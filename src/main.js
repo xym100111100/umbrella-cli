@@ -1,10 +1,13 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
+import './common/rem';
+import Vue from 'vue';
+import App from './App.vue';
+import { router } from './router';
 
-Vue.config.productionTip = false;
+// 导入自定义
+import './assets/iconfont/custom.less';
 
 new Vue({
-  router,
-  render: h => h(App)
-}).$mount("#app");
+    router,
+    el: '#app',
+    render: h => h(App),
+});

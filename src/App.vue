@@ -1,29 +1,50 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <router-view />
+        <van-tabbar v-model="active">
+            <van-tabbar-item icon="home">首页</van-tabbar-item>
+            <van-tabbar-item icon="category" dot>分类</van-tabbar-item>
+            <van-tabbar-item icon="cart" info="5">购物车</van-tabbar-item>
+            <van-tabbar-item icon="mine" info="20">我的</van-tabbar-item>
+        </van-tabbar>
     </div>
-    <router-view/>
-  </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import { Tabbar, TabbarItem } from 'vant';
+export default {
+    components: {
+        [Tabbar.name]: Tabbar,
+        [TabbarItem.name]: TabbarItem,
+    },
+    data() {
+        return {
+            active: 0,
+        };
+    },
+};
+</script>
+
+<style>
+body {
+    font-size: 24px;
+    background-color: #f8f8f8;
+    -webkit-font-smoothing: antialiased;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+.van-tabbar {
+    height: 60px;
+}
+
+.van-icon {
+    font-size: 32px;
+}
+
+.van-tabbar-item {
+    color: #aaa;
+}
+
+.van-tabbar-item--active {
+    color: #ca6924;
 }
 </style>
