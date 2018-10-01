@@ -6,28 +6,40 @@ Vue.use(Router);
 const routes = [
     {
         path: '*',
-        redirect: '/goods',
+        redirect: '/main',
     },
     {
-        name: 'user',
-        component: () => import('./view/user'),
-        meta: {
-            title: '会员中心',
-        },
-    },
-    {
-        name: 'cart',
-        component: () => import('./view/cart'),
-        meta: {
-            title: '购物车',
-        },
+        name: 'main',
+        path: '/main',
+        redirect: '/home',
+        component: () => import('./page/Main'),
+        children: [
+            {
+                name: 'home',
+                path: '/home',
+                component: () => import('./view/Home'),
+            },
+            {
+                name: 'category',
+                path: '/category',
+                component: () => import('./view/Category'),
+            },
+            {
+                name: 'cart',
+                path: '/cart',
+                component: () => import('./view/Cart'),
+            },
+            {
+                name: 'mine',
+                path: '/mine',
+                component: () => import('./view/Mine'),
+            },
+        ],
     },
     {
         name: 'goods',
-        component: () => import('./view/goods'),
-        meta: {
-            title: '商品详情',
-        },
+        path: '/goods',
+        component: () => import('./page/Goods'),
     },
 ];
 

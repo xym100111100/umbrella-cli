@@ -1,35 +1,23 @@
 <template>
-  <div>
-    <van-checkbox-group class="card-goods" v-model="checkedGoods">
-      <van-checkbox
-        class="card-goods__item"
-        v-for="item in goods"
-        :key="item.id"
-        :name="item.id"
-      >
-        <van-card
-          :title="item.title"
-          :desc="item.desc"
-          :num="item.num"
-          :price="formatPrice(item.price)"
-          :thumb="item.thumb"
-        />
-      </van-checkbox>
-    </van-checkbox-group>
-    <van-submit-bar
-      :price="totalPrice"
-      :disabled="!checkedGoods.length"
-      :button-text="submitBarText"
-      @submit="onSubmit"
-    />
-  </div>
+    <div class="page-content-warp">
+        <van-nav-bar title="购物车" right-text="编辑" />
+        <van-checkbox-group class="card-goods" v-model="checkedGoods">
+            <van-checkbox class="card-goods__item" v-for="item in goods" :key="item.id" :name="item.id">
+                <van-card :title="item.title" :desc="item.desc" :num="item.num" :price="formatPrice(item.price)" :thumb="item.thumb" />
+            </van-checkbox>
+        </van-checkbox-group>
+        <van-submit-bar :price="totalPrice" :disabled="!checkedGoods.length" :button-text="submitBarText" @submit="onSubmit">
+            <van-checkbox v-model="checked">全选</van-checkbox>
+        </van-submit-bar>
+    </div>
 </template>
 
 <script>
-import { Checkbox, CheckboxGroup, Card, SubmitBar, Toast } from 'vant';
+import { NavBar, Checkbox, CheckboxGroup, Card, SubmitBar, Toast } from 'vant';
 
 export default {
     components: {
+        [NavBar.name]: NavBar,
         [Card.name]: Card,
         [Checkbox.name]: Checkbox,
         [SubmitBar.name]: SubmitBar,
@@ -95,9 +83,16 @@ export default {
 </script>
 
 <style lang="less">
+.page-content-warp {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 .card-goods {
     padding: 10px 0;
     background-color: #fff;
+    flex-grow: 1;
 
     &__item {
         position: relative;
@@ -120,6 +115,15 @@ export default {
         .van-card__price {
             color: #f44;
         }
+    }
+}
+.van-submit-bar {
+    left: unset;
+    bottom: unset;
+    position: unset;
+
+    .van-checkbox {
+        margin-left: 20px;
     }
 }
 </style>
