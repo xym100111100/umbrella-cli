@@ -9,7 +9,7 @@
                     <van-swipe-item v-for="(image, index) in images" :key="index">
                         <div class="swipe-image-wrap">
                             <img class="swipe-image" v-lazy="image" />
-                    </div>
+                        </div>
                     </van-swipe-item>
                 </van-swipe>
             </div>
@@ -23,7 +23,7 @@
                     <div class="label">订单</div>
                 </van-col>
                 <van-col span="6">
-                    <van-icon name="favorite" color="#ffc0cb" size="48px" />
+                    <van-icon name="favoriteex" color="#ffc0cb" size="48px" />
                     <div class="label">收藏</div>
                 </van-col>
                 <van-col span="6">

@@ -1,6 +1,6 @@
 <template>
     <div class="page-content-warp">
-        <van-nav-bar title="购物车" right-text="编辑" />
+        <van-nav-bar left-arrow title="购物车" right-text="编辑" @click-left="handleBack" />
         <van-checkbox-group class="card-goods" v-model="checkedGoods">
             <van-checkbox class="card-goods__item" v-for="item in goods" :key="item.id" :name="item.id">
                 <van-card :title="item.title" :desc="item.desc" :num="item.num" :price="formatPrice(item.price)" :thumb="item.thumb" />
@@ -71,6 +71,12 @@ export default {
     },
 
     methods: {
+        /**
+         * 回退
+         */
+        handleBack() {
+            this.$router.go(-1);
+        },
         formatPrice(price) {
             return (price / 100).toFixed(2);
         },
@@ -87,43 +93,56 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-}
 
-.card-goods {
-    padding: 10px 0;
-    background-color: #fff;
-    flex-grow: 1;
+    .van-nav-bar__arrow {
+        font-size: 1.25em;
+        color: #666;
+    }
 
-    &__item {
-        position: relative;
-        background-color: #fafafa;
+    .van-nav-bar__title {
+        font-size: 1em;
+    }
 
-        .van-checkbox__label {
-            width: 100%;
-            padding: 0 10px 0 15px;
-            box-sizing: border-box;
-        }
+    .van-nav-bar__text {
+        font-size: 1.25em;
+    }
 
-        .van-checkbox__icon {
-            top: 50%;
-            left: 10px;
-            z-index: 1;
-            position: absolute;
-            margin-top: -10px;
-        }
+    .card-goods {
+        padding: 10px 0;
+        background-color: #fff;
+        flex-grow: 1;
 
-        .van-card__price {
-            color: #f44;
+        &__item {
+            position: relative;
+            background-color: #fafafa;
+
+            .van-checkbox__label {
+                width: 100%;
+                padding: 0 10px 0 15px;
+                box-sizing: border-box;
+            }
+
+            .van-checkbox__icon {
+                top: 50%;
+                left: 10px;
+                z-index: 1;
+                position: absolute;
+                margin-top: -10px;
+            }
+
+            .van-card__price {
+                color: #f44;
+            }
         }
     }
-}
-.van-submit-bar {
-    left: unset;
-    bottom: unset;
-    position: unset;
+    .van-submit-bar {
+        left: unset;
+        bottom: unset;
+        position: unset;
 
-    .van-checkbox {
-        margin-left: 20px;
+        .van-checkbox {
+            margin-left: 20px;
+        }
     }
 }
 </style>

@@ -2,12 +2,18 @@
     <router-view />
 </template>
 
-<style>
+<style lang="less">
 html,
 body,
 #app {
     height: 100%;
 }
+
+// 不显示滚动条
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     font-size: 24px;
     background-color: #f8f8f8;

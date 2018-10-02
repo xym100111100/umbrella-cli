@@ -51,13 +51,7 @@ export default {
     // 定义列数
     column-count: 2;
     // 列间距
-    column-gap: 4px;
-    break-inside: avoid;
-    background-color: #eee;
-}
-
-// 图片本身
-.gallery-item image {
-    width: 100%;
+    column-gap: 1px;
+    background-color: #ccc;
 }
 </style>
