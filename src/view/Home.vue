@@ -1,5 +1,5 @@
 <template>
-    <div class="fragment">
+    <div class="view-home">
         <div>
             <van-search placeholder="请输入搜索关键词" />
         </div>
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="less">
-.fragment {
+.view-home {
     flex-grow: 1;
     display: flex;
     flex-direction: column;

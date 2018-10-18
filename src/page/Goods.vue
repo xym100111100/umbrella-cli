@@ -1,5 +1,5 @@
 <template>
-    <div class="goods">
+    <div class="page-goods">
         <div class="back" @click="handleBack">
             <van-icon name="back" />
         </div>
@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="less">
-.goods {
+.page-goods {
     padding-bottom: 50px;
     // position: relative;
 

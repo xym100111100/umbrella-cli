@@ -1,6 +1,6 @@
 <template>
     <van-list v-model="loading" :finished="finished" @load="handleLoad">
-        <div class="goods" v-for="item in list" :key="item">
+        <div v-for="item in list" :key="item">
             <goods-card />
         </div>
     </van-list>

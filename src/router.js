@@ -41,6 +41,10 @@ const routes = [
         path: '/goods',
         component: () => import('./page/Goods'),
     },
+    {
+        path: '/login/fail',
+        component: () => import('./page/LoginFail'),
+    },
 ];
 
 // add route path
