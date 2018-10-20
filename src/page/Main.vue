@@ -29,34 +29,43 @@ export default {
 };
 </script>
 
-<style>
-.main-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.van-tabbar--fixed {
-    left: unset;
-    bottom: unset;
-    position: unset;
-}
-.van-tabbar {
-    height: 60px;
-}
-.van-submit-bar {
-    border-top: 1px red solid;
-    border-bottom: 1px #aaa solid;
-}
+<style lang="less">
+#app {
+    background-color: #eee;
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .van-tabbar--fixed {
+        left: unset;
+        bottom: unset;
+        position: unset;
+    }
 
-.van-icon {
-    font-size: 32px;
-}
+    // 底部标签栏
+    .van-tabbar {
+        height: 50px;
+        border-top: 1px solid #eee;
+        .van-tabbar-item {
+            margin-top: -5px;
+            .van-icon {
+                font-size: 32px;
+            }
+        }
+    }
 
-.van-tabbar-item {
-    color: #aaa;
-}
+    .van-submit-bar {
+        border-top: 1px red solid;
+        border-bottom: 1px #aaa solid;
+    }
 
-.van-tabbar-item--active {
-    color: #ca6924;
+    .van-tabbar-item {
+        color: #aaa;
+    }
+
+    .van-tabbar-item--active {
+        color: #ca6924;
+    }
 }
 </style>

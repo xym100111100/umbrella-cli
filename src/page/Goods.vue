@@ -4,7 +4,7 @@
             <van-icon name="back" />
         </div>
 
-        <van-swipe class="goods-swipe" :autoplay="3000">
+        <van-swipe class="page-goods-swipe" :autoplay="5000">
             <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
                 <img :src="thumb" >
             </van-swipe-item>
@@ -12,26 +12,26 @@
 
         <van-cell-group>
             <van-cell>
-                <div class="goods-title">{{ goods.title }}</div>
-                <div class="goods-price">{{ formatPrice(goods.price) }}</div>
+                <div class="page-goods-title">{{ goods.title }}</div>
+                <div class="page-goods-price">{{ formatPrice(goods.price) }}</div>
             </van-cell>
-            <van-cell class="goods-express">
+            <van-cell class="page-goods-express">
                 <van-col span="10">运费：{{ goods.express }}</van-col>
                 <van-col span="14">剩余：{{ goods.remain }}</van-col>
             </van-cell>
         </van-cell-group>
 
-        <van-cell-group class="goods-cell-group">
+        <van-cell-group class="page-goods-cell-group">
             <van-cell value="进入店铺" icon="shop" is-link @click="sorry">
                 <template slot="title">
                     <span class="van-cell-text">有赞的店</span>
-                    <van-tag class="goods-tag" type="danger">官方</van-tag>
+                    <van-tag class="page-goods-tag" type="danger">官方</van-tag>
                 </template>
             </van-cell>
             <van-cell title="线下门店" icon="location" is-link @click="sorry" />
         </van-cell-group>
 
-        <van-cell-group class="goods-cell-group">
+        <van-cell-group class="page-goods-cell-group">
             <van-cell title="查看商品详情" is-link @click="sorry" />
         </van-cell-group>
 
@@ -126,19 +126,20 @@ export default {
 
     // 回退
     .back {
-        position: absolute;
-        top: 0.7em;
-        left: 0.7em;
-        height: 1.8em;
-        width: 1.8em;
+        position: fixed;
+        top: 0.5em;
+        left: 0.5em;
+        height: 1.6em;
+        width: 1.6em;
         z-index: 9;
-        border-radius: 0.9em;
+        border-radius: 0.8em;
         color: white;
         background-color: black;
         opacity: 0.4;
 
         .van-icon {
-            font-size: 1.5em;
+            padding: 2px;
+            font-size: 1.2em;
         }
     }
 
@@ -151,7 +152,7 @@ export default {
     }
 
     &-title {
-        font-size: 16px;
+        font-size: 1.2em;
     }
 
     &-price {

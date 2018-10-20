@@ -5,7 +5,7 @@
         </div>
         <div class="scroll">
             <div>
-                <van-swipe :autoplay="3000">
+                <van-swipe :autoplay="10000">
                     <van-swipe-item v-for="(image, index) in images" :key="index">
                         <div class="swipe-image-wrap">
                             <img class="swipe-image" v-lazy="image" />
@@ -15,22 +15,25 @@
             </div>
             <van-row class="grid">
                 <van-col span="6">
-                    <van-icon name="fullback" color="#00ff00" size="48px" />
+                    <van-icon name="fullback" color="#00ff00" size="42px" />
                     <div class="label">拼全返</div>
                 </van-col>
                 <van-col span="6">
-                    <van-icon name="order" color="#6495ed" size="48px" />
+                    <van-icon name="order" color="#6495ed" size="42px" />
                     <div class="label">订单</div>
                 </van-col>
                 <van-col span="6">
-                    <van-icon name="favoriteex" color="#ffc0cb" size="48px" />
+                    <van-icon name="favoriteex" color="#ffc0cb" size="42px" />
                     <div class="label">收藏</div>
                 </van-col>
                 <van-col span="6">
-                    <van-icon name="wallet" color="red" size="48px" />
+                    <van-icon name="wallet" color="red" size="42px" />
                     <div class="label">钱包</div>
                 </van-col>
             </van-row>
+            <div class="full-back-rule">
+                拼全返商品免单规则
+            </div>
             <div class="daily">
                 <van-icon name="wavy" color="red" size="20px" />&nbsp;&nbsp;
                 <van-icon name="daily" color="red" size="20px" />每日推荐&nbsp;&nbsp;
@@ -80,6 +83,13 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    // 搜索
+    .van-search {
+        padding: 4px 8px;
+        .van-cell {
+            padding: 0 10px;
+        }
+    }
     .scroll {
         overflow: auto;
         flex-grow: 1;
@@ -94,23 +104,37 @@ export default {
             }
         }
 
-        // 宫格
+        // n宫格
         .grid {
+            position: sticky;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid #eee;
             text-align: center;
             padding: 0 0 5px;
             background-color: white;
             .label {
-                font-size: 16px;
+                font-size: 14px;
             }
+        }
+
+        // 拼全返规则
+        .full-back-rule {
+            margin: 8px;
+            border-radius: 10px;
+            // ----- TODO 下面要替换成图片
+            background-color: blue;
+            color: yellow;
+            padding: 10px;
         }
 
         // 每日推荐标题栏
         .daily {
-            margin-top: 15px;
             text-align: center;
             background-color: white;
             font-size: 20px;
-            padding-top: 8px;
+            padding: 4px 0;
         }
 
         // 每日推荐商品列表
