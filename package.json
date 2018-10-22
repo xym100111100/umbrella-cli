@@ -1,56 +1,64 @@
 {
-  "name": "damai-wxg",
-  "version": "1.0.0",
-  "description": "大卖网微信公众号网站",
-  "repository": "https://www.duamai.com",
-  "author": "zbz",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve -p",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "vant": "^1.3.3",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
-    "@vue/eslint-config-prettier": "^3.0.4",
-    "babel-plugin-import": "^1.9.1",
-    "less": "^3.0.4",
-    "less-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "damai-wxg",
+    "version": "1.0.0",
+    "description": "大卖网微信公众号网站",
+    "author": "zbz",
+    "license": "MIT",
+    "private": true,
+    "repository": "https://www.duamai.com",
+    "scripts": {
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "start": "vue-cli-service serve",
+        "help": "vue-cli-service --help"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier",
-      "eslint:recommended"
-    ],
-    "rules": {
-      "no-console": "off"
+    "dependencies": {
+        "vant": "^1.3.3",
+        "vue": "^2.5.17",
+        "vue-router": "^3.0.1"
     },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "devDependencies": {
+        "@babel/core": "^7.1.2",
+        "@vue/cli-plugin-babel": "^3.0.5",
+        "@vue/cli-plugin-eslint": "^3.0.4",
+        "@vue/cli-service": "^3.0.4",
+        "@vue/eslint-config-prettier": "^3.0.4",
+        "axios": "^0.18.0",
+        "babel-plugin-import": "^1.9.1",
+        "cross-env": "^5.2.0",
+        "eslint": "^5.7.0",
+        "less": "^3.0.4",
+        "less-loader": "^4.1.0",
+        "mockjs": "^1.0.1-beta3",
+        "vue-template-compiler": "^2.5.17",
+        "webpack": "^4.21.0",
+        "webpack-api-mocker": "^1.5.15"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "@vue/prettier",
+            "eslint:recommended"
+        ],
+        "rules": {
+            "no-console": "off"
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }

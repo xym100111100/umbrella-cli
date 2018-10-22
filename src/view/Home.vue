@@ -4,7 +4,7 @@
             <van-search placeholder="请输入搜索关键词" />
         </div>
         <div class="scroll">
-            <div>
+            <!-- <div>
                 <van-swipe :autoplay="10000">
                     <van-swipe-item v-for="(image, index) in images" :key="index">
                         <div class="swipe-image-wrap">
@@ -12,7 +12,7 @@
                         </div>
                     </van-swipe-item>
                 </van-swipe>
-            </div>
+            </div> -->
             <van-row class="grid">
                 <van-col span="6">
                     <van-icon name="fullback" color="#00ff00" size="42px" />
