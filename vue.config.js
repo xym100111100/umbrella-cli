@@ -1,3 +1,4 @@
+require('@babel/register');
 const path = require('path');
 const apiMocker = require('webpack-api-mocker');
 const proxy = require('./proxy.config');
@@ -8,7 +9,7 @@ module.exports = {
     devServer: {
         port: 8083,
         before(app) {
-            apiMocker(app, path.resolve('mock/index.js'));
+            apiMocker(app, path.resolve('mock'));
         },
         proxy,
     },

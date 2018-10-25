@@ -10,6 +10,7 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "start": "vue-cli-service serve",
+        "test:util": "mocha test/util/*.test.js --require @babel/register",
         "help": "vue-cli-service --help"
     },
     "dependencies": {
@@ -19,20 +20,28 @@
     },
     "devDependencies": {
         "@babel/core": "^7.1.2",
+        "@babel/register": "^7.0.0",
         "@vue/cli-plugin-babel": "^3.0.5",
         "@vue/cli-plugin-eslint": "^3.0.4",
         "@vue/cli-service": "^3.0.4",
         "@vue/eslint-config-prettier": "^3.0.4",
         "axios": "^0.18.0",
         "babel-plugin-import": "^1.9.1",
+        "chai": "^4.2.0",
         "cross-env": "^5.2.0",
         "eslint": "^5.7.0",
         "less": "^3.0.4",
         "less-loader": "^4.1.0",
+        "mocha": "^5.2.0",
         "mockjs": "^1.0.1-beta3",
         "vue-template-compiler": "^2.5.17",
         "webpack": "^4.21.0",
         "webpack-api-mocker": "^1.5.15"
+    },
+    "babel": {
+        "presets": [
+            "@babel/env"
+        ]
     },
     "eslintConfig": {
         "root": true,

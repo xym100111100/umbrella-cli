@@ -19,3 +19,4 @@ function addProxy(key, value) {
 }
 
 module.exports = proxy;
+// export default proxy;
