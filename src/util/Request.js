@@ -65,9 +65,9 @@ export function request(url, options) {
             .catch(e => {
                 // 状态码
                 const status = e.code || e.response.status;
-                const errortext = codeMessage[status] || e.response.statusText;
+                const errorText = codeMessage[status] || e.response.statusText;
                 // 产生请求失败事件
-                newOptions.onFail && newOptions.onFail(status, errortext);
+                newOptions.onFail && newOptions.onFail(status, errorText);
 
                 // TODO 根据错误状态进行相应处理
                 if (status === 'ETIMEDOUT') {
