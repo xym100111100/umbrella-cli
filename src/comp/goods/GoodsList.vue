@@ -1,58 +1,60 @@
 <template>
-    <div class="promo-list-wrap">
+    <div class="goods-list-wrap">
         <!-- 商品列表 -->
-        <van-list v-model="promoLoading" :finished="promoFinished" @load="handleLoad">
-            <div v-for="item in promoList" :key="item.id">
-                <goods-card />
+        <van-list v-model="loading" :alled="all" @load="handleLoad">
+            <div v-for="item in list" :key="item.id">
+                <goods-card :item="item" />
             </div>
         </van-list>
         <!-- 底线 -->
-        <div class="underline" v-if="promoFinished">~~~~~~~~~&nbsp;&nbsp;&nbsp;我是有底线的&nbsp;&nbsp;&nbsp;~~~~~~~~~</div>
+        <div class="underline" v-if="all">~~~~~~~~~&nbsp;&nbsp;&nbsp;我是有底线的&nbsp;&nbsp;&nbsp;~~~~~~~~~</div>
     </div>
 </template>
 <script>
 import Vue from 'vue';
 import { List } from 'vant';
 import GoodsCard from './GoodsCard.vue';
-import { list as listOnlOnlinePromo } from '../../svc/onl/OnlOnlinePromo';
 
 // 注册组件
-Vue.component('promo-list');
+Vue.component('goods-list');
 
 export default {
-    name: 'promo-list',
+    name: 'goods-list',
     components: {
         [GoodsCard.name]: GoodsCard,
         [List.name]: List,
     },
+    props: {
+        load: Function, // 加载的方法
+        loadParams: Object, // 加载时传入的参数
+    },
     data() {
         return {
+            list: [], // 商品的列表
             pageNum: 0, // 当前页码
-            // refreshing: false,
-            promoList: [], // 推荐的列表
-            promoLoading: false, // 是否正在加载推荐列表
-            promoFinished: false, // 是否全部加载推荐列表
+            loading: false, // 是否正在加载商品列表
+            all: false, // 是否全部加载完成商品列表
         };
     },
     methods: {
         handleLoad() {
             // 异步更新数据
             setTimeout(() => {
-                listOnlOnlinePromo({
-                    params: { promotionType: 1, pageNum: this.pageNum + 1 },
+                const params = { ...this.loadParams, pageNum: this.pageNum + 1 };
+                this.load({
+                    params,
                     onSuccess: data => {
                         this.pageNum = data.pageNum;
-                        this.promoList.push(...data.list);
-                        console.log(this.promoList);
+                        this.list.push(...data.list);
                         // 如果是最后一页
                         if (data.pages == data.pageNum) {
                             // 数据全部加载完成
-                            this.promoFinished = true;
+                            this.all = true;
                         }
                     },
                     onFinish: () => {
                         // 结束加载状态
-                        this.promoLoading = false;
+                        this.loading = false;
                     },
                 });
             }, 500);
@@ -61,8 +63,8 @@ export default {
 };
 </script>
 <style lang="less">
-.promo-list-wrap {
-    // 推荐列表
+.goods-list-wrap {
+    // 商品列表
     > .van-list {
         background-color: #eee;
         display: flex;
@@ -75,6 +77,7 @@ export default {
             border-right: 1px solid #eee;
             border-bottom: 1px solid #eee;
         }
+        // 正在加载
         .van-list__loading {
             width: 100%;
         }

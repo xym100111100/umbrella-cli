@@ -41,7 +41,7 @@
                 <van-icon name="wavy" color="red" size="20px" />
             </div>
             <div class="promo-list">
-                <promo-list v-if="!refreshing" />
+                <goods-list v-if="!refreshing" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
             </div>
         </van-pull-refresh>
     </div>
@@ -51,14 +51,15 @@
 import Vue from 'vue';
 import { PullRefresh, Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell } from 'vant';
 // import { Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell } from 'vant';
-import PromoList from '../comp/goods/PromoList.vue';
+import GoodsList from '../comp/goods/GoodsList.vue';
+import { list as listOnlOnlinePromo } from '../svc/onl/OnlOnlinePromo';
 
 // Lazyload插件需要初始化
 Vue.use(Lazyload);
 
 export default {
     components: {
-        [PromoList.name]: PromoList,
+        [GoodsList.name]: GoodsList,
         [Search.name]: Search,
         [Swipe.name]: Swipe,
         [SwipeItem.name]: SwipeItem,
@@ -72,7 +73,7 @@ export default {
     },
     data() {
         return {
-            refreshing: false,
+            refreshing: false, // 刷新状态，刷新状态为true时刷新推荐列表
             images: [
                 // 'https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg',
                 // 'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
@@ -80,6 +81,13 @@ export default {
         };
     },
     methods: {
+        /**
+         * 加载推荐列表的方法
+         */
+        listOnlOnlinePromo,
+        /**
+         * 下拉刷新页面
+         */
         handleRefresh() {
             setTimeout(() => {
                 this.refreshing = false;
