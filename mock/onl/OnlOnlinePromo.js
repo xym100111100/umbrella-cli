@@ -10,7 +10,8 @@ const template = {
     'list|8': [
         {
             'id|1000000000000000-9999999999999999': 1,
-            picPath: 'https://unsplash.it/200/200/?random',
+            // picPath: 'https://unsplash.it/200/200/?random',
+            picPath: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
             'specId|1000000000000000-9999999999999999': 1,
             promotionType: 1,
             'salePrice|30-3000.2': 1,

@@ -50,7 +50,6 @@
 <script>
 import Vue from 'vue';
 import { PullRefresh, Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell } from 'vant';
-// import { Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell } from 'vant';
 import GoodsList from '../comp/goods/GoodsList.vue';
 import { list as listOnlOnlinePromo } from '../svc/onl/OnlOnlinePromo';
 

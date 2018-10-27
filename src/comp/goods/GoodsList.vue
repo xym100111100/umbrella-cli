@@ -1,13 +1,13 @@
 <template>
     <div class="goods-list-wrap">
         <!-- 商品列表 -->
-        <van-list v-model="loading" :alled="all" @load="handleLoad">
+        <van-list v-model="loading" :finished="finished" @load="handleLoad">
             <div v-for="item in list" :key="item.id">
                 <goods-card :item="item" />
             </div>
         </van-list>
         <!-- 底线 -->
-        <div class="underline" v-if="all">~~~~~~~~~&nbsp;&nbsp;&nbsp;我是有底线的&nbsp;&nbsp;&nbsp;~~~~~~~~~</div>
+        <div class="underline" v-if="finished">~~~~~~~~~&nbsp;&nbsp;&nbsp;我是有底线的&nbsp;&nbsp;&nbsp;~~~~~~~~~</div>
     </div>
 </template>
 <script>
@@ -33,10 +33,13 @@ export default {
             list: [], // 商品的列表
             pageNum: 0, // 当前页码
             loading: false, // 是否正在加载商品列表
-            all: false, // 是否全部加载完成商品列表
+            finished: false, // 是否全部加载完成商品列表
         };
     },
     methods: {
+        /**
+         * 上翻列表加载新商品
+         */
         handleLoad() {
             // 异步更新数据
             setTimeout(() => {
@@ -49,7 +52,7 @@ export default {
                         // 如果是最后一页
                         if (data.pages == data.pageNum) {
                             // 数据全部加载完成
-                            this.all = true;
+                            this.finished = true;
                         }
                     },
                     onFinish: () => {
@@ -69,13 +72,15 @@ export default {
         background-color: #eee;
         display: flex;
         flex-wrap: wrap;
+        padding: 0 2px 2px;
         > * {
             box-sizing: border-box;
             width: 50%;
-            border-top: 0;
-            border-left: 1px solid #eee;
-            border-right: 1px solid #eee;
-            border-bottom: 1px solid #eee;
+            // border-top: 0;
+            // border-left: 2px solid #eee;
+            // border-right: 2px solid #eee;
+            // border-bottom: 2px solid #eee;
+            padding: 0 2px 4px;
         }
         // 正在加载
         .van-list__loading {
