@@ -41,7 +41,7 @@ export default {
 // 商品卡
 .goods-card {
     background-color: white;
-    margin-bottom: 1px;
+    // margin-bottom: 1px;
     // 拼全返的斜角标
     .goods-img-wrap {
         position: relative;
@@ -69,7 +69,7 @@ export default {
     // 商品标题
     .goods-title {
         position: relative;
-        font-size: 0.65em;
+        font-size: 0.6em;
         padding: 0 2px 0 6px;
         height: 2.6em;
         overflow: hidden;

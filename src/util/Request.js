@@ -1,5 +1,72 @@
 import axios from 'axios';
 
+/**
+ * 请求
+ *
+ * @param {String} url 请求的地址
+ * @param {Object} options 请求的选项
+ */
+export function request(url, options) {
+    // 初始化options
+    const defaultOptions = {
+        type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+        // 如果传入data，请求参数放入body，如果传入params，请求参数加在url后面
+        data: undefined, // 请求的参数数据
+        params: undefined, // 请求的参数数据
+        // 事件
+        onSuccess: undefined, // 请求完成事件
+        onFail: undefined, // 请求失败事件
+        onFinish: undefined, // 请求完成事件
+    };
+    const newOptions = { ...defaultOptions, ...options };
+
+    // 请求的config
+    const config = {
+        url,
+        method: newOptions.type.toLowerCase(),
+    };
+    // 如果传入data，请求参数放入body，如果传入params，请求参数加在url后面
+    if (newOptions.data) config.data = newOptions.data;
+    if (newOptions.params) config.params = newOptions.params;
+
+    // 发出请求
+    axios
+        .request(config)
+        // 如果状态正常
+        .then(response => {
+            // 如果没有响应回正确的数据，则抛出异常
+            if (!response.data) {
+                const error = new Error();
+                error.response = response;
+                throw error;
+            }
+
+            // 产生请求成功事件
+            newOptions.onSuccess && newOptions.onSuccess(response.data);
+            // 产生请求完成事件
+            newOptions.onFinish && newOptions.onFinish();
+            return;
+        })
+        // 如果状态异常
+        .catch(e => {
+            // 状态码
+            const status = e.code || e.response.status;
+            const errorText = codeMessage[status] || e.response.statusText;
+
+            // 产生请求失败事件
+            newOptions.onFail && newOptions.onFail(status, errorText);
+            // 产生请求完成事件
+            newOptions.onFinish && newOptions.onFinish();
+
+            // TODO 根据错误状态进行相应处理
+            // if (status === 401) {
+            // } else if (status === 403) {
+            // } else if (status <= 504 && status >= 500) {
+            // } else if (status >= 404 && status < 422) {
+            // }
+        });
+}
+
 const codeMessage = {
     ETIMEDOUT: '网络断开或服务器异常，请稍后重试',
     // 200: '服务器成功返回请求的数据',
@@ -20,73 +87,61 @@ const codeMessage = {
 };
 
 /**
- * 发出HTTP请求
+ * 发出GET请求
  *
  * @param {String} url 请求的地址
  * @param {Object} options 请求的选项
  */
-export function request(url, options) {
+export function get(url, options) {
     // 初始化options
     const defaultOptions = {
         type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
-        data: undefined, // 请求的参数数据
-        onSuccess: undefined, // 请求完成事件
-        onFail: undefined, // 请求失败事件
     };
     const newOptions = { ...defaultOptions, ...options };
-
-    // 请求的config
-    const config = {
-        url,
-        method: newOptions.type.toLowerCase(),
-        data: newOptions.data,
-    };
-    // 发出请求
-    return (
-        axios
-            .request(config)
-            // 如果状态正常
-            .then(response => {
-                // 检查状态，错误状态会抛出异常
-                // checkStatus(response);
-
-                // 如果没有响应回正确的数据，则抛出异常
-                if (!response.data) {
-                    const error = new Error();
-                    error.response = response;
-                    throw error;
-                }
-
-                // 产生请求成功事件
-                newOptions.onSuccess && newOptions.onSuccess(response.data);
-                return;
-            })
-            // 如果状态异常
-            .catch(e => {
-                // 状态码
-                const status = e.code || e.response.status;
-                const errorText = codeMessage[status] || e.response.statusText;
-                // 产生请求失败事件
-                newOptions.onFail && newOptions.onFail(status, errorText);
-
-                // TODO 根据错误状态进行相应处理
-                if (status === 'ETIMEDOUT') {
-                } else if (status === 401) {
-                } else if (status === 403) {
-                } else if (status <= 504 && status >= 500) {
-                } else if (status >= 404 && status < 422) {
-                }
-            })
-    );
+    request(url, newOptions);
 }
 
-// function checkStatus(response) {
-//     if (response.status >= 200 && response.status < 300) {
-//         return;
-//     }
+/**
+ * 发出POST请求
+ *
+ * @param {String} url 请求的地址
+ * @param {Object} options 请求的选项
+ */
+export function post(url, options) {
+    // 初始化options
+    const defaultOptions = {
+        type: 'POST', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+    };
+    const newOptions = { ...defaultOptions, ...options };
+    request(url, newOptions);
+}
 
-//     const error = new Error();
-//     error.code = response.status;
-//     error.response = response;
-//     throw error;
-// }
+/**
+ * 发出PUT请求
+ *
+ * @param {String} url 请求的地址
+ * @param {Object} options 请求的选项
+ */
+export function put(url, options) {
+    // 初始化options
+    const defaultOptions = {
+        type: 'PUT', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+    };
+    const newOptions = { ...defaultOptions, ...options };
+    request(url, newOptions);
+}
+
+/**
+ * 发出DELETE请求
+ *
+ * @param {String} url 请求的地址
+ * @param {Object} options 请求的选项
+ */
+export function del(url, options) {
+    // 初始化options
+    const defaultOptions = {
+        type: 'DELETE', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+    };
+    const newOptions = { ...defaultOptions, ...options };
+    request(url, newOptions);
+}

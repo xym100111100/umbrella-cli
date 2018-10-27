@@ -21,6 +21,7 @@
     "devDependencies": {
         "@babel/core": "^7.1.2",
         "@babel/register": "^7.0.0",
+        "@babel/runtime": "^7.1.2",
         "@vue/cli-plugin-babel": "^3.0.5",
         "@vue/cli-plugin-eslint": "^3.0.4",
         "@vue/cli-service": "^3.0.4",
@@ -41,6 +42,9 @@
     "babel": {
         "presets": [
             "@babel/env"
+        ],
+        "plugins": [
+            "@babel/transform-runtime"
         ]
     },
     "eslintConfig": {

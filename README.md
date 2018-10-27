@@ -3,13 +3,13 @@
 ## Project setup
 
 ```sh
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
 
 ```sh
-yarn run serve
+yarn start
 ```
 
 ### Compiles and minifies for production
