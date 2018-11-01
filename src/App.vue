@@ -24,4 +24,11 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.van-dialog__header {
+    font-size: 1em;
+}
+.van-dialog__message {
+    font-size: 1em !important;
+}
 </style>
