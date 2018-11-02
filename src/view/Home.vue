@@ -1,6 +1,5 @@
 <template>
     <div class="view-home">
-        <!-- <div class="view-home" v-if="!refreshing"> -->
         <div>
             <van-search placeholder="请输入搜索关键词" />
         </div>
@@ -98,9 +97,10 @@ export default {
 
 <style lang="less">
 .view-home {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    // height: 100%-@tabbar-height;
+    // width: 100%;
     // 搜索
     .van-search {
         padding: 4px 8px;

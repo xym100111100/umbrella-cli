@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content-warp">
+    <div class="view-cart">
         <van-nav-bar left-arrow title="购物车" right-text="编辑" @click-left="handleBack" />
         <van-checkbox-group class="card-goods" v-model="checkedGoods">
             <van-checkbox class="card-goods__item" v-for="item in goods" :key="item.id" :name="item.id">
@@ -89,28 +89,30 @@ export default {
 </script>
 
 <style lang="less">
-.page-content-warp {
+.view-cart {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    // height: 100%-@tabbar-height;
+    // width: 100%;
+    .van-nav-bar {
+        .van-nav-bar__arrow {
+            font-size: 1.25em;
+            color: #666;
+        }
 
-    .van-nav-bar__arrow {
-        font-size: 1.25em;
-        color: #666;
-    }
+        .van-nav-bar__title {
+            font-size: 1em;
+        }
 
-    .van-nav-bar__title {
-        font-size: 1em;
-    }
-
-    .van-nav-bar__text {
-        font-size: 1.25em;
+        .van-nav-bar__text {
+            font-size: 1.25em;
+        }
     }
 
     .card-goods {
+        flex-grow: 1;
         padding: 10px 0;
         background-color: #fff;
-        flex-grow: 1;
 
         &__item {
             position: relative;

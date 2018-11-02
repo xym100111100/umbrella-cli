@@ -1,7 +1,8 @@
 <template>
     <div class="goods-card" @click="handleGo">
         <div :class="{'goods-img-wrap':true,'affix-wrap':item.subjectType!==0}" :data-content="item.subjectType===1?'拼全返':''">
-            <img class="goods-img" mode="widthFix" :src="item.picPath" />
+            <!-- <img class="goods-img" mode="widthFix" :src="item.picPath" /> -->
+            <img class="goods-img" :src="item.picPath" />
         </div>
         <div class="goods-title">
             <van-tag v-if="item.cashbackAmount!==0&&item.subjectType!==1" type="primary" mark plain>返现</van-tag>
@@ -81,7 +82,9 @@ export default {
         overflow: hidden;
         // 商品图片
         .goods-img {
-            width: 100%;
+            // width: 100%;
+            width: 50vw;
+            height: 50vw;
         }
     }
     // 商品标题

@@ -20,21 +20,33 @@ const routes = [
                 name: 'home',
                 path: '/home',
                 component: () => import('./view/Home'),
+                meta: {
+                    level: '00',
+                },
             },
             {
                 name: 'category',
                 path: '/category',
                 component: () => import('./view/Category'),
+                meta: {
+                    level: '01',
+                },
             },
             {
                 name: 'cart',
                 path: '/cart',
                 component: () => import('./view/Cart'),
+                meta: {
+                    level: '02',
+                },
             },
             {
                 name: 'mine',
                 path: '/mine',
                 component: () => import('./view/Mine'),
+                meta: {
+                    level: '03',
+                },
             },
         ],
     },
@@ -42,10 +54,14 @@ const routes = [
         name: 'goods',
         path: '/goods',
         component: () => import('./page/Goods'),
+        meta: {
+            level: '05',
+        },
     },
     {
         path: '/login/fail',
         component: () => import('./page/LoginFail'),
+        level: '99',
     },
 ];
 
@@ -56,23 +72,7 @@ routes.forEach(route => {
 
 const router = new Router({ routes });
 
-// 监听浏览器回退事件
-window.onpopstate = () => {
-    // 如果当前路由是首页，弹出退出确认框
-    if (window.currentRoute === 'home') {
-        Dialog.confirm({
-            title: '退出程序',
-            message: '您确认要退出程序？',
-        })
-            .then(() => {
-                wx.closeWindow();
-            })
-            .catch(() => {
-                pushHistory();
-            });
-    }
-};
-
+// 初始化时，在首页后再添加一条首页的路由
 pushHistory();
 
 /**
@@ -84,9 +84,43 @@ function pushHistory() {
         url: '#/',
     };
     window.history.pushState(state, 'title', '#/');
+    window.isBack = false;
 }
 
+window.isBack = false;
+// 监听浏览器回退事件
+window.onpopstate = e => {
+    console.log('onpopstate', e);
+
+    window.isBack = true;
+    // 如果当前路由是首页，弹出退出确认框
+    console.log('targetRoute', e.target.location.hash);
+    if (window.currentRoute === 'home') {
+        Dialog.confirm({
+            title: '退出程序',
+            message: '您确认要退出程序？',
+        })
+            .then(() => {
+                wx.closeWindow();
+            })
+            .catch(() => {
+                // 在首页取消后再添加一条首页的路由
+                pushHistory();
+            });
+    }
+};
+
 router.beforeEach((to, from, next) => {
+    console.log('beforeEach', from, to);
+
+    // 如果是首页回退事件，不要跳转到其它页
+    if (window.isBack && from.name === 'home') {
+        window.isBack = false;
+        next(false);
+        return;
+    }
+    window.isBack = false;
+
     const title = to.meta && to.meta.title;
     if (title) {
         document.title = title;
@@ -97,7 +131,9 @@ router.beforeEach((to, from, next) => {
 /**
  * 在每次跳转路由之后，记录当前的路由
  */
-router.afterEach(to => {
+router.afterEach((to, from) => {
+    console.log('afterEach', from, to);
+
     window.currentRoute = to.name;
 });
 

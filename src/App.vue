@@ -1,11 +1,31 @@
 <template>
-    <router-view />
+    <transition :name="transitionName">
+        <router-view />
+    </transition>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            transitionName: 'slide-left',
+        };
+    },
+    // 接着在父组件内
+    // watch $route 决定使用哪种过渡
+    watch: {
+        $route(to, from) {
+            console.log('watchRoute', from, to);
+            this.transitionName = to.meta.level < from.meta.level ? 'slide-right' : 'slide-left';
+        },
+    },
+};
+</script>
+
 
 <style lang="less">
 html,
 body,
-#app {
+body > * {
     height: 100%;
 }
 
@@ -18,17 +38,5 @@ body {
     font-size: 24px;
     background-color: #f8f8f8;
     -webkit-font-smoothing: antialiased;
-}
-
-#app {
-    display: flex;
-    flex-direction: column;
-}
-
-.van-dialog__header {
-    font-size: 1em;
-}
-.van-dialog__message {
-    font-size: 1em !important;
 }
 </style>

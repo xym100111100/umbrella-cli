@@ -1,7 +1,10 @@
+// 主框架页面
 <template>
     <div id="app">
         <div class="main-content">
-            <router-view />
+            <transition :name="transitionName">
+                <router-view />
+            </transition>
         </div>
         <div>
             <van-tabbar v-model="active">
@@ -24,48 +27,57 @@ export default {
     data() {
         return {
             active: 0,
+            transitionName: 'slide-left',
         };
+    },
+    // 接着在父组件内
+    // watch $route 决定使用哪种过渡
+    watch: {
+        $route(to, from) {
+            console.log('watchRoute', from, to);
+            this.transitionName = to.meta.level < from.meta.level ? 'slide-right' : 'slide-left';
+        },
     },
 };
 </script>
 
 <style lang="less">
 #app {
+    position: relative;
     background-color: #eee;
+    // 页面主内容
     .main-content {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        > * {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 50px;
+        }
     }
-    .van-tabbar--fixed {
-        left: unset;
-        bottom: unset;
-        position: unset;
-    }
-
-    // 底部标签栏
+    // 页面底部标签栏
     .van-tabbar {
         height: 50px;
         border-top: 1px solid #eee;
         .van-tabbar-item {
+            color: #aaa;
             margin-top: -5px;
             .van-icon {
                 font-size: 32px;
             }
         }
-    }
-
-    .van-submit-bar {
-        border-top: 1px red solid;
-        border-bottom: 1px #aaa solid;
-    }
-
-    .van-tabbar-item {
-        color: #aaa;
-    }
-
-    .van-tabbar-item--active {
-        color: #ca6924;
+        .van-tabbar-item--active {
+            color: #ca6924;
+        }
+        .van-submit-bar {
+            border-top: 1px red solid;
+            border-bottom: 1px #aaa solid;
+        }
     }
 }
 </style>
