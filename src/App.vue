@@ -24,8 +24,7 @@ export default {
 
 <style lang="less">
 html,
-body,
-body > * {
+body {
     height: 100%;
 }
 

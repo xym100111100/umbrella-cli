@@ -35,6 +35,20 @@ export default {
     watch: {
         $route(to, from) {
             console.log('watchRoute', from, to);
+            switch (to.name) {
+                case 'home':
+                    this.active = 0;
+                    break;
+                case 'category':
+                    this.active = 1;
+                    break;
+                case 'cart':
+                    this.active = 2;
+                    break;
+                case 'mine':
+                    this.active = 3;
+                    break;
+            }
             this.transitionName = to.meta.level < from.meta.level ? 'slide-right' : 'slide-left';
         },
     },
@@ -44,6 +58,7 @@ export default {
 <style lang="less">
 #app {
     position: relative;
+    height: 100%;
     background-color: #eee;
     // 页面主内容
     .main-content {

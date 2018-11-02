@@ -1,5 +1,22 @@
 import axios from 'axios';
 
+// response 拦截器
+// axios.interceptors.response.use(
+//     data => {
+//         return data;
+//     },
+//     err => {
+//         if (err.response.status == 504 || err.response.status == 404) {
+//             Message.error({ message: '服务器被吃了⊙﹏⊙∥' });
+//         } else if (err.response.status == 403) {
+//             Message.error({ message: '权限不足,请联系管理员!' });
+//         } else {
+//             Message.error({ message: '未知错误!' });
+//         }
+//         return Promise.resolve(err);
+//     }
+// );
+
 /**
  * 请求
  *
@@ -13,7 +30,7 @@ export function request(url, options) {
         // 如果传入data，请求参数放入body，如果传入params，请求参数加在url后面
         data: undefined, // 请求的参数数据
         params: undefined, // 请求的参数数据
-        // 事件
+        // ~~~~~事件~~~~~
         onSuccess: undefined, // 请求完成事件
         onFail: undefined, // 请求失败事件
         onFinish: undefined, // 请求完成事件
