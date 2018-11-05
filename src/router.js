@@ -21,7 +21,7 @@ const routes = [
                 path: '/home',
                 component: () => import('./view/Home'),
                 meta: {
-                    level: '00',
+                    index: 0,
                 },
             },
             {
@@ -29,7 +29,7 @@ const routes = [
                 path: '/category',
                 component: () => import('./view/Category'),
                 meta: {
-                    level: '01',
+                    index: 1,
                 },
             },
             {
@@ -37,7 +37,7 @@ const routes = [
                 path: '/cart',
                 component: () => import('./view/Cart'),
                 meta: {
-                    level: '02',
+                    index: 20,
                 },
             },
             {
@@ -45,7 +45,7 @@ const routes = [
                 path: '/mine',
                 component: () => import('./view/Mine'),
                 meta: {
-                    level: '03',
+                    index: 3,
                 },
             },
         ],
@@ -55,13 +55,15 @@ const routes = [
         path: '/goods',
         component: () => import('./page/Goods'),
         meta: {
-            level: '05',
+            index: 4,
         },
     },
     {
         path: '/login/fail',
         component: () => import('./page/LoginFail'),
-        level: '99',
+        meta: {
+            index: 99,
+        },
     },
 ];
 
@@ -84,17 +86,21 @@ function pushHistory() {
         url: '#/',
     };
     window.history.pushState(state, 'title', '#/');
-    window.isBack = false;
+    _isBackOrForward = false;
 }
 
-window.isBack = false;
-// 监听浏览器回退事件
+// 记录是否是浏览器回退/前进事件
+let _isBackOrForward = false;
+// 监听浏览器回退/前进事件
 window.onpopstate = e => {
     console.log('onpopstate', e);
 
-    window.isBack = true;
-    // 如果当前路由是首页，弹出退出确认框
-    console.log('targetRoute', e.target.location.hash);
+    _isBackOrForward = true;
+
+    const targetHash = e.target.location.hash;
+    console.log(window.currentRoute, targetHash);
+
+    // 如果当前路由是首页，弹出退出确认框(FIXME 目前分不出是forward还是back，在首页forward时也会弹出此退出框)
     if (window.currentRoute === 'home') {
         Dialog.confirm({
             title: '退出程序',
@@ -114,12 +120,11 @@ router.beforeEach((to, from, next) => {
     console.log('beforeEach', from, to);
 
     // 如果是首页回退事件，不要跳转到其它页
-    if (window.isBack && from.name === 'home') {
-        window.isBack = false;
+    if (_isBackOrForward && from.name === 'home') {
+        _isBackOrForward = false;
         next(false);
         return;
     }
-    window.isBack = false;
 
     const title = to.meta && to.meta.title;
     if (title) {
@@ -133,7 +138,7 @@ router.beforeEach((to, from, next) => {
  */
 router.afterEach((to, from) => {
     console.log('afterEach', from, to);
-
+    _isBackOrForward = false;
     window.currentRoute = to.name;
 });
 

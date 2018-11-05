@@ -19,6 +19,15 @@
 
 <script>
 import { Tabbar, TabbarItem } from 'vant';
+
+// 路由索引，据此来判断进入/离开动画是往左还是往右
+const routeIndex = {
+    home: 0,
+    category: 1,
+    cart: 2,
+    mine: 3,
+};
+
 export default {
     components: {
         [Tabbar.name]: Tabbar,
@@ -35,21 +44,10 @@ export default {
     watch: {
         $route(to, from) {
             console.log('watchRoute', from, to);
-            switch (to.name) {
-                case 'home':
-                    this.active = 0;
-                    break;
-                case 'category':
-                    this.active = 1;
-                    break;
-                case 'cart':
-                    this.active = 2;
-                    break;
-                case 'mine':
-                    this.active = 3;
-                    break;
-            }
-            this.transitionName = to.meta.level < from.meta.level ? 'slide-right' : 'slide-left';
+            const fromIndex = routeIndex[from.name];
+            const toIndex = routeIndex[to.name];
+            this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left';
+            this.active = toIndex;
         },
     },
 };

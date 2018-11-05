@@ -1,23 +1,23 @@
 <template>
-    <transition :name="transitionName">
-        <router-view />
-    </transition>
+    <!-- <transition :name="transitionName"> -->
+    <router-view />
+    <!-- </transition> -->
 </template>
 <script>
 export default {
     data() {
-        return {
-            transitionName: 'slide-left',
-        };
+        // return {
+        //     transitionName: 'slide-left',
+        // };
     },
     // 接着在父组件内
     // watch $route 决定使用哪种过渡
-    watch: {
-        $route(to, from) {
-            console.log('watchRoute', from, to);
-            this.transitionName = to.meta.level < from.meta.level ? 'slide-right' : 'slide-left';
-        },
-    },
+    // watch: {
+    //     $route(to, from) {
+    //         console.log('watchRoute', from, to);
+    //         // this.transitionName = to.meta.index < from.meta.index ? 'slide-right' : 'slide-left';
+    //     },
+    // },
 };
 </script>
 
