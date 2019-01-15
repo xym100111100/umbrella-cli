@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ * 目前用amfe-flexible包代替
+ */
 (function(d, w) {
     const doc = d.documentElement;
     function rem() {

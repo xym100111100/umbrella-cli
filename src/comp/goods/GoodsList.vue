@@ -1,18 +1,22 @@
 <template>
-    <div class="goods-list-wrap">
-        <!-- 商品列表 -->
-        <van-list v-model="loading" :finished="finished" @load="handleLoad">
-            <div v-for="item in list" :key="item.id">
-                <goods-card :item="item" />
-            </div>
-        </van-list>
-        <!-- 底线 -->
-        <div class="underline" v-if="finished">~~~~~~~~~&nbsp;&nbsp;&nbsp;我是有底线的&nbsp;&nbsp;&nbsp;~~~~~~~~~</div>
-    </div>
+  <!-- 商品列表 -->
+  <van-list
+    v-model="loading"
+    :finished="finished"
+    @load="handleLoad"
+    finished-text="没有更多了"
+  >
+    <van-cell
+      v-for="item in list"
+      :key="item.id"
+    >
+      <goods-card :item="item" />
+    </van-cell>
+  </van-list>
 </template>
 <script>
 import Vue from 'vue';
-import { List } from 'vant';
+import { List, Cell } from 'vant';
 import GoodsCard from './GoodsCard.vue';
 
 // 注册组件
@@ -23,6 +27,7 @@ export default {
     components: {
         [GoodsCard.name]: GoodsCard,
         [List.name]: List,
+        [Cell.name]: Cell,
     },
     props: {
         load: Function, // 加载的方法
@@ -66,34 +71,25 @@ export default {
 };
 </script>
 <style lang="less">
-.goods-list-wrap {
-    // 商品列表
-    > .van-list {
+// 商品列表
+.van-list {
+    background-color: #eee;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2px;
+    > * {
+        box-sizing: border-box;
+        width: 50%;
+        padding: 0 2px 4px;
         background-color: #eee;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0 2px 2px;
-        > * {
-            box-sizing: border-box;
-            width: 50%;
-            // border-top: 0;
-            // border-left: 2px solid #eee;
-            // border-right: 2px solid #eee;
-            // border-bottom: 2px solid #eee;
-            padding: 0 2px 4px;
-        }
-        // 正在加载
-        .van-list__loading {
-            width: 100%;
-        }
+    }
+    // 正在加载
+    > .van-list__loading {
+        width: 100%;
     }
     // 底线
-    > .underline {
-        // background-color: white;
-        color: #666;
-        font-size: 0.6em;
-        text-align: center;
-        padding: 10px;
+    > .van-list__finished-text {
+        width: 100%;
     }
 }
 </style>

@@ -1,58 +1,96 @@
 <template>
-    <div class="page-goods">
-        <div class="back" @click="handleBack">
-            <van-icon name="back" />
-        </div>
-
-        <van-swipe class="page-goods-swipe" :autoplay="5000">
-            <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
-                <img :src="thumb" >
-            </van-swipe-item>
-        </van-swipe>
-
-        <van-cell-group>
-            <van-cell>
-                <div class="page-goods-title">{{ goods.title }}</div>
-                <div class="page-goods-price">{{ formatPrice(goods.price) }}</div>
-            </van-cell>
-            <van-cell class="page-goods-express">
-                <van-col span="10">运费：{{ goods.express }}</van-col>
-                <van-col span="14">剩余：{{ goods.remain }}</van-col>
-            </van-cell>
-        </van-cell-group>
-
-        <van-cell-group class="page-goods-cell-group">
-            <van-cell value="进入店铺" icon="shop" is-link @click="sorry">
-                <template slot="title">
-                    <span class="van-cell-text">有赞的店</span>
-                    <van-tag class="page-goods-tag" type="danger">官方</van-tag>
-                </template>
-            </van-cell>
-            <van-cell title="线下门店" icon="location" is-link @click="sorry" />
-        </van-cell-group>
-
-        <van-cell-group class="page-goods-cell-group">
-            <van-cell title="查看商品详情" is-link @click="sorry" />
-        </van-cell-group>
-
-        <van-goods-action>
-            <van-goods-action-mini-btn icon="shareex" @click="sorry">
-                分享
-            </van-goods-action-mini-btn>
-            <van-goods-action-mini-btn icon="favorite" @click="sorry">
-                收藏
-            </van-goods-action-mini-btn>
-            <van-goods-action-mini-btn icon="cart" @click="onClickCart">
-                购物车
-            </van-goods-action-mini-btn>
-            <van-goods-action-big-btn @click="sorry">
-                加入购物车
-            </van-goods-action-big-btn>
-            <van-goods-action-big-btn primary @click="sorry">
-                立即购买
-            </van-goods-action-big-btn>
-        </van-goods-action>
+  <div class="page-goods">
+    <div
+      class="back"
+      @click="handleBack"
+    >
+      <van-icon name="back" />
     </div>
+
+    <van-swipe
+      class="page-goods-swipe"
+      :autoplay="5000"
+    >
+      <van-swipe-item
+        v-for="thumb in goods.thumb"
+        :key="thumb"
+      >
+        <img :src="thumb">
+      </van-swipe-item>
+    </van-swipe>
+
+    <van-cell-group>
+      <van-cell>
+        <div class="page-goods-title">{{ goods.title }}</div>
+        <div class="page-goods-price">{{ formatPrice(goods.price) }}</div>
+      </van-cell>
+      <van-cell class="page-goods-express">
+        <van-col span="10">运费：{{ goods.express }}</van-col>
+        <van-col span="14">剩余：{{ goods.remain }}</van-col>
+      </van-cell>
+    </van-cell-group>
+
+    <van-cell-group class="page-goods-cell-group">
+      <van-cell
+        value="进入店铺"
+        icon="shop"
+        is-link
+        @click="sorry"
+      >
+        <template slot="title">
+          <span class="van-cell-text">有赞的店</span>
+          <van-tag
+            class="page-goods-tag"
+            type="danger"
+          >官方</van-tag>
+        </template>
+      </van-cell>
+      <van-cell
+        title="线下门店"
+        icon="location"
+        is-link
+        @click="sorry"
+      />
+    </van-cell-group>
+
+    <van-cell-group class="page-goods-cell-group">
+      <van-cell
+        title="查看商品详情"
+        is-link
+        @click="sorry"
+      />
+    </van-cell-group>
+
+    <van-goods-action>
+      <van-goods-action-mini-btn
+        icon="shareex"
+        @click="sorry"
+      >
+        分享
+      </van-goods-action-mini-btn>
+      <van-goods-action-mini-btn
+        icon="favorite"
+        @click="sorry"
+      >
+        收藏
+      </van-goods-action-mini-btn>
+      <van-goods-action-mini-btn
+        icon="cart"
+        @click="onClickCart"
+      >
+        购物车
+      </van-goods-action-mini-btn>
+      <van-goods-action-big-btn @click="sorry">
+        加入购物车
+      </van-goods-action-big-btn>
+      <van-goods-action-big-btn
+        primary
+        @click="sorry"
+      >
+        立即购买
+      </van-goods-action-big-btn>
+    </van-goods-action>
+  </div>
 </template>
 
 <script>
@@ -83,7 +121,6 @@ export default {
         [GoodsActionBigBtn.name]: GoodsActionBigBtn,
         [GoodsActionMiniBtn.name]: GoodsActionMiniBtn,
     },
-
     data() {
         return {
             goods: {
@@ -98,7 +135,6 @@ export default {
             },
         };
     },
-
     methods: {
         // 回退
         handleBack() {

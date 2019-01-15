@@ -1,14 +1,14 @@
-import './common/rem';
+import 'amfe-flexible';
 import Vue from 'vue';
+import Navigation from 'vue-navigation';
 import App from './App.vue';
 import { router } from './router';
-
 // 导入自定义字体图标
 import './assets/iconfont/custom.less';
-import './assets/css/custom.less';
 
+Vue.use(Navigation, { router });
 new Vue({
-    router,
     el: '#app',
+    router,
     render: h => h(App),
 });
