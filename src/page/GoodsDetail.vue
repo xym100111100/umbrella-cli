@@ -1,5 +1,6 @@
 <template>
-  <div class="page-goods">
+  <!-- 商品详情 -->
+  <div class="page-goods-page">
     <div
       class="back"
       @click="handleBack"
@@ -8,7 +9,7 @@
     </div>
 
     <van-swipe
-      class="page-goods-swipe"
+      class="page-goods-page-swipe"
       :autoplay="5000"
     >
       <van-swipe-item
@@ -21,16 +22,16 @@
 
     <van-cell-group>
       <van-cell>
-        <div class="page-goods-title">{{ goods.title }}</div>
-        <div class="page-goods-price">{{ formatPrice(goods.price) }}</div>
+        <div class="page-goods-page-title">{{ goods.title }}</div>
+        <div class="page-goods-page-price">{{ formatPrice(goods.price) }}</div>
       </van-cell>
-      <van-cell class="page-goods-express">
+      <van-cell class="page-goods-page-express">
         <van-col span="10">运费：{{ goods.express }}</van-col>
         <van-col span="14">剩余：{{ goods.remain }}</van-col>
       </van-cell>
     </van-cell-group>
 
-    <van-cell-group class="page-goods-cell-group">
+    <van-cell-group class="page-goods-page-cell-group">
       <van-cell
         value="进入店铺"
         icon="shop"
@@ -40,7 +41,7 @@
         <template slot="title">
           <span class="van-cell-text">有赞的店</span>
           <van-tag
-            class="page-goods-tag"
+            class="page-goods-page-tag"
             type="danger"
           >官方</van-tag>
         </template>
@@ -53,7 +54,7 @@
       />
     </van-cell-group>
 
-    <van-cell-group class="page-goods-cell-group">
+    <van-cell-group class="page-goods-page-cell-group">
       <van-cell
         title="查看商品详情"
         is-link
@@ -156,9 +157,10 @@ export default {
 </script>
 
 <style lang="less">
-.page-goods {
-    padding-bottom: 50px;
+.page-goods-page {
+    // padding-bottom: 50px;
     // position: relative;
+    height: 100%;
 
     // 回退
     .back {

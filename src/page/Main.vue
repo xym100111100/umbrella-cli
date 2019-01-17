@@ -1,49 +1,52 @@
-// 主框架页面
 <template>
-  <div id="app">
-    <!-- <div class="main-content"> -->
-    <transition
-      :name="transitionName"
-      @after-leave="afterLeave"
-    >
-      <router-view />
-    </transition>
-    <!-- </div> -->
+  <!-- 主框架页面 -->
+  <div id="main-page">
+    <router-view class="main-content" />
     <van-tabbar v-model="active">
       <van-tabbar-item
         icon="tabbar-home"
         to="home"
-      >首页</van-tabbar-item>
+      >
+        首页
+      </van-tabbar-item>
       <van-tabbar-item
         icon="tabbar-find"
-        to="category"
-      >查找</van-tabbar-item>
+        to="find"
+      >
+        查找
+      </van-tabbar-item>
       <van-tabbar-item
         icon="tabbar-msg"
-        to="cart"
-      >消息</van-tabbar-item>
+        to="msg"
+      >
+        消息
+      </van-tabbar-item>
       <van-tabbar-item
         icon="tabbar-cart"
         to="cart"
-      >购物车</van-tabbar-item>
+      >
+        购物车
+      </van-tabbar-item>
       <van-tabbar-item
         icon="tabbar-mine"
         to="mine"
-      >我的</van-tabbar-item>
+      >
+        我的
+      </van-tabbar-item>
     </van-tabbar>
-    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import { Tabbar, TabbarItem } from 'vant';
 
-// 路由索引，据此来判断进入/离开动画是往左还是往右
+// 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
     home: 0,
-    category: 1,
-    cart: 2,
-    mine: 3,
+    find: 1,
+    msg: 2,
+    cart: 3,
+    mine: 4,
 };
 
 export default {
@@ -54,37 +57,16 @@ export default {
     data() {
         return {
             active: 0,
-            transitionName: 'slide-left',
         };
     },
-    methods: {
-        afterLeave() {
-            this.$root.$emit('triggerScroll');
-        },
-        //     /**
-        //      * 滚动时保存滚动条位置
-        //      */
-        //     scroll() {
-        //         console.log(this.$refs.content.scrollTop);
-        //         this.scrollTop = this.$refs.content.scrollTop;
-        //     },
-    },
-    // /**
-    //  * 回退时回归保存的滚动条位置
-    //  */
-    // activated() {
-    //     this.$refs.content.scrollTop = this.scrollTop;
-    // },
-    // 接着在父组件内
-    // watch $route 决定使用哪种过渡
-    watch: {
-        // $route(to, from) {
-        //     console.log('watchRoute', from, to);
-        //     const fromIndex = routeIndex[from.name];
-        //     const toIndex = routeIndex[to.name];
-        //     this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left';
-        //     this.active = toIndex;
-        // },
+    beforeRouteUpdate(to, from, next) {
+        console.log('beforeRouteUpdate\r\nfrom', from, '\r\nto', to);
+
+        // 设置激活图标为目标路由的图标，否则浏览器回退时由于缓存的作用，不会切换激活图标
+        const toIndex = routeIndex[to.name];
+        this.active = toIndex;
+
+        next();
     },
 };
 </script>
@@ -93,7 +75,7 @@ export default {
 // 底部标签栏高度
 @bottom-height: 1.5rem;
 
-#app {
+#main-page {
     position: absolute;
     left: 0;
     right: 0;
@@ -111,29 +93,10 @@ export default {
         top: 0;
         bottom: 0;
         bottom: @bottom-height;
-        // flex-grow: 1;
-        // display: flex;
-        // position: absolute;
-        // left: 0;
-        // top: 0;
-        // right: 0;
-        // bottom: 0;
-        // > * {
-        //     position: absolute;
-        //     left: 0;
-        //     top: 0;
-        //     right: 0;
-        //     bottom: 1.5rem;
-        // }
     }
     // 页面底部标签栏
     > .van-tabbar {
-        // position: unset;
-        // width: unset;
-        // bottom: unset;
-        // left: unset;
         height: @bottom-height;
-        // flex-grow: 0;
         border-top: 1px solid #ddd;
         background-color: white;
         .van-tabbar-item {

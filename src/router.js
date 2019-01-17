@@ -21,13 +21,21 @@ const routes = [
                 path: '/home',
                 component: () => import('./view/Home'),
                 meta: {
-                    index: 0,
+                    index: 1,
                 },
             },
             {
-                name: 'category',
-                path: '/category',
-                component: () => import('./view/Category'),
+                name: 'find',
+                path: '/find',
+                component: () => import('./view/Find'),
+                meta: {
+                    index: 1,
+                },
+            },
+            {
+                name: 'msg',
+                path: '/msg',
+                component: () => import('./view/Msg'),
                 meta: {
                     index: 1,
                 },
@@ -37,7 +45,7 @@ const routes = [
                 path: '/cart',
                 component: () => import('./view/Cart'),
                 meta: {
-                    index: 20,
+                    index: 30,
                 },
             },
             {
@@ -45,21 +53,22 @@ const routes = [
                 path: '/mine',
                 component: () => import('./view/Mine'),
                 meta: {
-                    index: 3,
+                    index: 1,
                 },
             },
         ],
     },
     {
-        name: 'goods',
-        path: '/goods',
-        component: () => import('./page/Goods'),
+        name: 'goods-detail',
+        path: '/goods-detail',
+        component: () => import('./page/GoodsDetail'),
         meta: {
-            index: 4,
+            index: 20,
         },
     },
     {
-        path: '/login/fail',
+        name: 'login-fail',
+        path: '/login-fail',
         component: () => import('./page/LoginFail'),
         meta: {
             index: 99,

@@ -1,5 +1,5 @@
 <template>
-  <div class="view-home main-content">
+  <div class="home-view">
     <!-- <div>
       <van-search placeholder="请输入搜索关键词" />
     </div> -->
@@ -9,14 +9,20 @@
     >
       <save-position>
         <!-- <div>
-                <van-swipe :autoplay="10000">
-                    <van-swipe-item v-for="(image, index) in images" :key="index">
-                        <div class="swipe-image-wrap">
-                            <img class="swipe-image" v-lazy="image" />
-                        </div>
-                    </van-swipe-item>
-                </van-swipe>
-            </div> -->
+        <van-swipe :autoplay="10000">
+          <van-swipe-item
+            v-for="(image, index) in images"
+            :key="index"
+          >
+            <div class="swipe-image-wrap">
+              <img
+                class="swipe-image"
+                v-lazy="image"
+              />
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+      </div> -->
         <van-row class="grid">
           <van-col span="6">
             <van-icon
@@ -119,7 +125,7 @@ export default {
 </script>
 
 <style lang="less">
-.view-home {
+.home-view {
     // // 搜索
     // .van-search {
     //     padding: 4px 8px;
@@ -130,6 +136,7 @@ export default {
     > .van-pull-refresh {
         height: 100%;
         > .van-pull-refresh__track {
+            // overflow: auto;
             height: 100%;
             > .save-position {
                 // position: absolute;
@@ -165,7 +172,6 @@ export default {
                 > .full-back-banner {
                     width: 100%;
                 }
-
             }
         }
     }

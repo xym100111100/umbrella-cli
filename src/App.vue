@@ -1,49 +1,30 @@
 <template>
-  <navigation>
-    <!-- <router-view /> -->
-    <!-- <div> -->
-    <!-- <keep-alive> -->
-    <router-view />
-    <!-- <router-view v-if="$route.meta.isKeepAlive" /> -->
-    <!-- </keep-alive> -->
-    <!-- <router-view v-if="!$route.meta.isKeepAlive" /> -->
-    <!-- </div> -->
-  </navigation>
+  <transition :name="transitionName">
+    <!-- <transition name="fade" mode="out-in"> -->
+    <!-- @after-leave="afterLeave" -->
+    <keep-alive>
+      <router-view class="transition-view" />
+    </keep-alive>
+  </transition>
 </template>
+
 <script>
-import { Dialog } from 'vant';
-import * as wx from 'weixin-js-sdk';
 export default {
-    // data() {
-    // return {
-    //     transitionName: 'slide-left',
-    // };
-    // },
+    data() {
+        return {
+            transitionName: 'slide-left',
+        };
+    },
     // 接着在父组件内
     // watch $route 决定使用哪种过渡
-    // watch: {
-    //     $route(to, from) {
-    //         console.log('watchRoute', from, to);
-    //         // this.transitionName = to.meta.index < from.meta.index ? 'slide-right' : 'slide-left';
-    //     },
-    // },
-    created() {
-        // bind event
-        this.$navigation.on('forward', (to, from) => {
-            console.log('forward:\r\n to', to, '\r\nfrom', from);
-        });
-        this.$navigation.on('back', (to, from) => {
-            console.log('back:\r\n to', to, '\r\nfrom', from);
-        });
-        this.$navigation.on('replace', (to, from) => {
-            console.log('replace:\r\n to', to, '\r\nfrom', from);
-        });
-        this.$navigation.on('refresh', (to, from) => {
-            console.log('refresh:\r\n to', to, '\r\nfrom', from);
-        });
-        this.$navigation.on('reset:', (to, from) => {
-            console.log('reset:\r\n to', to, '\r\nfrom', from);
-        });
+    watch: {
+        $route(to, from) {
+            console.log('watchRoute', from, to);
+            if (to.meta.index < from.meta.index) this.transitionName = 'slide-right';
+            else if (to.meta.index > from.meta.index) this.transitionName = 'slide-left';
+            else this.transitionName = undefined;
+            console.log(this.transitionName);
+        },
     },
 };
 </script>

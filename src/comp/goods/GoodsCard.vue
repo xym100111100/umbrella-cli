@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         handleGo: function() {
-            this.$router.push('/goods');
+            this.$router.push('/goods-detail');
         },
     },
 };

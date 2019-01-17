@@ -1,5 +1,5 @@
 <template>
-  <div class="view-cart">
+  <div class="cart-view">
     <van-nav-bar
       left-arrow
       title="购物车"
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="less">
-.view-cart {
+.cart-view {
     display: flex;
     flex-direction: column;
     // height: 100%-@tabbar-height;

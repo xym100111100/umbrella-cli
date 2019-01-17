@@ -25,7 +25,7 @@ Vue.component('goods-list');
 export default {
     name: 'goods-list',
     components: {
-        [GoodsCard.name]: GoodsCard,
+        GoodsCard,
         [List.name]: List,
         [Cell.name]: Cell,
     },
