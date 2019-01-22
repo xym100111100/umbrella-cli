@@ -82,7 +82,8 @@ export default {
     top: 0;
     bottom: 0;
     // height: 100%;
-    background-color: #eee;
+    background-color: #0f0;
+
     // display: flex;
     // flex-direction: column;
     // 页面主内容

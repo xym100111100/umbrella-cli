@@ -2,6 +2,7 @@
   <!-- 商品列表 -->
   <van-list
     v-model="loading"
+    :class="{'column-1':columnCount==1,'column-2':columnCount==2}"
     :finished="finished"
     @load="handleLoad"
     finished-text="没有更多了"
@@ -10,7 +11,10 @@
       v-for="item in list"
       :key="item.id"
     >
-      <goods-card :item="item" />
+      <goods-card
+        :item="item"
+        :columnCount="columnCount"
+      />
     </van-cell>
   </van-list>
 </template>
@@ -32,6 +36,7 @@ export default {
     props: {
         load: Function, // 加载的方法
         loadParams: Object, // 加载时传入的参数
+        columnCount: String, // 列数，目前只支持1和2
     },
     data() {
         return {
@@ -73,15 +78,12 @@ export default {
 <style lang="less">
 // 商品列表
 .van-list {
-    background-color: #eee;
     display: flex;
     flex-wrap: wrap;
-    padding: 2px;
     > * {
-        box-sizing: border-box;
-        width: 50%;
+        // box-sizing: border-box;
         padding: 0 2px 4px;
-        background-color: #eee;
+        background-color: unset;
     }
     // 正在加载
     > .van-list__loading {
@@ -90,6 +92,27 @@ export default {
     // 底线
     > .van-list__finished-text {
         width: 100%;
+    }
+    .van-cell:not(:last-child)::after {
+        left: unset; // 去掉从第二行开始的一条线
+    }
+}
+
+// 一列的样式
+.column-1 {
+    > * {
+        width: 100%;
+        // padding: 0 0.15rem 0.2rem;
+        padding: 0.2rem 0.15rem 0;
+    }
+}
+// 两列的样式
+.column-2 {
+    padding: 0 0.1rem;
+    > * {
+        width: 50%;
+        // padding: 0 0.08rem 0.24rem;
+        padding: 0.24rem 0.08rem 0;
     }
 }
 </style>

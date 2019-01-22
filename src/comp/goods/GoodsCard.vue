@@ -3,69 +3,20 @@
     class="goods-card"
     @click="handleGo"
   >
-    <div
-      :class="{'goods-img-wrap':true,'affix-wrap':item.subjectType!==0}"
-      :data-content="item.subjectType===1?'拼全返':''"
-    >
-      <!-- <img class="goods-img" mode="widthFix" :src="item.picPath" /> -->
-      <img
-        class="goods-img"
-        :src="item.picPath"
-      />
-    </div>
-    <div class="goods-title">
-      <van-tag
-        v-if="item.cashbackAmount!==0&&item.subjectType!==1"
-        type="primary"
-        mark
-        plain
-      >返现</van-tag>
-      <van-tag
-        v-if="item.subjectType===1"
-        type="success"
-        mark
-      >拼全返</van-tag>
-      {{item.onlineTitle}}
-      <span class="goods-title-ellipsis">...</span>
-    </div>
-    <div class="goods-bottom">
-      <!-- 普通商品价格 -->
-      <div
-        class="goods-price"
-        v-if="item.subjectType===0"
-      >
-        <div class="goods-price-rmb">¥</div>
-        <div class="goods-sale-price">{{item.salePrice}}&nbsp;</div>
-        <div class="goods-cashback">返</div>
-        <div class="goods-cashback-price">{{item.cashbackAmount}}</div>
-        <div class="space"></div>
-        <van-icon
-          name="goodscard-cart"
-          color="#00ff00"
-          size=".9rem"
-        />
-      </div>
-      <!-- 拼全返商品价格 -->
-      <div
-        class="goods-price-fullback"
-        v-if="item.subjectType===1"
-      >
-        <div class="goods-fullback-price">0</div>
-        <div class="goods-price-unit">元</div>
-        <div class="goods-sale-price">¥{{item.salePrice}}</div>
-        <div class="space"></div>
-        <van-icon
-          name="goodscard-cart"
-          color="#00ff00"
-          size=".9rem"
-        />
-      </div>
-    </div>
+    <goods-card-1
+      v-if="columnCount==1"
+      :item="item"
+    />
+    <goods-card-2
+      v-else-if="columnCount==2"
+      :item="item"
+    />
   </div>
 </template>
 <script>
 import Vue from 'vue';
-import { Tag, Icon } from 'vant';
+import GoodsCard1 from './GoodsCard1.vue';
+import GoodsCard2 from './GoodsCard2.vue';
 
 // 注册组件
 Vue.component('goods-card');
@@ -73,11 +24,12 @@ Vue.component('goods-card');
 export default {
     name: 'goods-card',
     components: {
-        [Tag.name]: Tag,
-        [Icon.name]: Icon,
+        GoodsCard1,
+        GoodsCard2,
     },
     props: {
-        item: Object,
+        item: Object, // 当前商品的信息
+        columnCount: String, // 列数，目前只支持1和2
     },
     methods: {
         handleGo: function() {
@@ -86,139 +38,3 @@ export default {
     },
 };
 </script>
-<style lang="less">
-// 角标的容器
-.affix-wrap {
-    &:before {
-        content: attr(data-content);
-        position: absolute;
-        width: 100%;
-        line-height: .7rem;
-        height: .7rem;
-        background: #fe3000;
-        top: 6%;
-        left: 37%;
-        // z-index: 999;
-        font-size: .45rem;
-        color: white;
-        text-align: center;
-        transform: rotate(45deg);
-    }
-}
-
-// 商品卡
-.goods-card {
-    background-color: white;
-
-    // 拼全返的斜角标
-    .goods-img-wrap {
-        position: relative;
-        overflow: hidden;
-        // 商品图片
-        .goods-img {
-            // width: 100%;
-            width: 50vw;
-            height: 50vw;
-        }
-    }
-    // 商品标题
-    .goods-title {
-        position: relative;
-        font-size: .4rem;
-        line-height: .65rem;
-        padding: 1px 2px 0 6px;
-        height: 1.2rem;
-        overflow: hidden;
-        // 标记
-        .van-tag {
-            font-size: .3rem;
-            padding: 4px 8px 2px 5px;
-        }
-        // 省略号
-        .goods-title-ellipsis {
-            position: absolute;
-            bottom: 0;
-            right: 6px;
-            padding: 0 2px 4px;
-            background-color: white;
-        }
-    }
-    // 商品价格
-    .goods-bottom {
-        display: flex;
-        padding: 0 2px 6px 6px;
-        // 普通商品价格
-        .goods-price {
-            flex-grow: 1;
-            display: flex;
-            align-items: flex-end;
-            padding: 8px 4px 1px;
-            .goods-price-rmb {
-                flex-grow: 0;
-                color: red;
-                font-size: .5rem;
-                padding-right: 2px;
-                margin-bottom: -1px;
-            }
-            .goods-sale-price {
-                flex-grow: 0;
-                color: red;
-                font-size: .5rem;
-                margin-bottom: -1px;
-            }
-            .goods-cashback {
-                flex-grow: 0;
-                color: red;
-                color: #aaa;
-                font-size: .35rem;
-                padding-right: 4px;
-                margin-bottom: 2px;
-            }
-            .goods-cashback-price {
-                flex-grow: 0;
-                color: #aaa;
-                color: red;
-                font-size: .35rem;
-                margin-bottom: 2px;
-            }
-            .space {
-                flex-grow: 1;
-            }
-        }
-        // 拼全返商品价格
-        .goods-price-fullback {
-            flex-grow: 1;
-            display: flex;
-            align-items: flex-end;
-            padding: 8px 4px 1px;
-            .space {
-                flex-grow: 1;
-            }
-            .goods-sale-price {
-                flex-grow: 0;
-                color: #aaa;
-                font-size: .4rem;
-                padding-left: 4px;
-                text-decoration: line-through;
-            }
-            .goods-fullback-price {
-                flex-grow: 0;
-                color: red;
-                font-size: .6rem;
-                margin-bottom: -3px;
-            }
-            .goods-price-unit {
-                flex-grow: 0;
-                color: red;
-                font-size: .5rem;
-                padding-right: 3px;
-                margin-bottom: -1px;
-            }
-        }
-        .van-icon-goodscard-cart {
-            padding: 3px 0 0;
-            margin-right: -3px;
-        }
-    }
-}
-</style>
