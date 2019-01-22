@@ -35,12 +35,8 @@
         <img
           class="full-back-banner"
           :src="fullBackBannerImg"
-          @touchstart="handelGridTouchStart"
         />
-        <div
-          class="grid"
-          @touchstart="handelGridTouchStart"
-        >
+        <div class="grid">
           <van-row>
             <van-col span="6">
               <van-icon
@@ -151,12 +147,6 @@ export default {
             this.isDisabledPullRefresh = scrollTop > 0;
             // 是否显示回到顶部
             this.isShowTop = scrollTop > 900;
-        },
-        /**
-         * 处理触摸n宫格的开始事件
-         */
-        handelGridTouchStart() {
-            this.isDisabledPullRefresh = false;
         },
     },
 };
