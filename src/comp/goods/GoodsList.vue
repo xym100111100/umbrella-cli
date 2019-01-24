@@ -88,10 +88,14 @@ export default {
     // 正在加载
     > .van-list__loading {
         width: 100%;
+        text-align: right;
+        padding-right: 1rem;
     }
     // 底线
     > .van-list__finished-text {
         width: 100%;
+        text-align: right;
+        padding-right: 1rem;
     }
     .van-cell:not(:last-child)::after {
         left: unset; // 去掉从第二行开始的一条线

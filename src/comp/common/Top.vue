@@ -26,29 +26,35 @@ export default {
 };
 </script>
 <style lang="less" >
+@width: 1.1rem;
+@height: @width;
+
 // 过滤动画
+.transition-view {
+    transition: all 0.5s cubic-bezier(0.49, 0.01, 0.33, 1);
+}
 .slide-enter-active,
 .slide-leave-active {
-    transform: translate(-100%, 0);
+    transform: translate(0, -150%);
 }
 
 .slide-enter,
 .slide-leave-to {
     opacity: 0;
-    transform: translate(100%, 0);
+    transform: translate(0, 150%);
 }
 
 .top {
     opacity: 0.7;
-    height: 1.1rem;
-    width: 1.1rem;
+    width: @width;
+    height: @height;
     border-radius: 50%;
     // border-radius: 0.1rem;
     background-color: black;
     border: 2px solid #ddd;
     position: fixed;
-    bottom: 13%;
-    right: 4%;
+    bottom: 10%;
+    left: calc(~'50% - @{width}/2');
     z-index: 999;
     text-align: center;
     color: white;

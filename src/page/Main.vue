@@ -100,6 +100,7 @@ export default {
         height: @bottom-height;
         border-top: 1px solid #ddd;
         background-color: white;
+        z-index: 9999 !important;
         .van-tabbar-item {
             color: #666;
             margin-top: -6px;

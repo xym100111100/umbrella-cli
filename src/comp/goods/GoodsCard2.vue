@@ -161,7 +161,6 @@ export default {
             }
             .goods-cashback {
                 flex-grow: 0;
-                color: red;
                 color: #aaa;
                 font-size: 0.35rem;
                 padding-right: 4px;

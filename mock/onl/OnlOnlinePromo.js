@@ -20,6 +20,7 @@ const template = {
             'cashbackAmount|0-10.2': 1,
             'subjectType|1': [0, 1],
             onlineTitle: '@ctitle(10,50) 商品',
+            onlineDetail: '@ctitle(10,20)',
         },
     ],
 };
