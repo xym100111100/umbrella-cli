@@ -23,21 +23,16 @@ export default {
             if (to.meta.index < from.meta.index) this.transitionName = 'slide-right';
             else if (to.meta.index > from.meta.index) this.transitionName = 'slide-left';
             else this.transitionName = undefined;
-            console.log(this.transitionName);
+            console.log('transitionName:', this.transitionName);
         },
     },
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 * {
     margin: 0;
     padding: 0;
-}
-
-html,
-body {
-    height: 100%;
 }
 
 // 不显示滚动条

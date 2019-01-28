@@ -72,8 +72,7 @@ export default {
 </script>
 
 <style lang="less">
-// 底部标签栏高度
-@bottom-height: 1.5rem;
+@import '../assets/css/custom.less';
 
 #main-page {
     position: absolute;

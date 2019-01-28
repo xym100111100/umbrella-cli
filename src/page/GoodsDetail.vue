@@ -156,7 +156,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .page-goods-page {
     // padding-bottom: 50px;
     // position: relative;
@@ -165,27 +165,27 @@ export default {
     // 回退
     .back {
         position: fixed;
-        top: 0.5em;
-        left: 0.5em;
-        height: 1.6em;
-        width: 1.6em;
+        top: 0.3rem;
+        left: 0.2rem;
+        height: 1rem;
+        width: 1rem;
+        border-radius: 50%;
         z-index: 9;
-        border-radius: 0.8em;
         color: white;
         background-color: black;
         opacity: 0.4;
 
         .van-icon {
-            padding: 2px;
-            font-size: 1.2em;
+            // position: relative;
+            // padding: 2px;
+            font-size: 0.8rem;
+            top: -0.1rem;
         }
     }
 
     &-swipe {
         img {
-            width: 7.5rem;
-            height: 7.5rem;
-            display: block;
+            width: 100%;
         }
     }
 

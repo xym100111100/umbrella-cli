@@ -74,6 +74,11 @@ const routes = [
             index: 99,
         },
     },
+    {
+        name: 'test1',
+        path: '/test1',
+        component: () => import('./page/test/Test1'),
+    },
 ];
 
 const router = new Router({

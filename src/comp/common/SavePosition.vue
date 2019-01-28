@@ -3,7 +3,6 @@
   <div
     class="save-position"
     @scroll="handelScroll"
-    ref="content"
   >
     <slot></slot>
   </div>
@@ -21,11 +20,11 @@ export default {
         /**
          * 处理本区块滚动事件
          */
-        handelScroll() {
+        handelScroll(e) {
             // 记录滚动位置
-            this.scrollTop = this.$refs.content.scrollTop;
+            this.scrollTop = this.$el.scrollTop;
             // 触发本组件自定义的滚动事件，将滚动位置传出去(目前自定义该事件是为了在PullRefresh中使用，让向上滚动与下拉刷新不要产生冲突)
-            this.$emit('scroll', this.scrollTop);
+            this.$emit('scroll', e);
         },
         /**
          * 滚动到顶部
@@ -38,10 +37,10 @@ export default {
             let b = this.scrollTop;
             let d = 500;
             let c = b;
-            let content = this.$refs.content;
+            const el = this.$el;
             let timer = requestAnimationFrame(function func() {
                 var t = d - Math.max(0, startTime - +new Date() + d);
-                content.scrollTop = (t * -c) / d + b;
+                el.scrollTop = (t * -c) / d + b;
                 timer = requestAnimationFrame(func);
                 if (t == d) {
                     cancelAnimationFrame(timer);
@@ -50,7 +49,12 @@ export default {
         },
     },
     activated() {
-        this.$refs.content.scrollTop = this.scrollTop;
+        this.$el.scrollTop = this.scrollTop;
     },
 };
 </script>
+<style lang="less" scoped>
+.save-position {
+    will-change: scroll-position;
+}
+</style>

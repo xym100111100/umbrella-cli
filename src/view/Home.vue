@@ -32,48 +32,62 @@
         </van-swipe>
       </div> -->
         <!-- 拼全返免单流程图片 -->
+        <!-- <div > -->
         <img
-          class="full-back-banner"
           :src="fullBackBannerImg"
+          class="full-back-banner"
+          name="aaa"
         />
-        <div class="grid">
-          <van-row>
-            <van-col span="6">
-              <van-icon
-                name="fullback"
-                color="#00ff00"
-              />
-              <div class="label">拼全返</div>
-            </van-col>
-            <van-col span="6">
-              <van-icon
-                name="order"
-                color="#6495ed"
-              />
-              <div class="label">订单</div>
-            </van-col>
-            <van-col span="6">
-              <van-icon
-                name="favoriteex"
-                color="#ffc0cb"
-              />
-              <div class="label">收藏</div>
-            </van-col>
-            <van-col span="6">
-              <van-icon
-                name="wallet"
-                color="red"
-              />
-              <div class="label">钱包</div>
-            </van-col>
-          </van-row>
-        </div>
+        <!-- </div> -->
+
+        <!-- n宫格 -->
+        <sticky>
+          <div
+            class="grid"
+            ref="grid"
+          >
+            <!-- :style="stickyStyle" -->
+            <van-row>
+              <van-col span="6">
+                <van-icon
+                  name="fullback"
+                  color="#00ff00"
+                />
+                <div class="label">拼全返</div>
+              </van-col>
+              <van-col span="6">
+                <van-icon
+                  name="order"
+                  color="#6495ed"
+                />
+                <div class="label">订单</div>
+              </van-col>
+              <van-col span="6">
+                <van-icon
+                  name="favoriteex"
+                  color="#ffc0cb"
+                />
+                <div class="label">收藏</div>
+              </van-col>
+              <van-col span="6">
+                <van-icon
+                  name="wallet"
+                  color="red"
+                />
+                <div class="label">钱包</div>
+              </van-col>
+            </van-row>
+          </div>
+        </sticky>
+
         <goods-list
           v-if="!refreshing"
           columnCount="1"
           :load="listOnlOnlinePromo"
           :load-params="{ promotionType: 1 }"
         />
+        <!-- <div style="height:99px"></div>
+        <div style="height:9999px"></div> -->
       </save-position>
     </van-pull-refresh>
   </div>
@@ -81,8 +95,10 @@
 
 <script>
 import Vue from 'vue';
-import { PullRefresh, Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell } from 'vant';
+import { PullRefresh, Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell, Toast } from 'vant';
+import { isSupportSticky } from '../util/SysUtils.js';
 import SavePosition from '../comp/common/SavePosition.vue';
+import Sticky from '../comp/common/Sticky.vue';
 import Top from '../comp/common/Top.vue';
 import GoodsList from '../comp/goods/GoodsList.vue';
 import { list as listOnlOnlinePromo } from '../svc/onl/OnlOnlinePromo';
@@ -94,6 +110,7 @@ export default {
     components: {
         Top,
         SavePosition,
+        Sticky,
         [GoodsList.name]: GoodsList,
         [PullRefresh.name]: PullRefresh,
         [Search.name]: Search,
@@ -108,6 +125,8 @@ export default {
     },
     data() {
         return {
+            // isFixSticky: false, // 部分安卓手机使用sticky样式会坐标会偏上
+            // stickyStyle: undefined, // 部分安卓手机使用sticky样式会坐标会偏上，修正样式
             isShowTop: false, // 是否显示回到顶部
             isDisabledPullRefresh: false, // 是否禁止下拉刷新(在滚动条位置>0时禁止，避免向上滚时与下拉刷新冲突)
             refreshing: false, // 刷新状态，刷新状态为true时刷新推荐列表
@@ -118,6 +137,13 @@ export default {
             fullBackBannerImg: 'img/FullBackBanner.png',
         };
     },
+    mounted() {
+        // if (isSupportSticky(this.$refs.grid)) {
+        //     Toast('支持Sticky');
+        // } else {
+        //     Toast('不支持Sticky');
+        // }
+    },
     methods: {
         /**
          * 加载推荐列表的方法
@@ -127,8 +153,6 @@ export default {
          * 回到顶部
          */
         goTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
             this.$refs.savePosition.goTop();
         },
         /**
@@ -142,7 +166,8 @@ export default {
         /**
          * 处理页面的滚动事件
          */
-        handelScroll(scrollTop) {
+        handelScroll(e) {
+            const scrollTop = e.target.scrollTop;
             // 与PullRefresh的下拉刷新不产生冲突
             this.isDisabledPullRefresh = scrollTop > 0;
             // 是否显示回到顶部
@@ -153,6 +178,8 @@ export default {
 </script>
 
 <style lang="less">
+@import '../assets/css/custom.less';
+
 .home-view {
     // // 搜索
     // .van-search {
@@ -162,13 +189,15 @@ export default {
     //     }
     // }
     > .van-pull-refresh {
-        height: 100%;
+        // height: 100%;
         > .van-pull-refresh__track {
-            // overflow: auto;
-            height: 100%;
+            // height: 100%;
             > .save-position {
-                height: 100%;
+                position: block;
                 overflow: auto;
+                -webkit-overflow-scrolling: touch;  // 解决iOS卡的问题
+                height: calc(~'100vh - @{bottom-height}');
+                // display: block;
                 // // 轮播
                 // .swipe-image-wrap {
                 //     height: 150px;
@@ -180,16 +209,13 @@ export default {
 
                 // 拼全返免单流程图片
                 > .full-back-banner {
+                    height: 2.6rem;
                     width: 100%;
                     display: block; // 解决div里面img图片下方有空白的问题
                 }
 
                 // n宫格
-                > .grid {
-                    position: sticky;
-                    left: 0;
-                    top: -0.03rem; // 避免在chrome的iphone 6/7/8 plus中看到顶部还漏了一条缝
-                    z-index: 999;
+                .grid {
                     border-bottom: 1px solid #ddd;
                     text-align: center;
                     // margin-top: -0.3rem;

@@ -6,7 +6,6 @@
       @click="handelClick"
     >
       <van-icon name="top" />
-      <!-- <div class="title">顶部</div> -->
     </div>
   </transition>
 </template>
@@ -20,6 +19,8 @@ export default {
     },
     methods: {
         handelClick() {
+            // document.body.scrollTop = 0;
+            // document.documentElement.scrollTop = 0;
             this.$emit('click');
         },
     },
@@ -65,14 +66,6 @@ export default {
         top: -0.26rem;
         // left: 0.01rem;
     }
-    // .title {
-    //     font-family: monospace;
-    //     font-size: 0.35rem;
-    //     position: relative;
-    //     // bottom: 0.15rem;
-    //     left: 0.02rem;
-    //     bottom: 0.75rem;
-    // }
 }
 </style>
 

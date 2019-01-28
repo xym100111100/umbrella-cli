@@ -1,9 +1,9 @@
 <template>
   <div class="cart-view">
     <van-nav-bar
-      left-arrow
+      :border="false"
       title="购物车"
-      right-text="编辑"
+      right-text="管理"
       @click-left="handleBack"
     />
     <van-checkbox-group
@@ -37,11 +37,12 @@
 </template>
 
 <script>
-import { NavBar, Checkbox, CheckboxGroup, Card, SubmitBar, Toast } from 'vant';
+import { NavBar, Icon, Checkbox, CheckboxGroup, Card, SubmitBar, Toast } from 'vant';
 
 export default {
     components: {
         [NavBar.name]: NavBar,
+        [Icon.name]: Icon,
         [Card.name]: Card,
         [Checkbox.name]: Checkbox,
         [SubmitBar.name]: SubmitBar,
@@ -112,31 +113,38 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+@cart-background-color: gold;
 .cart-view {
     display: flex;
     flex-direction: column;
+    background-color: @cart-background-color;
     // height: 100%-@tabbar-height;
     // width: 100%;
     .van-nav-bar {
-        .van-nav-bar__arrow {
-            font-size: 1.25em;
-            color: #666;
-        }
+        height: 1.15rem;
+        font-family: monospace;
 
         .van-nav-bar__title {
-            font-size: 1em;
+            font-weight: bolder;
+            color: white;
+            background-color: @cart-background-color;
+            text-align: left;
+            font-size: 0.6rem;
+            max-width: unset;
         }
 
-        .van-nav-bar__text {
-            font-size: 1.25em;
+        .van-nav-bar__right {
+            bottom: -0.15rem;
+            .van-nav-bar__text {
+                font-size: 0.4rem;
+            }
         }
     }
 
     .card-goods {
         flex-grow: 1;
         padding: 10px 0;
-        background-color: #fff;
 
         &__item {
             position: relative;
