@@ -156,7 +156,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .page-goods-page {
     // padding-bottom: 50px;
     // position: relative;
@@ -174,12 +174,14 @@ export default {
         color: white;
         background-color: black;
         opacity: 0.4;
-
+        display: flex;
+        flex-direction: column;
         .van-icon {
             // position: relative;
             // padding: 2px;
             font-size: 0.8rem;
-            top: -0.1rem;
+            // top: -0.1rem;
+            top: 0.04rem;
         }
     }
 
