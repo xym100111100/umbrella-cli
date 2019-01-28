@@ -160,7 +160,7 @@ export default {
 .page-goods-page {
     // padding-bottom: 50px;
     // position: relative;
-    height: 100%;
+    height: 100vh;
 
     // 回退
     .back {
