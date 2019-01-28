@@ -26,7 +26,7 @@ export default {
     },
 };
 </script>
-<style lang="less" >
+<style lang="less" scoped>
 @width: 1.1rem;
 @height: @width;
 
@@ -50,7 +50,6 @@ export default {
     width: @width;
     height: @height;
     border-radius: 50%;
-    // border-radius: 0.1rem;
     background-color: black;
     border: 2px solid #ddd;
     position: fixed;
@@ -59,11 +58,15 @@ export default {
     z-index: 999;
     text-align: center;
     color: white;
+    display: flex;
+    flex-direction: column;
     .van-icon-top {
-        font-size: 0.6rem;
-        position: relative;
-        // // top: 0.05rem;
-        top: -0.26rem;
+        font-size: 0.64rem;
+        // position: relative;
+        top: 0.14rem;
+        // bottom: 0.1rem;
+        height: @height;
+        // top: -0.26rem;
         // left: 0.01rem;
     }
 }
