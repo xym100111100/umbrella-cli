@@ -45,7 +45,7 @@ const routes = [
                 path: '/cart',
                 component: () => import('./view/Cart'),
                 meta: {
-                    index: 30,
+                    index: 1,
                 },
             },
             {

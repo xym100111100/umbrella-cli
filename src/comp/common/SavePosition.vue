@@ -30,6 +30,10 @@ export default {
          * 滚动到顶部
          */
         goTop() {
+            // const first = this.$el.firstElementChild;
+            // first.scrollIntoView({
+            //     behavior: 'smooth',
+            // });
             cancelAnimationFrame(timer);
             //获取当前毫秒数
             let startTime = +new Date();

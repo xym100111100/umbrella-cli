@@ -195,7 +195,8 @@ export default {
             > .save-position {
                 position: block;
                 overflow: auto;
-                -webkit-overflow-scrolling: touch;  // 解决iOS卡的问题
+                -webkit-overflow-scrolling: touch; // 解决iOS卡的问题
+                will-change: scroll-position;
                 height: calc(~'100vh - @{bottom-height}');
                 // display: block;
                 // // 轮播
