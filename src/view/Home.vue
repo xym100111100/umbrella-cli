@@ -14,7 +14,7 @@
     >
       <save-position
         ref="savePosition"
-        @scroll="handelScroll"
+        @scroll="handleScroll"
       >
         <!-- <div>
         <van-swipe :autoplay="10000">
@@ -82,7 +82,7 @@
 
         <goods-list
           v-if="!refreshing"
-          columnCount="1"
+          columnCount="2"
           :load="listOnlOnlinePromo"
           :load-params="{ promotionType: 1 }"
         />
@@ -166,7 +166,7 @@ export default {
         /**
          * 处理页面的滚动事件
          */
-        handelScroll(e) {
+        handleScroll(e) {
             const scrollTop = e.target.scrollTop;
             // 与PullRefresh的下拉刷新不产生冲突
             this.isDisabledPullRefresh = scrollTop > 0;
