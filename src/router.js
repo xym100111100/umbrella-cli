@@ -75,6 +75,14 @@ const routes = [
         },
     },
     {
+        name: 'full-back-process',
+        path: '/full-back-process',
+        component: () => import('./page/FullBackProcess'),
+        meta: {
+            index: 2,
+        }
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),

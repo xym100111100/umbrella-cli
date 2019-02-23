@@ -37,6 +37,7 @@
           :src="fullBackBannerImg"
           class="full-back-banner"
           name="aaa"
+          @click="fullBackProcess"
         />
         <!-- </div> -->
 
@@ -172,6 +173,12 @@ export default {
             this.isDisabledPullRefresh = scrollTop > 0;
             // 是否显示回到顶部
             this.isShowTop = scrollTop > 900;
+        },
+        /**
+         * 拼全返流程
+         */
+        fullBackProcess() {
+          this.$router.push('./full-back-process');
         },
     },
 };
