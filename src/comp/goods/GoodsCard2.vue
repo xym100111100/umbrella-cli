@@ -1,4 +1,5 @@
 <template>
+  <!-- 一行显示两列的商品卡片组件 -->
   <div class="goods-card-2">
     <div
       :class="{'goods-img-wrap':true,'affix-wrap':item.subjectType!==0}"

@@ -1,4 +1,5 @@
 <template>
+  <!-- 一行只显示单列的商品卡片组件 -->
   <div class="goods-card-1">
     <van-card
       :thumb="item.picPath"
