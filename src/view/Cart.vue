@@ -1,30 +1,32 @@
 <template>
+  <!-- 购物车的视图组件 -->
   <div class="cart-view">
-    <van-nav-bar
-      :border="false"
-      title="购物车"
-      right-text="管理"
-      @click-left="handleBack"
-    />
-    <van-checkbox-group
-      class="card-goods"
-      v-model="checkedGoods"
-    >
-      <van-checkbox
-        class="card-goods__item"
-        v-for="item in goods"
-        :key="item.id"
-        :name="item.id"
+    <div class="cart-view__main">
+      <van-nav-bar
+        :border="false"
+        title="购物车"
+        right-text="管理"
+      />
+      <van-checkbox-group
+        class="card-goods"
+        v-model="checkedGoods"
       >
-        <van-card
-          :title="item.title"
-          :desc="item.desc"
-          :num="item.num"
-          :price="formatPrice(item.price)"
-          :thumb="item.thumb"
-        />
-      </van-checkbox>
-    </van-checkbox-group>
+        <van-checkbox
+          class="card-goods__item"
+          v-for="item in goods"
+          :key="item.id"
+          :name="item.id"
+        >
+          <van-card
+            :title="item.title"
+            :desc="item.desc"
+            :num="item.num"
+            :price="formatPrice(item.price)"
+            :thumb="item.thumb"
+          />
+        </van-checkbox>
+      </van-checkbox-group>
+    </div>
     <van-submit-bar
       :price="totalPrice"
       :disabled="!checkedGoods.length"
@@ -96,12 +98,6 @@ export default {
     },
 
     methods: {
-        /**
-         * 回退
-         */
-        handleBack() {
-            this.$router.go(-1);
-        },
         formatPrice(price) {
             return (price / 100).toFixed(2);
         },
@@ -114,58 +110,68 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@cart-background-color: gold;
+@cart-background-color: #fafafa;
 .cart-view {
     display: flex;
     flex-direction: column;
     background-color: @cart-background-color;
     // height: 100%-@tabbar-height;
     // width: 100%;
-    .van-nav-bar {
-        height: 1.15rem;
-        font-family: monospace;
 
-        .van-nav-bar__title {
-            font-weight: bolder;
-            color: white;
-            background-color: @cart-background-color;
-            text-align: left;
-            font-size: 0.6rem;
-            max-width: unset;
-        }
-
-        .van-nav-bar__right {
-            bottom: -0.15rem;
-            .van-nav-bar__text {
-                font-size: 0.4rem;
-            }
-        }
-    }
-
-    .card-goods {
+    .cart-view__main {
         flex-grow: 1;
-        padding: 10px 0;
 
-        &__item {
-            position: relative;
-            background-color: #fafafa;
+        .van-nav-bar {
+            height: 1.15rem;
+            font-family: monospace;
+            background: linear-gradient(to right, OrangeRed, red);
 
-            .van-checkbox__label {
-                width: 100%;
-                padding: 0 10px 0 15px;
-                box-sizing: border-box;
+            &__title {
+                color: white;
+                padding: 0 0.3rem;
+                font-size: 0.5rem;
+                max-width: unset;
             }
 
-            .van-checkbox__icon {
-                top: 50%;
-                left: 10px;
-                z-index: 1;
-                position: absolute;
-                margin-top: -10px;
+            &__right {
+                bottom: -0.15rem;
+                .van-nav-bar__text {
+                    font-size: 0.4rem;
+                    color: white;
+                }
             }
+        }
 
-            .van-card__price {
-                color: #f44;
+        .card-goods {
+            padding: 10px 0;
+            margin: 0.3rem;
+            background-color: white;
+            border-radius: 0.3rem;
+
+            &__item {
+                position: relative;
+                margin: 0 0.15rem;
+
+                .van-checkbox__label {
+                    width: 100%;
+                    padding: 0 10px 0 15px;
+                    box-sizing: border-box;
+                }
+
+                .van-checkbox__icon {
+                    top: 50%;
+                    left: 10px;
+                    z-index: 1;
+                    position: absolute;
+                    margin-top: -10px;
+                }
+
+                .van-card {
+                    background-color: unset;
+                    &__price {
+                        color: #f44;
+                    }
+                }
             }
         }
     }
