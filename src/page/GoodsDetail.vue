@@ -1,13 +1,22 @@
 <template>
   <!-- 商品详情 -->
   <div class="page-goods-page">
-    <div class="back" @click="handleBack">
-      <van-icon name="back"/>
+    <div
+      class="back"
+      @click="handleBack"
+    >
+      <van-icon name="back" />
     </div>
 
-    <div style="overflow: auto;">
-      <van-swipe class="page-goods-page-swipe" :autoplay="5000">
-        <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
+    <div class="page-goods-page-main">
+      <van-swipe
+        class="page-goods-page-swipe"
+        :autoplay="5000"
+      >
+        <van-swipe-item
+          v-for="thumb in goods.thumb"
+          :key="thumb"
+        >
           <img :src="thumb">
         </van-swipe-item>
       </van-swipe>
@@ -17,46 +26,53 @@
           <div class="page-goods-page-title">{{ goods.title }}</div>
           <div class="page-goods-page-price">{{ formatPrice(goods.price) }}</div>
         </van-cell>
-        <van-cell is-link @click="addShoppingCart">
+        <van-cell
+          is-link
+          @click="addShoppingCart"
+        >
           <template slot="title">
             <div>
               <span style="color: #7d7e80;">规格</span>
-              <span
-                v-if="selectedSkuName !== undefined"
-              >&nbsp;&nbsp;&nbsp;&nbsp;已选:"{{ selectedSkuName }}"</span>
+              <span v-if="selectedSkuName !== undefined">&nbsp;&nbsp;&nbsp;&nbsp;已选:"{{ selectedSkuName }}"</span>
             </div>
             <div class="goods-page-sku-img">
               <table>
                 <tr>
                   <td>
-                    <img
-                      src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg"
-                    >
+                    <img src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg">
                   </td>
                   <td>
-                    <img
-                      src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg"
-                    >
+                    <img src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg">
                   </td>
                   <td>
-                    <img
-                      src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg"
-                    >
+                    <img src="https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg">
                   </td>
                 </tr>
               </table>
             </div>
           </template>
         </van-cell>
-        <van-cell title="查看商品详情" is-link/>
+        <van-cell
+          title="查看商品详情"
+          is-link
+        />
       </van-cell-group>
     </div>
 
     <van-goods-action>
-      <van-goods-action-mini-btn icon="shareex" @click="sorry">分享</van-goods-action-mini-btn>
-      <van-goods-action-mini-btn icon="cart" @click="onClickCart">购物车</van-goods-action-mini-btn>
+      <van-goods-action-mini-btn
+        icon="shareex"
+        @click="sorry"
+      >分享</van-goods-action-mini-btn>
+      <van-goods-action-mini-btn
+        icon="cart"
+        @click="onClickCart"
+      >购物车</van-goods-action-mini-btn>
       <van-goods-action-big-btn @click="addShoppingCart">加入购物车</van-goods-action-big-btn>
-      <van-goods-action-big-btn primary @click="sorry">立即购买</van-goods-action-big-btn>
+      <van-goods-action-big-btn
+        primary
+        @click="sorry"
+      >立即购买</van-goods-action-big-btn>
     </van-goods-action>
 
     <van-sku
@@ -268,7 +284,8 @@ export default {
 <style lang="less">
 .page-goods-page {
     // padding-bottom: 50px;
-    // position: relative;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
 
     // 回退
@@ -292,6 +309,11 @@ export default {
             // top: -0.1rem;
             top: 0.04rem;
         }
+    }
+
+    &-main {
+        overflow: auto;
+        flex-grow: 1;
     }
 
     &-swipe {
@@ -324,6 +346,10 @@ export default {
 
     &-tag {
         margin-left: 5px;
+    }
+
+    .van-goods-action {
+        position: unset;
     }
 }
 
