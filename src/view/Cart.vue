@@ -2,10 +2,10 @@
   <!-- 购物车的视图组件 -->
   <div class="cart-view">
     <div class="cart-view__main">
-      <div style="height: 6%">
-        <van-nav-bar :border="false" title="购物车" right-text="管理"/>
+      <div style="height: 1.2rem;">
+        <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage"/>
       </div>
-      <div style="height: 90%; overflow:auto;">
+      <div style="height: 11.78rem; overflow:auto;">
         <div
           class="card-goods"
           style="display: flex; flex: 1; align-items: center;"
@@ -25,19 +25,28 @@
               :title="item.title"
               :desc="item.desc"
               :num="item.num"
-              :price="formatPrice(item.price)"
+              :price="0"
+              :origin-price="formatPrice(item.price)"
               thumb-link="#/goods-detail"
               :thumb="item.thumb"
             />
             <div class="cart-stepper">
-              <van-stepper v-model="steppervalue" integer="true" :max="99"/>
+              <van-stepper
+                :key="item.id"
+                :name="item.id"
+                v-model="item.num"
+                :integer="true"
+                :max="99"
+                @plus="stepperPlus(item)"
+                @minus="stepperMinus(item)"
+                @blur="stepperBlur(item)"
+              />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div style="display: flex;
-    flex-direction: column;">
+    <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
       <van-submit-bar
         :price="totalPrice"
         :disabled="!checkedGoods.length"
@@ -46,6 +55,14 @@
       >
         <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
       </van-submit-bar>
+    </div>
+    <div v-show="isShowManage" class="cart-delete-bar">
+      <div class="van-submit-bar__bar">
+        <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
+        <div style="margin-left: 6rem;">
+          <van-button plain hairline round="true" size="small" type="danger" text="删除"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -64,7 +81,10 @@ import {
     Row,
     Col,
     Stepper,
+    Button,
 } from 'vant';
+
+import { list as goodsList } from '../svc/Cart';
 
 export default {
     components: {
@@ -79,6 +99,7 @@ export default {
         [Row.name]: Row,
         [Col.name]: Col,
         [Stepper.name]: Stepper,
+        [Button.name]: Button,
     },
 
     data() {
@@ -88,48 +109,11 @@ export default {
             // 是否全选
             checked: false,
             steppervalue: 1,
-            goods: [
-                {
-                    id: '1',
-                    title: '进口香蕉',
-                    desc: '约250g，2根',
-                    price: 200,
-                    num: 1,
-                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/2f9a36046449dafb8608e99990b3c205.jpeg',
-                },
-                {
-                    id: '2',
-                    title: '陕西蜜梨',
-                    desc: '约600g',
-                    price: 690,
-                    num: 1,
-                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg',
-                },
-                {
-                    id: '3',
-                    title: '美国伽力果',
-                    desc: '约680g/3个',
-                    price: 2680,
-                    num: 1,
-                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/320454216bbe9e25c7651e1fa51b31fd.jpeg',
-                },
-                {
-                    id: '4',
-                    title: '美国伽力果',
-                    desc: '约680g/3个',
-                    price: 2680,
-                    num: 1,
-                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/320454216bbe9e25c7651e1fa51b31fd.jpeg',
-                },
-                {
-                    id: '5',
-                    title: '美国伽力果',
-                    desc: '约680g/3个',
-                    price: 2680,
-                    num: 1,
-                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/320454216bbe9e25c7651e1fa51b31fd.jpeg',
-                },
-            ],
+            // 是否显示管理页面
+            isShowManage: false,
+            // 是否显示提交页面
+            isShowSubmit: true,
+            goods: this.goods(),
         };
     },
 
@@ -140,10 +124,14 @@ export default {
         },
 
         totalPrice() {
-            return this.goods.reduce(
-                (total, item) => total + (this.checkedGoods.indexOf(item.id) !== -1 ? item.price : 0),
-                0
-            );
+            if (this.goods !== undefined) {
+                return this.goods.reduce(
+                    (total, item) => total + (this.checkedGoods.indexOf(item.id) !== -1 ? item.price * item.num : 0),
+                    0
+                );
+            } else {
+                return 0;
+            }
         },
     },
 
@@ -191,7 +179,7 @@ export default {
                             Dialog.close;
                         });
                 }.bind(this),
-                1500
+                2000
             );
         },
 
@@ -203,6 +191,44 @@ export default {
                 console.log(111);
             }
         },
+
+        // 点击管理事件
+        onManage() {
+            // 是否显示管理页面
+            this.isShowManage = !this.isShowManage;
+            // 是否显示提交页面
+            this.isShowSubmit = !this.isShowSubmit;
+        },
+
+        // 获取商品数据
+        goods() {
+            goodsList({
+                onSuccess: data => {
+                    this.goods = data;
+                    // 数据全部加载完成
+                    this.finished = true;
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
+                },
+            });
+        },
+
+        // 步进器点击增加按钮时触发
+        stepperPlus(goods) {
+            console.log(goods);
+        },
+
+        // 步进器点击减少按钮时触发
+        stepperMinus(goods) {
+            console.log(goods);
+        },
+
+        // 步进器输入框失焦时触发
+        stepperBlur(goods) {
+            console.log(goods);
+        },
     },
 };
 </script>
@@ -212,6 +238,7 @@ export default {
 #main-page {
     height: 93%;
 }
+
 .cart-view {
     display: flex;
     flex-direction: column;
@@ -219,7 +246,6 @@ export default {
 
     .cart-view__main {
         flex-grow: 1;
-        height: 100%;
         .van-nav-bar {
             height: 1.15rem;
             font-family: monospace;
@@ -233,7 +259,7 @@ export default {
             }
 
             &__right {
-                bottom: -0.15rem;
+                bottom: -0.01rem;
                 .van-nav-bar__text {
                     font-size: 0.4rem;
                     color: white;
@@ -252,10 +278,9 @@ export default {
                 margin: 0 0.15rem;
                 display: flex;
                 justify-content: flex-end;
-                height: 28.8px;
+                height: 0.768rem;
 
                 .van-checkbox__label {
-                    width: 100%;
                     padding: 0 10px 0 15px;
                     box-sizing: border-box;
                 }
@@ -270,40 +295,68 @@ export default {
         }
 
         .cart-checkbox {
-            margin-left: 2%;
+            margin-left: 0.19rem;
             display: flex;
             align-items: center;
         }
 
         .cart-card {
             flex: 1;
-            margin-left: -1%;
+            margin-left: -0.1rem;
             display: flex;
         }
 
         .cart-stepper {
-            margin-left: 11%;
-            margin-top: 22%;
+            margin-left: -0.76rem;
+            margin-top: 2rem;
+            width: 3.2rem;
         }
     }
     .van-submit-bar {
         left: unset;
         bottom: unset;
         position: unset;
-        margin-top: -8%;
+        margin-top: -1rem;
 
         .van-checkbox {
-            margin-left: 20px;
+            margin-left: 0.53333rem;
+        }
+    }
+
+    .cart-delete-bar {
+        left: unset;
+        bottom: unset;
+        position: unset;
+        margin-top: -1rem;
+
+        .van-checkbox {
+            margin-left: 0.53333rem;
+        }
+
+        .van-button--small {
+            font-size: 0.42rem;
         }
     }
 }
 
 .van-card {
     background-color: white;
-    height: 100%;
+    width: 6.5rem;
+}
+
+.van-card__title {
+    width: 5.32rem;
+}
+
+.van-card__desc {
+    width: 5.32rem;
+}
+
+.van-card__bottom {
+    width: 2.1667rem;
 }
 
 .van-card__header {
-    margin-left: -2%;
+    margin-left: -0.16rem;
 }
 </style>

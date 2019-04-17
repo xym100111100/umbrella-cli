@@ -83,6 +83,14 @@ const routes = [
         }
     },
     {
+        name: 'confirm-order',
+        path: '/confirm-order',
+        component: () => import('./page/ConfirmOrder'),
+        meta: {
+            index: 2,
+        }
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),

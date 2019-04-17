@@ -236,7 +236,6 @@ export default {
                     this.goods = data;
                     this.goodsThumb = data.thumb;
                     this.goodsDetail = data.detail;
-                    console.log(this.goodsDetail)
                     // 数据全部加载完成
                     this.finished = true;
                 },
