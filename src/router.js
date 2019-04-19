@@ -80,7 +80,7 @@ const routes = [
         component: () => import('./page/FullBackProcess'),
         meta: {
             index: 2,
-        }
+        },
     },
     {
         name: 'confirm-order',
@@ -88,7 +88,15 @@ const routes = [
         component: () => import('./page/ConfirmOrder'),
         meta: {
             index: 2,
-        }
+        },
+    },
+    {
+        name: 'order',
+        path: '/order',
+        component: () => import('./page/Order'),
+        meta: {
+            index: 2,
+        },
     },
     {
         name: 'test1',
