@@ -3,7 +3,7 @@ const Mock = require('mockjs');
 
 const template = [
     {
-        id: '12345678-12345678-12345678',
+        id: '12345678-12345678',
         orderState: 1,
         goods: [
             {

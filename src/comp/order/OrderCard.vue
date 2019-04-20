@@ -1,16 +1,19 @@
 <template>
   <div>
     <div v-for="order in orders" :key="order.id" :name="order.id" class="order-card">
-      <div style="width: 8rem; margin-left: .2rem; margin-top: -.2rem;">
+      <div style="width: 8rem; margin-top: -.2rem;">
         <van-cell>
           <div style="display: flex; justify-content: space-between;" slot="title">
             <span>订单：{{ order.id }}</span>
-            <van-tag plain type="success">待发货</van-tag>
+            <van-tag style="left: .3rem;" plain type="success">待发货</van-tag>
           </div>
         </van-cell>
       </div>
       <div>
-        <div style="display: flex; justify-content: space-between;" class="transp-block circle"/>
+        <!-- 该div用于画出水印 -->
+        <!-- <div style="display: flex; justify-content: space-between;" class="transp-block circle"/> -->
+        <!-- 该div用于不画水印时顶替水印的高度 -->
+        <div style="margin-top: 1.25rem;"/>
         <div style="margin-top: -1.2rem;">
           <div v-for="item in order.goods" :key="item.id" :name="item.id" class="order-goods">
             <div style="margin-left: -1rem;" class="dividing-line"/>
@@ -114,7 +117,7 @@ export default {
     position: relative;
 
     .order-goods {
-        margin-left: 0.2rem;
+        // margin-left: 0.2rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

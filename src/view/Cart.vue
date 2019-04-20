@@ -5,7 +5,7 @@
       <div style="height: 1.2rem;">
         <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage"/>
       </div>
-      <div style="height: 11.78rem; overflow:auto;">
+      <div style="height: 12.78rem; overflow:auto;">
         <div
           class="card-goods"
           style="display: flex; flex: 1; align-items: center;"

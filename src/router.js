@@ -99,6 +99,14 @@ const routes = [
         },
     },
     {
+        name: 'order-detail',
+        path: '/order-detail',
+        component: () => import('./page/OrderDetail'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),
