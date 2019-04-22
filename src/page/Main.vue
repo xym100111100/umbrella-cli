@@ -3,34 +3,19 @@
   <div id="main-page">
     <router-view class="main-content" />
     <van-tabbar v-model="active">
-      <van-tabbar-item
-        icon="tabbar-home"
-        to="home"
-      >
+      <van-tabbar-item icon="tabbar-home" to="home" >
         首页
       </van-tabbar-item>
-      <van-tabbar-item
-        icon="tabbar-find"
-        to="find"
-      >
+      <van-tabbar-item icon="tabbar-find" to="find">
         查找
       </van-tabbar-item>
-      <van-tabbar-item
-        icon="tabbar-msg"
-        to="msg"
-      >
+      <van-tabbar-item icon="tabbar-msg" to="msg">
         消息
       </van-tabbar-item>
-      <van-tabbar-item
-        icon="tabbar-cart"
-        to="cart"
-      >
+      <van-tabbar-item icon="tabbar-cart" to="cart">
         购物车
       </van-tabbar-item>
-      <van-tabbar-item
-        icon="tabbar-mine"
-        to="mine"
-      >
+      <van-tabbar-item icon="tabbar-mine" to="mine">
         我的
       </van-tabbar-item>
     </van-tabbar>
@@ -39,7 +24,6 @@
 
 <script>
 import { Tabbar, TabbarItem } from 'vant';
-
 // 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
     home: 0,
@@ -60,12 +44,14 @@ export default {
         };
     },
     beforeRouteUpdate(to, from, next) {
-        console.log('beforeRouteUpdate\r\nfrom', from, '\r\nto', to);
+        //  console.log('beforeRouteUpdate\r\nfrom', from, '\r\nto', to);
+        // console.log(to);
+        // console.log(from);
+        // console.log(next);
 
         // 设置激活图标为目标路由的图标，否则浏览器回退时由于缓存的作用，不会切换激活图标
         const toIndex = routeIndex[to.name];
         this.active = toIndex;
-
         next();
     },
 };
@@ -81,7 +67,7 @@ export default {
     top: 0;
     bottom: 0;
     // height: 100%;
-    background-color: #0f0;
+    background-color: #ebe6e6;
 
     // display: flex;
     // flex-direction: column;
@@ -101,7 +87,7 @@ export default {
         background-color: white;
         z-index: 9999 !important;
         .van-tabbar-item {
-            color: #666;
+            color: #a8a5a5;
             margin-top: -6px;
             // 图标下部的字体大小
             font-size: 0.35rem;
@@ -112,7 +98,7 @@ export default {
             }
         }
         .van-tabbar-item--active {
-            color: #ca6924;
+            color: OrangeRed;
         }
         .van-submit-bar {
             border-top: 1px red solid;

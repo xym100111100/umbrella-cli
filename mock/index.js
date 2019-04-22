@@ -4,6 +4,7 @@ const GoodsDetail = require('./onl/GoodsDetail');
 const Cart = require('./Cart');
 const Order = require('./ord/Order');
 const OrderDetail = require('./ord/OrderDetail');
+const AfcAccount = require('./afc/AfcAccount');
 
 const mock = {
     // 获取每日推荐
@@ -14,6 +15,9 @@ const mock = {
     'GET /onl-svr/onl/cart': Cart.goodsList,
     'GET /ord-svr/ord/order': Order.list,
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
+
+    'GET /afc-svr/afc/account': AfcAccount.getById,
+
 };
 
 module.exports = mock;
