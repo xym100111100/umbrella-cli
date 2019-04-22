@@ -107,6 +107,22 @@ const routes = [
         },
     },
     {
+        name: 'my-wallet',
+        path: '/my-wallet',
+        component: () => import('./page/MyWallet'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
+        name: 'my-point',
+        path: '/my-point',
+        component: () => import('./page/MyPoint'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),
