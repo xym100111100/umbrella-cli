@@ -4,8 +4,8 @@
       <div style="width: 8rem; margin-top: -.2rem;">
         <van-cell>
           <div style="display: flex; justify-content: space-between;" slot="title">
-            <span>订单：{{ order.id }}</span>
-            <van-tag style="left: .3rem;" plain type="success">待发货</van-tag>
+            <span>订单：{{ order.orderCode }}</span>
+            <van-tag v-show="order.isOrderState" style="left: .3rem;" plain type="success">待发货</van-tag>
           </div>
         </van-cell>
       </div>
@@ -30,8 +30,12 @@
               <div slot="origin-price">
                 <span>{{ formatPrice(item.price) }}</span>
               </div>
+
+              <div v-show="item.subjectType === 1" slot="tag" class="con">
+                <div class="subscript">拼全返</div>
+              </div>
             </van-card>
-            <van-cell>
+            <van-cell v-show="item.subjectType === 1">
               <div slot="title" style="display: flex; justify-content: space-between;">
                 <div class="order-matched">
                   <div class="order-matched-user">
@@ -60,7 +64,7 @@
             <div>
               <span>
                 实付:￥
-                <span style="font-size: 0.4rem;">100000.00</span>
+                <span style="font-size: 0.4rem; font-weight: 700;">{{ order.realMoney }}</span>
               </span>
             </div>
           </div>
@@ -227,6 +231,32 @@ export default {
     .van-cell:not(:last-child)::after {
         border-bottom: 0;
     }
+}
+
+.con {
+    height: 2rem;
+    width: 2rem;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    margin-left: 0.4rem;
+    margin-top: -0.06rem;
+}
+.subscript {
+    color: #fff;
+    width: 2rem;;
+    position: absolute;
+    right: -0.55rem;
+    text-align: center;
+    line-height: 0.4rem;
+    font-family: '黑体';
+    background-color: red;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin-top: 0.25rem;
 }
 </style>
 
