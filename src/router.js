@@ -123,6 +123,22 @@ const routes = [
         },
     },
     {
+        name: 'withdraw',
+        path: '/withdraw',
+        component: () => import('./page/Withdraw'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
+        name: 'withdraw-record',
+        path: '/withdraw-record',
+        component: () => import('./page/WithdrawRecord'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),
