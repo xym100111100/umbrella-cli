@@ -20,8 +20,8 @@
         <div class="user-content">
 
             <!-- 我的订单 -->
-            <div class=" content-order">
-                <div class="order-top" v-on:click="getOrderList">
+            <div class=" content-order"  v-on:click="getOrderList" >
+                <div class="order-top">
                     <span class="top-right">
                         我的订单
                     </span>

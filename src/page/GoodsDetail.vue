@@ -321,7 +321,7 @@ export default {
     }
 
     &-price {
-        color: #f44;
+        color: yellow;
     }
 
     &-express {

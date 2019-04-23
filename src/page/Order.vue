@@ -1,24 +1,18 @@
 <template>
   <div class="order-view">
     <div class="order-navbar">
-      <van-nav-bar title="我的订单" left-arrow>
-        <van-icon name="search" size=".8rem" slot="right"/>
+      <van-nav-bar title="我的订单" v-on:click-left="onClickLeft" left-arrow>
+        <van-icon name="search" size=".8rem" slot="right" />
       </van-nav-bar>
     </div>
     <div class="order-tabs">
-      <van-tabs
-        v-model="active"
-        swipeable="true"
-        title-active-color="red"
-        background="#fafafa00"
-        title-inactive-color="#333"
-      >
+      <van-tabs v-model="active" swipeable="true" title-active-color="red" background="#fafafa00" title-inactive-color="#333">
         <van-tab>
           <div slot="title">
             <span style="font-size: 0.47333rem;">全部</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders"/>
+            <order-card :orders="orders" />
           </div>
         </van-tab>
         <van-tab>
@@ -26,7 +20,7 @@
             <span style="font-size: 0.47333rem;">待付款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders"/>
+            <order-card :orders="orders" />
           </div>
         </van-tab>
         <van-tab>
@@ -34,7 +28,7 @@
             <span style="font-size: 0.47333rem;">待收货</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders"/>
+            <order-card :orders="orders" />
           </div>
         </van-tab>
         <van-tab>
@@ -42,7 +36,7 @@
             <span style="font-size: 0.47333rem;">待返款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders"/>
+            <order-card :orders="orders" />
           </div>
         </van-tab>
       </van-tabs>
@@ -80,7 +74,9 @@ export default {
         formatPrice(price) {
             return (price / 100).toFixed(2);
         },
-
+        onClickLeft() {
+            this.$router.go(-1);
+        },
         orders() {
             list({
                 onSuccess: data => {
