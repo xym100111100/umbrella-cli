@@ -21,7 +21,7 @@
 
             <!-- 我的订单 -->
             <div class=" content-order">
-                <div class="order-top">
+                <div class="order-top" v-on:click="getOrderList">
                     <span class="top-right">
                         我的订单
                     </span>
@@ -34,31 +34,31 @@
                 <div class="order-buttom">
                     <van-row class="user-links">
                         <van-col span="4">
-                            <van-icon color="#f40" style="margin-left:0.1rem;" name="tubiaozhizuo-" />
+                            <van-icon color="#f40" name="tubiaozhizuo-" />
                             <br/>
                             <span>待付款</span>
                         </van-col>
-                        <van-col style="margin-left:0.4rem;" span="4">
+                        <van-col style="margin-left:0.3rem;" span="4">
                             <van-icon color="#f40" name="kuaidiche" />
                             <br/>
                             <span>待发货</span>
                         </van-col>
-                        <van-col style="margin-left:0.4rem;" span="4">
+                        <van-col style="margin-left:0.3rem;" span="4">
                             <van-icon color="#f40" name="qianshou" />
                             <br/>
                             <span> 待签收</span>
                         </van-col>
 
-                        <van-col style="margin-left:0.4rem;" span="4">
+                        <van-col style="margin-left:0.3rem;" span="4">
                             <van-icon color="#f40" name="jiesuan" />
                             <br/>
                             <span> 待结算</span>
                         </van-col>
 
-                        <van-col style="margin-left:0.4rem;" span="4">
+                        <van-col style="margin-left:0.2rem;" span="5">
                             <van-icon color="#f40" name="dianhua" />
                             <br/>
-                            <span>待售后</span>
+                            <span>退款/售后</span>
                         </van-col>
                     </van-row>
                 </div>
@@ -66,26 +66,26 @@
 
             <!-- 我的钱包 -->
             <div class="content-money">
-                <div class="money-left" v-if='account!==undefined && account.length>0'>
+                <div class="money-left" v-if='afcAccount!==undefined && afcAccount.length>0'>
                     <div>
-                        <span class="value">{{account[0].balance}}</span>
+                        <span class="value">{{afcAccount[0].balance}}</span>
                         <span class="key">余额</span>
                     </div>
                     <div>
-                        <span class="value" v-if='account[0]'>{{account[0].cashback}}</span>
+                        <span class="value" v-if='afcAccount[0]'>{{afcAccount[0].cashback}}</span>
                         <span class="key">返现金</span>
                     </div>
                     <div>
-                        <span class="value" v-if='account[0]'>{{account[0].commissionTotal}}</span>
+                        <span class="value" v-if='afcAccount[0]'>{{afcAccount[0].commissionTotal}}</span>
                         <span class="key">已全返</span>
                     </div>
 
                     <div>
-                        <span class="value" v-if='account[0]'>{{account[0].commissioning}}</span>
+                        <span class="value" v-if='afcAccount[0]'>{{afcAccount[0].commissioning}}</span>
                         <span class="key"> 待全返</span>
                     </div>
                 </div>
-                <div class="money-right">
+                <div class="money-right" v-on:click="getMyWallet">
                     <div>
                         <van-icon color="#f40" name="purse" />
                         <span>钱包</span>
@@ -102,26 +102,26 @@
             </div>
             <!-- 我的积分 -->
             <div class="content-point">
-                <div class="point-left">
+                <div class="point-left" v-if='pntAccount!==undefined && pntAccount.length>0'>
                     <div>
-                        <span class="value">0</span>
+                        <span class="value">{{pntAccount[0].point}}</span>
                         <span class="key"> 积分</span>
                     </div>
                     <div>
-                        <span class="value">0.1</span>
+                        <span class="value">{{pntAccount[0].yesterdayIncome}}</span>
                         <span class="key">昨日收益</span>
                     </div>
                     <div>
-                        <span class="value">15</span>
+                        <span class="value">{{pntAccount[0].cumulativeIncome}}</span>
                         <span class="key">累计收益</span>
                     </div>
                     <div>
-                        <span class="value">36</span>
+                        <span class="value">{{pntAccount[0].waitingPoint}}</span>
                         <span class="key">待入积分</span>
                     </div>
 
                 </div>
-                <div class="point-right">
+                <div class="point-right" v-on:click="getMyPoint" >
                     <div>
                         <van-icon color="#f40" name="jifen" />
                         <span>积分</span>
@@ -142,7 +142,7 @@
 
 <script>
 import { Row, Col, Icon } from 'vant';
-import { getAccountById ,getPntAccount} from '../svc/Mine';
+import { getAccountById, getPntAccount } from '../svc/Mine';
 
 export default {
     components: {
@@ -152,37 +152,38 @@ export default {
     },
     data() {
         return {
-            account: this.getAccount(),
+            afcAccount: this.getAccount(),
+            pntAccount: [],
         };
     },
     methods: {
         getAccount() {
             getAccountById({
                 onSuccess: data => {
-                    this.account = data;
+                    this.afcAccount = data;
                 },
             });
             getPntAccount({
-                onSuccess: data => {
-                    console.log(data);
+                onSuccess: data2 => {
+                    this.pntAccount = data2;
                 },
             });
+            
+        },
+        getOrderList() {
+            this.$router.push('/order');
+        },
+        getMyWallet() {
+            this.$router.push('/my-wallet');
+        },
+        getMyPoint() {
+            this.$router.push('/my-point');
         },
     },
 };
 </script>
 
 <style lang="less" scoped>
-button,
-html,
-input,
-select,
-i,
-span,
-p,
-textarea {
-    font-family: PingFang-SC-Regular, Helvetica Neue, Helvetica, microsoft yahei, sans-serif;
-}
 .user {
     &-box {
         height: 18rem;

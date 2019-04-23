@@ -1,79 +1,73 @@
 <template>
-  <div class="my-point-view">
-    <div class="my-point-navbar">
-      <van-nav-bar title="我的积分" left-arrow right-text="转出收益"></van-nav-bar>
+    <div class="my-point-view">
+        <div class="my-point-navbar">
+            <van-nav-bar title="我的积分" v-on:click-left="onClickLeft"  left-arrow right-text="转出收益"></van-nav-bar>
+        </div>
+        <div class="my-point-tabs">
+            <van-tabs v-model="active" swipe-threshold="5" title-active-color="red" swipeable="true">
+                <van-tab>
+                    <template slot="title">
+                        <div class="my-point-tabs-title">
+                            <span>累计收益</span>
+                            <span class="my-point-tabs-title__balance">1.111</span>
+                        </div>
+                    </template>
+                    <ul class="balance-title">
+                        <li style="margin-left: 1rem;">交易标题</li>
+                        <li style="margin-left: .1rem;">交易总额</li>
+                        <li style="margin-right: .8rem;">交易时间</li>
+                    </ul>
+                    <div style="height: 12.5rem; overflow: auto; background-color: white;">
+                        <ul v-for="item in list" :key="item.id">
+                            <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+                            <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
+                            <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
+                        </ul>
+                    </div>
+                </van-tab>
+                <van-tab>
+                    <template slot="title">
+                        <div class="my-point-tabs-title">
+                            <span>待入积分</span>
+                            <span class="my-point-tabs-title__balance">1.111</span>
+                        </div>
+                    </template>
+                    <ul class="balance-title">
+                        <li style="margin-left: 1rem;">交易标题</li>
+                        <li style="margin-left: .1rem;">交易总额</li>
+                        <li style="margin-right: .8rem;">交易时间</li>
+                    </ul>
+                    <div style="height: 12.5rem; overflow: auto;">
+                        <ul v-for="item in list" :key="item.id">
+                            <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+                            <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
+                            <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
+                        </ul>
+                    </div>
+                </van-tab>
+                <van-tab>
+                    <template slot="title">
+                        <div class="my-point-tabs-title">
+                            <span>积分</span>
+                            <span class="my-point-tabs-title__balance">1.111</span>
+                        </div>
+                    </template>
+                    <ul class="balance-title">
+                        <li style="margin-left: 1rem;">交易标题</li>
+                        <li style="margin-left: .1rem;">交易总额</li>
+                        <li style="margin-right: .8rem;">交易时间</li>
+                    </ul>
+                    <div style="height: 12.5rem; overflow: auto;">
+                        <ul v-for="item in list" :key="item.id">
+                            <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+                            <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
+                            <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
+                        </ul>
+                    </div>
+                </van-tab>
+            </van-tabs>
+        </div>
     </div>
-    <div class="my-point-tabs">
-      <van-tabs v-model="active" swipe-threshold="5" title-active-color="red" swipeable="true">
-        <van-tab>
-          <template slot="title">
-            <div class="my-point-tabs-title">
-              <span>累计收益</span>
-              <span class="my-point-tabs-title__balance">1.111</span>
-            </div>
-          </template>
-          <ul class="balance-title">
-            <li style="margin-left: 1rem;">交易标题</li>
-            <li style="margin-left: .1rem;">交易总额</li>
-            <li style="margin-right: .8rem;">交易时间</li>
-          </ul>
-          <div style="height: 12.5rem; overflow: auto; background-color: white;">
-            <ul v-for="item in list" :key="item.id">
-              <li
-                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
-              >{{ item.tradeTitle }}</li>
-              <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
-              <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
-            </ul>
-          </div>
-        </van-tab>
-        <van-tab>
-          <template slot="title">
-            <div class="my-point-tabs-title">
-              <span>待入积分</span>
-              <span class="my-point-tabs-title__balance">1.111</span>
-            </div>
-          </template>
-          <ul class="balance-title">
-            <li style="margin-left: 1rem;">交易标题</li>
-            <li style="margin-left: .1rem;">交易总额</li>
-            <li style="margin-right: .8rem;">交易时间</li>
-          </ul>
-          <div style="height: 12.5rem; overflow: auto;">
-            <ul v-for="item in list" :key="item.id">
-              <li
-                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
-              >{{ item.tradeTitle }}</li>
-              <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
-              <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
-            </ul>
-          </div>
-        </van-tab>
-        <van-tab>
-          <template slot="title">
-            <div class="my-point-tabs-title">
-              <span>积分</span>
-              <span class="my-point-tabs-title__balance">1.111</span>
-            </div>
-          </template>
-          <ul class="balance-title">
-            <li style="margin-left: 1rem;">交易标题</li>
-            <li style="margin-left: .1rem;">交易总额</li>
-            <li style="margin-right: .8rem;">交易时间</li>
-          </ul>
-          <div style="height: 12.5rem; overflow: auto;">
-            <ul v-for="item in list" :key="item.id">
-              <li
-                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
-              >{{ item.tradeTitle }}</li>
-              <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
-              <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
-            </ul>
-          </div>
-        </van-tab>
-      </van-tabs>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -206,6 +200,11 @@ export default {
                 },
             ],
         };
+    },
+    methods: {
+        onClickLeft() {
+            this.$router.go(-1);
+        },
     },
 };
 </script>

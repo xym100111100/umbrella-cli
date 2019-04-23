@@ -5,6 +5,7 @@ const Cart = require('./Cart');
 const Order = require('./ord/Order');
 const OrderDetail = require('./ord/OrderDetail');
 const AfcAccount = require('./afc/AfcAccount');
+const PntAccount = require('./pnt/PntAccount');
 
 const mock = {
     // 获取每日推荐
@@ -17,6 +18,9 @@ const mock = {
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
 
     'GET /afc-svr/afc/account': AfcAccount.getById,
+
+    'GET /pnt-svr/pnt/account': PntAccount.getById,
+
 
 };
 

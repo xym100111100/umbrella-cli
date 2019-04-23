@@ -60,7 +60,7 @@
       <div class="van-submit-bar__bar">
         <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
         <div style="margin-left: 6rem;">
-          <van-button plain hairline round="true" size="small" type="danger" text="删除"/>
+          <van-button plain hairline :round="true" size="small" type="danger" text="删除"/>
         </div>
       </div>
     </div>
