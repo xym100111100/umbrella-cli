@@ -1,7 +1,13 @@
 <template>
   <div class="my-wallet-view">
     <div class="my-wallet-navbar">
-      <van-nav-bar title="我的钱包" v-on:click-left="onClickLeft" left-arrow right-text="提现"></van-nav-bar>
+      <van-nav-bar
+        title="我的钱包"
+        @click-left="onClickLeft"
+        left-arrow
+        right-text="提现"
+        @click-right="onWithdraw"
+      ></van-nav-bar>
     </div>
     <div class="my-wallet-tabs">
       <van-tabs v-model="active" swipe-threshold="5" title-active-color="red" swipeable="true">
@@ -19,7 +25,9 @@
           </ul>
           <div style="height: 12.5rem; overflow: auto; background-color: white;">
             <ul v-for="item in list" :key="item.id">
-              <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+              <li
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
+              >{{ item.tradeTitle }}</li>
               <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
               <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
             </ul>
@@ -39,7 +47,9 @@
           </ul>
           <div style="height: 12.5rem; overflow: auto;">
             <ul v-for="item in list" :key="item.id">
-              <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+              <li
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
+              >{{ item.tradeTitle }}</li>
               <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
               <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
             </ul>
@@ -59,7 +69,9 @@
           </ul>
           <div style="height: 12.5rem; overflow: auto;">
             <ul v-for="item in list" :key="item.id">
-              <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+              <li
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
+              >{{ item.tradeTitle }}</li>
               <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
               <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
             </ul>
@@ -79,7 +91,9 @@
           </ul>
           <div style="height: 12.5rem; overflow: auto;">
             <ul v-for="item in list" :key="item.id">
-              <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+              <li
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
+              >{{ item.tradeTitle }}</li>
               <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
               <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
             </ul>
@@ -99,7 +113,9 @@
           </ul>
           <div style="height: 12.5rem; overflow: auto;">
             <ul v-for="item in list" :key="item.id">
-              <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;">{{ item.tradeTitle }}</li>
+              <li
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 4rem; text-align: center; margin-left: .3rem;"
+              >{{ item.tradeTitle }}</li>
               <li style="margin-left: -.45rem;">{{ item.tradeAmount }}</li>
               <li style="width: 3.5rem;">{{ item.tradeTime }}</li>
             </ul>
@@ -243,7 +259,11 @@ export default {
     },
     methods: {
         onClickLeft() {
-             this.$router.go(-1);
+            this.$router.go(-1);
+        },
+
+        onWithdraw() {
+            this.$router.push('withdraw');
         },
     },
 };
