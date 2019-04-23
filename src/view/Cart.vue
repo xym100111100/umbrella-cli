@@ -1,40 +1,70 @@
 <template>
-    <!-- 购物车的视图组件 -->
-    <div class="cart-view">
-        <div class="cart-view__main">
-            <div style="height: 1.2rem;">
-                <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage" />
+  <!-- 购物车的视图组件 -->
+  <div class="cart-view">
+    <div class="cart-view__main">
+      <div style="height: 1.2rem;">
+        <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage"/>
+      </div>
+      <div style="height: 11.78rem; overflow:auto;">
+        <div
+          class="card-goods"
+          style="display: flex; flex: 1; align-items: center;"
+          v-for="item in goods"
+          :key="item.id"
+          :name="item.id"
+        >
+          <div class="cart-checkbox">
+            <van-checkbox-group v-model="checkedGoods">
+              <van-checkbox class="card-goods__item" :key="item.id" :name="item.id"></van-checkbox>
+            </van-checkbox-group>
+          </div>
+          <div class="cart-card">
+            <van-card
+              @touchstart.native="deleteGoods(item.id)"
+              @touchend.native="gotouchend"
+              :title="item.title"
+              :desc="item.desc"
+              :num="item.num"
+              :price="0"
+              :origin-price="formatPrice(item.price)"
+              thumb-link="#/goods-detail"
+              :thumb="item.thumb"
+            />
+            <div class="cart-stepper">
+              <van-stepper
+                :key="item.id"
+                :name="item.id"
+                v-model="item.num"
+                :integer="true"
+                :max="99"
+                @plus="stepperPlus(item)"
+                @minus="stepperMinus(item)"
+                @blur="stepperBlur(item)"
+              />
             </div>
-            <div style="height: 12.78rem; overflow:auto;">
-                <div class="card-goods" style="display: flex; flex: 1; align-items: center;" v-for="item in goods" :key="item.id" :name="item.id">
-                    <div class="cart-checkbox">
-                        <van-checkbox-group v-model="checkedGoods">
-                            <van-checkbox class="card-goods__item" :key="item.id" :name="item.id"></van-checkbox>
-                        </van-checkbox-group>
-                    </div>
-                    <div class="cart-card">
-                        <van-card @touchstart.native="deleteGoods(item.id)" @touchend.native="gotouchend" :title="item.title" :desc="item.desc" :num="item.num" :price="0" :origin-price="formatPrice(item.price)" thumb-link="#/goods-detail" :thumb="item.thumb" />
-                        <div class="cart-stepper">
-                            <van-stepper :key="item.id" :name="item.id" v-model="item.num" :integer="true" :max="99" @plus="stepperPlus(item)" @minus="stepperMinus(item)" @blur="stepperBlur(item)" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
-            <van-submit-bar :price="totalPrice" :disabled="!checkedGoods.length" :button-text="submitBarText" @submit="onSubmit">
-                <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
-            </van-submit-bar>
-        </div>
-        <div v-show="isShowManage" class="cart-delete-bar">
-            <div class="van-submit-bar__bar">
-                <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
-                <div style="margin-left: 6rem;">
-                    <van-button plain hairline :round="true" size="small" type="danger" text="删除" />
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
+      <van-submit-bar
+        :price="totalPrice"
+        :disabled="!checkedGoods.length"
+        :button-text="submitBarText"
+        @submit="onSubmit"
+      >
+        <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
+      </van-submit-bar>
+    </div>
+    <div v-show="isShowManage" class="cart-delete-bar">
+      <div class="van-submit-bar__bar">
+        <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
+        <div style="margin-left: 6rem;">
+          <van-button plain hairline :round="true" size="small" type="danger" text="删除"/>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -174,7 +204,7 @@ export default {
         goods() {
             goodsList({
                 onSuccess: data => {
-                    this.goods = data;
+                    this.goods = data.list;
                     // 数据全部加载完成
                     this.finished = true;
                 },
@@ -282,6 +312,7 @@ export default {
             width: 3.2rem;
         }
     }
+
     .van-submit-bar {
         left: unset;
         bottom: unset;
@@ -298,6 +329,7 @@ export default {
         bottom: unset;
         position: unset;
         margin-top: -1rem;
+        z-index: 99;
 
         .van-checkbox {
             margin-left: 0.53333rem;

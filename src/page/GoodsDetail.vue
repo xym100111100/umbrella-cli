@@ -15,7 +15,9 @@
       <van-cell-group>
         <van-cell>
           <div class="page-goods-page-title">{{ goods.title }}</div>
-          <div class="page-goods-page-price">{{ formatPrice(goods.price) }}</div>
+          <div class="page-goods-page-price">
+            <span style="color: #ff0000">{{ formatPrice(goods.price) }}</span>
+          </div>
         </van-cell>
         <van-cell is-link @click="addShoppingCart">
           <template slot="title">
@@ -297,10 +299,7 @@ export default {
         display: flex;
         flex-direction: column;
         .van-icon {
-            // position: relative;
-            // padding: 2px;
             font-size: 0.8rem;
-            // top: -0.1rem;
             top: 0.04rem;
         }
     }
@@ -308,6 +307,7 @@ export default {
     &-main {
         overflow: auto;
         flex-grow: 1;
+        height: 10rem;
     }
 
     &-swipe {
@@ -318,10 +318,6 @@ export default {
 
     &-title {
         font-size: 1.2em;
-    }
-
-    &-price {
-        color: yellow;
     }
 
     &-express {
@@ -348,19 +344,19 @@ export default {
 }
 
 .goods-page-sku-img {
-    margin-left: 40px;
-    margin-top: 0px;
-    height: 30px;
-    width: 30px;
+    margin-left: 1.06667rem;
+    margin-top: 0;
+    height: 0.8rem;
+    width: 0.8rem;
 }
 
 .goods-page-sku-img img {
-    width: 30px;
-    height: 30px;
+    width: 0.8rem;
+    height: 0.8rem;
 }
 
 .detailDiv img {
-    width: 109%;
-    margin-left: -16px;
+    width: 10rem;
+    margin-left: -0.4rem;
 }
 </style>

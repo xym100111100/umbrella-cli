@@ -12,7 +12,7 @@
             <span style="font-size: 0.47333rem;">全部</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders" />
+            <order-card :orders="orders.list" />
           </div>
         </van-tab>
         <van-tab>
@@ -20,7 +20,7 @@
             <span style="font-size: 0.47333rem;">待付款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders" />
+            <order-card :orders="orders.list" />
           </div>
         </van-tab>
         <van-tab>
@@ -28,7 +28,7 @@
             <span style="font-size: 0.47333rem;">待收货</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders" />
+            <order-card :orders="orders.list" />
           </div>
         </van-tab>
         <van-tab>
@@ -36,7 +36,7 @@
             <span style="font-size: 0.47333rem;">待返款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders" />
+            <order-card :orders="orders.list" />
           </div>
         </van-tab>
       </van-tabs>
@@ -80,6 +80,7 @@ export default {
         orders() {
             list({
                 onSuccess: data => {
+                  console.log(data);
                     this.orders = data;
                     // 数据全部加载完成
                     this.finished = true;
