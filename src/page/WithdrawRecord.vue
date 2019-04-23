@@ -1,7 +1,7 @@
 <template>
   <div class="withdraw-record-view">
     <div class="withdraw-record-navbar">
-      <van-nav-bar title="提现记录" left-arrow/>
+      <van-nav-bar title="提现记录" left-arrow @click-left="handleBack"/>
     </div>
     <div class="withdraw-record-list">
       <ul class="withdraw-record-list-title">
@@ -45,110 +45,16 @@ export default {
                     tradeAmount: '19.44',
                     tradeTime: '2019-04-22 11:23:28',
                 },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
-                {
-                    id: '9876543211231111',
-                    tradeTitle: '阿萨德撒大大多撒二翁绕弯儿翁绕弯儿无若',
-                    tradeAmount: '20.44',
-                    tradeTime: '2019-04-22 11:23:28',
-                },
             ],
         };
+    },
+    
+    methods: {
+        // 回退
+        handleBack() {
+            console.log(111);
+            this.$router.go(-1);
+        },
     },
 };
 </script>
@@ -185,7 +91,6 @@ export default {
     }
 
     .withdraw-record-list {
-        
         ul {
             list-style: none;
             padding: 0;

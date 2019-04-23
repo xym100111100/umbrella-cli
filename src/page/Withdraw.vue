@@ -1,7 +1,7 @@
 <template>
   <div class="withdraw-view">
     <div class="withdraw-navbar">
-      <van-nav-bar title="提现" left-arrow right-text="记录"></van-nav-bar>
+      <van-nav-bar title="提现" @click-left="handleBack" @click-right="withdrawRecord" left-arrow right-text="记录"></van-nav-bar>
     </div>
     <div>
       <van-cell>
@@ -103,6 +103,18 @@ export default {
             },
         };
     },
+
+    methods: {
+        // 回退
+        handleBack() {
+            this.$router.go(-1);
+        },
+
+        // 提现记录
+        withdrawRecord() {
+            this.$router.push('withdraw-record');
+        }
+    }
 };
 </script>
 

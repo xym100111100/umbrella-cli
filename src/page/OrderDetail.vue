@@ -1,7 +1,7 @@
 <template>
   <div class="order-detail-view">
     <div class="order-detail-navbar">
-      <van-nav-bar title="订单详情" left-arrow/>
+      <van-nav-bar title="订单详情" left-arrow @click-left="handleBack"/>
     </div>
     <div style="height: 14.5rem; overflow:auto;">
       <div class="order-step">
@@ -83,6 +83,11 @@ export default {
     methods: {
         formatPrice(price) {
             return (price / 100).toFixed(2);
+        },
+
+        // 回退
+        handleBack() {
+            this.$router.go(-1);
         },
 
         order() {

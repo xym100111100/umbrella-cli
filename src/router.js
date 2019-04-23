@@ -139,6 +139,14 @@ const routes = [
         },
     },
     {
+        name: 'address',
+        path: '/address',
+        component: () => import('./page/Address'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),
