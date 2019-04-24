@@ -3,8 +3,8 @@ const Mock = require('mockjs');
 
 const template = {
     pageSize: 8, // 每页大小
-    pages: 11, // 总页数
-    total: '83', // 总记录数
+    pages: 2, // 总页数
+    total: '16', // 总记录数
     'list|8': [
         {
             'id|1000000000000000-9999999999999999': 1,
@@ -34,7 +34,9 @@ exports.list = function(req, res, u) {
     if (!url || Object.prototype.toString.call(url) !== '[object String]') {
         url = req.url; // eslint-disable-line
     }
+    const params = Url.parse(url, true).query;
 
     const data = Mock.mock(template);
+    data.pageNum = params.pageNum - 0 || 1;
     return res.json(data);
 };

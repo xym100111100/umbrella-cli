@@ -6,44 +6,46 @@
         <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage"/>
       </div>
       <div style="height: 11.78rem; overflow:auto;">
-        <div
-          class="card-goods"
-          style="display: flex; flex: 1; align-items: center;"
-          v-for="item in goods"
-          :key="item.id"
-          :name="item.id"
-        >
-          <div class="cart-checkbox">
-            <van-checkbox-group v-model="checkedGoods">
-              <van-checkbox class="card-goods__item" :key="item.id" :name="item.id"></van-checkbox>
-            </van-checkbox-group>
-          </div>
-          <div class="cart-card">
-            <van-card
-              @touchstart.native="deleteGoods(item.id)"
-              @touchend.native="gotouchend"
-              :title="item.title"
-              :desc="item.desc"
-              :num="item.num"
-              :price="0"
-              :origin-price="formatPrice(item.price)"
-              thumb-link="#/goods-detail"
-              :thumb="item.thumb"
-            />
-            <div class="cart-stepper">
-              <van-stepper
-                :key="item.id"
-                :name="item.id"
-                v-model="item.num"
-                :integer="true"
-                :max="99"
-                @plus="stepperPlus(item)"
-                @minus="stepperMinus(item)"
-                @blur="stepperBlur(item)"
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="handleLoad">
+          <div
+            class="card-goods"
+            style="display: flex; flex: 1; align-items: center;"
+            v-for="item in goods"
+            :key="item.id"
+            :name="item.id"
+          >
+            <div class="cart-checkbox">
+              <van-checkbox-group v-model="checkedGoods">
+                <van-checkbox class="card-goods__item" :key="item.id" :name="item.id"></van-checkbox>
+              </van-checkbox-group>
+            </div>
+            <div class="cart-card">
+              <van-card
+                @touchstart.native="deleteGoods(item.id)"
+                @touchend.native="gotouchend"
+                :title="item.title"
+                :desc="item.desc"
+                :num="item.num"
+                :price="0"
+                :origin-price="formatPrice(item.price)"
+                thumb-link="#/goods-detail"
+                :thumb="item.thumb"
               />
+              <div class="cart-stepper">
+                <van-stepper
+                  :key="item.id"
+                  :name="item.id"
+                  v-model="item.num"
+                  :integer="true"
+                  :max="99"
+                  @plus="stepperPlus(item)"
+                  @minus="stepperMinus(item)"
+                  @blur="stepperBlur(item)"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </van-list>
       </div>
     </div>
     <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
@@ -82,6 +84,7 @@ import {
     Col,
     Stepper,
     Button,
+    List,
 } from 'vant';
 
 import { list as goodsList } from '../svc/Cart';
@@ -100,6 +103,7 @@ export default {
         [Col.name]: Col,
         [Stepper.name]: Stepper,
         [Button.name]: Button,
+        [List.name]: List,
     },
 
     data() {
@@ -113,7 +117,10 @@ export default {
             isShowManage: false,
             // 是否显示提交页面
             isShowSubmit: true,
-            goods: this.goods(),
+            goods: [],
+            pageNum: 0, // 当前页码
+            loading: false, // 是否正在加载商品列表
+            finished: false, // 是否全部加载完成商品列表
         };
     },
 
@@ -188,7 +195,6 @@ export default {
             // 清除定时器
             clearTimeout(this.Loop);
             if (this.Loop != 0) {
-                console.log(111);
             }
         },
 
@@ -201,12 +207,18 @@ export default {
         },
 
         // 获取商品数据
-        goods() {
+        handleLoad() {
+            const params = { pageNum: this.pageNum + 1 };
             goodsList({
+                params,
                 onSuccess: data => {
-                    this.goods = data.list;
-                    // 数据全部加载完成
-                    this.finished = true;
+                    this.pageNum = data.pageNum;
+                    this.goods.push(...data.list);
+                    // 如果是最后一页
+                    if (data.pages == data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    }
                 },
                 onFinish: () => {
                     // 结束加载状态

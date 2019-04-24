@@ -2,17 +2,30 @@
   <div class="order-view">
     <div class="order-navbar">
       <van-nav-bar title="我的订单" v-on:click-left="onClickLeft" left-arrow>
-        <van-icon name="search" size=".8rem" slot="right" />
+        <van-icon name="search" size=".8rem" slot="right"/>
       </van-nav-bar>
     </div>
     <div class="order-tabs">
-      <van-tabs v-model="active" swipeable="true" title-active-color="red" background="#fafafa00" title-inactive-color="#333">
+      <van-tabs
+        v-model="active"
+        :swipeable="true"
+        title-active-color="ff0000"
+        background="#fafafa00"
+        title-inactive-color="#333"
+      >
         <van-tab>
           <div slot="title">
             <span style="font-size: 0.47333rem;">全部</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders.list" />
+            <van-list
+              v-model="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="handleLoad"
+            >
+              <order-card :orders="orders"/>
+            </van-list>
           </div>
         </van-tab>
         <van-tab>
@@ -20,7 +33,7 @@
             <span style="font-size: 0.47333rem;">待付款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders.list" />
+            <order-card :orders="orders"/>
           </div>
         </van-tab>
         <van-tab>
@@ -28,7 +41,7 @@
             <span style="font-size: 0.47333rem;">待收货</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders.list" />
+            <order-card :orders="orders"/>
           </div>
         </van-tab>
         <van-tab>
@@ -36,7 +49,7 @@
             <span style="font-size: 0.47333rem;">待返款</span>
           </div>
           <div style="overflow: auto; height: 13.39rem;">
-            <order-card :orders="orders.list" />
+            <order-card :orders="orders"/>
           </div>
         </van-tab>
       </van-tabs>
@@ -45,7 +58,7 @@
 </template>
 
 <script>
-import { NavBar, Icon, Tab, Tabs, Cell, Tag, Card, Button } from 'vant';
+import { NavBar, Icon, Tab, Tabs, Cell, Tag, Card, Button, List } from 'vant';
 import OrderCard from '../comp/order/OrderCard.vue';
 
 import { list } from '../svc/ord/Order';
@@ -61,12 +74,16 @@ export default {
         [Card.name]: Card,
         [Button.name]: Button,
         [OrderCard.name]: OrderCard,
+        [List.name]: List,
     },
 
     data() {
         return {
             active: 0,
-            orders: this.orders(),
+            orders: [],
+            pageNum: 0, // 当前页码
+            loading: false, // 是否正在加载商品列表
+            finished: false, // 是否全部加载完成商品列表
         };
     },
 
@@ -77,13 +94,19 @@ export default {
         onClickLeft() {
             this.$router.go(-1);
         },
-        orders() {
+
+        handleLoad() {
+            const params = { pageNum: this.pageNum + 1 };
             list({
+                params,
                 onSuccess: data => {
-                  console.log(data);
-                    this.orders = data;
-                    // 数据全部加载完成
-                    this.finished = true;
+                    this.pageNum = data.pageNum;
+                    this.orders.push(...data.list);
+                    // 如果是最后一页
+                    if (data.pages == data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    }
                 },
                 onFinish: () => {
                     // 结束加载状态
