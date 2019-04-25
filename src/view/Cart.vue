@@ -194,7 +194,7 @@ export default {
         gotouchend() {
             // 清除定时器
             clearTimeout(this.Loop);
-            if (this.Loop != 0) {
+            if (this.Loop !== 0) {
             }
         },
 
@@ -215,7 +215,7 @@ export default {
                     this.pageNum = data.pageNum;
                     this.goods.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages == data.pageNum) {
+                    if (data.pages === data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
                     }
@@ -246,7 +246,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@cart-background-color: #fafafa;
+@cart-background-color: #f2f3f5;
 #main-page {
     height: 93%;
 }
@@ -280,10 +280,11 @@ export default {
         }
 
         .card-goods {
-            padding: 10px 0;
-            margin: 0.3rem;
+            padding: 0.26667rem 0;
+            margin: 0.13rem;
             background-color: white;
             border-radius: 0.3rem;
+                margin-left: .069rem;
 
             &__item {
                 position: relative;
@@ -374,3 +375,11 @@ export default {
     margin-left: -0.16rem;
 }
 </style>
+
+<style>
+.van-list > .van-list__finished-text {
+    text-align: center;
+    padding-right: 0rem;
+}
+</style>
+

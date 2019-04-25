@@ -144,6 +144,11 @@ export default {
         }
     }
 }
+
+.van-list > .van-list__finished-text {
+    text-align: center;
+    padding-right: 0rem;
+}
 </style>
 
 
