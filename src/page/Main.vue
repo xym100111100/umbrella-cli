@@ -9,9 +9,9 @@
       <van-tabbar-item icon="tabbar-find" to="find">
         查找
       </van-tabbar-item>
-      <van-tabbar-item icon="tabbar-msg" to="msg">
+      <!-- <van-tabbar-item icon="tabbar-msg" to="msg">
         消息
-      </van-tabbar-item>
+      </van-tabbar-item> -->
       <van-tabbar-item icon="tabbar-cart" to="cart">
         购物车
       </van-tabbar-item>
@@ -28,9 +28,9 @@ import { Tabbar, TabbarItem } from 'vant';
 const routeIndex = {
     home: 0,
     find: 1,
-    msg: 2,
-    cart: 3,
-    mine: 4,
+  //  msg: 2,
+    cart: 2,
+    mine: 3,
 };
 
 export default {

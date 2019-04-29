@@ -41,9 +41,9 @@ export default {
     display: none;
 }
 
-body {
+html,body {
     // font-size: 24px;
-    background-color: #f8f8f8;
+    background-color: #fafafa;
     -webkit-font-smoothing: antialiased;
 }
 </style>

@@ -130,7 +130,7 @@
             </div>
             <!-- 我的設置 -->
             <div class="content-setting">
-                <div>
+                <div v-on:click="setAddress" >
                     <van-icon color="#7d7e80" name="dizhi" />
                     <span>收货地址</span>
                 </div>
@@ -178,6 +178,9 @@ export default {
         },
         getMyPoint() {
             this.$router.push('/my-point');
+        },
+        setAddress() {
+            this.$router.push('/address');
         },
     },
 };
