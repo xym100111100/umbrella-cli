@@ -20,8 +20,8 @@
         <div class="user-content">
 
             <!-- 我的订单 -->
-            <div class=" content-order"  v-on:click="getOrderList" >
-                <div class="order-top">
+            <div class=" content-order"   >
+                <div class="order-top" v-on:click="getOrderList">
                     <span class="top-right">
                         我的订单
                     </span>
@@ -54,12 +54,13 @@
                             <br/>
                             <span> 待结算</span>
                         </van-col>
-
-                        <van-col style="margin-left:0.2rem;" span="5">
+                        <div @click="getReturnGoods">
+                        <van-col style="margin-left:0.2rem;" span="5" >
                             <van-icon color="#f40" name="dianhua" />
                             <br/>
                             <span>退款/售后</span>
                         </van-col>
+                        </div>
                     </van-row>
                 </div>
             </div>
@@ -181,6 +182,9 @@ export default {
         },
         setAddress() {
             this.$router.push('/address');
+        },
+        getReturnGoods() {
+            this.$router.push('/return-goods');
         },
     },
 };

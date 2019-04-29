@@ -6,7 +6,9 @@ const Order = require('./ord/Order');
 const OrderDetail = require('./ord/OrderDetail');
 const AfcAccount = require('./afc/AfcAccount');
 const PntAccount = require('./pnt/PntAccount');
+const ReturnGoods = require('./ord/ReturnGoods');
 const getGoodsData = require('./onl/getGoodsData');
+
 const mock = {
     // 获取每日推荐
     // 'GET /onl-svr/onl/onlinepromotion/list': listOnlOnlinePromo,
@@ -17,7 +19,8 @@ const mock = {
     'GET /onl-svr/onl/cart': Cart.goodsList,
     'GET /ord-svr/ord/order': Order.list,
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
-
+    'GET /ord-svr/ord/ReturnGoods': ReturnGoods.goodsList,
+    
     'GET /afc-svr/afc/account': AfcAccount.getById,
 
     'GET /pnt-svr/pnt/account': PntAccount.getById,

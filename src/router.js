@@ -147,6 +147,14 @@ const routes = [
         },
     },
     {
+        name: 'return-goods',
+        path: '/return-goods',
+        component: () => import('./page/ReturnGoods'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'test1',
         path: '/test1',
         component: () => import('./page/test/Test1'),
