@@ -12,20 +12,26 @@
       />
     </div>
     <div class="goods-title">
-      <van-tag
+      <!-- <van-tag
         v-if="item.cashbackAmount!==0&&item.subjectType!==1"
         type="primary"
-        mark
-        plain
+        round
+        
       >返现</van-tag>
       <van-tag
         v-if="item.subjectType===1"
-        type="success"
-        mark
-      >拼全返</van-tag>
-      {{item.onlineTitle}}
+        color="red"
+        round
+      >拼全返</van-tag> -->
+       <span>{{item.onlineTitle}}</span> 
+     <!-- {{item.onlineTitle}}-->
     </div>
-    <div class="goods-bottom">
+    <div style="margin-top:0.3rem;"  >
+        <span v-if="item.cashbackAmount!==0&&item.subjectType!==1"  style="padding:0 0.2rem;margin:0.24rem;background: rgba(255,87,6, 0.08); color:#FF5706;" >返现</span>
+          <span  v-if="item.subjectType===1"  style="padding:0 0.2rem;margin:0.24rem;background: rgba(255,0,0, 0.7); color:white;" >拼全返</span>
+
+    </div>
+    <div class="goods-bottom" >
       <!-- 返现商品价格 -->
       <div
         class="goods-price"
@@ -38,7 +44,7 @@
         <div class="space"></div>
         <van-icon
           name="goodscard-cart"
-          color="#0f0"
+          color="red"
           size=".9rem"
         />
       </div>
@@ -53,7 +59,7 @@
         <div class="space"></div>
         <van-icon
           name="goodscard-cart"
-          color="#0f0"
+          color="red"
           size=".9rem"
         />
       </div>
@@ -125,20 +131,19 @@ export default {
         height: 1.2rem;
         overflow: hidden;
         font-weight: bolder;
-
         // 超出2行显示省略号
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-
         // 标记
         .van-tag {
             font-size: 0.3rem;
-            padding: 3px 8px 3px 5px;
+             padding: 5px 8px 5px 8px;
         }
     }
     // 商品价格
     .goods-bottom {
+  
         display: flex;
         padding: 0 2px 0.3rem 6px;
         // 普通商品价格
@@ -146,7 +151,7 @@ export default {
             flex-grow: 1;
             display: flex;
             align-items: flex-end;
-            padding: 8px 4px 1px;
+            padding: 0px 4px 1px;
             .goods-price-rmb {
                 flex-grow: 0;
                 color: red;
@@ -183,7 +188,7 @@ export default {
             flex-grow: 1;
             display: flex;
             align-items: flex-end;
-            padding: 8px 4px 1px;
+            padding: 0px 4px 1px;
             .space {
                 flex-grow: 1;
             }
@@ -213,6 +218,8 @@ export default {
             padding: 3px 0 0;
             margin-right: -0.04rem;
             margin-bottom: -0.06rem;
+           
+
         }
     }
 }

@@ -1,21 +1,11 @@
 <template>
   <div class="home-view">
-    <top
-      v-if="isShowTop"
-      @click="goTop"
-    />
+    <top v-if="isShowTop" @click="goTop" />
     <!-- <div>
       <van-search placeholder="请输入搜索关键词" />
     </div> -->
-    <van-pull-refresh
-      v-model="refreshing"
-      :disabled="isDisabledPullRefresh"
-      @refresh="handleRefresh"
-    >
-      <save-position
-        ref="savePosition"
-        @scroll="handleScroll"
-      >
+    <van-pull-refresh v-model="refreshing" :disabled="isDisabledPullRefresh" @refresh="handleRefresh">
+      <save-position ref="savePosition" @scroll="handleScroll">
         <!-- <div>
         <van-swipe :autoplay="10000">
           <van-swipe-item
@@ -33,60 +23,43 @@
       </div> -->
         <!-- 拼全返免单流程图片 -->
         <!-- <div > -->
-        <img
-          :src="fullBackBannerImg"
-          class="full-back-banner"
-          name="aaa"
-          @click="fullBackProcess"
-        />
+        <img :src="fullBackBannerImg" class="full-back-banner" name="aaa" @click="fullBackProcess" />
         <!-- </div> -->
 
         <!-- n宫格 -->
         <sticky>
-          <div
-            class="grid"
-            ref="grid"
-          >
+          <div class="grid" ref="grid">
             <!-- :style="stickyStyle" -->
             <van-row>
-              <van-col span="6">
-                <van-icon
-                  name="fullback"
-                  color="#00ff00"
-                />
-                <div class="label">拼全返</div>
-              </van-col>
-              <van-col span="6">
-                <van-icon
-                  name="order"
-                  color="#6495ed"
-                />
-                <div class="label">订单</div>
-              </van-col>
-              <van-col span="6">
-                <van-icon
-                  name="favoriteex"
-                  color="#ffc0cb"
-                />
-                <div class="label">收藏</div>
-              </van-col>
-              <van-col span="6">
-                <van-icon
-                  name="wallet"
-                  color="red"
-                />
-                <div class="label">钱包</div>
-              </van-col>
+              <div >
+                <van-col span="6">
+                  <van-icon name="fullback" color="red" />
+                  <div class="label">拼全返</div>
+                </van-col>
+              </div>
+              <div @click="getOrderList">
+                <van-col span="6">
+                  <van-icon name="order" color="red" />
+                  <div class="label">订单</div>
+                </van-col>
+              </div>
+              <div @click="getMyPoint" >
+                <van-col span="6">
+                  <van-icon name="favoriteex" color="red" />
+                  <div class="label">积分</div>
+                </van-col>
+              </div>
+              <div @click="getMyWallet">
+                <van-col span="6">
+                  <van-icon name="wallet" color="red" />
+                  <div class="label">钱包</div>
+                </van-col>
+              </div>
             </van-row>
           </div>
         </sticky>
 
-        <goods-list
-          v-if="!refreshing"
-          columnCount="2"
-          :load="listOnlOnlinePromo"
-          :load-params="{ promotionType: 1 }"
-        />
+        <goods-list v-if="!refreshing" columnCount="2" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
         <!-- <div style="height:99px"></div>
         <div style="height:9999px"></div> -->
       </save-position>
@@ -178,7 +151,16 @@ export default {
          * 拼全返流程
          */
         fullBackProcess() {
-          this.$router.push('./full-back-process');
+            this.$router.push('./full-back-process');
+        },
+        getOrderList() {
+            this.$router.push('/order');
+        },
+        getMyWallet() {
+            this.$router.push('/my-wallet');
+        },
+        getMyPoint() {
+            this.$router.push('/my-point');
         },
     },
 };

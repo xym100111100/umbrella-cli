@@ -211,7 +211,7 @@ export default {
         },
         moreGoods(classId) {
             console.log('sss');
-            this.$router.push('/order');
+            this.$router.push('/more-goods');
         },
         handleLoad() {
             getGoodsData({

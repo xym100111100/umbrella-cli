@@ -131,6 +131,14 @@ const routes = [
         },
     },
     {
+        name: 'more-goods',
+        path: '/more-goods',
+        component: () => import('./page/MoreGoods'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'withdraw-record',
         path: '/withdraw-record',
         component: () => import('./page/WithdrawRecord'),
