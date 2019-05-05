@@ -59,7 +59,7 @@
           </div>
         </sticky>
 
-        <goods-list v-if="!refreshing" columnCount="2" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
+        <goods-list v-if="!refreshing" columnCount="1" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
         <!-- <div style="height:99px"></div>
         <div style="height:9999px"></div> -->
       </save-position>
