@@ -87,7 +87,7 @@ import {
     List,
 } from 'vant';
 
-import { list as goodsList } from '../svc/Cart';
+import { list as goodsList } from '../../svc/Cart';
 
 export default {
     components: {

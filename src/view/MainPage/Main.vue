@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/css/custom.less';
+@import '../../assets/css/custom.less';
 
 #main-page {
     position: absolute;

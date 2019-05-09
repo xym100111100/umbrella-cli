@@ -111,7 +111,7 @@ import {
     Button,
 } from 'vant';
 
-import { goodsList, skuList } from '../svc/onl/GoodsDetail';
+import { goodsList, skuList } from '../../svc/onl/GoodsDetail';
 
 export default {
     components: {

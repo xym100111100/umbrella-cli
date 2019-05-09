@@ -45,7 +45,7 @@
 <script>
 import Vue from 'vue';
 import { Search, TreeSelect, Icon, Lazyload } from 'vant';
-import { getGoodsData } from '../svc/onl/OnlOnlinePromo';
+import { getGoodsData } from '../../svc/onl/OnlOnlinePromo';
 // Lazyload插件需要初始化
 Vue.use(Lazyload, {
     lazyComponent: true,

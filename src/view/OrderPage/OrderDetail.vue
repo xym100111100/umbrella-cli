@@ -57,9 +57,9 @@
 
 <script>
 import { NavBar, Step, Steps, Icon, Cell, Card, Tag } from 'vant';
-import OrderCard from '../comp/order/OrderCard.vue';
+import OrderCard from '../../comp/order/OrderCard.vue';
 
-import { list } from '../svc/ord/OrderDetail';
+import { list } from '../../svc/ord/OrderDetail';
 
 export default {
     components: {

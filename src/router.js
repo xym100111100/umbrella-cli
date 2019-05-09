@@ -14,12 +14,12 @@ const routes = [
         name: 'main',
         path: '/main',
         redirect: '/home',
-        component: () => import('./page/Main'),
+        component: () => import('./view/MainPage/Main'),
         children: [
             {
                 name: 'home',
                 path: '/home',
-                component: () => import('./view/Home'),
+                component: () => import('./view/HomePage/Home'),
                 meta: {
                     index: 1,
                 },
@@ -27,7 +27,7 @@ const routes = [
             {
                 name: 'find',
                 path: '/find',
-                component: () => import('./view/Find'),
+                component: () => import('./view/FindPage/Find'),
                 meta: {
                     index: 1,
                 },
@@ -35,7 +35,7 @@ const routes = [
             {
                 name: 'msg',
                 path: '/msg',
-                component: () => import('./view/Msg'),
+                component: () => import('./view/MsgPage/Msg'),
                 meta: {
                     index: 1,
                 },
@@ -43,7 +43,7 @@ const routes = [
             {
                 name: 'cart',
                 path: '/cart',
-                component: () => import('./view/Cart'),
+                component: () => import('./view/CartPage/Cart'),
                 meta: {
                     index: 1,
                 },
@@ -51,7 +51,7 @@ const routes = [
             {
                 name: 'mine',
                 path: '/mine',
-                component: () => import('./view/Mine'),
+                component: () => import('./view/MinePage/Mine'),
                 meta: {
                     index: 1,
                 },
@@ -61,7 +61,7 @@ const routes = [
     {
         name: 'goods-detail',
         path: '/goods-detail',
-        component: () => import('./page/GoodsDetail'),
+        component: () => import('./view/GoodsPage/GoodsDetail'),
         meta: {
             index: 20,
         },
@@ -69,7 +69,7 @@ const routes = [
     {
         name: 'login-fail',
         path: '/login-fail',
-        component: () => import('./page/LoginFail'),
+        component: () => import('./view/LoginPage/LoginFail'),
         meta: {
             index: 99,
         },
@@ -77,7 +77,7 @@ const routes = [
     {
         name: 'full-back-process',
         path: '/full-back-process',
-        component: () => import('./page/FullBackProcess'),
+        component: () => import('./view/HomePage/FullBackProcess'),
         meta: {
             index: 2,
         },
@@ -85,7 +85,7 @@ const routes = [
     {
         name: 'confirm-order',
         path: '/confirm-order',
-        component: () => import('./page/ConfirmOrder'),
+        component: () => import('./view/OrderPage/ConfirmOrder'),
         meta: {
             index: 2,
         },
@@ -93,7 +93,7 @@ const routes = [
     {
         name: 'order',
         path: '/order',
-        component: () => import('./page/Order'),
+        component: () => import('./view/OrderPage/Order'),
         meta: {
             index: 2,
         },
@@ -101,7 +101,7 @@ const routes = [
     {
         name: 'order-detail',
         path: '/order-detail',
-        component: () => import('./page/OrderDetail'),
+        component: () => import('./view/OrderPage/OrderDetail'),
         meta: {
             index: 2,
         },
@@ -109,7 +109,7 @@ const routes = [
     {
         name: 'my-wallet',
         path: '/my-wallet',
-        component: () => import('./page/MyWallet'),
+        component: () => import('./view/WalletPage/MyWallet'),
         meta: {
             index: 2,
         },
@@ -117,7 +117,7 @@ const routes = [
     {
         name: 'my-point',
         path: '/my-point',
-        component: () => import('./page/MyPoint'),
+        component: () => import('./view/PointPage/MyPoint'),
         meta: {
             index: 2,
         },
@@ -125,7 +125,7 @@ const routes = [
     {
         name: 'withdraw',
         path: '/withdraw',
-        component: () => import('./page/Withdraw'),
+        component: () => import('./view/WalletPage/Withdraw'),
         meta: {
             index: 2,
         },
@@ -133,7 +133,7 @@ const routes = [
     {
         name: 'more-goods',
         path: '/more-goods',
-        component: () => import('./page/MoreGoods'),
+        component: () => import('./view/GoodsPage/MoreGoods'),
         meta: {
             index: 2,
         },
@@ -141,7 +141,7 @@ const routes = [
     {
         name: 'withdraw-record',
         path: '/withdraw-record',
-        component: () => import('./page/WithdrawRecord'),
+        component: () => import('./view/WalletPage/WithdrawRecord'),
         meta: {
             index: 2,
         },
@@ -149,7 +149,7 @@ const routes = [
     {
         name: 'address',
         path: '/address',
-        component: () => import('./page/Address'),
+        component: () => import('./view/AddressPage/Address'),
         meta: {
             index: 2,
         },
@@ -157,16 +157,16 @@ const routes = [
     {
         name: 'return-goods',
         path: '/return-goods',
-        component: () => import('./page/ReturnGoods'),
+        component: () => import('./view/OrderPage/ReturnGoods'),
         meta: {
             index: 2,
         },
     },
-    {
-        name: 'test1',
-        path: '/test1',
-        component: () => import('./page/test/Test1'),
-    },
+    // {
+    //     name: 'test1',
+    //     path: '/test1',
+    //     component: () => import('./page/test/Test1'),
+    // },
 ];
 
 const router = new Router({

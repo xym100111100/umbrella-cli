@@ -143,7 +143,7 @@
 
 <script>
 import { Row, Col, Icon } from 'vant';
-import { getAccountById, getPntAccount } from '../svc/Mine';
+import { getAccountById, getPntAccount } from '../../svc/Mine';
 
 export default {
     components: {

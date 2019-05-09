@@ -83,7 +83,7 @@ import {
     Picker,
     Popup,
 } from 'vant';
-import { list as goodsList } from '../svc/ord/ReturnGoods';
+import { list as goodsList } from '../../svc/ord/ReturnGoods';
 export default {
     components: {
         [NavBar.name]: NavBar,

@@ -59,7 +59,7 @@
           </div>
         </sticky>
 
-        <goods-list v-if="!refreshing" columnCount="1" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
+        <goods-list v-if="!refreshing" columnCount="2" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
         <!-- <div style="height:99px"></div>
         <div style="height:9999px"></div> -->
       </save-position>
@@ -70,12 +70,12 @@
 <script>
 import Vue from 'vue';
 import { PullRefresh, Search, Swipe, SwipeItem, Lazyload, Row, Col, Icon, List, Cell, Toast } from 'vant';
-import { isSupportSticky } from '../util/SysUtils.js';
-import SavePosition from '../comp/common/SavePosition.vue';
-import Sticky from '../comp/common/Sticky.vue';
-import Top from '../comp/common/Top.vue';
-import GoodsList from '../comp/goods/GoodsList.vue';
-import { list as listOnlOnlinePromo } from '../svc/onl/OnlOnlinePromo';
+import { isSupportSticky } from '../../util/SysUtils.js';
+import SavePosition from '../../comp/common/SavePosition.vue';
+import Sticky from '../../comp/common/Sticky.vue';
+import Top from '../../comp/common/Top.vue';
+import GoodsList from '../../comp/goods/GoodsList.vue';
+import { list as listOnlOnlinePromo } from '../../svc/onl/OnlOnlinePromo';
 
 // Lazyload插件需要初始化
 Vue.use(Lazyload);
@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/css/custom.less';
+@import '../../assets/css/custom.less';
 
 .home-view {
     // // 搜索

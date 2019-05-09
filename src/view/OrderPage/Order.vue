@@ -59,9 +59,9 @@
 
 <script>
 import { NavBar, Icon, Tab, Tabs, Cell, Tag, Card, Button, List } from 'vant';
-import OrderCard from '../comp/order/OrderCard.vue';
+import OrderCard from '../../comp/order/OrderCard.vue';
 
-import { list } from '../svc/ord/Order';
+import { list } from '../../svc/ord/Order';
 
 export default {
     components: {
