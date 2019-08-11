@@ -7,7 +7,7 @@ const proxy = require('./proxy.config');
 
 module.exports = {
     outputDir: 'dist',
-    publicPath: '/damai-wxg/',
+    publicPath: '/umbrella-cli/',
     css: {
         loaderOptions: {
             postcss: {

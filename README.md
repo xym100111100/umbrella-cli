@@ -1,4 +1,4 @@
-# damai-wxg
+# umbrella-cli
 
 ## Project setup
 
