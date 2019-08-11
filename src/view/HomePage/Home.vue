@@ -23,13 +23,13 @@
       </div> -->
         <!-- 拼全返免单流程图片 -->
         <!-- <div > -->
-        <img :src="fullBackBannerImg" class="full-back-banner" name="aaa" @click="fullBackProcess" />
+        <!-- <img :src="fullBackBannerImg" class="full-back-banner" name="aaa" @click="fullBackProcess" /> -->
         <!-- </div> -->
 
         <!-- n宫格 -->
-        <sticky>
+        <!-- <sticky>
           <div class="grid" ref="grid">
-            <!-- :style="stickyStyle" -->
+             :style="stickyStyle" 
             <van-row>
               <div >
                 <van-col span="6">
@@ -57,7 +57,7 @@
               </div>
             </van-row>
           </div>
-        </sticky>
+        </sticky> -->
 
         <goods-list v-if="!refreshing" columnCount="2" :load="listOnlOnlinePromo" :load-params="{ promotionType: 1 }" />
         <!-- <div style="height:99px"></div>

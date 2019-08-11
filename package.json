@@ -1,67 +1,68 @@
 {
-    "name": "damai-wxg",
-    "version": "1.0.0",
-    "description": "大卖网微信公众号网站",
-    "author": "zbz",
-    "license": "MIT",
-    "private": true,
-    "repository": "https://www.duamai.com",
-    "scripts": {
-        "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint",
-        "start": "vue-cli-service serve",
-        "test:util": "mocha test/util/*.test.js --require @babel/register",
-        "help": "vue-cli-service --help"
-    },
-    "dependencies": {
-        "amfe-flexible": "^2.2.1",
-        "vant": "^1.6.5",
-        "vue": "^2.5.22",
-        "vue-navigation": "^1.1.4",
-        "vue-router": "^3.0.2",
-        "weixin-js-sdk": "^1.4.0-test"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.1.2",
-        "@babel/register": "^7.0.0",
-        "@babel/runtime": "^7.1.2",
-        "@vue/cli-plugin-babel": "^3.0.5",
-        "@vue/cli-plugin-eslint": "^3.0.4",
-        "@vue/cli-service": "^3.0.4",
-        "@vue/eslint-config-prettier": "^3.0.4",
-        "axios": "^0.18.0",
-        "babel-eslint": "^10.0.1",
-        "babel-plugin-import": "^1.9.1",
-        "chai": "^4.2.0",
-        "cross-env": "^5.2.0",
-        "eslint": "^5.7.0",
-        "eslint-plugin-vue": "^5.1.0",
-        "less": "^3.0.4",
-        "less-loader": "^4.1.0",
-        "lodash.camelcase": "^4.3.0",
-        "mocha": "^5.2.0",
-        "mockjs": "^1.0.1-beta3",
-        "postcss-pxtorem": "^4.0.1",
-        "vue-template-compiler": "^2.5.22",
-        "webpack": "^4.21.0",
-        "webpack-api-mocker": "^1.5.15"
-    },
-    "babel": {
-        "presets": [
-            "@babel/env"
-        ],
-        "plugins": [
-            "@babel/transform-runtime"
-        ]
-    },
-    "postcss": {
-        "plugins": {
-            "autoprefixer": {}
-        }
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not ie <= 8"
+  "name": "damai-wxg",
+  "version": "1.0.0",
+  "description": "大卖网微信公众号网站",
+  "author": "zbz",
+  "license": "MIT",
+  "private": true,
+  "repository": "https://www.duamai.com",
+  "scripts": {
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve",
+    "test:util": "mocha test/util/*.test.js --require @babel/register",
+    "help": "vue-cli-service --help"
+  },
+  "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "vant": "^1.6.5",
+    "vue": "^2.5.22",
+    "vue-navigation": "^1.1.4",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.1",
+    "weixin-js-sdk": "^1.4.0-test"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.4",
+    "@vue/cli-service": "^3.0.4",
+    "@vue/eslint-config-prettier": "^3.0.4",
+    "axios": "^0.18.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.9.1",
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.7.0",
+    "eslint-plugin-vue": "^5.1.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "lodash.camelcase": "^4.3.0",
+    "mocha": "^5.2.0",
+    "mockjs": "^1.0.1-beta3",
+    "postcss-pxtorem": "^4.0.1",
+    "vue-template-compiler": "^2.5.22",
+    "webpack": "^4.21.0",
+    "webpack-api-mocker": "^1.5.15"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ],
+    "plugins": [
+      "@babel/transform-runtime"
     ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

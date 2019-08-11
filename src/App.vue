@@ -1,11 +1,11 @@
 <template>
-    <transition :name="transitionName">
-        <!-- <transition name="fade" mode="out-in"> -->
-        <!-- @after-leave="afterLeave" -->
-        <keep-alive>
-            <router-view class="transition-view" />
-        </keep-alive>
-    </transition>
+  <transition :name="transitionName">
+    <!-- <transition name="fade" mode="out-in"> -->
+    <!-- @after-leave="afterLeave" -->
+    <keep-alive>
+      <router-view class="transition-view" />
+    </keep-alive>
+  </transition>
 </template>
 
 <script>
@@ -14,6 +14,13 @@ export default {
         return {
             transitionName: 'slide-left',
         };
+    },
+    created() {
+        const user = {
+            name: '小明同学',
+            id:1,
+        };
+        this.$store.dispatch('setUser', user);
     },
     // 接着在父组件内
     // watch $route 决定使用哪种过渡
@@ -41,9 +48,13 @@ export default {
     display: none;
 }
 
-html,body {
+html,
+body {
     // font-size: 24px;
     background-color: #fafafa;
     -webkit-font-smoothing: antialiased;
+    
 }
+
+
 </style>

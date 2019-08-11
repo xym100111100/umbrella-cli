@@ -1,22 +1,22 @@
 <template>
   <!-- 主框架页面 -->
-  <div id="main-page">
+  <div id="main-page"  >
     <router-view class="main-content" />
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="tabbar-home" to="home" >
+      <van-tabbar-item icon="shouye2" to="home"  >
         首页
       </van-tabbar-item>
       <van-tabbar-item icon="tabbar-find" to="find">
         查找
       </van-tabbar-item>
-      <!-- <van-tabbar-item icon="tabbar-msg" to="msg">
+       <van-tabbar-item icon="tabbar-msg" to="msg">
         消息
-      </van-tabbar-item> -->
-      <van-tabbar-item icon="tabbar-cart" to="cart">
-        购物车
+      </van-tabbar-item> 
+      <van-tabbar-item icon="xihuan" to="cart">
+        喜欢
       </van-tabbar-item>
       <van-tabbar-item icon="tabbar-mine" to="mine">
-        我的
+        我
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -28,9 +28,9 @@ import { Tabbar, TabbarItem } from 'vant';
 const routeIndex = {
     home: 0,
     find: 1,
-  //  msg: 2,
-    cart: 2,
-    mine: 3,
+    msg: 2,
+    cart: 3,
+    mine: 4,
 };
 
 export default {
@@ -91,14 +91,13 @@ export default {
             margin-top: -6px;
             // 图标下部的字体大小
             font-size: 0.35rem;
-            font-weight: bolder;
             .van-icon {
                 // 图标的大小
                 font-size: 0.9rem;
             }
         }
         .van-tabbar-item--active {
-            color: OrangeRed;
+            color: #7bbfea;
         }
         .van-submit-bar {
             border-top: 1px red solid;

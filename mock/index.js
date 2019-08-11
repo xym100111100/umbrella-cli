@@ -8,6 +8,7 @@ const AfcAccount = require('./afc/AfcAccount');
 const PntAccount = require('./pnt/PntAccount');
 const ReturnGoods = require('./ord/ReturnGoods');
 const getGoodsData = require('./onl/getGoodsData');
+const Chat = require('./Chat');
 
 const mock = {
     // 获取每日推荐
@@ -23,7 +24,8 @@ const mock = {
     
     'GET /afc-svr/afc/account': AfcAccount.getById,
 
-    'GET /pnt-svr/pnt/account': PntAccount.getById,
+     'GET /pnt-svr/pnt/account': PntAccount.getById,
+     'GET /chat-svr/chat': Chat.chatInfo,
 
 
 };

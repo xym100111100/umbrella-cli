@@ -1,45 +1,46 @@
 <template>
-    <div class="find-box">
-        <header>
-            <div class="find-header">
-                <van-search v-on:click="()=>selectGoods(2)" v-on:blur="()=>selectGoods(1)" input-align="center" background="#fafafa" placeholder="请输入搜索关键词" />
+  <div id="iems"  class="iems">
+    <header>
+      <div class="find-header">
+        <van-search
+          v-on:click="()=>selectGoods(2)"
+          v-on:blur="()=>selectGoods(1)"
+          input-align="center"
+          background="#fafafa"
+          v-bind:placeholder="goodsDates[0]"
+        />
+      </div>
+    </header>
+    <div class="find-content" v-if="selectGoodsStep==1">
+      <div class="content-link">
+        <ul id="link-item">
+          <li v-for="(goods,index) in goodsList" :key="goods.id">
+            <span v-on:click="chooseClass(index)">{{goods.class}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="wrap content-item" @scroll="handelScroll">
+        <lazy-component>
+          <div v-for="(i,goods) in goodsList" :key="goods.id">
+            <div class="item-title" @click="moreGoods">
+              <span>{{i.class}}</span>
+              <span>
+                查看更多
+                <van-icon name="qianjin" color="#555555" />
+              </span>
             </div>
-        </header>
-        <div v-if="selectGoodsStep==2" style="height:5rem;background:red">
+            <div class="item-goods">
+              <div class="goods-detail" v-for="img in i.imageList" :key="img.id">
+                <img v-lazy="img.src" />
 
-        </div>
-        <div class="find-content" v-if="selectGoodsStep==1">
-            <div class="content-link">
-                <ul id="link-item">
-                    <li v-for="(goods,index) in goodsList" :key="goods.id">
-                        <span v-on:click="chooseClass(index)">{{goods.class}}</span>
-                    </li>
-                </ul>
+                <span>秋冬新品</span>
+              </div>
             </div>
-            <div class="content-item" @scroll="handelScroll" id="handelScroll">
-                <lazy-component>
-                    <div v-for="(i,goods) in goodsList" :key="goods.id">
-                        <div class="item-title" @click="moreGoods">
-                            <span>{{i.class}}</span>
-                            <span>
-                                查看更多
-                                <van-icon name="qianjin" color="#555555" />
-                            </span>
-                        </div>
-                        <div class="item-goods">
-                            <div class="goods-detail" v-for="img in i.imageList" :key="img.id">
-                                <img v-lazy="img.src">
-
-                                <span>秋冬新品</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </lazy-component>
-            </div>
-
-        </div>
+          </div>
+        </lazy-component>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -60,7 +61,8 @@ export default {
     data() {
         return {
             selectGoodsStep: 1,
-            scrollTop: 0,
+            scrollTop: 200,
+            goodsDates:[],
             goodsList: [
                 {
                     class: '手机',
@@ -216,22 +218,15 @@ export default {
         handleLoad() {
             getGoodsData({
                 onSuccess: data => {
-                    //  console.log(data);
+                    this.goodsDates = data;
                 },
             });
         },
 
-        activated() {
-            console.log('ddd');
-            this.$el.scrollTop = this.scrollTop;
-        },
-
         handelScroll(e) {
             // 记录滚动位置
-            this.scrollTop = this.$el.scrollTop;
-            console.log(this.$el.scrollTop);
-            // 触发本组件自定义的滚动事件，将滚动位置传出去(目前自定义该事件是为了在PullRefresh中使用，让向上滚动与下拉刷新不要产生冲突)
-            this.$emit('scroll', e);
+            console.log(this.$store);
+            console.log(document.getElementById('iems').clientHeight);
         },
         chooseClass(index) {
             //去掉所有li的背景颜色和其子节点去掉span的左边框样式。
@@ -247,6 +242,31 @@ export default {
             chooseContentItemlChildren.children[0].style.borderLeft = 'solid 2px red';
             chooseContentItemlChildren.children[0].style.color = 'red';
         },
+    },
+    beforeCreate() {
+        console.log('-----1------beforeCreate1');
+        console.log(document.getElementById('iems'));
+        console.log('-----1------beforeCreate1');
+    },
+    beforeMounted() {
+        console.log('-----2------beforeCreate1');
+        console.log(document.getElementById('iems'));
+        console.log('-----2------beforeCreate1');
+    },
+    beforeUpdate() {
+        console.log('-----3------beforeUpdate1');
+        console.log(document.getElementById('iems').scrollTop = 200);
+        console.log('-----3------beforeCreate1');
+    },
+    updated() {
+        console.log('-----4------updated1');
+        console.log(document.getElementById('iems').scrollTop = 200);
+        console.log('-----4------beforeCreate1');
+    },
+    beforeDestroy() {
+        console.log('-----5------beforeDestroy1');
+        console.log(document.getElementById('iems'));
+        console.log('-----5------beforeCreate1');
     },
 };
 </script>
