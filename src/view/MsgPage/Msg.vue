@@ -2,7 +2,8 @@
     <div class="msg">
         <header>
             <div class="msg-header">
-                <span>米格</span>
+                <van-nav-bar title="name"  >
+                </van-nav-bar>
             </div>
         </header>
         <div class="msg-content">
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import { Search, Cell, CellGroup } from 'vant';
+import { Search, Icon, NavBar, Cell, CellGroup } from 'vant';
 import Test from './Text.vue';
 import WSocket from '../../socket.js';
 import { getChatInfo } from '../../svc/Chat';
@@ -53,6 +54,8 @@ export default {
         [Search.name]: Search,
         [Cell.name]: Cell,
         [CellGroup.name]: CellGroup,
+        [NavBar.name]: NavBar,
+        [Icon.name]: Icon,
         Test,
     },
 
@@ -118,6 +121,7 @@ export default {
                 },
             });
         },
+
         setMsgCount(message) {
             // 判断消息列表中是否有该用户
             // let chatUser = this.chatDataList.filter(chatItem => {
@@ -212,33 +216,43 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-* {
-    margin: 0;
-    padding: 0;
-}
-
 li {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 img {
     vertical-align: top;
     border: none;
+    margin: 0;
+    padding: 0;
 }
 
+body,
+html {
+    height: 100%;
+}
 .msg {
-    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     &-header {
-        background: #e9eae847;
-        border-bottom: 0.1rem solid #ededed;
-        text-align: center;
-        display: flex;
-        justify-content: center;
+        background: #fafafa;
+        border-bottom: 1px solid #ededed;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 99;
         span {
             font-size: 0.5rem;
         }
     }
     &-content {
+        position: absolute;
+        width: 100%;
+        top: 1.2rem;
+        background: yellow;
         .content-item {
             display: flex;
             align-items: center;
@@ -268,14 +282,20 @@ img {
                         align-items: center;
                         p {
                             font-size: 0.4rem;
+                            padding: 0;
+                            margin: 0;
                         }
                         p:nth-child(2) {
+                            padding: 0;
+                            margin: 0;
                             color: #907777;
                             padding-right: 0.5rem;
                         }
                     }
                     .content-bottom {
                         p {
+                            padding: 0;
+                            margin: 0;
                             font-size: 0.35rem;
                             color: #907777;
                             padding: 0.1rem 0 0.2rem;
@@ -315,6 +335,25 @@ img {
     }
     li.move {
         transform: translateX(-1.5rem); /*滑动后x轴位移-1rem,使其可见*/
+    }
+}
+
+.order-navbar {
+    width: 100%;
+    .van-nav-bar {
+        background-color: red;
+        &__arrow {
+            font-size: 0.7rem;
+        }
+
+        &__title {
+            color: #fafafa;
+            font-size: 0.5rem;
+        }
+
+        .van-icon {
+            color: #fafafa;
+        }
     }
 }
 </style>
