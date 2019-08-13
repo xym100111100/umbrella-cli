@@ -252,7 +252,6 @@ html {
         position: absolute;
         width: 100%;
         top: 1.2rem;
-        background: yellow;
         .content-item {
             display: flex;
             align-items: center;

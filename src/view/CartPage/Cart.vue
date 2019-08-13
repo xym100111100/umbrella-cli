@@ -1,54 +1,63 @@
 <template>
-  <!-- 购物车的视图组件 -->
-  <div class="cart-view">
-    <div class="cart-view__main">
-      <div style="height: 1.2rem;">
-        <van-nav-bar :border="false" title="购物车" right-text="管理" @click-right="onManage"/>
-      </div>
-      <div style="height: 11.78rem; overflow:auto;">
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="handleLoad">
-          <div
-            class="card-goods"
-            style="display: flex; flex: 1; align-items: center;"
-            v-for="item in goods"
-            :key="item.id"
-            :name="item.id"
-          >
-            <div class="cart-checkbox">
-              <van-checkbox-group v-model="checkedGoods">
-                <van-checkbox class="card-goods__item" :key="item.id" :name="item.id"></van-checkbox>
-              </van-checkbox-group>
+    <!-- 购物车的视图组件 -->
+    <div class="cart-view">
+        <div class="cart-view__main">
+            <div class="cart-nav">
+                <van-nav-bar :border="false" title="喜欢" right-text="管理" @click-right="onManage" />
             </div>
-            <div class="cart-card">
-              <van-card
-                @touchstart.native="deleteGoods(item.id)"
-                @touchend.native="gotouchend"
-                :title="item.title"
-                :desc="item.desc"
-                :num="item.num"
-                :price="0"
-                :origin-price="formatPrice(item.price)"
-                thumb-link="#/goods-detail"
-                :thumb="item.thumb"
-              />
-              <div class="cart-stepper">
-                <van-stepper
-                  :key="item.id"
-                  :name="item.id"
-                  v-model="item.num"
-                  :integer="true"
-                  :max="99"
-                  @plus="stepperPlus(item)"
-                  @minus="stepperMinus(item)"
-                  @blur="stepperBlur(item)"
-                />
-              </div>
+            <div class="cart-content">
+                <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    finished-text="没有更多了"
+                    @load="handleLoad"
+                >
+                    <div
+                        class="card-goods"
+                        style="display: flex; flex: 1; align-items: center;"
+                        v-for="item in goods"
+                        :key="item.id"
+                        :name="item.id"
+                    >
+                        <div class="cart-checkbox">
+                            <van-checkbox-group v-model="checkedGoods">
+                                <van-checkbox
+                                    class="card-goods__item"
+                                    :key="item.id"
+                                    :name="item.id"
+                                ></van-checkbox>
+                            </van-checkbox-group>
+                        </div>
+                        <div class="cart-card">
+                            <van-card
+                                @touchstart.native="deleteGoods(item.id)"
+                                @touchend.native="gotouchend"
+                                :title="item.title"
+                                :desc="item.desc"
+                                :num="item.num"
+                                :price="0"
+                                :origin-price="formatPrice(item.price)"
+                                thumb-link="#/goods-detail"
+                                :thumb="item.thumb"
+                            />
+                            <div class="cart-stepper">
+                                <van-stepper
+                                    :key="item.id"
+                                    :name="item.id"
+                                    v-model="item.num"
+                                    :integer="true"
+                                    :max="99"
+                                    @plus="stepperPlus(item)"
+                                    @minus="stepperMinus(item)"
+                                    @blur="stepperBlur(item)"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </van-list>
             </div>
-          </div>
-        </van-list>
-      </div>
-    </div>
-    <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
+        </div>
+        <!--     <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
       <van-submit-bar
         :price="totalPrice"
         :disabled="!checkedGoods.length"
@@ -65,8 +74,8 @@
           <van-button plain hairline :round="true" size="small" type="danger" text="删除"/>
         </div>
       </div>
+        </div>-->
     </div>
-  </div>
 </template>
 
 <script>
@@ -244,13 +253,18 @@ export default {
     },
 };
 </script>
-
 <style lang="less" scoped>
+html,
+body {
+    height: 100%;
+    
+}
+
 @cart-background-color: #f2f3f5;
 #main-page {
     height: 93%;
+    background: red;
 }
-
 .cart-view {
     display: flex;
     flex-direction: column;
@@ -261,10 +275,9 @@ export default {
         .van-nav-bar {
             height: 1.15rem;
             font-family: monospace;
-            background: linear-gradient(to right, rgb(241, 101, 50), red);
-
+            // background: linear-gradient(to right, rgb(241, 101, 50), red);
+            background: white;
             &__title {
-                color: white;
                 padding: 0 0.3rem;
                 font-size: 0.5rem;
                 max-width: unset;
@@ -274,9 +287,24 @@ export default {
                 bottom: -0.01rem;
                 .van-nav-bar__text {
                     font-size: 0.4rem;
-                    color: white;
                 }
             }
+        }
+
+        .cart-nav {
+            height: 1.2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .cart-content {
+            height: 100%;
+            overflow: auto;
+            position: absolute;
+            top: 1.2rem;
+            margin-bottom: 1.2rem;
+            background:  #f2f3f5;
         }
 
         .card-goods {
@@ -284,7 +312,7 @@ export default {
             margin: 0.13rem;
             background-color: white;
             border-radius: 0.3rem;
-                margin-left: .069rem;
+            margin-left: 0.069rem;
 
             &__item {
                 position: relative;

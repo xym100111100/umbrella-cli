@@ -43,7 +43,14 @@ const routes = [
                    
                 },
             },
-
+            {
+                name: 'cart',
+                path: '/cart',
+                component: () => import('./view/CartPage/Cart'),
+                meta: {
+                    index: 1,
+                },
+            },
             {
                 name: 'mine',
                 path: '/mine',
@@ -52,7 +59,6 @@ const routes = [
                     index: 1,
                 },
             },
-
         ],
     },
     {
@@ -71,15 +77,7 @@ const routes = [
             index: 2,
         },
     },
-    {
-        name: 'cart',
-        path: '/cart',
-        component: () => import('./view/CartPage/Cart'),
-        meta: {
-            index: 22,
-        },
-        props: true,
-    },
+
     {
         name: 'msg-chat',
         path: '/msg-chat',

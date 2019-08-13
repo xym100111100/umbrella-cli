@@ -9,10 +9,10 @@
       <van-tabbar-item icon="tabbar-find" to="find">
         查找
       </van-tabbar-item>
-       <van-tabbar-item icon="tabbar-msg" to="msg">
+       <van-tabbar-item icon="tabbar-msg" v-bind:info="msgCount"  to="msg">
         消息
       </van-tabbar-item> 
-      <van-tabbar-item icon="xihuan" to="cart">
+      <van-tabbar-item icon="xihuan" v-bind:info="loveCount"  to="cart">
         喜欢
       </van-tabbar-item>
       <van-tabbar-item icon="tabbar-mine" to="mine">
@@ -41,6 +41,8 @@ export default {
     data() {
         return {
             active: 0,
+            msgCount:5,
+            loveCount:6,
         };
     },
     beforeRouteUpdate(to, from, next) {
@@ -88,12 +90,11 @@ export default {
         z-index: 9999 !important;
         .van-tabbar-item {
             color: #a8a5a5;
-            margin-top: -6px;
             // 图标下部的字体大小
             font-size: 0.35rem;
             .van-icon {
                 // 图标的大小
-                font-size: 0.9rem;
+                font-size: 0.78rem;
             }
         }
         .van-tabbar-item--active {
