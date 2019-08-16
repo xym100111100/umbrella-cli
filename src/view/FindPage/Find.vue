@@ -87,10 +87,18 @@
                         <div>
                             <van-card
                                 :title="item.title"
-                                :desc="item.desc"
                                 thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
-                            />
+                                :price="item.price"
+                            >
+                                <div slot="tags" class="right-tags">
+                                    <span>即刻出售</span>
+                                    <span>不可议价</span>
+                                </div>
+                                <div class="right-footer" slot="footer">
+                                    <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
+                                </div>
+                            </van-card>
                         </div>
                     </div>
                 </van-list>
@@ -101,13 +109,14 @@
 
 <script>
 import Vue from 'vue';
-import { Search, List, Card } from 'vant';
+import { Search, List, Card, Icon } from 'vant';
 import { getGoodsData } from '../../svc/onl/OnlOnlinePromo';
 import { list as goodsList } from '../../svc/Cart';
 // Lazyload插件需要初始化
 
 export default {
     components: {
+        [Icon.name]: Icon,
         [Search.name]: Search,
         [List.name]: List,
         [Card.name]: Card,
@@ -242,6 +251,18 @@ body {
             height: 100%;
             top: 1.3rem;
             width: 80%;
+            .right-tags {
+                padding: 0.3rem 0 0.1rem 0;
+                span {
+                    padding: 0 0.1rem;
+                    margin-right: 0.15rem;
+                    background: rgba(123, 191, 234, 0.2);
+                    color: #7bbfea;
+                }
+            }
+            .right-footer{
+                margin-top: -1rem;
+            }
         }
     }
 }
@@ -255,6 +276,9 @@ body {
 
 .van-card {
     background-color: white;
+}
+.van-card__price {
+    color: #7bbfea;
 }
 
 .find-content {

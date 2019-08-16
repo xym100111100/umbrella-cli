@@ -18,127 +18,15 @@
       </div>
     </header>
     <div class="user-content">
-<!--        <van-cell title="我的大学" icon="shouye2" is-link/>
-      <van-cell title="我的店铺" icon="huabanfuben1" is-link/>
-      <van-cell title="米格走廊" icon="location-o" is-link/> -->
+
     
         <DyCell MyIcon="shouye" content="我的大学"  />
         <DyCell MyIcon="shouye2"  content="我的店铺"  />
+         <DyCell MyIcon="fabuxuqiu"  content="需求公告"  />
         <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊"  />
      
 
-      <!-- 我的订单 -->
-      <!-- <div class="content-order">
-        <div class="order-top" v-on:click="getOrderList">
-          <span class="top-right">我的订单</span>
-          <span class="top-left">
-            查看所有订单
-            <van-icon color="#555555" name="qianjin" />
-          </span>
-        </div>
-        <div class="hr"></div>
-        <div class="order-buttom">
-          <van-row class="user-links">
-            <van-col span="4">
-              <van-icon color="#f40" name="tubiaozhizuo-" />
-              <br />
-              <span>待付款</span>
-            </van-col>
-            <van-col style="margin-left:0.3rem;" span="4">
-              <van-icon color="#f40" name="kuaidiche" />
-              <br />
-              <span>待发货</span>
-            </van-col>
-            <van-col style="margin-left:0.3rem;" span="4">
-              <van-icon color="#f40" name="qianshou" />
-              <br />
-              <span>待签收</span>
-            </van-col>
-
-            <van-col style="margin-left:0.3rem;" span="4">
-              <van-icon color="#f40" name="jiesuan" />
-              <br />
-              <span>待结算</span>
-            </van-col>
-            <div @click="getReturnGoods">
-              <van-col style="margin-left:0.2rem;" span="5">
-                <van-icon color="#f40" name="dianhua" />
-                <br />
-                <span>退款/售后</span>
-              </van-col>
-            </div>
-          </van-row>
-        </div>
-      </div>
-
-      
-      <div class="content-money">
-        <div class="money-left" v-if="afcAccount!==undefined && afcAccount.length>0">
-          <div>
-            <span class="value">{{afcAccount[0].balance}}</span>
-            <span class="key">余额</span>
-          </div>
-          <div>
-            <span class="value" v-if="afcAccount[0]">{{afcAccount[0].cashback}}</span>
-            <span class="key">返现金</span>
-          </div>
-          <div>
-            <span class="value" v-if="afcAccount[0]">{{afcAccount[0].commissionTotal}}</span>
-            <span class="key">已全返</span>
-          </div>
-
-          <div>
-            <span class="value" v-if="afcAccount[0]">{{afcAccount[0].commissioning}}</span>
-            <span class="key">待全返</span>
-          </div>
-        </div>
-        <div class="money-right" v-on:click="getMyWallet">
-          <div>
-            <van-icon color="#f40" name="purse" />
-            <span>钱包</span>
-          </div>
-        </div>
-      </div>
-      <div class="content-line">
-        <div class="line-left">
-          <div class="left-concent"></div>
-        </div>
-        <div class="line-right"></div>
-      </div>
-  
-      <div class="content-point">
-        <div class="point-left" v-if="pntAccount!==undefined && pntAccount.length>0">
-          <div>
-            <span class="value">{{pntAccount[0].point}}</span>
-            <span class="key">积分</span>
-          </div>
-          <div>
-            <span class="value">{{pntAccount[0].yesterdayIncome}}</span>
-            <span class="key">昨日收益</span>
-          </div>
-          <div>
-            <span class="value">{{pntAccount[0].cumulativeIncome}}</span>
-            <span class="key">累计收益</span>
-          </div>
-          <div>
-            <span class="value">{{pntAccount[0].waitingPoint}}</span>
-            <span class="key">待入积分</span>
-          </div>
-        </div>
-        <div class="point-right" v-on:click="getMyPoint">
-          <div>
-            <van-icon color="#f40" name="jifen" />
-            <span>积分</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="content-setting">
-        <div v-on:click="setAddress">
-          <van-icon color="#7d7e80" name="dizhi" />
-          <span>收货地址</span>
-        </div>
-      </div>-->
+ 
     </div>
   </div>
 </template>
