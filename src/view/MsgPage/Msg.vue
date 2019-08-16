@@ -255,7 +255,7 @@ html {
         .content-item {
             display: flex;
             align-items: center;
-            padding: 0.2rem 0 0.1rem 0.3rem;
+            padding: 0 0 0.1rem 0.3rem;
             .item-right {
                 .right-user-face {
                     line-height: 1.2rem;
@@ -327,10 +327,14 @@ html {
         position: relative;
         transform: translateX(0);
         transition: all 0.3s; /*滑动效果更生动*/
+        padding: 0;
+        margin: 0;
     }
     ul {
         overflow-x: hidden; /*隐藏ul x轴的滚动条*/
         padding-bottom: 1.5rem;
+        padding: 0;
+        margin: 0;
     }
     li.move {
         transform: translateX(-1.5rem); /*滑动后x轴位移-1rem,使其可见*/

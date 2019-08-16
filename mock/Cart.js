@@ -4,7 +4,7 @@ const Mock = require('mockjs');
 // 商品信息
 const goodsTemplate = {
     pageSize: 8, // 每页大小
-    pages: 2, // 总页数
+    pages: 8, // 总页数
     total: '16', // 总记录数
     'list|8': [
         {

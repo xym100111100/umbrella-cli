@@ -214,7 +214,7 @@ export default {
                 .van-card {
                     background-color: unset;
                     &__price {
-                        color: #f44;
+                        color: #7bbfea;
                     }
                 }
             }

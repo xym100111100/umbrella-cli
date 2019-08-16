@@ -12,13 +12,7 @@
                     finished-text="没有更多了"
                     @load="handleLoad"
                 >
-                    <div
-                        class="card-goods"
-                        style="display: flex; flex: 1; align-items: center;"
-                        v-for="item in goods"
-                        :key="item.id"
-                        :name="item.id"
-                    >
+                    <div class="card-goods" v-for="item in goods" :key="item.id" :name="item.id">
                         <div class="cart-checkbox">
                             <van-checkbox-group v-model="checkedGoods">
                                 <van-checkbox
@@ -34,14 +28,12 @@
                                 @touchend.native="gotouchend"
                                 :title="item.title"
                                 :desc="item.desc"
-                                :num="item.num"
-                                :price="0"
-                                :origin-price="formatPrice(item.price)"
+                                :price="formatPrice(item.price)"
                                 thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
                             />
                             <div class="cart-stepper">
-                                <van-stepper
+                                <!--  <van-stepper
                                     :key="item.id"
                                     :name="item.id"
                                     v-model="item.num"
@@ -50,7 +42,8 @@
                                     @plus="stepperPlus(item)"
                                     @minus="stepperMinus(item)"
                                     @blur="stepperBlur(item)"
-                                />
+                                />-->
+                                <van-icon color="#7bbfea" name="liaotian" />
                             </div>
                         </div>
                     </div>
@@ -257,13 +250,11 @@ export default {
 html,
 body {
     height: 100%;
-    
 }
 
 @cart-background-color: #f2f3f5;
 #main-page {
     height: 93%;
-    background: red;
 }
 .cart-view {
     display: flex;
@@ -304,7 +295,7 @@ body {
             position: absolute;
             top: 1.2rem;
             margin-bottom: 1.2rem;
-            background:  #f2f3f5;
+            background: #f2f3f5;
         }
 
         .card-goods {
@@ -313,6 +304,9 @@ body {
             background-color: white;
             border-radius: 0.3rem;
             margin-left: 0.069rem;
+            display: flex;
+            flex: 1;
+            align-items: center;
 
             &__item {
                 position: relative;
@@ -329,28 +323,29 @@ body {
                 .van-card {
                     background-color: unset;
                     &__price {
-                        color: #f44;
+                        color: #7bbfea;
                     }
                 }
             }
         }
 
         .cart-checkbox {
-            margin-left: 0.19rem;
             display: flex;
             align-items: center;
+            //   border: solid 1px rebeccapurple;
         }
 
         .cart-card {
             flex: 1;
-            margin-left: -0.1rem;
             display: flex;
+            // border: solid 1px yellow;
         }
 
         .cart-stepper {
-            margin-left: -0.76rem;
-            margin-top: 2rem;
-            width: 3.2rem;
+            //  border: solid 1px red;
+            width: 1.5rem;
+            padding-top: 1.6rem;
+            font-size: 0.8rem;
         }
     }
 
@@ -358,11 +353,6 @@ body {
         left: unset;
         bottom: unset;
         position: unset;
-        margin-top: -1rem;
-
-        .van-checkbox {
-            margin-left: 0.53333rem;
-        }
     }
 
     .cart-delete-bar {
@@ -370,17 +360,15 @@ body {
         bottom: unset;
         position: unset;
         margin-top: -1rem;
-        z-index: 99;
 
-        .van-checkbox {
-            margin-left: 0.53333rem;
-        }
+
 
         .van-button--small {
             font-size: 0.42rem;
         }
     }
 }
+
 
 .van-card {
     background-color: white;
@@ -397,10 +385,14 @@ body {
 
 .van-card__bottom {
     width: 2.1667rem;
+    margin-top: 0.5rem;
 }
 
 .van-card__header {
     margin-left: -0.16rem;
+}
+.van-card__price {
+    color: #7bbfea;
 }
 </style>
 
