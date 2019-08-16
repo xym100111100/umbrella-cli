@@ -275,9 +275,10 @@ body {
             }
 
             &__right {
-                bottom: -0.01rem;
+                bottom: -0.1rem;
                 .van-nav-bar__text {
                     font-size: 0.4rem;
+                    color: #7bbfea;
                 }
             }
         }

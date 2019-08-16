@@ -95,7 +95,7 @@
                                     <span>即刻出售</span>
                                     <span>不可议价</span>
                                 </div>
-                                <div class="right-footer" slot="footer">
+                                <div @click="addToLove" class="right-footer" slot="footer">
                                     <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                                 </div>
                             </van-card>
@@ -109,7 +109,7 @@
 
 <script>
 import Vue from 'vue';
-import { Search, List, Card, Icon } from 'vant';
+import { Search, List, Card, Icon, Toast } from 'vant';
 import { getGoodsData } from '../../svc/onl/OnlOnlinePromo';
 import { list as goodsList } from '../../svc/Cart';
 // Lazyload插件需要初始化
@@ -130,6 +130,12 @@ export default {
         };
     },
     methods: {
+        addToLove() {
+            Toast({
+                message: '自定义图标',
+                icon: 'https://img.yzcdn.cn/vant/logo.png',
+            });
+        },
         // 获取商品数据
         handleLoad() {
             const params = { pageNum: this.pageNum + 1 };
@@ -260,7 +266,7 @@ body {
                     color: #7bbfea;
                 }
             }
-            .right-footer{
+            .right-footer {
                 margin-top: -1rem;
             }
         }

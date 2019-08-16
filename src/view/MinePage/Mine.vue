@@ -1,34 +1,29 @@
 <template>
-  <div id="user-box" class="user-box">
-    <header>
-      <div class="user-header">
-        <div class="header-face">
-          <img
-            src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-          />
-        </div>
-        <div class="header-name">
-          <span>Umbrella</span>
+    <div id="user-box" class="user-box">
+        <header>
+            <div class="user-header">
+                <div class="header-face">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                    />
+                </div>
+                <div class="header-name">
+                    <span>Umbrella</span>
 
-          <span class="Uid">UID:12345678</span>
-        </div>
-        <!-- <div class="header-setting">
+                    <span class="Uid">UID:12345678</span>
+                </div>
+                <!-- <div class="header-setting">
           <van-icon color="red" name="shezhi" />
-        </div>-->
-      </div>
-    </header>
-    <div class="user-content">
-
-    
-        <DyCell MyIcon="shouye" content="我的大学"  />
-        <DyCell MyIcon="shouye2"  content="我的店铺"  />
-         <DyCell MyIcon="fabuxuqiu"  content="需求公告"  />
-        <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊"  />
-     
-
- 
+                </div>-->
+            </div>
+        </header>
+        <div class="user-content">
+            <DyCell MyIcon="shouye" content="我的大学" />
+            <DyCell MyIcon="shouye2" content="我的店铺" />
+            <DyCell MyIcon="fabuxuqiu" content="需求公告" />
+            <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -49,7 +44,6 @@ export default {
             afcAccount: this.getAccount(),
             pntAccount: [],
             id: this.$route.params.id,
-           
         };
     },
     methods: {
@@ -114,10 +108,12 @@ export default {
 body,
 html {
     height: 100%;
+    background: rgba(60, 47, 15, 0.0001);
 }
 .user {
     &-box {
         height: 100%;
+        background: rgba(60, 47, 15, 0.0001);
     }
     &-header {
         height: 3rem;
@@ -216,7 +212,7 @@ html {
             display: flex;
             align-items: center;
             justify-content: space-around;
-           
+
             .line-left,
             .money-left,
             .point-left {

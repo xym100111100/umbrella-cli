@@ -2,8 +2,7 @@
     <div class="msg">
         <header>
             <div class="msg-header">
-                <van-nav-bar title="name"  >
-                </van-nav-bar>
+                <van-nav-bar title="消息" ></van-nav-bar>
             </div>
         </header>
         <div class="msg-content">
@@ -244,9 +243,6 @@ html {
         top: 0;
         width: 100%;
         z-index: 99;
-        span {
-            font-size: 0.5rem;
-        }
     }
     &-content {
         position: absolute;
@@ -357,6 +353,15 @@ html {
         .van-icon {
             color: #fafafa;
         }
+    }
+}
+.van-nav-bar__title {
+    font-size: 0.5rem;
+}
+.van-nav-bar__right {
+    .van-nav-bar__text {
+        font-size: 0.4rem;
+        color: #7bbfea;
     }
 }
 </style>
