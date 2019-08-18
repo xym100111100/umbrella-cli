@@ -3,7 +3,12 @@
     <div class="cart-view">
         <div class="cart-view__main">
             <div class="cart-nav">
-                <van-nav-bar :border="false" title="喜欢" right-text="管理" @click-right="onManage" />
+                <van-nav-bar
+                    :border="false"
+                    title="喜欢"
+                    :right-text="checkedGoods.length > 0? '删除':'管理'"
+                    @click-right="manageBtn"
+                />
             </div>
             <div class="cart-content">
                 <van-list
@@ -14,7 +19,7 @@
                 >
                     <div class="card-goods" v-for="item in goods" :key="item.id" :name="item.id">
                         <div class="cart-checkbox">
-                            <van-checkbox-group v-model="checkedGoods">
+                            <van-checkbox-group @change="toggle" v-model="checkedGoods">
                                 <van-checkbox
                                     class="card-goods__item"
                                     :key="item.id"
@@ -24,8 +29,6 @@
                         </div>
                         <div class="cart-card">
                             <van-card
-                                @touchstart.native="deleteGoods(item.id)"
-                                @touchend.native="gotouchend"
                                 :title="item.title"
                                 :desc="item.desc"
                                 :price="formatPrice(item.price)"
@@ -50,24 +53,6 @@
                 </van-list>
             </div>
         </div>
-        <!--     <div v-show="isShowSubmit" style="display: flex; flex-direction: column;">
-      <van-submit-bar
-        :price="totalPrice"
-        :disabled="!checkedGoods.length"
-        :button-text="submitBarText"
-        @submit="onSubmit"
-      >
-        <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
-      </van-submit-bar>
-    </div>
-    <div v-show="isShowManage" class="cart-delete-bar">
-      <div class="van-submit-bar__bar">
-        <van-checkbox v-model="checked" @change="selectAll">全选</van-checkbox>
-        <div style="margin-left: 6rem;">
-          <van-button plain hairline :round="true" size="small" type="danger" text="删除"/>
-        </div>
-      </div>
-        </div>-->
     </div>
 </template>
 
@@ -123,6 +108,7 @@ export default {
             pageNum: 0, // 当前页码
             loading: false, // 是否正在加载商品列表
             finished: false, // 是否全部加载完成商品列表
+            manage: '管理',
         };
     },
 
@@ -152,10 +138,18 @@ export default {
         onSubmit() {
             Toast('点击结算');
         },
-
+        toggle(e) {
+            console.log(e);
+            this.checkedGoods = e;
+            if (e.length > 0) {
+                this.manage = '删除';
+            } else {
+                this.manage = '管理';
+            }
+        },
         // 全选
-        selectAll(event) {
-            if (event === true) {
+        manageBtn() {
+            if (!this.checked) {
                 const goods = this.goods;
                 let checkedGoods = new Array();
                 for (let i = 0; i < goods.length; i++) {
@@ -163,49 +157,13 @@ export default {
                     checkedGoods.push(element.id);
                 }
                 this.checkedGoods = checkedGoods;
+                this.checked = true;
+                this.manage = '删除';
             } else {
                 this.checkedGoods = [];
+                this.checked = false;
+                this.manage = '管理';
             }
-        },
-
-        // 删除购物车商品
-        deleteGoods(e) {
-            clearTimeout(this.Loop); //再次清空定时器，防止重复注册定时器
-            this.Loop = setTimeout(
-                function() {
-                    this.$dialog
-                        .confirm({
-                            message: '确认要删除该商品吗？',
-                            cancelButtonText: '我再想想',
-                            closeOnClickOverlay: true,
-                        })
-                        // 点击确定执行事件
-                        .then(() => {
-                            console.log('确定');
-                        })
-                        // 点击取消执行事件
-                        .catch(() => {
-                            Dialog.close;
-                        });
-                }.bind(this),
-                2000
-            );
-        },
-
-        // 如果长按的事件不足1秒则执行其他操作
-        gotouchend() {
-            // 清除定时器
-            clearTimeout(this.Loop);
-            if (this.Loop !== 0) {
-            }
-        },
-
-        // 点击管理事件
-        onManage() {
-            // 是否显示管理页面
-            this.isShowManage = !this.isShowManage;
-            // 是否显示提交页面
-            this.isShowSubmit = !this.isShowSubmit;
         },
 
         // 获取商品数据
@@ -227,21 +185,6 @@ export default {
                     this.loading = false;
                 },
             });
-        },
-
-        // 步进器点击增加按钮时触发
-        stepperPlus(goods) {
-            console.log(goods);
-        },
-
-        // 步进器点击减少按钮时触发
-        stepperMinus(goods) {
-            console.log(goods);
-        },
-
-        // 步进器输入框失焦时触发
-        stepperBlur(goods) {
-            console.log(goods);
         },
     },
 };
@@ -362,14 +305,11 @@ body {
         position: unset;
         margin-top: -1rem;
 
-
-
         .van-button--small {
             font-size: 0.42rem;
         }
     }
 }
-
 
 .van-card {
     background-color: white;

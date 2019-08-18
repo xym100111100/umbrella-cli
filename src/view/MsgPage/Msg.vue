@@ -13,9 +13,10 @@
                     @touchstart="touchStart(item)"
                     @touchend="touchEnd(item)"
                     :key="item.id"
+                    @click="contact(item.id,item.name)"
                 >
                     <div class="content-item">
-                        <div class="item-right" @click="contact(item.id,item.name)">
+                        <div class="item-right" >
                             <div class="right-user-face">
                                 <img
                                     :src="item.thumb"
@@ -32,7 +33,7 @@
                                     <p>{{item.text}}</p>
                                 </div>
                             </div>
-                            <div class="left-del" @click.prevent="deleteItem(index)">
+                            <div class="left-del" @click.stop="deleteItem(index)">
                                 <p>删除</p>
                             </div>
                         </div>
