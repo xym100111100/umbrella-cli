@@ -18,7 +18,7 @@
                         <div class="item-right" @click="contact(item.id,item.name)">
                             <div class="right-user-face">
                                 <img
-                                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                                    :src="item.thumb"
                                 />
                             </div>
                         </div>
@@ -256,6 +256,7 @@ html {
                 .right-user-face {
                     line-height: 1.2rem;
                     height: 1.2rem;
+                    width: 1.2rem;
                     img {
                         height: 1.2rem;
                         border: #fff 1px solid;
