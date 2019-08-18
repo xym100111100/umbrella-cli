@@ -128,7 +128,15 @@ const routes = [
             keepAlive: false,
         },
     },
-
+    {
+        name: 'goods-detail',
+        path: '/goods-detail',
+        component: () => import('./view/GoodsPage/GoodsDetail'),
+        meta: {
+            index: 2,
+        },
+    },
+ 
 ];
 
 const router = new Router({
