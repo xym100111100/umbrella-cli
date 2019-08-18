@@ -66,14 +66,7 @@ const routes = [
             },
         ],
     },
-    {
-        name: 'goods-detail',
-        path: '/goods-detail',
-        component: () => import('./view/GoodsPage/GoodsDetail'),
-        meta: {
-            index: 2,
-        },
-    },
+
     {
         name: 'text',
         path: '/text',
@@ -95,30 +88,6 @@ const routes = [
         name: 'login-fail',
         path: '/login-fail',
         component: () => import('./view/LoginPage/LoginFail'),
-        meta: {
-            index: 2,
-        },
-    },
-    {
-        name: 'full-back-process',
-        path: '/full-back-process',
-        component: () => import('./view/HomePage/FullBackProcess'),
-        meta: {
-            index: 2,
-        },
-    },
-    {
-        name: 'confirm-order',
-        path: '/confirm-order',
-        component: () => import('./view/OrderPage/ConfirmOrder'),
-        meta: {
-            index: 2,
-        },
-    },
-    {
-        name: 'order',
-        path: '/order',
-        component: () => import('./view/OrderPage/Order'),
         meta: {
             index: 2,
         },
@@ -159,45 +128,7 @@ const routes = [
             keepAlive: false,
         },
     },
-    {
-        name: 'more-goods',
-        path: '/more-goods',
-        component: () => import('./view/GoodsPage/MoreGoods'),
-        meta: {
-            index: 2,
-           
-        },
-    },
-    {
-        name: 'withdraw-record',
-        path: '/withdraw-record',
-        component: () => import('./view/WalletPage/WithdrawRecord'),
-        meta: {
-            index: 2,
-        },
-    },
-    {
-        name: 'address',
-        path: '/address',
-        component: () => import('./view/AddressPage/Address'),
-        meta: {
-            index: 2,
-        },
-    },
-    {
-        name: 'return-goods',
-        path: '/return-goods',
-        component: () => import('./view/OrderPage/ReturnGoods'),
-        meta: {
-            index: 2,
-        },
-    },
 
-    // {
-    //     name: 'test1',
-    //     path: '/test1',
-    //     component: () => import('./page/test/Test1'),
-    // },
 ];
 
 const router = new Router({
