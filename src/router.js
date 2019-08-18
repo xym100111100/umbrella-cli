@@ -22,6 +22,7 @@ const routes = [
                 component: () => import('./view/HomePage/Home'),
                 meta: {
                     index: 1,
+                    keepAlive: false,
                 },
             },
             {
@@ -30,6 +31,7 @@ const routes = [
                 component: () => import('./view/FindPage/Find'),
                 meta: {
                     index: 1,
+                    keepAlive: false,
                     
                 },
                 
@@ -40,6 +42,7 @@ const routes = [
                 component: () => import('./view/MsgPage/Msg'),
                 meta: {
                     index: 1,
+                    keepAlive: false,
                    
                 },
             },
@@ -49,6 +52,7 @@ const routes = [
                 component: () => import('./view/CartPage/Cart'),
                 meta: {
                     index: 1,
+                    keepAlive: false,
                 },
             },
             {
@@ -57,6 +61,7 @@ const routes = [
                 component: () => import('./view/MinePage/Mine'),
                 meta: {
                     index: 1,
+                    keepAlive: false,
                 },
             },
         ],
@@ -119,35 +124,39 @@ const routes = [
         },
     },
     {
-        name: 'order-detail',
-        path: '/order-detail',
-        component: () => import('./view/OrderPage/OrderDetail'),
+        name: 'school',
+        path: '/mine/school',
+        component: () => import('./view/MinePage/School'),
         meta: {
             index: 2,
+            keepAlive: false,
         },
     },
     {
-        name: 'my-wallet',
-        path: '/my-wallet',
-        component: () => import('./view/WalletPage/MyWallet'),
+        name: 'notice',
+        path: '/mine/notice',
+        component: () => import('./view/MinePage/Notice'),
         meta: {
             index: 2,
+            keepAlive: false,
         },
     },
     {
-        name: 'my-point',
-        path: '/my-point',
-        component: () => import('./view/PointPage/MyPoint'),
+        name: 'shop',
+        path: '/mine/shop',
+        component: () => import('./view/MinePage/Shop'),
         meta: {
             index: 2,
+            keepAlive: false,
         },
     },
     {
-        name: 'withdraw',
-        path: '/withdraw',
-        component: () => import('./view/WalletPage/Withdraw'),
+        name: 'corridor',
+        path: '/mine/corridor',
+        component: () => import('./view/MinePage/Corridor'),
         meta: {
             index: 2,
+            keepAlive: false,
         },
     },
     {

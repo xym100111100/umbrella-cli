@@ -12,16 +12,13 @@
 
                     <span class="Uid">UID:12345678</span>
                 </div>
-                <!-- <div class="header-setting">
-          <van-icon color="red" name="shezhi" />
-                </div>-->
             </div>
         </header>
         <div class="user-content">
-            <DyCell MyIcon="shouye" content="我的大学" />
-            <DyCell MyIcon="shouye2" content="我的店铺" />
-            <DyCell MyIcon="fabuxuqiu" content="需求公告" />
-            <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊" />
+            <DyCell MyIcon="shouye" content="我的大学" :goPath="()=>this.$router.push({name:'school'})" />
+            <DyCell MyIcon="shouye2" content="我的店铺" :goPath="()=>this.$router.push({name:'shop'})" />
+            <DyCell MyIcon="fabuxuqiu" content="需求公告" :goPath="()=>this.$router.push({name:'notice'})" />
+            <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊" :goPath="()=>this.$router.push({name:'corridor'})" />
         </div>
     </div>
 </template>
@@ -58,21 +55,6 @@ export default {
                     this.pntAccount = data2;
                 },
             });
-        },
-        getOrderList() {
-            this.$router.push('/order');
-        },
-        getMyWallet() {
-            this.$router.push('/my-wallet');
-        },
-        getMyPoint() {
-            this.$router.push('/my-point');
-        },
-        setAddress() {
-            this.$router.push('/address');
-        },
-        getReturnGoods() {
-            this.$router.push('/return-goods');
         },
     },
 
