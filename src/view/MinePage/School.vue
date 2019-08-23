@@ -25,7 +25,7 @@ export default {
             Toast('返回');
         },
         onClickRight() {
-            Toast('按钮');
+            this.$router.push({name:'notice'})
         },
     },
 

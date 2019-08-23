@@ -1,11 +1,9 @@
 <template>
-  <transition :name="transitionName">
-    <!-- <transition name="fade" mode="out-in"> -->
-    <!-- @after-leave="afterLeave" -->
-    <keep-alive>
-      <router-view class="transition-view" />
-    </keep-alive>
-  </transition>
+    <transition :name="transitionName">
+        <keep-alive>
+            <router-view class="transition-view" />
+        </keep-alive>
+    </transition>
 </template>
 
 <script>
@@ -18,7 +16,7 @@ export default {
     created() {
         const user = {
             name: '小明同学',
-            id:1,
+            id: 1,
         };
         this.$store.dispatch('setUser', user);
     },
@@ -53,8 +51,5 @@ body {
     // font-size: 24px;
     background-color: #fafafa;
     -webkit-font-smoothing: antialiased;
-    
 }
-
-
 </style>

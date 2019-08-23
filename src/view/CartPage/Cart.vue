@@ -10,7 +10,7 @@
                     @click-right="manageBtn"
                 />
             </div>
-            <div class="cart-content">
+            <div id="cart-content" class="cart-content" @scroll="moving">
                 <van-list
                     v-model="loading"
                     :finished="finished"
@@ -35,17 +35,7 @@
                                 thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
                             />
-                            <div class="cart-stepper">
-                                <!--  <van-stepper
-                                    :key="item.id"
-                                    :name="item.id"
-                                    v-model="item.num"
-                                    :integer="true"
-                                    :max="99"
-                                    @plus="stepperPlus(item)"
-                                    @minus="stepperMinus(item)"
-                                    @blur="stepperBlur(item)"
-                                />-->
+                            <div @click="contact" class="cart-stepper">
                                 <van-icon color="#7bbfea" name="liaotian" />
                             </div>
                         </div>
@@ -99,16 +89,12 @@ export default {
             checkedGoods: [],
             // 是否全选
             checked: false,
-            steppervalue: 1,
-            // 是否显示管理页面
-            isShowManage: false,
-            // 是否显示提交页面
-            isShowSubmit: true,
             goods: [],
             pageNum: 0, // 当前页码
             loading: false, // 是否正在加载商品列表
             finished: false, // 是否全部加载完成商品列表
             manage: '管理',
+            scroll: 0,
         };
     },
 
@@ -129,14 +115,18 @@ export default {
             }
         },
     },
-
+    activated() {
+        document.getElementById('cart-content').scrollTop = this.scroll;
+    },
     methods: {
+        moving(e) {
+            this.scroll = e.target.scrollTop;
+        },
         formatPrice(price) {
             return (price / 100).toFixed(2);
         },
-
-        onSubmit() {
-            Toast('点击结算');
+        contact() {
+            this.$router.push({ name: 'corridor' });
         },
         toggle(e) {
             console.log(e);
