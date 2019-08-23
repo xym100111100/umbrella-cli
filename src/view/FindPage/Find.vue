@@ -138,11 +138,12 @@ export default {
             this.scroll = e.target.scrollTop;
         },
         addToLove() {
-            this.$router.push({ name: 'corridor' });
-            // Toast({
-            //     message: '自定义图标',
-            //     icon: 'https://img.yzcdn.cn/vant/logo.png',
-            // });
+            this.$store.getters.active.loveCount = this.$store.getters.active.loveCount+1
+         //   this.$router.push({ name: 'corridor' });
+            Toast({
+                message: '自定义图标',
+                icon: 'https://img.yzcdn.cn/vant/logo.png',
+            });
         },
         // 获取商品数据
         handleLoad() {

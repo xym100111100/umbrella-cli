@@ -12,13 +12,16 @@ const state = {
   // 需要维护的状态
   user: {}, // 存储用户信息
   targetUser: {},
-  heightNum:200,
+  active:{
+    msgCount:5,
+    loveCount:6
+  },
 };
 
 const getters = {
   user: state => state.user,
   targetUser: state => state.targetUser,
-  heightNum:state =>state.heightNum,
+  active:state =>state.active,
 };
 
 const mutations = {

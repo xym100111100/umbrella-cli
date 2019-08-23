@@ -8,7 +8,7 @@
         <div class="goods-title">
             <span>{{item.onlineTitle}}</span>
         </div>
-        <div  class="goods-describe">
+        <div class="goods-describe">
             <span>即刻出售</span>
             <span>可议价</span>
         </div>
@@ -16,7 +16,7 @@
             <!-- 返现商品价格 -->
             <div class="goods-price">
                 <div class="goods-sale-price">¥{{item.salePrice}}&nbsp;</div>
-                <div class="goods-sale-love">
+                <div @click.stop="addToLove" class="goods-sale-love">
                     <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                 </div>
             </div>
@@ -38,6 +38,11 @@ export default {
     },
     props: {
         item: Object, // 当前商品的信息
+    },
+    methods: {
+        addToLove() {
+            this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
+        },
     },
 };
 </script>
@@ -99,7 +104,7 @@ export default {
         }
     }
     .goods-describe {
-        margin:   0.15rem 0  0.15rem 0;
+        margin: 0.15rem 0 0.15rem 0;
         padding: 0 0.2rem;
         overflow: hidden;
         height: 0.6rem;

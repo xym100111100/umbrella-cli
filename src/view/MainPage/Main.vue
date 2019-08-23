@@ -41,9 +41,15 @@ export default {
     data() {
         return {
             active: 0,
-            msgCount:5,
-            loveCount:6,
         };
+    },
+    computed:{
+      msgCount(){
+        return this.$store.getters.active.msgCount
+      },
+      loveCount(){
+        return this.$store.getters.active.loveCount;
+      }
     },
     beforeRouteUpdate(to, from, next) {
         //  console.log('beforeRouteUpdate\r\nfrom', from, '\r\nto', to);
