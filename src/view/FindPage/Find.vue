@@ -76,7 +76,7 @@
                     </li>
                 </ol>
             </div>
-            <div class="content-right">
+            <div id="content-right" @scroll="moving" class="content-right">
                 <van-list
                     v-model="loading"
                     :finished="finished"
@@ -127,14 +127,22 @@ export default {
             pageNum: 0, // 当前页码
             loading: false, // 是否正在加载商品列表
             finished: false, // 是否全部加载完成商品列表
+            scroll: 0,
         };
     },
+    activated() {
+        document.getElementById('content-right').scrollTop = this.scroll;
+    },
     methods: {
+        moving(e) {
+            this.scroll = e.target.scrollTop;
+        },
         addToLove() {
-            Toast({
-                message: '自定义图标',
-                icon: 'https://img.yzcdn.cn/vant/logo.png',
-            });
+            this.$router.push({ name: 'corridor' });
+            // Toast({
+            //     message: '自定义图标',
+            //     icon: 'https://img.yzcdn.cn/vant/logo.png',
+            // });
         },
         // 获取商品数据
         handleLoad() {
@@ -172,25 +180,14 @@ export default {
         },
     },
     beforeCreate() {
-        console.log('-----1------beforeCreate1');
-        console.log('-----1------beforeCreate1');
     },
     beforeMounted() {
-        console.log('-----2------beforeCreate1');
-        console.log('-----2------beforeCreate1');
     },
     beforeUpdate() {
-        console.log('-----3------beforeUpdate1');
-
-        console.log('-----3------beforeCreate1');
     },
     updated() {
-        console.log('-----4------updated1');
-        console.log('-----4------beforeCreate1');
     },
     beforeDestroy() {
-        console.log('-----5------beforeDestroy1');
-        console.log('-----5------beforeCreate1');
     },
 };
 </script>
