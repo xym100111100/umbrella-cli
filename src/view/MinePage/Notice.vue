@@ -128,7 +128,7 @@
                                     </div>
                                 </div>
                                 <div class="right-notice-contact">
-                                    <van-icon color="#7bbfea" name="liaotian" />
+                                    <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </div>
                         </div>

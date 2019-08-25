@@ -186,13 +186,14 @@ window.onpopstate = e => {
 };
 
 router.beforeEach((to, from, next) => {
-
+    console.log("78515111111651")
     // 如果是首页回退事件，不要跳转到其它页
-    if (_isBackOrForward && from.name === 'home') {
-        _isBackOrForward = false;
-        next(false);
-        return;
-    }
+    // if (_isBackOrForward && from.name === 'home') {
+    //     console.log("======")
+    //     _isBackOrForward = false;
+    //     next(false);
+    //     return;
+    // }
 
     const title = to.meta && to.meta.title;
     if (title) {

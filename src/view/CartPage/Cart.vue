@@ -36,7 +36,7 @@
                                 :thumb="item.thumb"
                             />
                             <div @click="contact" class="cart-stepper">
-                                <van-icon color="#7bbfea" name="liaotian" />
+                                <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                             </div>
                         </div>
                     </div>
@@ -120,6 +120,7 @@ export default {
     },
     methods: {
         moving(e) {
+            console.log('000');
             this.scroll = e.target.scrollTop;
         },
         formatPrice(price) {
@@ -241,7 +242,7 @@ body {
             display: flex;
             flex: 1;
             align-items: center;
-
+            width: 98vw;
             &__item {
                 position: relative;
                 margin: 0 0.15rem;
@@ -273,6 +274,7 @@ body {
             flex: 1;
             display: flex;
             // border: solid 1px yellow;
+            width: 80vw;
         }
 
         .cart-stepper {
