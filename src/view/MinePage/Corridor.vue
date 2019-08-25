@@ -29,31 +29,6 @@ export default {
         },
     },
 
-    beforeCreate() {
-        console.log('-----1------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----1------beforeCreate1');
-    },
-    beforeMounted() {
-        console.log('-----2------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----2------beforeCreate1');
-    },
-    beforeUpdate() {
-        console.log('-----3------beforeUpdate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----3------beforeCreate1');
-    },
-    updated() {
-        console.log('-----4------updated1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----4------beforeCreate1');
-    },
-    beforeDestroy() {
-        console.log('-----5------beforeDestroy1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----5------beforeCreate1');
-    },
 };
 </script>
 
@@ -63,7 +38,7 @@ export default {
         bottom: -0.1rem;
         .van-nav-bar__text {
             font-size: 0.4rem;
-            color: #7bbfea;
+            color: #499df1;
         }
     }
 }
