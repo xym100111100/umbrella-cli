@@ -1,70 +1,73 @@
 <template>
     <div>
-        <van-nav-bar
+        <van-area
+            @cancel="$router.go(-1)"
+            @confirm="confirm"
+            :area-list="areaList"
+            :columns-num="2"
             title="我的大学"
-            right-text="按钮"
-            left-arrow
-            @click-left="$router.go(-1)"
-            @click-right="onClickRight"
         />
     </div>
 </template>
 
 <script>
-import { NavBar, Toast } from 'vant';
+import { NavBar, Dialog, Area } from 'vant';
 export default {
     components: {
         [NavBar.name]: NavBar,
-        [Toast.name]: Toast,
+        [Area.name]: Area,
+        [Dialog.name]: Dialog,
     },
     data() {
-        return {};
+        return {
+            areaList: {
+                province_list: {
+                    110000: '广西',
+                    120000: '北京',
+                },
+                city_list: {
+                    110100: '桂林理工大学',
+                    110200: '广西大学',
+                    110300: '桂林电子科技大学',
+                    110400: '广西科技大学',
+                    110500: '南宁学院',
+                    110600: '广西电力职业技术学院',
+                    110700: '广西大学',
+                    120100: '清华大学',
+                    120200: '北京大学',
+                    120300: '中国人民大学',
+                    120400: '北京师范学院',
+                    120500: '北京航天工业大学',
+                },
+                county_list: {
+                    110101: '东城区',
+                    110102: '西城区',
+                    110105: '朝阳区',
+                    110106: '丰台区',
+                    120101: '和平区',
+                    120102: '河东区',
+                    120103: '河西区',
+                    120104: '南开区',
+                    120105: '河北区',
+                },
+            },
+        };
     },
     methods: {
-        onClickLeft() {
-            Toast('返回');
-        },
-        onClickRight() {
-            this.$router.push({name:'notice'})
+        confirm(data) {
+            console.log(data);
+            Dialog.confirm({
+                title: '温馨提示',
+                message: '大学只能选择一次，是否确认?',
+            })
+                .then(() => {
+                    // on confirm
+                })
+                .catch(() => {
+                    // on cancel
+                });
         },
     },
 
-    beforeCreate() {
-        console.log('-----1------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----1------beforeCreate1');
-    },
-    beforeMounted() {
-        console.log('-----2------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----2------beforeCreate1');
-    },
-    beforeUpdate() {
-        console.log('-----3------beforeUpdate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----3------beforeCreate1');
-    },
-    updated() {
-        console.log('-----4------updated1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----4------beforeCreate1');
-    },
-    beforeDestroy() {
-        console.log('-----5------beforeDestroy1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----5------beforeCreate1');
-    },
 };
 </script>
-
-<style lang="less" scoped>
-.van-nav-bar {
-    &__right {
-        bottom: -0.1rem;
-        .van-nav-bar__text {
-            font-size: 0.4rem;
-            color: #7bbfea;
-        }
-    }
-}
-</style>

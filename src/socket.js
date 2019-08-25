@@ -5,7 +5,7 @@ export default {
     console.log(config.user.id);
     if (!this.ws) {
       // 实例化socket对象
-      this.ws = new WebSocket('ws://192.168.43.162:9100/?paramKey='+config.user.id);
+      this.ws = new WebSocket('ws://192.168.8.108:9100/?paramKey='+config.user.id);
     }
 
     // 客户端接收消息
