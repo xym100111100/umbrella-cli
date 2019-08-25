@@ -20,11 +20,7 @@
                     <div class="card-goods" v-for="item in goods" :key="item.id" :name="item.id">
                         <div class="cart-checkbox">
                             <van-checkbox-group @change="toggle" v-model="checkedGoods">
-                                <van-checkbox
-                                    class="card-goods__item"
-                                    :key="item.id"
-                                    :name="item.id"
-                                ></van-checkbox>
+                                <van-checkbox :key="item.id" :name="item.id"></van-checkbox>
                             </van-checkbox-group>
                         </div>
                         <div class="cart-card">
@@ -219,6 +215,7 @@ body {
             top: 1.2rem;
             margin-bottom: 1.2rem;
             background: #f2f3f5;
+            left: 0.08rem;
         }
 
         .card-goods {
@@ -228,14 +225,18 @@ body {
             border-radius: 0.3rem;
             margin-left: 0.069rem;
             display: flex;
-            width: 98vw;
+            width: 97vw;
             align-items: center;
+            .cart-checkbox {
+                padding-left: 0.2rem;
+            }
         }
 
         .cart-card {
             .van-card {
-                width: 90vw;
+                width: 86vw;
                 padding-top: 0.5rem;
+                margin-left: 0.2rem;
             }
             .card-tags {
                 p {
