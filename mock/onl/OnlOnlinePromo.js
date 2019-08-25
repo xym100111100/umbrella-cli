@@ -14,7 +14,7 @@ const template = {
             picPath: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
             'specId|1000000000000000-9999999999999999': 1,
             promotionType: 1,
-            'salePrice|30-3000.2': 1,
+            'salePrice|30-50.2': 1,
             onlineSpec: '@ctitle(3,10) 规格',
             'onlineId|1000000000000000-9999999999999999': 1,
             'cashbackAmount|0-10.2': 1,

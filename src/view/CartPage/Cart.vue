@@ -29,15 +29,26 @@
                         </div>
                         <div class="cart-card">
                             <van-card
-                                :title="item.title"
-                                :desc="item.desc"
+                                :title="item.title|filtersTitle"
                                 :price="formatPrice(item.price)"
                                 thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
-                            />
-                            <div @click="contact" class="cart-stepper">
-                                <van-icon color="rgb(186, 191, 202)" name="liaotian" />
-                            </div>
+                            >
+                                <div slot="tags" class="card-tags">
+                                    <p>
+                                        <span>即时出售</span>
+                                        <span>已用5年</span>
+                                    </p>
+                                    <p>
+                                        <span>不可议价</span>
+                                        <span>原价:${{item.price}}</span>
+                                    </p>
+                                </div>
+
+                                <div @click="contact" slot="footer" class="cart-footer">
+                                    <van-icon color="rgb(186, 191, 202)" name="liaotian" />
+                                </div>
+                            </van-card>
                         </div>
                     </div>
                 </van-list>
@@ -47,22 +58,7 @@
 </template>
 
 <script>
-import {
-    NavBar,
-    Icon,
-    Checkbox,
-    CheckboxGroup,
-    Card,
-    SubmitBar,
-    Toast,
-    SwipeCell,
-    Dialog,
-    Row,
-    Col,
-    Stepper,
-    Button,
-    List,
-} from 'vant';
+import { NavBar, Icon, Checkbox, Card, SubmitBar, Row, Col, Stepper, List, checkboxGroup } from 'vant';
 
 import { list as goodsList } from '../../svc/Cart';
 
@@ -73,14 +69,11 @@ export default {
         [Card.name]: Card,
         [Checkbox.name]: Checkbox,
         [SubmitBar.name]: SubmitBar,
-        [CheckboxGroup.name]: CheckboxGroup,
-        [SwipeCell.name]: SwipeCell,
-        [Dialog.name]: Dialog,
         [Row.name]: Row,
         [Col.name]: Col,
         [Stepper.name]: Stepper,
-        [Button.name]: Button,
         [List.name]: List,
+        [checkboxGroup.name]: checkboxGroup,
     },
 
     data() {
@@ -97,7 +90,14 @@ export default {
             scroll: 0,
         };
     },
-
+    filters: {
+        filtersTitle(data) {
+            if (data.length > 11) {
+                return data.substr(1, 10) + '...';
+            }
+            return data;
+        },
+    },
     computed: {
         submitBarText() {
             const count = this.checkedGoods.length;
@@ -120,7 +120,6 @@ export default {
     },
     methods: {
         moving(e) {
-            console.log('000');
             this.scroll = e.target.scrollTop;
         },
         formatPrice(price) {
@@ -130,7 +129,6 @@ export default {
             this.$router.push({ name: 'corridor' });
         },
         toggle(e) {
-            console.log(e);
             this.checkedGoods = e;
             if (e.length > 0) {
                 this.manage = '删除';
@@ -187,9 +185,7 @@ body {
 }
 
 @cart-background-color: #f2f3f5;
-#main-page {
-    height: 93%;
-}
+
 .cart-view {
     display: flex;
     flex-direction: column;
@@ -200,7 +196,6 @@ body {
         .van-nav-bar {
             height: 1.15rem;
             font-family: monospace;
-            // background: linear-gradient(to right, rgb(241, 101, 50), red);
             background: white;
             &__title {
                 padding: 0 0.3rem;
@@ -215,13 +210,6 @@ body {
                     color: #7bbfea;
                 }
             }
-        }
-
-        .cart-nav {
-            height: 1.2rem;
-            position: fixed;
-            width: 100%;
-            z-index: 99;
         }
 
         .cart-content {
@@ -240,99 +228,42 @@ body {
             border-radius: 0.3rem;
             margin-left: 0.069rem;
             display: flex;
-            flex: 1;
-            align-items: center;
             width: 98vw;
-            &__item {
-                position: relative;
-                margin: 0 0.15rem;
-                display: flex;
-                justify-content: flex-end;
-                height: 0.768rem;
+            align-items: center;
+        }
 
-                .van-checkbox__label {
-                    padding: 0 10px 0 15px;
-                    box-sizing: border-box;
-                }
-
-                .van-card {
-                    background-color: unset;
-                    &__price {
+        .cart-card {
+            .van-card {
+                width: 90vw;
+                padding-top: 0.5rem;
+            }
+            .card-tags {
+                p {
+                    padding: 0;
+                    margin: 0;
+                    padding-top: 0.1rem;
+                    padding-bottom: 0.1rem;
+                    span {
+                        padding: 0 0.1rem;
+                        margin-right: 0.15rem;
+                        background: rgba(123, 191, 234, 0.2);
                         color: #7bbfea;
                     }
                 }
             }
-        }
-
-        .cart-checkbox {
-            display: flex;
-            align-items: center;
-            //   border: solid 1px rebeccapurple;
-        }
-
-        .cart-card {
-            flex: 1;
-            display: flex;
-            // border: solid 1px yellow;
-            width: 80vw;
-        }
-
-        .cart-stepper {
-            //  border: solid 1px red;
-            width: 1.5rem;
-            padding-top: 1.6rem;
-            font-size: 0.8rem;
-        }
-    }
-
-    .van-submit-bar {
-        left: unset;
-        bottom: unset;
-        position: unset;
-    }
-
-    .cart-delete-bar {
-        left: unset;
-        bottom: unset;
-        position: unset;
-        margin-top: -1rem;
-
-        .van-button--small {
-            font-size: 0.42rem;
+            .cart-footer {
+                font-size: 0.7rem;
+                margin-top: -0.5rem;
+            }
         }
     }
 }
 
-.van-card {
-    background-color: white;
-    width: 6.5rem;
-}
-
-.van-card__title {
-    width: 5.32rem;
-}
-
-.van-card__desc {
-    width: 5.32rem;
-}
-
-.van-card__bottom {
-    width: 2.1667rem;
-    margin-top: 0.5rem;
-}
-
-.van-card__header {
-    margin-left: -0.16rem;
-}
 .van-card__price {
     color: #7bbfea;
+    padding-bottom: -1rem;
+    padding-left: 0.1rem;
 }
 </style>
 
-<style>
-.van-list > .van-list__finished-text {
-    text-align: center;
-    padding-right: 0rem;
-}
-</style>
 

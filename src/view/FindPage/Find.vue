@@ -86,14 +86,20 @@
                     <div v-for="item in goods" :key="item.id" :title="item.desc">
                         <div>
                             <van-card
-                                :title="item.title"
+                                :title="item.title|filtersTitle"
                                 thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
                                 :price="item.price"
                             >
                                 <div slot="tags" class="right-tags">
-                                    <span>即刻出售</span>
-                                    <span>不可议价</span>
+                                    <p>
+                                        <span>即时出售</span>
+                                        <span>已用5年</span>
+                                    </p>
+                                    <p>
+                                        <span>不可议价</span>
+                                        <span>原价:${{item.price}}</span>
+                                    </p>
                                 </div>
                                 <div @click="addToLove" class="right-footer" slot="footer">
                                     <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
@@ -130,6 +136,14 @@ export default {
             scroll: 0,
         };
     },
+    filters: {
+        filtersTitle(data) {
+            if (data.length > 11) {
+                return data.substr(1, 10) + '...';
+            }
+            return data;
+        },
+    },
     activated() {
         document.getElementById('content-right').scrollTop = this.scroll;
     },
@@ -138,8 +152,8 @@ export default {
             this.scroll = e.target.scrollTop;
         },
         addToLove() {
-            this.$store.getters.active.loveCount = this.$store.getters.active.loveCount+1
-         //   this.$router.push({ name: 'corridor' });
+            this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
+            //   this.$router.push({ name: 'corridor' });
             Toast({
                 message: '自定义图标',
                 icon: 'https://img.yzcdn.cn/vant/logo.png',
@@ -180,16 +194,11 @@ export default {
             chooseContentItemlChildren.children[0].style.color = '#7bbfea';
         },
     },
-    beforeCreate() {
-    },
-    beforeMounted() {
-    },
-    beforeUpdate() {
-    },
-    updated() {
-    },
-    beforeDestroy() {
-    },
+    beforeCreate() {},
+    beforeMounted() {},
+    beforeUpdate() {},
+    updated() {},
+    beforeDestroy() {},
 };
 </script>
 
@@ -256,12 +265,16 @@ body {
             top: 1.3rem;
             width: 80%;
             .right-tags {
-                padding: 0.3rem 0 0.1rem 0;
-                span {
-                    padding: 0 0.1rem;
-                    margin-right: 0.15rem;
-                    background: rgba(123, 191, 234, 0.2);
-                    color: #7bbfea;
+                padding-top: 0.1rem;
+                p {
+                    padding: 0;
+                    margin: 0;
+                    span {
+                        padding: 0 0.1rem;
+                        margin-right: 0.15rem;
+                        background: rgba(123, 191, 234, 0.2);
+                        color: #7bbfea;
+                    }
                 }
             }
             .right-footer {
@@ -283,6 +296,7 @@ body {
 }
 .van-card__price {
     color: #7bbfea;
+    padding: 0.2rem 0 0 0.2rem;
 }
 
 .find-content {
