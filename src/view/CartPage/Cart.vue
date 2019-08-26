@@ -23,11 +23,10 @@
                                 <van-checkbox :key="item.id" :name="item.id"></van-checkbox>
                             </van-checkbox-group>
                         </div>
-                        <div class="cart-card">
+                        <div class="cart-card"  @click="()=>goGoodsDetail(item.id)" >
                             <van-card
                                 :title="item.title|filtersTitle"
                                 :price="formatPrice(item.price)"
-                                thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
                             >
                                 <div slot="tags" class="card-tags">
@@ -41,7 +40,7 @@
                                     </p>
                                 </div>
 
-                                <div @click="contact" slot="footer" class="cart-footer">
+                                <div @click.stop="()=>contact(1,'猫咪')" slot="footer" class="cart-footer">
                                     <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </van-card>
@@ -121,8 +120,11 @@ export default {
         formatPrice(price) {
             return (price / 100).toFixed(2);
         },
-        contact() {
-            this.$router.push({ name: 'corridor' });
+        goGoodsDetail(id) {
+            this.$router.push({ name: 'goods-detail' });
+        },
+        contact(id, name) {
+            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
         },
         toggle(e) {
             this.checkedGoods = e;
@@ -234,9 +236,9 @@ body {
 
         .cart-card {
             .van-card {
-                width: 86vw;
+                width: 85vw;
                 padding-top: 0.5rem;
-                margin-left: 0.2rem;
+                margin-left: 0.3rem;
             }
             .card-tags {
                 p {

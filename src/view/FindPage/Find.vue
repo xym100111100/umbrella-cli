@@ -84,10 +84,9 @@
                     @load="handleLoad"
                 >
                     <div v-for="item in goods" :key="item.id" :title="item.desc">
-                        <div>
+                        <div @click="()=>goGoodsDetail(item.id)">
                             <van-card
                                 :title="item.title|filtersTitle"
-                                thumb-link="#/goods-detail"
                                 :thumb="item.thumb"
                                 :price="item.price"
                             >
@@ -101,7 +100,7 @@
                                         <span>原价:${{item.price}}</span>
                                     </p>
                                 </div>
-                                <div @click="addToLove" class="right-footer" slot="footer">
+                                <div @click.stop="addToLove" class="right-footer" slot="footer">
                                     <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                                 </div>
                             </van-card>
@@ -148,6 +147,9 @@ export default {
         document.getElementById('content-right').scrollTop = this.scroll;
     },
     methods: {
+        goGoodsDetail(id) {
+            this.$router.push({ name: 'goods-detail' });
+        },
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
