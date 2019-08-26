@@ -23,7 +23,7 @@
                                         </p>
                                         <p>
                                             <span>不可议价</span>
-                                            <span>原价:${{item.salePrice}}</span>
+                                            <span>原价: ${{item.salePrice}}</span>
                                         </p>
                                     </div>
                                     <div class="good-price">

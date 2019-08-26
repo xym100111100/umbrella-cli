@@ -81,7 +81,7 @@ const routes = [
         path: '/msg-chat',
         component: () => import('./view/MsgPage/Chat'),
         meta: {
-            index: 2,
+            index: 5,
         },
     },
     {

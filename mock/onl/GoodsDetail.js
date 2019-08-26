@@ -13,7 +13,7 @@ const goodsTemplate = {
         'https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg',
         'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg',
     ],
-    detail: '<p>商品详情</p><p>厨小宝<br/>清水洗涤神器<br/><br/>厨小宝是运用多项国家专利，完全物理原理，应用定频离子共振技术，与水分子团产生共振，高穿透深度瓦解油腻顽渍的聚合，从而使去污、除菌在清洗中一次完成，并达到高效的洁净力。<br/><br/>详情介绍</p><img src="https://duamai.com/ise-svr/files/goodsDetail/2018/11/20/14/25/A931E164D6724F6AAB2A22324C3D00AD.jpg"/><p></p><p></p><p></p>',
+    detail: '八个人来，七个人走，留下一堆单身狗，即时出售!!!,不管是灵魂，还是肉体，不管是兄弟，还是女朋友',
 };
 
 exports.goodsList = function(req, res, u) {
