@@ -2,53 +2,59 @@
     <div class="msg">
         <header>
             <div class="msg-header">
-                <van-nav-bar title="消息" ></van-nav-bar>
+                <van-nav-bar title="消息"></van-nav-bar>
             </div>
         </header>
-        <div class="msg-content">
-            <ul>
-                <li
-                    v-for="(item,index) in chatDataList"
-                    :class="{move:candelete.id==item.id}"
-                    @touchstart="touchStart(item)"
-                    @touchend="touchEnd(item)"
-                    :key="item.id"
-                    @click="contact(item.id,item.name)"
-                >
-                    <div class="content-item">
-                        <div class="item-right" >
-                            <div class="right-user-face">
-                                <img
-                                    :src="item.thumb"
-                                />
-                            </div>
-                        </div>
-                        <div class="item-left">
-                            <div class="left-content">
-                                <div class="content-top">
-                                    <p>{{item.name}}</p>
-                                    <p>2019-03-16</p>
-                                </div>
-                                <div class="content-bottom">
-                                    <p>{{item.text}}</p>
+        <div id="msg-content"  class="msg-content" @scroll="moving">
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="handleLoad"
+            >
+                <ul>
+                    <li
+                        v-for="(item,index) in computeText"
+                        :class="{move:candelete.id==item.id}"
+                        @touchstart="touchStart(item)"
+                        @touchend="touchEnd(item)"
+                        :key="item.id"
+                        @click="contact(item.id,item.name)"
+                    >
+                        <div class="content-item">
+                            <div class="item-right">
+                                <div class="right-user-face">
+                                    <img :src="item.thumb" />
                                 </div>
                             </div>
-                            <div class="left-del" @click.stop="deleteItem(index)">
-                                <p>删除</p>
+                            <div class="item-left">
+                                <div class="left-content">
+                                    <div class="content-top">
+                                        <p>{{item.name}}</p>
+                                        <p>2019-03-16</p>
+                                    </div>
+                                    <div class="content-bottom">
+                                        <p>{{item.text}}</p>
+                                    </div>
+                                </div>
+                                <div class="left-del" @click.stop="deleteItem(index)">
+                                    <p>删除</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </van-list>
         </div>
     </div>
 </template>
 
 <script>
-import { Search, Icon, NavBar, Cell, CellGroup } from 'vant';
-import Test from './Text.vue';
+import { Search, Icon, NavBar, List, Cell, CellGroup } from 'vant';
 import WSocket from '../../socket.js';
-import { getChatInfo } from '../../svc/Chat';
+import { getChatInfo as goodsList } from '../../svc/Chat';
+// import { list as goodsList } from '../../svc/Cart';
+
 export default {
     components: {
         [Search.name]: Search,
@@ -56,21 +62,22 @@ export default {
         [CellGroup.name]: CellGroup,
         [NavBar.name]: NavBar,
         [Icon.name]: Icon,
-        Test,
+        [List.name]: List,
     },
 
     data() {
         return {
             // 数据
-            message: 'ss',
-            messages: this.chatInfo(),
             dataInfo: [],
             clientNum: {}, // 记录开始滑动（x1）,结束滑动（x2）的鼠标指针的位置
             candelete: {}, // 滑动的item
+            loading: false,
+            finished: false,
+            scroll: 0,
         };
     },
     computed: {
-        chatDataList() {
+        computeText() {
             return this.dataInfo.filter(function(data) {
                 if (data.text.length > 20) {
                     data.text = data.text.slice(1, 20) + '...';
@@ -96,28 +103,30 @@ export default {
             }
         );
     },
-
-    beforeCreate() {
-        console.log('beforeCreate');
-    },
-    beforeMounted() {
-        console.log('beforeCreate');
-    },
-    beforeUpdate() {
-        console.log('beforeUpdate');
-    },
-    updated() {
-        console.log('updated');
-    },
-    beforeDestroy() {
-        console.log('beforeDestroy');
+    activated() {
+        document.getElementById('msg-content').scrollTop = this.scroll;
     },
     methods: {
-        chatInfo() {
-            getChatInfo({
+        moving(e) {
+            this.scroll = e.target.scrollTop;
+        },
+        // 获取商品数据
+        handleLoad() {
+            const params = { pageNum: this.pageNum + 1 };
+            goodsList({
+                params,
                 onSuccess: data => {
-                    console.log(data);
-                    this.dataInfo = data.list;
+                    this.pageNum = data.pageNum;
+                    this.dataInfo.push(...data.list);
+                    // 如果是最后一页
+                    if (data.pages === data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    }
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
                 },
             });
         },
@@ -229,14 +238,9 @@ img {
     padding: 0;
 }
 
-body,
-html {
-    height: 100%;
-}
 .msg {
     display: flex;
     flex-direction: column;
-    height: 100%;
     &-header {
         background: #fafafa;
         border-bottom: 1px solid #ededed;
@@ -249,6 +253,8 @@ html {
         position: absolute;
         width: 100%;
         top: 1.2rem;
+        height: 100%;
+        overflow: scroll;
         .content-item {
             display: flex;
             align-items: center;

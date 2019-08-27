@@ -1,14 +1,14 @@
 <template>
-    <div class="msg">
+    <div class="chat">
         <header>
-            <div class="msg-header">
+            <div class="chat-header">
                 <van-nav-bar v-bind:title="name" v-on:click-left="handleBack" left-arrow>
                     <van-icon size="0.8rem" slot="right" />
                 </van-nav-bar>
             </div>
         </header>
 
-        <div class="msg-centent" id="msg-content">
+        <div class="chat-centent" @scroll="moving" id="chat-content">
             <div class="centent-node-you">
                 <img
                     src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
@@ -73,11 +73,22 @@
                 <img
                     src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
                 />
+                <span>曾今有一份再会</span>
+            </div>
+            <div class="centent-node-you">
+                <img
+                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                />
+                <span>曾今有一份再会</span>
+            </div>
+            <div class="centent-node-you">
+                <img
+                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                />
                 <span>最后</span>
             </div>
         </div>
-
-        <div class="msg-footer">
+        <div class="chat-footer">
             <div id="addImg" v-on:click="addImg" class="footer-add-img">+</div>
             <div class="footer-input">
                 <van-cell-group>
@@ -99,7 +110,7 @@
 </template>
 
 <script>
-import { NavBar, Button, Field, Icon, Search, Cell, CellGroup } from 'vant';
+import { NavBar, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
 import { getAccountById, getPntAccount } from '../../svc/Mine';
 import { getChatInfo } from '../../svc/Chat';
 import WSocket from '../../socket.js';
@@ -110,6 +121,7 @@ export default {
         [Cell.name]: Cell,
         [CellGroup.name]: CellGroup,
         [NavBar.name]: NavBar,
+        [List.name]: List,
         [Icon.name]: Icon,
         [Button.name]: Button,
     },
@@ -117,23 +129,40 @@ export default {
         return {
             id: this.$route.params.id,
             name: this.$route.params.name,
-            websocket: null,
             inputValue: null,
+            list: [],
+            loading: false,
+            finished: false,
         };
     },
     updated() {
-        this.$nextTick(function() {});
-        console.log('---11---');
+        console.log('updated');
     },
     created() {
-        // this.initwebsoket();
-        console.log('---22---');
+        console.log('created');
     },
     destroyed() {
-        this.websocket.close(); //离开路由之后断开websoket连接
+        console.log('destroyed');
     },
     methods: {
+        moving(e) {
+            console.log(e.target.scrollTop);
+        },
+        onLoad() {
+            // 异步更新数据
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                    this.list.push(this.list.length + 1);
+                }
+                // 加载状态结束
+                this.loading = false;
 
+                // 数据全部加载完成
+                if (this.list.length >= 40) {
+                    this.finished = true;
+                }
+            }, 500);
+        },
         handleScroll(e) {
             const scrollTop = e.target.scrollTop;
             // 与PullRefresh的下拉刷新不产生冲突
@@ -143,69 +172,22 @@ export default {
         },
         addImg() {
             console.log('0000');
-            console.log((document.getElementById('msg-content').style.height = 250 + 'px'));
-            document.getElementById('msg-content').scrollTop = document.getElementById('msg-content').offsetHeight;
+            console.log((document.getElementById('chat-content').style.height = 250 + 'px'));
+            document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
         },
         inputFocus() {
-            let centent = document.getElementById('msg-content');
+            let centent = document.getElementById('chat-content');
             centent.style.height = 8.5 + 'rem';
-            document.getElementById('msg-content').scrollTop =
-                document.getElementById('msg-content').offsetHeight + 1000;
+            document.getElementById('chat-content').scrollTop =
+                document.getElementById('chat-content').offsetHeight + 1000;
         },
         inputBlur() {
-            let centent = document.getElementById('msg-content');
+            let centent = document.getElementById('chat-content');
             centent.style.height = 16 + 'rem';
-            document.getElementById('msg-content').offsetHeight;
+            document.getElementById('chat-content').offsetHeight;
         },
         handleBack(e) {
             this.$router.go(-1);
-        },
-        initwebsoket() {
-            console.log('初始化');
-            //初始化weosocket
-            const wsuri = 'ws://192.168.43.162:8080/chat';
-            this.websocket = new WebSocket(wsuri);
-            this.websocket.onmessage = this.websoketonmessage;
-            this.websocket.onopen = this.websoketonopen;
-            this.websocket.onerror = this.websoketonerror;
-            this.websocket.onclose = this.websoketclose;
-        },
-        websoketonopen() {
-            console.log('打开连接');
-        },
-        websoketonerror() {
-            console.log('重连');
-            //连接建立失败重连
-            //  this.initwebsoket();
-        },
-        websoketonmessage(e) {
-            console.log('接收');
-            //数据接收
-            const data = JSON.parse(e.data);
-            if (data.id != undefined) {
-                let test = JSON.parse(data.id);
-                console.log(test);
-                let parent = document.getElementById('msg-content');
-                // 创建文字内容节点
-                let spanNode = document.createElement('span');
-                let textNode = document.createTextNode(test.msg);
-                spanNode.appendChild(textNode);
-                // 创建头像
-                let imgNode = document.createElement('img');
-                imgNode.src =
-                    'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132';
-                // 创建内容节点
-                let divNode = document.createElement('div');
-                divNode.className = 'centent-node-you';
-                // 将头像和文字节点添加进去
-                divNode.appendChild(imgNode);
-                divNode.appendChild(spanNode);
-                // 将整个内容添加进去父亲节点
-                parent.appendChild(divNode); //向p追加此文本节点
-
-                // 将焦点依然放在输入框中
-                document.getElementById('inputNode').focus();
-            }
         },
         websoketsend() {
             console.log('发送');
@@ -226,9 +208,10 @@ export default {
     },
 
     activated() {
+        console.log('activated');
         this.id = this.$route.params.id;
         this.name = this.$route.params.name;
-        document.getElementById('msg-content').scrollTop = document.getElementById('msg-content').offsetHeight;
+         document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
     },
 };
 </script>
@@ -237,7 +220,7 @@ body,
 html {
     height: 100%;
 }
-.msg {
+.chat {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -255,7 +238,7 @@ html {
         //  display: flex;
         flex-direction: column;
         padding: 1.5rem 0 1.5rem;
-        height: 80%;
+        height: 100%;
         overflow: scroll;
         div {
             margin: 0.2rem 0 0.2rem 0;

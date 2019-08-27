@@ -251,7 +251,7 @@ body {
                     }
                 }
                 li:nth-child(1) {
-                    background: white;
+                    background: #fafafa;
                     span:nth-child(1) {
                         border-left: solid 2px #7bbfea;
                         color: #7bbfea;
@@ -274,7 +274,8 @@ body {
                     span {
                         padding: 0 0.1rem;
                         margin-right: 0.15rem;
-                        background: rgba(123, 191, 234, 0.2);
+                        // background: rgba(123, 191, 234, 0.2);
+                        background: rgba(60, 47, 15, 0.1);
                         color: #7bbfea;
                     }
                 }
@@ -294,7 +295,8 @@ body {
 }
 
 .van-card {
-    background-color: white;
+    background-color: #fafafa;
+    margin-bottom: 0.2rem;
 }
 .van-card__price {
     color: #7bbfea;
