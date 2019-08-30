@@ -8,72 +8,16 @@
         <div class="find-content">
             <div class="content-left">
                 <ol>
-                    <li>
-                        <span>鞋子</span>
-                    </li>
-                    <li>
-                        <span>电脑</span>
-                    </li>
-                    <li>
-                        <span>体育</span>
-                    </li>
-                    <li>
-                        <span>文具</span>
-                    </li>
-                    <li>
-                        <span>衣服</span>
-                    </li>
-                    <li>
-                        <span>凳子</span>
-                    </li>
-                    <li>
-                        <span>左边</span>
-                    </li>
-                    <li>
-                        <span>桌球</span>
-                    </li>
-                    <li>
-                        <span>耳机</span>
-                    </li>
-                    <li>
-                        <span>手机</span>
-                    </li>
-                    <li>
-                        <span>母婴</span>
-                    </li>
-                    <li>
-                        <span>玩具</span>
-                    </li>
-                    <li>
-                        <span>书本</span>
-                    </li>
-                    <li>
-                        <span>篮球</span>
-                    </li>
-                    <li>
-                        <span>火箭</span>
-                    </li>
-                    <li>
-                        <span>航母</span>
-                    </li>
-                    <li>
-                        <span>飞机</span>
-                    </li>
-                    <li>
-                        <span>坦克</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>手枪</span>
-                    </li>
-                    <li>
-                        <span>最后</span>
-                    </li>
+                    <template v-for=" item in goodsClass">
+                        <li
+                            :class="{focus2:item.id === currentGoodsClass}"
+                            @click="chooseClass(item.id)"
+                            :key="item.id"
+                            :id="item.id"
+                        >
+                            <span>{{item.name}}</span>
+                        </li>
+                    </template>
                 </ol>
             </div>
             <div id="content-right" @scroll="moving" class="content-right">
@@ -133,6 +77,38 @@ export default {
             loading: false, // 是否正在加载商品列表
             finished: false, // 是否全部加载完成商品列表
             scroll: 0,
+            currentGoodsClass: 1,
+            goodsClass: [
+                {
+                    id: 1,
+                    name: '手机',
+                },
+                {
+                    id: 2,
+                    name: '体育',
+                },
+                {
+                    id: 3,
+                    name: '运动',
+                },
+                {
+                    id: 4,
+                    name: '凳子',
+                },
+                {
+                    id: 5,
+                    name: '运动',
+                },
+
+                {
+                    id: 13,
+                    name: '运动',
+                },
+                {
+                    id: 14,
+                    name: '最后',
+                },
+            ],
         };
     },
     filters: {
@@ -182,18 +158,10 @@ export default {
             });
         },
         chooseClass(index) {
-            //去掉所有li的背景颜色和其子节点去掉span的左边框样式。
-            let contentItemlChildren = document.getElementById('link-item').children;
-            for (let i = 0; i < contentItemlChildren.length; i++) {
-                contentItemlChildren[i].style.background = 'none';
-                contentItemlChildren[i].children[0].style.border = 'none';
-                contentItemlChildren[i].children[0].style.color = '#666';
-            }
-            //将选中的li的设置背景颜色和其子节点span的左边框设置样式。
-            let chooseContentItemlChildren = document.getElementById('link-item').children[index];
-            chooseContentItemlChildren.style.background = 'white';
-            chooseContentItemlChildren.children[0].style.borderLeft = 'solid 2px #7bbfea';
-            chooseContentItemlChildren.children[0].style.color = '#7bbfea';
+            this.currentGoodsClass = index;
+            this.pageNum = 0;
+            this.goods = [];
+            this.handleLoad();
         },
     },
     beforeCreate() {},
@@ -233,11 +201,12 @@ body {
             top: 1.3rem;
             padding: 0;
             margin: 0;
+            background: rgba(60, 47, 15, 0.041);
+
             ol {
                 padding: 0;
                 margin: 0;
                 padding-bottom: 3rem;
-                background: rgba(60, 47, 15, 0.041);
                 li {
                     margin: 0;
                     padding: 0;
@@ -248,11 +217,12 @@ body {
                         font-size: 0.45rem;
                         width: 100%;
                         color: #907777;
+                        border-left: solid 2px rgba(60, 47, 15, 0.041);
                     }
                 }
-                li:nth-child(1) {
+                .focus2 {
                     background: #fafafa;
-                    span:nth-child(1) {
+                    span {
                         border-left: solid 2px #7bbfea;
                         color: #7bbfea;
                     }

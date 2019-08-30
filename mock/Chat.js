@@ -3,10 +3,10 @@ const Mock = require('mockjs');
 
 // 商品信息
 const goodsTemplate = {
-    pageSize: 16, // 每页大小
+    pageSize: 8, // 每页大小
     pages: 8, // 总页数
-    total: '32', // 总记录数
-    'list|16': [
+    total: '64', // 总记录数
+    'list|8': [
         {
             'id|1000000000000000-9999999999999999': 1,
           //  text: '@ctitle(10,50) 商品',

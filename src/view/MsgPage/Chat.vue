@@ -7,86 +7,19 @@
                 </van-nav-bar>
             </div>
         </header>
-
-        <div class="chat-centent" @scroll="moving" id="chat-content">
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span id="num">曾今有一份会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>在我的面前，我没有珍惜，如果上天再给我一次机会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有我的面前，我没有珍惜，如果上天再给我一次机会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份真挚的爱情放在我的面前，我没有珍惜，如果上天再给我一次机会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一我没有次机会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份真挚的爱情会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份真挚的爱情放在再给我一次机会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份再会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份再会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份再会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份再会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>曾今有一份再会</span>
-            </div>
-            <div class="centent-node-you">
-                <img
-                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                />
-                <span>最后</span>
-            </div>
+        <div class="chat-centent" style="backround:red" id="chat-content">
+            <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+                <template v-for="item in chatInfo">
+                    <div v-if="item.id%2==0" :key="item.id" class="centent-node-you">
+                        <img :src="item.thumb" />
+                        <span id="num">{{item.text}}</span>
+                    </div>
+                    <div v-if="item.id%2!=0" :key="item.id" class="centent-node-me">
+                        <span id="num">{{item.text}}</span>
+                        <img :src="item.thumb" />
+                    </div>
+                </template>
+            </van-pull-refresh>
         </div>
         <div class="chat-footer">
             <div id="addImg" v-on:click="addImg" class="footer-add-img">+</div>
@@ -110,8 +43,7 @@
 </template>
 
 <script>
-import { NavBar, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
-import { getAccountById, getPntAccount } from '../../svc/Mine';
+import { NavBar, PullRefresh, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
 import { getChatInfo } from '../../svc/Chat';
 import WSocket from '../../socket.js';
 export default {
@@ -124,67 +56,57 @@ export default {
         [List.name]: List,
         [Icon.name]: Icon,
         [Button.name]: Button,
+        [PullRefresh.name]: PullRefresh,
     },
     data() {
         return {
             id: this.$route.params.id,
             name: this.$route.params.name,
             inputValue: null,
-            list: [],
-            loading: false,
-            finished: false,
+            chatInfo: [],
+            isLoading: false,
+            meClientHeight: 0, //这个值是用来计算当软键盘升起来应该控制内容的高度是多少
         };
     },
-    updated() {
-        console.log('updated');
-    },
+    updated() {},
     created() {
         console.log('created');
+        this.meClientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     },
     destroyed() {
         console.log('destroyed');
     },
     methods: {
-        moving(e) {
-            console.log(e.target.scrollTop);
+        onRefresh() {
+            const params = { pageNum: this.pageNum + 1 };
+            getChatInfo({
+                params,
+                onSuccess: data => {
+                    this.pageNum = data.pageNum;
+                    this.chatInfo.unshift(...data.list);
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 500);
+                },
+                onFinish: () => {},
+            });
         },
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
 
-                // 数据全部加载完成
-                if (this.list.length >= 40) {
-                    this.finished = true;
-                }
-            }, 500);
-        },
-        handleScroll(e) {
-            const scrollTop = e.target.scrollTop;
-            // 与PullRefresh的下拉刷新不产生冲突
-            this.isDisabledPullRefresh = scrollTop > 0;
-            // 是否显示回到顶部
-            this.isShowTop = true;
-        },
-        addImg() {
-            console.log('0000');
-            console.log((document.getElementById('chat-content').style.height = 250 + 'px'));
-            document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
-        },
+        addImg() {},
         inputFocus() {
-            let centent = document.getElementById('chat-content');
-            centent.style.height = 8.5 + 'rem';
-            document.getElementById('chat-content').scrollTop =
-                document.getElementById('chat-content').offsetHeight + 1000;
+            // 这里这延迟必须有，否则页面将显示为0，因为可是区域还没有被
+            // 软键盘挡住.
+            setTimeout(() => {
+                let centent = document.getElementById('chat-content');
+                let height = this.meClientHeight - document.body.clientHeight;
+                centent.style.height = height + 'px';
+                document.getElementById('chat-content').scrollTop =
+                    document.getElementById('chat-content').offsetHeight + 1000;
+            }, 500);
         },
         inputBlur() {
             let centent = document.getElementById('chat-content');
-            centent.style.height = 16 + 'rem';
-            document.getElementById('chat-content').offsetHeight;
+            centent.style.height = this.meClientHeight + 'px';
         },
         handleBack(e) {
             this.$router.go(-1);
@@ -209,9 +131,11 @@ export default {
 
     activated() {
         console.log('activated');
+        this.chatInfo = [];
+        this.onRefresh();
         this.id = this.$route.params.id;
         this.name = this.$route.params.name;
-         document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
+        document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
     },
 };
 </script>
@@ -230,6 +154,7 @@ html {
         position: fixed;
         top: 0;
         width: 100%;
+        z-index: 99;
         span {
             font-size: 0.5rem;
         }
@@ -238,7 +163,7 @@ html {
         //  display: flex;
         flex-direction: column;
         padding: 1.5rem 0 1.5rem;
-        height: 100%;
+        height: 90vh;
         overflow: scroll;
         div {
             margin: 0.2rem 0 0.2rem 0;
@@ -256,7 +181,7 @@ html {
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
                 padding: 0.2rem 0.06rem;
-                background: #cdd3c5;
+                background: rgba(60, 47, 15, 0.1);
                 border-radius: 0.2rem;
                 text-align: justify;
             }
@@ -274,7 +199,7 @@ html {
             }
             span {
                 font-size: 0.4rem;
-                background: #84dd0f;
+                background: rgba(123, 191, 234, 0.2);
                 border-radius: 0.2rem;
                 margin-right: 0.2rem;
                 padding: 0.2rem 0.06rem;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="shop">
         <van-nav-bar
             title="我的小店"
             right-text="按钮"
@@ -7,28 +7,44 @@
             @click-left="$router.go(-1)"
             @click-right="onClickRight"
         />
+        <div style="backgrouond:red">
+            <van-uploader :max-count="2" :after-read="afterRead" v-model="fileList" multiple>
+                <span>文件上传</span>
+            </van-uploader>
+        </div>
     </div>
 </template>
 
 <script>
-import { NavBar, Toast } from 'vant';
+import { NavBar, Toast, Uploader } from 'vant';
 export default {
     components: {
         [NavBar.name]: NavBar,
         [Toast.name]: Toast,
+        [Uploader.name]: Uploader,
     },
     data() {
-        return {};
+        return {
+            fileList: [
+                { url: 'https://img.yzcdn.cn/vant/cat.jpeg' },
+                // Uploader 根据文件后缀来判断是否为图片文件
+                // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+                { url: 'https://cloud-image', isImage: true },
+            ],
+        };
     },
     methods: {
+        afterRead(file) {
+            // 此时可以自行将文件上传至服务器
+            console.log(file);
+        },
         onClickLeft() {
             Toast('返回');
         },
         onClickRight() {
-           this.$router.push({name:'school'})
+            this.$router.push({ name: 'school' });
         },
     },
-
 };
 </script>
 
