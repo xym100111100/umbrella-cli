@@ -2,6 +2,8 @@
 const proxy = {};
 addProxy('onl-svr', 'http://127.0.0.1:9100/');
 addProxy('swa-svr', 'http://127.0.0.1:8888/');
+addProxy('ise-svr', 'http://127.0.0.1:20180/');
+
 /**
  * 添加联调的微服务
  *

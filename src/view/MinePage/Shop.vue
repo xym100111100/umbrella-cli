@@ -17,6 +17,9 @@
 
 <script>
 import { NavBar, Toast, Uploader } from 'vant';
+import { upload } from '../../svc/Mine';
+import { list2 as ordList } from '../../svc/ord/Order';
+import axios from 'axios';
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -35,8 +38,30 @@ export default {
     },
     methods: {
         afterRead(file) {
-            // 此时可以自行将文件上传至服务器
+            let param = new FormData();
+            param.append('name', 'wiiiiiinney');
+            //通过append向form对象添加数据
+            param.append('file', file.file);
+            //FormData私有类对象，访问不到，可以通过get判断值是否传进去
             console.log(file);
+            let config = {
+                //添加请求头
+                headers: { 'Content-Type': 'multipart/form-data' },
+                onUploadProgress: e => {
+                    var completeProgress = (((e.loaded / e.total) * 100) | 0) + '%';
+                    this.progress = completeProgress;
+                },
+            };
+
+            axios.post('http://192.168.1.104:20180/ise/upload', param, config).then(res => {
+                console.log('数据保存成功');
+            });
+            // // 此时可以自行将文件上传至服务器
+            // let data = {};
+            // data.file = multipartFile;
+            // upload({
+            //     data,
+            // });
         },
         onClickLeft() {
             Toast('返回');

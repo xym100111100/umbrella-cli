@@ -25,7 +25,6 @@
 
 <script>
 import { Row, Col, Icon, Cell } from 'vant';
-import { getAccountById, getPntAccount } from '../../svc/Mine';
 import DyCell from '../../comp/common/DyCell.vue';
 
 export default {
@@ -38,51 +37,12 @@ export default {
     },
     data() {
         return {
-            afcAccount: this.getAccount(),
-            pntAccount: [],
             id: this.$route.params.id,
         };
     },
     methods: {
-        getAccount() {
-            getAccountById({
-                onSuccess: data => {
-                    this.afcAccount = data;
-                },
-            });
-            getPntAccount({
-                onSuccess: data2 => {
-                    this.pntAccount = data2;
-                },
-            });
-        },
     },
 
-    beforeCreate() {
-        console.log('-----1------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----1------beforeCreate1');
-    },
-    beforeMounted() {
-        console.log('-----2------beforeCreate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----2------beforeCreate1');
-    },
-    beforeUpdate() {
-        console.log('-----3------beforeUpdate1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----3------beforeCreate1');
-    },
-    updated() {
-        console.log('-----4------updated1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----4------beforeCreate1');
-    },
-    beforeDestroy() {
-        console.log('-----5------beforeDestroy1');
-        console.log(document.getElementById('user-box'));
-        console.log('-----5------beforeCreate1');
-    },
 };
 </script>
 

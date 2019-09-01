@@ -1,20 +1,15 @@
-import { get } from '../util/Request';
+import { post } from '../util/Request';
 
-export function getAccountById(options) {
+/**
+ * 上传文件
+ * @param {文件} options 
+ */
+export function upload(options) {
+    console.log(options)
     // 初始化options
     const defaultOptions = {
-        type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+        type: 'POST', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
     };
     const newOptions = { ...defaultOptions, ...options };
-    return get(`/afc-svr/afc/account`, newOptions);
-}
-
-
-export function getPntAccount(options) {
-    // 初始化options
-    const defaultOptions = {
-        type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
-    };
-    const newOptions = { ...defaultOptions, ...options };
-    return get(`/pnt-svr/pnt/account`, newOptions);
+    return post(`/ise-svr/ise/upload`, newOptions);
 }
