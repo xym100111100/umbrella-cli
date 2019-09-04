@@ -6,6 +6,95 @@
             @click-left="$router.go(-1)"
             @click-right="onClickRight"
         />
+        <van-popup
+            position="right"
+            :style="{ height: '100%',width:'25%' }"
+            get-container="body"
+            v-model="show"
+        >
+            <div>
+                <ol>
+                    <li @click="choiceClass('第一/配件')">
+                        <span>第一/配件</span>
+                    </li>
+                    <li @click="choiceClass('电脑/配件')">
+                        <span>电脑/配件</span>
+                    </li>
+                    <li>
+                        <span>体育</span>
+                    </li>
+                    <li>
+                        <span>文具</span>
+                    </li>
+                    <li>
+                        <span>衣服</span>
+                    </li>
+                    <li>
+                        <span>凳子</span>
+                    </li>
+                    <li>
+                        <span>左边</span>
+                    </li>
+                    <li>
+                        <span>桌球</span>
+                    </li>
+                    <li>
+                        <span>耳机</span>
+                    </li>
+                    <li>
+                        <span>手机</span>
+                    </li>
+                    <li>
+                        <span>母婴</span>
+                    </li>
+                    <li>
+                        <span>玩具</span>
+                    </li>
+                    <li>
+                        <span>书本</span>
+                    </li>
+                    <li>
+                        <span>篮球</span>
+                    </li>
+                    <li>
+                        <span>火箭</span>
+                    </li>
+                    <li>
+                        <span>航母</span>
+                    </li>
+                    <li>
+                        <span>飞机</span>
+                    </li>
+                    <li>
+                        <span>坦克</span>
+                    </li>
+                    <li>
+                        <span>大炮</span>
+                    </li>
+                    <li>
+                        <span>步枪</span>
+                    </li>
+                    <li>
+                        <span>大炮</span>
+                    </li>
+                    <li>
+                        <span>步枪</span>
+                    </li>
+                    <li>
+                        <span>大炮</span>
+                    </li>
+                    <li>
+                        <span>步枪</span>
+                    </li>
+                    <li>
+                        <span>手枪</span>
+                    </li>
+                    <li>
+                        <span>最后</span>
+                    </li>
+                </ol>
+            </div>
+        </van-popup>
         <div class="shop-content">
             <div class="content-title">
                 <van-notice-bar
@@ -32,30 +121,28 @@
                 </div>
             </div>
             <div class="content-info">
-                <div class="info-title">
-                    <span>宝贝详情</span>
+                <div class="info-class">
+                    <span @click="showPopup">选择分类</span>
+                    <span>{{className}}</span>
                 </div>
                 <div class="info-radio">
-                    <div>
-                        <van-radio-group v-model="radio">
-                            <van-radio name="1">即刻出售</van-radio>
-                            <van-radio name="2">议时出售</van-radio>
-                        </van-radio-group>
+                    <div class="radio-sell">
+                        <div class="sell-radio"></div>
+                        <div class="sell-text">即时出售</div>
                     </div>
-                    <div>
-                        <van-radio-group v-model="radio">
-                            <van-radio name="1">可议价</van-radio>
-                            <van-radio name="2">不可议价</van-radio>
-                        </van-radio-group>
+                    <div class="radio-sell">
+                        <div class="sell-radio"></div>
+                        <div class="sell-text">议时出售</div>
                     </div>
                 </div>
+                <div class="info-input"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { NavBar, NoticeBar, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
+import { NavBar, NoticeBar, Popup, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
 import { upload } from '../../svc/Mine';
 import { list2 as ordList } from '../../svc/ord/Order';
 import axios from 'axios';
@@ -68,41 +155,26 @@ export default {
         [Icon.name]: Icon,
         [RadioGroup.name]: RadioGroup,
         [Radio.name]: Radio,
+        [Popup.name]: Popup,
     },
     data() {
         return {
-            fileList: [
-                {
-                    id: 1,
-                    url:
-                        'http://192.168.1.104:20180/files/umbrella/2019/09/01/16/09/6F25169381AF455E95E88A95216FF2F5.jpeg',
-                },
-                {
-                    id: 2,
-                    url:
-                        'http://192.168.1.104:20180/files/umbrella/2019/09/01/16/09/6F25169381AF455E95E88A95216FF2F5.jpeg',
-                },
-                {
-                    id: 3,
-                    url:
-                        'http://192.168.1.104:20180/files/umbrella/2019/09/01/16/09/6F25169381AF455E95E88A95216FF2F5.jpeg',
-                },
-                {
-                    id: 4,
-                    url:
-                        'http://192.168.1.104:20180/files/umbrella/2019/09/01/16/09/6F25169381AF455E95E88A95216FF2F5.jpeg',
-                },
-                {
-                    id: 5,
-                    url:
-                        'http://192.168.1.104:20180/files/umbrella/2019/09/01/16/09/6F25169381AF455E95E88A95216FF2F5.jpeg',
-                },
-            ],
+            fileList: [],
+            fileIndex: 0, // 这个是图片的序号，不断增长，以免重复。
             radio: '1',
+            show: false,
+            className: '未选择',
         };
     },
     computed: {},
     methods: {
+        showPopup() {
+            this.show = true;
+        },
+        choiceClass(name) {
+            this.className = name;
+            this.show = false;
+        },
         deleteImg(index) {
             this.fileList.map((item, i) => {
                 if (item.id === index) {
@@ -178,7 +250,7 @@ export default {
                         axios.post('http://192.168.1.104:20180/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePaths);
                             let fileObj = {};
-                            fileObj.id = self.fileList + 1;
+                            fileObj.id = self.fileIndex += 1;
                             fileObj.url = 'http://192.168.1.104:20180/files' + res.data.filePaths;
                             self.fileList.push(fileObj);
                         });
@@ -287,26 +359,89 @@ body {
             }
         }
         .content-info {
-            .info-title {
+            width: 94%;
+            margin-left: 0.3rem;
+            border-radius: 0.2rem;
+            overflow: hidden;
+            .info-class {
+                padding-top: 0.2rem;
+                height: 1.3rem;
+                width: 100%;
                 font-size: 0.42rem;
-                padding: 0 0 0.2rem 0.4rem;
+                line-height: 1.3rem;
+                background: rgba(183, 210, 226, 0.2);
+                span:first-child {
+                    background: rgba(123, 191, 234, 0.2);
+                    border-radius: 0.2rem;
+                    padding: 0.15rem;
+                    margin-left: 1rem;
+                    color: #499df1;
+                }
+                span:last-child {
+                    padding-left: 0.4rem;
+                    font-size: 0.4rem;
+                }
             }
             .info-radio {
                 display: flex;
                 font-size: 0.5rem;
-                background: rgba(183, 210, 226, 0.2);
-                width: 94%;
-                margin-left: 0.3rem;
-                div {
-                    padding-left: 0.5rem;
-                    .van-radio {
-                        margin-top: 0.2rem;
-                        padding-bottom: 0.1rem;
-
-                        .van-radio__label {
-                        }
+                width: 100%;
+                .radio-sell {
+                    height: 1.3rem;
+                    width: 50%;
+                    background: rgba(183, 210, 226, 0.2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .sell-radio {
+                        background: white;
+                        border-radius: 5rem;
+                        height: 0.3rem;
+                        width: 0.3rem;
+                        border: solid 0.2rem greenyellow;
+                    }
+                    .sell-text {
+                        margin-left: 0.5rem;
+                        font-size: 0.4rem;
                     }
                 }
+            }
+            .info-input {
+                height: 1.3rem;
+                background: red;
+                width: 100%;
+                display: flex;
+                font-size: 0.5rem;
+            }
+        }
+    }
+}
+
+.van-popup--right {
+    div:last-child {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+        color: #4a4a4c;
+        font-size: 0.42rem;
+
+        ol {
+            padding-bottom: 1rem;
+            li {
+                margin: 0;
+                padding: 0;
+                height: 1.4rem;
+                line-height: 1.4rem;
+                text-align: center;
+                span {
+                    padding: 0.1rem 0.2rem;
+                    border-bottom: solid 0.03rem #ededed;
+                    color: #499df1;
+                }
+            }
+            li:active {
+                background: rgba(123, 191, 234, 0.2);
             }
         }
     }

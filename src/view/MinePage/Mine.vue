@@ -15,10 +15,29 @@
             </div>
         </header>
         <div class="user-content">
-            <DyCell MyIcon="shouye" content="我的大学" :goPath="()=>this.$router.push({name:'school'})" />
+            <DyCell
+                MyIcon="shouye"
+                content="我的大学"
+                :goPath="()=>this.$router.push({name:'school'})"
+            />
             <DyCell MyIcon="shouye2" content="我的店铺" :goPath="()=>this.$router.push({name:'shop'})" />
-            <DyCell MyIcon="fabuxuqiu" content="需求公告" :goPath="()=>this.$router.push({name:'notice'})" />
-            <DyCell MyIcon="location-o" :isBootomLine="false" content="米格走廊" :goPath="()=>this.$router.push({name:'corridor'})" />
+            <DyCell
+                MyIcon="fabuxuqiu"
+                content="需求公告"
+                :goPath="()=>this.$router.push({name:'notice'})"
+            />
+            <DyCell
+                MyIcon="lianheyingyong"
+                content="校企联盟"
+                :goPath="()=>this.$router.push({name:'notice'})"
+            />
+
+            <DyCell
+                MyIcon="xiangxishiyi"
+                :isBootomLine="false"
+                content="米格走廊"
+                :goPath="()=>this.$router.push({name:'corridor'})"
+            />
         </div>
     </div>
 </template>
@@ -40,9 +59,7 @@ export default {
             id: this.$route.params.id,
         };
     },
-    methods: {
-    },
-
+    methods: {},
 };
 </script>
 
