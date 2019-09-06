@@ -29,7 +29,7 @@
             <DyCell
                 MyIcon="lianheyingyong"
                 content="校企联盟"
-                :goPath="()=>this.$router.push({name:'notice'})"
+                :goPath="()=>this.$router.push({name:'union'})"
             />
 
             <DyCell
@@ -43,14 +43,13 @@
 </template>
 
 <script>
-import { Row, Col, Icon, Cell } from 'vant';
+import { Row, Col, Cell } from 'vant';
 import DyCell from '../../comp/common/DyCell.vue';
 
 export default {
     components: {
         [Row.name]: Row,
         [Col.name]: Col,
-        [Icon.name]: Icon,
         [Cell.name]: Cell,
         DyCell,
     },

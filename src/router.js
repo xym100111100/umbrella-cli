@@ -22,7 +22,7 @@ const routes = [
                 component: () => import('./view/HomePage/Home'),
                 meta: {
                     index: 1,
-                    
+
                 },
             },
             {
@@ -31,10 +31,10 @@ const routes = [
                 component: () => import('./view/FindPage/Find'),
                 meta: {
                     index: 1,
-                    
-                    
+
+
                 },
-                
+
             },
             {
                 name: 'msg',
@@ -42,8 +42,8 @@ const routes = [
                 component: () => import('./view/MsgPage/Msg'),
                 meta: {
                     index: 1,
-                    
-                   
+
+
                 },
             },
             {
@@ -52,7 +52,7 @@ const routes = [
                 component: () => import('./view/CartPage/Cart'),
                 meta: {
                     index: 1,
-                    
+
                 },
             },
             {
@@ -61,7 +61,7 @@ const routes = [
                 component: () => import('./view/MinePage/Mine'),
                 meta: {
                     index: 1,
-                    
+
                 },
             },
         ],
@@ -98,7 +98,7 @@ const routes = [
         component: () => import('./view/MinePage/School'),
         meta: {
             index: 2,
-            
+
         },
     },
     {
@@ -107,7 +107,7 @@ const routes = [
         component: () => import('./view/MinePage/Notice'),
         meta: {
             index: 2,
-            
+
         },
     },
     {
@@ -116,7 +116,7 @@ const routes = [
         component: () => import('./view/MinePage/Shop'),
         meta: {
             index: 2,
-            
+
         },
     },
     {
@@ -125,7 +125,16 @@ const routes = [
         component: () => import('./view/MinePage/Corridor'),
         meta: {
             index: 2,
-            
+
+        },
+    },
+    {
+        name: 'union',
+        path: '/mine/union',
+        component: () => import('./view/MinePage/Union'),
+        meta: {
+            index: 2,
+
         },
     },
     {
@@ -136,7 +145,7 @@ const routes = [
             index: 2,
         },
     },
- 
+
 ];
 
 const router = new Router({
@@ -169,31 +178,31 @@ const router = new Router({
 
 //     const targetHash = e.target.location.hash;
 
-    // 如果当前路由是首页，弹出退出确认框(FIXME 目前分不出是forward还是back，在首页forward时也会弹出此退出框)
-    // if (window.currentRoute === 'home') {
-    //     Dialog.confirm({
-    //         title: '退出程序',
-    //         message: '您确认要退出程序？',
-    //     })
-    //         .then(() => {
-    //             wx.closeWindow();
-    //         })
-    //         .catch(() => {
-    //             // 在首页取消后再添加一条首页的路由
-    //             pushHistory();
-    //         });
-    // }
+// 如果当前路由是首页，弹出退出确认框(FIXME 目前分不出是forward还是back，在首页forward时也会弹出此退出框)
+// if (window.currentRoute === 'home') {
+//     Dialog.confirm({
+//         title: '退出程序',
+//         message: '您确认要退出程序？',
+//     })
+//         .then(() => {
+//             wx.closeWindow();
+//         })
+//         .catch(() => {
+//             // 在首页取消后再添加一条首页的路由
+//             pushHistory();
+//         });
+// }
 // };
 
 // router.beforeEach((to, from, next) => {
 //     console.log("ddddd")
-    // 如果是首页回退事件，不要跳转到其它页
-    // if (_isBackOrForward && from.name === 'home') {
-    //     console.log("======")
-    //     _isBackOrForward = false;
-    //     next(false);
-    //     return;
-    // }
+// 如果是首页回退事件，不要跳转到其它页
+// if (_isBackOrForward && from.name === 'home') {
+//     console.log("======")
+//     _isBackOrForward = false;
+//     next(false);
+//     return;
+// }
 
 //     const title = to.meta && to.meta.title;
 //     if (title) {

@@ -101,7 +101,8 @@
                     color="#1989fa"
                     background="#ecf9ff"
                     left-icon="info-o"
-                >温馨提示:拍摄时请将宝贝置于镜头的上部分</van-notice-bar>
+                    text="温馨提示:拍摄时请将宝贝置于镜头的上部分,以防商品无法完整展示出来。"
+                />
             </div>
             <div class="content-upload">
                 <template v-for=" item in fileList">
@@ -121,28 +122,99 @@
                 </div>
             </div>
             <div class="content-info">
-                <div class="info-class">
-                    <span @click="showPopup">选择分类</span>
-                    <span>{{className}}</span>
-                </div>
-                <div class="info-radio">
-                    <div class="radio-sell">
-                        <div class="sell-radio"></div>
-                        <div class="sell-text">即时出售</div>
-                    </div>
-                    <div class="radio-sell">
-                        <div class="sell-radio"></div>
-                        <div class="sell-text">议时出售</div>
-                    </div>
-                </div>
-                <div class="info-input"></div>
+                <van-tabs
+                    v-model="tabsActive"
+                    :swipeable="true"
+                    color="greenyellow"
+                    :animated="true"
+                    background="rgba(123, 191, 234, 0.1)"
+                >
+                    <van-tab title="出售宝贝">
+                        <div class="info-tab1">
+                            <div class="info-class">
+                                <span @click="showPopup">选择分类</span>
+                                <span>{{className}}</span>
+                            </div>
+                            <div class="info-radio">
+                                <template v-for="item in radioList1">
+                                    <div
+                                        :key="item.index"
+                                        class="radio-sell"
+                                        @click="changeRadio1(item.index)"
+                                    >
+                                        <div
+                                            class="sell-radio"
+                                            :class="{sellRadioActive:item.active===true}"
+                                        ></div>
+                                        <div class="sell-text">{{item.value}}</div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="info-radio">
+                                <template v-for="item in radioList2">
+                                    <div
+                                        :key="item.index"
+                                        class="radio-bargaining"
+                                        @click="changeRadio2(item.index)"
+                                    >
+                                        <div
+                                            class="bargaining-radio"
+                                            :class="{bargainingRadioActive:item.active===true}"
+                                        ></div>
+                                        <div
+                                            :class="{moveLeft:item.index===1}"
+                                            class="bargaining-text"
+                                        >{{item.value}}</div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="info-bottom">
+                                <div class="bottom-left">
+                                    <span>已用</span>
+                                    <span @click="changeUseTime(-1)">
+                                        <van-icon color="#7bbfea" name="jianhao" />
+                                    </span>
+                                    <span>{{useTime}}</span>
+                                    <span @click="changeUseTime(1)">
+                                        <van-icon color="#7bbfea" name="tianjiajiahaowubiankuang" />
+                                    </span>
+                                    <span>/月</span>
+                                </div>
+                                <div class="bottom-right">
+                                    <span>原价:</span>
+                                    <input
+                                        type="text"
+                                        placeholder="只能输入千位价格"
+                                        :value="oldPrice"
+                                        maxlength="4"
+                                        @input="changeOldPrice"
+                                    />
+                                </div>
+                                <div class="bottom-textArea-title">
+                                    <textarea maxlength="20" placeholder="请简短地输入宝贝标题 如:华为耳机黑色"></textarea>
+                                </div>
+                                <div class="bottom-textArea-detail">
+                                    <textarea placeholder="请简短地输入你对宝贝的描述"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </van-tab>
+                    <van-tab title="出租宝贝">
+                        <div class="info-tab2">
+                            <input />
+                        </div>
+                    </van-tab>
+                </van-tabs>
+            </div>
+            <div class="shop-footer">
+                <button>提交</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { NavBar, NoticeBar, Popup, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
+import { NavBar, NoticeBar, Stepper, Tab, Tabs, Popup, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
 import { upload } from '../../svc/Mine';
 import { list2 as ordList } from '../../svc/ord/Order';
 import axios from 'axios';
@@ -156,18 +228,73 @@ export default {
         [RadioGroup.name]: RadioGroup,
         [Radio.name]: Radio,
         [Popup.name]: Popup,
+        [Stepper.name]: Stepper,
+        [Tabs.name]: Tabs,
+        [Tab.name]: Tab,
     },
     data() {
         return {
             fileList: [],
-            fileIndex: 0, // 这个是图片的序号，不断增长，以免重复。
-            radio: '1',
+            useTime: 1, // 商品使用时间,单位是月
+            oldPrice: '',
+            radioList1: [
+                {
+                    index: 1,
+                    value: '即时出售',
+                    active: true,
+                },
+                {
+                    index: 2,
+                    value: '议时出售',
+                    active: false,
+                },
+            ],
+            radioList2: [
+                {
+                    index: 1,
+                    value: '可议价',
+                    active: true,
+                },
+                {
+                    index: 2,
+                    value: '不可议价',
+                    active: false,
+                },
+            ],
+            tabsActive: 2,
             show: false,
             className: '未选择',
         };
     },
     computed: {},
     methods: {
+        changeOldPrice(even) {
+            console.log(even.target.value);
+            this.oldPrice = even.target.value.replace(/[^\d]/g, '');
+        },
+        changeUseTime(count) {
+            if ((this.useTime === 1 && count === -1) || (this.useTime === 99 && count === 1)) return;
+            this.useTime += count;
+            console.log(this.useTime);
+        },
+        changeRadio1(index) {
+            this.radioList1.map(item => {
+                if (item.index === index) {
+                    item.active = true;
+                } else {
+                    item.active = false;
+                }
+            });
+        },
+        changeRadio2(index) {
+            this.radioList2.map(item => {
+                if (item.index === index) {
+                    item.active = true;
+                } else {
+                    item.active = false;
+                }
+            });
+        },
         showPopup() {
             this.show = true;
         },
@@ -250,7 +377,7 @@ export default {
                         axios.post('http://192.168.1.104:20180/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePaths);
                             let fileObj = {};
-                            fileObj.id = self.fileIndex += 1;
+                            fileObj.id = new Date().getTime();
                             fileObj.url = 'http://192.168.1.104:20180/files' + res.data.filePaths;
                             self.fileList.push(fileObj);
                         });
@@ -337,7 +464,7 @@ body {
                     height: 1rem;
                     width: 1rem;
                     .van-icon {
-                        background: rgba(180, 194, 202, 0.1);
+                        background: rgba(180, 194, 202, 0.3);
                         padding-bottom: 0.2rem;
                     }
                 }
@@ -361,58 +488,165 @@ body {
         .content-info {
             width: 94%;
             margin-left: 0.3rem;
-            border-radius: 0.2rem;
+            border-radius: 0.4rem;
+            margin-top: 0.2rem;
             overflow: hidden;
-            .info-class {
-                padding-top: 0.2rem;
-                height: 1.3rem;
-                width: 100%;
-                font-size: 0.42rem;
-                line-height: 1.3rem;
-                background: rgba(183, 210, 226, 0.2);
-                span:first-child {
-                    background: rgba(123, 191, 234, 0.2);
-                    border-radius: 0.2rem;
-                    padding: 0.15rem;
-                    margin-left: 1rem;
-                    color: #499df1;
-                }
-                span:last-child {
-                    padding-left: 0.4rem;
-                    font-size: 0.4rem;
-                }
-            }
-            .info-radio {
-                display: flex;
-                font-size: 0.5rem;
-                width: 100%;
-                .radio-sell {
+            background: rgba(123, 191, 234, 0.2);
+            .info-tab1 {
+                .info-class {
+                    padding-top: 0.2rem;
                     height: 1.3rem;
-                    width: 50%;
-                    background: rgba(183, 210, 226, 0.2);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    .sell-radio {
-                        background: white;
-                        border-radius: 5rem;
-                        height: 0.3rem;
-                        width: 0.3rem;
-                        border: solid 0.2rem greenyellow;
+                    width: 100%;
+                    font-size: 0.35rem;
+                    line-height: 1.3rem;
+                    span:first-child {
+                        background: rgba(123, 191, 234, 0.2);
+                        border-radius: 0.2rem;
+                        padding: 0.15rem;
+                        margin-left: 1rem;
+                        color: #499df1;
                     }
-                    .sell-text {
-                        margin-left: 0.5rem;
-                        font-size: 0.4rem;
+                    span:last-child {
+                        padding-left: 0.4rem;
+                        font-size: 0.38rem;
+                    }
+                }
+                .info-radio {
+                    display: flex;
+                    font-size: 0.38rem;
+                    width: 100%;
+                    .radio-sell {
+                        height: 1.3rem;
+                        width: 50%;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .sell-radio {
+                            background: white;
+                            border-radius: 5rem;
+                            height: 0.25rem;
+                            width: 0.25rem;
+                            border: solid 0.15rem rgba(66, 76, 82, 0.2);
+                        }
+                        .sellRadioActive {
+                            border: solid 0.15rem greenyellow;
+                        }
+                        .sell-text {
+                            margin-left: 0.5rem;
+                            font-size: 0.38rem;
+                        }
+                    }
+                    .radio-bargaining {
+                        height: 1.3rem;
+                        width: 50%;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .bargaining-radio {
+                            background: white;
+                            border-radius: 5rem;
+                            height: 0.25rem;
+                            width: 0.25rem;
+                            border: solid 0.15rem rgba(66, 76, 82, 0.2);
+                        }
+                        .bargainingRadioActive {
+                            border: solid 0.15rem greenyellow;
+                        }
+                        .bargaining-text {
+                            margin-left: 0.5rem;
+                            font-size: 0.38rem;
+                        }
+                        .moveLeft {
+                            padding-right: 0.4rem;
+                        }
+                    }
+                }
+                .info-bottom {
+                    height: 6rem;
+                    width: 100%;
+                    display: flex;
+                    font-size: 0.5rem;
+                    flex-wrap: wrap;
+                    .bottom-left {
+                        height: 1.3rem;
+                        line-height: 1.3rem;
+                        width: 50%;
+                        text-align: center;
+                        font-size: 0.38rem;
+                        span:nth-child(3) {
+                            font-size: 0.5rem;
+                        }
+                        span:nth-child(2),
+                        span:nth-child(4) {
+                            background: rgba(66, 76, 82, 0.1);
+                            padding: 0.1rem 0.12rem;
+                            border-radius: 0.3rem;
+                            margin: 0 0.2rem;
+                        }
+                        span:nth-child(2):active,
+                        span:nth-child(4):active {
+                            background: rgba(123, 191, 234, 0.5);
+                        }
+                    }
+                    .bottom-right {
+                        width: 50%;
+                        overflow: hidden;
+                        height: 1.3rem;
+                        line-height: 1.3rem;
+                        font-size: 0.38rem;
+                        span:first-child {
+                            padding-right: 0.15rem;
+                        }
+                        input {
+                            width: 70%;
+                            height: 0.7rem;
+                            border-radius: 0.2rem;
+                            border: none;
+                            font-size: 0.35rem;
+                        }
+                    }
+                    .bottom-textArea-title {
+                        width: 100%;
+                        text-align: center;
+                        textarea {
+                            width: 90%;
+                            font-size: 0.35rem;
+                            height: 1.2rem;
+                            border: none;
+                        }
+                    }
+                    .bottom-textArea-detail {
+                        width: 100%;
+                        text-align: center;
+                        textarea {
+                            width: 90%;
+                            font-size: 0.35rem;
+                            height: 2rem;
+                            border: none;
+                        }
                     }
                 }
             }
-            .info-input {
-                height: 1.3rem;
-                background: red;
-                width: 100%;
-                display: flex;
-                font-size: 0.5rem;
-            }
+        }
+    }
+    .shop-footer {
+        height: 2rem;
+        text-align: center;
+        width: 100%;
+        line-height: 2rem;
+        button {
+            width: 90%;
+            height: 1rem;
+            font-size: 0.45rem;
+            line-height: 1rem;
+            border-radius: 0.2rem;
+            border: none;
+            background: greenyellow; 
+        }
+        button:active {
+            background:rgba(123, 191, 234, 0.2);
         }
     }
 }
