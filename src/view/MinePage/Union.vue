@@ -11,12 +11,21 @@
                 @load="handleLoad"
             >
                 <template v-for="item in unionData">
-                    <div class="content-school" @click="driverSchool" :key="item.id">
+                    <div
+                        class="content-school"
+                        @click="driverSchool(item.driverSchoolName)"
+                        :key="item.id"
+                    >
                         <van-card :thumb="item.thumb">
                             <div class="school-card" slot="tags">
                                 <p>{{item.driverSchoolName}}</p>
                                 <p>综合评分</p>
-                                <van-rate v-model="item.scoreValue" void-icon="star" :count="8" />
+                                <van-rate
+                                    readonly
+                                    v-model="item.scoreValue"
+                                    void-icon="star"
+                                    :count="7"
+                                />
                             </div>
                         </van-card>
                     </div>
@@ -71,8 +80,8 @@ export default {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        driverSchool() {
-            this.$router.push({ name: 'driver-school' });
+        driverSchool(driverSchoolName) {
+            this.$router.push({ name: 'driver-school', params: { name: driverSchoolName } });
         },
         onLoad() {
             // 异步更新数据
@@ -104,10 +113,6 @@ html {
 .union {
     height: 100vh;
     overflow: scroll;
-    .union-title {
-        width: 100%;
-        z-index: 99;
-    }
     .union-content {
         height: 99%;
         overflow: scroll;

@@ -128,7 +128,6 @@ export default {
             console.log('断开连接', e);
         },
     },
-
     activated() {
         console.log('activated');
         this.chatInfo = [];

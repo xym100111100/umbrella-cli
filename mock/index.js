@@ -28,6 +28,7 @@ const mock = {
     'GET /pnt-svr/pnt/account': PntAccount.getById,
     'GET /chat-svr/chat': Chat.chatInfo,
     'GET /dri-svr/list': driverSchool.list,
+    'GET /dri-svr/getComment': driverSchool.getComment,
 
 
 };
