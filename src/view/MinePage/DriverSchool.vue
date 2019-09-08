@@ -1,24 +1,17 @@
 <template>
-    <div>
-        <van-area
-            @cancel="$router.go(-1)"
-            @confirm="confirm"
-            :area-list="schollData"
-            :columns-num="2"
-            title="我的大学"
-        />
+    <div class="driver-school">
+        <van-nav-bar title="驾校简介" right-text="报名" left-arrow @click-left="$router.go(-1)" />
+        <p>sss</p>
     </div>
 </template>
 
 <script>
-import { NavBar, Dialog, Area } from 'vant';
-import  schoolData   from '../../util/SchoolData';
+import { NavBar } from 'vant';
+import schoolData from '../../util/SchoolData';
 
 export default {
     components: {
         [NavBar.name]: NavBar,
-        [Area.name]: Area,
-        [Dialog.name]: Dialog,
     },
     data() {
         return {
@@ -42,5 +35,24 @@ export default {
     },
 };
 </script>
+<style lang="less" scoped>
+body,
+html {
+    height: 100%;
+    background: rgba(60, 47, 15, 0.0001);
+}
+.driver-school {
+    height: 100vh;
+    overflow: scroll;
+}
 
-
+.van-nav-bar {
+    &__right {
+        bottom: -0.1rem;
+        .van-nav-bar__text {
+            font-size: 0.4rem;
+            color: #499df1;
+        }
+    }
+}
+</style>

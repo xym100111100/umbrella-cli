@@ -9,6 +9,7 @@ const PntAccount = require('./pnt/PntAccount');
 const ReturnGoods = require('./ord/ReturnGoods');
 const getGoodsData = require('./onl/getGoodsData');
 const Chat = require('./Chat');
+const driverSchool = require('./DriverSchool');
 
 const mock = {
     // 获取每日推荐
@@ -21,11 +22,12 @@ const mock = {
     'GET /ord-svr/ord/order': Order.list,
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
     'GET /ord-svr/ord/ReturnGoods': ReturnGoods.goodsList,
-    
+
     'GET /afc-svr/afc/account': AfcAccount.getById,
 
-     'GET /pnt-svr/pnt/account': PntAccount.getById,
-     'GET /chat-svr/chat': Chat.chatInfo,
+    'GET /pnt-svr/pnt/account': PntAccount.getById,
+    'GET /chat-svr/chat': Chat.chatInfo,
+    'GET /dri-svr/list': driverSchool.list,
 
 
 };

@@ -119,6 +119,14 @@ const routes = [
         },
     },
     {
+        name: 'driver-school',
+        path: '/mine/driver-school',
+        component: () => import('./view/MinePage/DriverSchool'),
+        meta: {
+            index: 5,
+        },
+    },
+    {
         name: 'shop',
         path: '/mine-shop',
         component: () => import('./view/MinePage/Shop'),

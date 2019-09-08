@@ -1,5 +1,5 @@
 <template>
-    <div class="doNotice">
+    <div class="do-notice">
         <header class="header">
             <van-nav-bar
                 title="发布公告"
@@ -8,7 +8,7 @@
                 @click-right="showPopup"
             />
         </header>
-        <div>
+        <div class="do-notice-content" >
             <p>asdfffffffdsd</p>
         </div>
     </div>
@@ -77,115 +77,12 @@ body {
     height: 100%;
     width: 100%;
 }
-
-.notice {
-    .header {
-        position: fixed;
-        width: 100%;
-        height: 1.3rem;
-        z-index: 99;
-    }
-    &-content {
+.do-notice{
+    height: 100vh;
+    overflow: scroll;
+    .do-notice-content{
         height: 100%;
-        padding: 1.4rem 0.2rem 0 0.2rem;
-        .content-item {
-            display: flex;
-            padding-top: 0.15rem;
-            .item-left {
-                margin-right: 0.2rem;
-                img {
-                    height: 1.1rem;
-                    width: 1.1rem;
-                    padding: 0;
-                    margin: 0;
-                    border-radius: 0.2rem;
-                }
-            }
-            .item-right {
-                border-bottom: solid 0.03rem #ededed;
-                display: flex;
-                width: 80VW;
-                .right-notice-info {
-                     flex-grow: 2;
-                    .user-wxname {
-                        font-size: 0.45rem;
-                        color: #4a4a4c;
-                    }
-                    .notice-info {
-                        margin-top: -0.2rem;
-                        padding-bottom: 0.1rem;
-                        span {
-                            padding: 0.1rem 0.1rem 0 0.1rem;
-                            margin-right: 0.15rem;
-                            color: #615c5c;
-                            font-size: 0.4rem;
-                        }
-                        .info-price {
-                            font-size: 0.4rem;
-                            padding-left: 0.2rem;
-                            span {
-                                background: unset;
-                                padding: unset;
-                                color: #7bbfea;
-                            }
-                        }
-                    }
-                }
-                .right-notice-contact {
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: flex-end;
-                    padding: 0 0.1rem 0.1rem 0;
-                    font-size: 0.8rem;
-                }
-            }
-        }
-    }
-}
-
-.van-nav-bar {
-    &__right {
-        bottom: -0.1rem;
-        .van-nav-bar__text {
-            font-size: 0.4rem;
-            color: #499df1;
-        }
-    }
-}
-.van-popup--right {
-    div:first-child {
-        width: 100%;
-        text-align: center;
-        font-size: 0.45rem;
-        padding: 0.2rem 0;
-        border-bottom: solid 0.03rem #ededed;
-        color: #499df1;
-    }
-    div:last-child {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        overflow: scroll;
-        color: #4a4a4c;
-        font-size: 0.42rem;
-
-        ol {
-            padding-bottom: 1.5rem;
-            li {
-                margin: 0;
-                padding: 0;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                text-align: center;
-                span {
-                    padding: 0.1rem 0.2rem;
-                    border-bottom: solid 0.03rem #ededed;
-                }
-            }
-            li:active {
-                background: rgba(123, 191, 234, 0.2);
-            }
-        }
+        background: red;
     }
 }
 </style>
