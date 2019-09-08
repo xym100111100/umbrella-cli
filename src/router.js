@@ -111,6 +111,14 @@ const routes = [
         },
     },
     {
+        name: 'do-notice',
+        path: '/mine/do-notice',
+        component: () => import('./view/MinePage/DoNotice'),
+        meta: {
+            index: 3,
+        },
+    },
+    {
         name: 'shop',
         path: '/mine-shop',
         component: () => import('./view/MinePage/Shop'),

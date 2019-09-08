@@ -15,7 +15,7 @@
             get-container="body"
             v-model="show"
         >
-            <div>发布公告</div>
+            <div @click="doNotice">发布公告</div>
             <div>
                 <ol>
                     <li @click="choiceClass">
@@ -114,7 +114,7 @@
                                     src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
                                 />
                             </div>
-                            <div  class="item-right">
+                            <div class="item-right">
                                 <div class="right-notice-info">
                                     <div class="user-wxname">保护伞</div>
                                     <div class="notice-info">
@@ -163,6 +163,9 @@ export default {
         };
     },
     methods: {
+        doNotice() {
+            this.$router.push({ name: 'do-notice' });
+        },
         choiceClass() {
             this.show = false;
         },
@@ -229,9 +232,9 @@ body {
             .item-right {
                 border-bottom: solid 0.03rem #ededed;
                 display: flex;
-                width: 80VW;
+                width: 80vw;
                 .right-notice-info {
-                     flex-grow: 2;
+                    flex-grow: 2;
                     .user-wxname {
                         font-size: 0.45rem;
                         color: #4a4a4c;

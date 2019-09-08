@@ -201,13 +201,68 @@
                     </van-tab>
                     <van-tab title="出租宝贝">
                         <div class="info-tab2">
-                            <input />
+                            <div class="info-class">
+                                <span @click="showPopup">选择分类</span>
+                                <span>{{className}}</span>
+                            </div>
+                            <div class="info-radio">
+                                <template v-for="item in radioList1">
+                                    <div
+                                        :key="item.index"
+                                        class="radio-sell"
+                                        @click="changeRadio1(item.index)"
+                                    >
+                                        <div
+                                            class="sell-radio"
+                                            :class="{sellRadioActive:item.active===true}"
+                                        ></div>
+                                        <div class="sell-text">{{item.value}}</div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="info-radio">
+                                <template v-for="item in radioList2">
+                                    <div
+                                        :key="item.index"
+                                        class="radio-bargaining"
+                                        @click="changeRadio2(item.index)"
+                                    >
+                                        <div
+                                            class="bargaining-radio"
+                                            :class="{bargainingRadioActive:item.active===true}"
+                                        ></div>
+                                        <div
+                                            :class="{moveLeft:item.index===1}"
+                                            class="bargaining-text"
+                                        >{{item.value}}</div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="info-bottom">
+                                <div class="bottom-left">
+                                    <span>租价</span>
+                                    <span @click="changeUseTime(-1)">
+                                        <van-icon color="#7bbfea" name="jianhao" />
+                                    </span>
+                                    <span>{{useTime}}</span>
+                                    <span @click="changeUseTime(1)">
+                                        <van-icon color="#7bbfea" name="tianjiajiahaowubiankuang" />
+                                    </span>
+                                    <span>/元/天</span>
+                                </div>
+                                <div class="bottom-textArea-title">
+                                    <textarea maxlength="20" placeholder="请简短地输入宝贝标题 如:华为耳机黑色"></textarea>
+                                </div>
+                                <div class="bottom-textArea-detail">
+                                    <textarea placeholder="请简短地输入你对宝贝的描述"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </van-tab>
                 </van-tabs>
             </div>
             <div class="shop-footer">
-                <button>提交</button>
+                <button @click="doSubmit">提交</button>
             </div>
         </div>
     </div>
@@ -268,6 +323,9 @@ export default {
     },
     computed: {},
     methods: {
+        doSubmit() {
+            console.log(this.data);
+        },
         changeOldPrice(even) {
             console.log(even.target.value);
             this.oldPrice = even.target.value.replace(/[^\d]/g, '');
@@ -326,7 +384,7 @@ export default {
                 },
             };
 
-            axios.post('http://192.168.1.104:20180/ise/upload', param, config).then(res => {
+            axios.post('http://192.168.8.108:20180/ise/upload', param, config).then(res => {
                 console.log('数据保存成功');
             });
         },
@@ -374,11 +432,11 @@ export default {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         };
                         // 发送请求;
-                        axios.post('http://192.168.1.104:20180/ise/upload', formData, config).then(res => {
+                        axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePaths);
                             let fileObj = {};
                             fileObj.id = new Date().getTime();
-                            fileObj.url = 'http://192.168.1.104:20180/files' + res.data.filePaths;
+                            fileObj.url = 'http://192.168.8.108:20180/files' + res.data.filePaths;
                             self.fileList.push(fileObj);
                         });
                     };
@@ -492,140 +550,138 @@ body {
             margin-top: 0.2rem;
             overflow: hidden;
             background: rgba(123, 191, 234, 0.2);
-            .info-tab1 {
-                .info-class {
-                    padding-top: 0.2rem;
-                    height: 1.3rem;
-                    width: 100%;
-                    font-size: 0.35rem;
-                    line-height: 1.3rem;
-                    span:first-child {
-                        background: rgba(123, 191, 234, 0.2);
-                        border-radius: 0.2rem;
-                        padding: 0.15rem;
-                        margin-left: 1rem;
-                        color: #499df1;
-                    }
-                    span:last-child {
-                        padding-left: 0.4rem;
-                        font-size: 0.38rem;
-                    }
+            .info-class {
+                padding-top: 0.2rem;
+                height: 1.3rem;
+                width: 100%;
+                font-size: 0.35rem;
+                line-height: 1.3rem;
+                span:first-child {
+                    background: rgba(123, 191, 234, 0.2);
+                    border-radius: 0.2rem;
+                    padding: 0.15rem;
+                    margin-left: 1rem;
+                    color: #499df1;
                 }
-                .info-radio {
-                    display: flex;
+                span:last-child {
+                    padding-left: 0.4rem;
                     font-size: 0.38rem;
-                    width: 100%;
-                    .radio-sell {
-                        height: 1.3rem;
-                        width: 50%;
+                }
+            }
+            .info-radio {
+                display: flex;
+                font-size: 0.38rem;
+                width: 100%;
+                .radio-sell {
+                    height: 1.3rem;
+                    width: 50%;
 
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        .sell-radio {
-                            background: white;
-                            border-radius: 5rem;
-                            height: 0.25rem;
-                            width: 0.25rem;
-                            border: solid 0.15rem rgba(66, 76, 82, 0.2);
-                        }
-                        .sellRadioActive {
-                            border: solid 0.15rem greenyellow;
-                        }
-                        .sell-text {
-                            margin-left: 0.5rem;
-                            font-size: 0.38rem;
-                        }
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .sell-radio {
+                        background: white;
+                        border-radius: 5rem;
+                        height: 0.25rem;
+                        width: 0.25rem;
+                        border: solid 0.15rem rgba(66, 76, 82, 0.2);
                     }
-                    .radio-bargaining {
-                        height: 1.3rem;
-                        width: 50%;
-
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        .bargaining-radio {
-                            background: white;
-                            border-radius: 5rem;
-                            height: 0.25rem;
-                            width: 0.25rem;
-                            border: solid 0.15rem rgba(66, 76, 82, 0.2);
-                        }
-                        .bargainingRadioActive {
-                            border: solid 0.15rem greenyellow;
-                        }
-                        .bargaining-text {
-                            margin-left: 0.5rem;
-                            font-size: 0.38rem;
-                        }
-                        .moveLeft {
-                            padding-right: 0.4rem;
-                        }
+                    .sellRadioActive {
+                        border: solid 0.15rem greenyellow;
+                    }
+                    .sell-text {
+                        margin-left: 0.5rem;
+                        font-size: 0.38rem;
                     }
                 }
-                .info-bottom {
-                    height: 6rem;
-                    width: 100%;
+                .radio-bargaining {
+                    height: 1.3rem;
+                    width: 50%;
+
                     display: flex;
-                    font-size: 0.5rem;
-                    flex-wrap: wrap;
-                    .bottom-left {
-                        height: 1.3rem;
-                        line-height: 1.3rem;
-                        width: 50%;
-                        text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    .bargaining-radio {
+                        background: white;
+                        border-radius: 5rem;
+                        height: 0.25rem;
+                        width: 0.25rem;
+                        border: solid 0.15rem rgba(66, 76, 82, 0.2);
+                    }
+                    .bargainingRadioActive {
+                        border: solid 0.15rem greenyellow;
+                    }
+                    .bargaining-text {
+                        margin-left: 0.5rem;
                         font-size: 0.38rem;
-                        span:nth-child(3) {
-                            font-size: 0.5rem;
-                        }
-                        span:nth-child(2),
-                        span:nth-child(4) {
-                            background: rgba(66, 76, 82, 0.1);
-                            padding: 0.1rem 0.12rem;
-                            border-radius: 0.3rem;
-                            margin: 0 0.2rem;
-                        }
-                        span:nth-child(2):active,
-                        span:nth-child(4):active {
-                            background: rgba(123, 191, 234, 0.5);
-                        }
                     }
-                    .bottom-right {
-                        width: 50%;
-                        overflow: hidden;
-                        height: 1.3rem;
-                        line-height: 1.3rem;
-                        font-size: 0.38rem;
-                        span:first-child {
-                            padding-right: 0.15rem;
-                        }
-                        input {
-                            width: 70%;
-                            height: 0.7rem;
-                            border-radius: 0.2rem;
-                            border: none;
-                            font-size: 0.35rem;
-                        }
+                    .moveLeft {
+                        padding-right: 0.4rem;
                     }
-                    .bottom-textArea-title {
-                        width: 100%;
-                        text-align: center;
-                        textarea {
-                            width: 90%;
-                            font-size: 0.35rem;
-                            height: 1.2rem;
-                            border: none;
-                        }
+                }
+            }
+            .info-bottom {
+                height: 6rem;
+                width: 100%;
+                display: flex;
+                font-size: 0.5rem;
+                flex-wrap: wrap;
+                .bottom-left {
+                    height: 1.3rem;
+                    line-height: 1.3rem;
+                    width: 50%;
+                    text-align: center;
+                    font-size: 0.38rem;
+                    span:nth-child(3) {
+                        font-size: 0.5rem;
                     }
-                    .bottom-textArea-detail {
-                        width: 100%;
-                        text-align: center;
-                        textarea {
-                            width: 90%;
-                            font-size: 0.35rem;
-                            height: 2rem;
-                            border: none;
-                        }
+                    span:nth-child(2),
+                    span:nth-child(4) {
+                        background: rgba(66, 76, 82, 0.1);
+                        padding: 0.1rem 0.12rem;
+                        border-radius: 0.3rem;
+                        margin: 0 0.2rem;
+                    }
+                    span:nth-child(2):active,
+                    span:nth-child(4):active {
+                        background: rgba(123, 191, 234, 0.5);
+                    }
+                }
+                .bottom-right {
+                    width: 50%;
+                    overflow: hidden;
+                    height: 1.3rem;
+                    line-height: 1.3rem;
+                    font-size: 0.38rem;
+                    span:first-child {
+                        padding-right: 0.15rem;
+                    }
+                    input {
+                        width: 70%;
+                        height: 0.7rem;
+                        border-radius: 0.2rem;
+                        border: none;
+                        font-size: 0.35rem;
+                    }
+                }
+                .bottom-textArea-title {
+                    width: 100%;
+                    text-align: center;
+                    textarea {
+                        width: 90%;
+                        font-size: 0.35rem;
+                        height: 1.2rem;
+                        border: none;
+                    }
+                }
+                .bottom-textArea-detail {
+                    width: 100%;
+                    text-align: center;
+                    textarea {
+                        width: 90%;
+                        font-size: 0.35rem;
+                        height: 2rem;
+                        border: none;
                     }
                 }
             }
@@ -643,10 +699,10 @@ body {
             line-height: 1rem;
             border-radius: 0.2rem;
             border: none;
-            background: greenyellow; 
+            background: greenyellow;
         }
         button:active {
-            background:rgba(123, 191, 234, 0.2);
+            background: rgba(123, 191, 234, 0.2);
         }
     }
 }
