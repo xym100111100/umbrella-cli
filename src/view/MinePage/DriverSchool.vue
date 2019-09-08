@@ -11,13 +11,16 @@
         <div id="school-content" class="school-content">
             <div class="content-school-info">驾校介绍</div>
             <div class="content-school-comment">学员评价</div>
-            <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="handleLoad">
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="handleLoad"
+            >
                 <template v-for="item in commentList">
                     <div @click="handleLoad" class="school-comment" :key="item.id">
                         <div class="comment-img">
-                            <img
-                                :src="item.thumb"
-                            />
+                            <img :src="item.thumb" />
                         </div>
                         <div class="comment-info">
                             <div class="info-rate">
@@ -107,7 +110,7 @@ html {
     height: 100vh;
     overflow: scroll;
     .school-content {
-        height: 99%;
+        height: 93%;
         overflow: scroll;
         padding: 0 0.3rem;
         .content-school-info {

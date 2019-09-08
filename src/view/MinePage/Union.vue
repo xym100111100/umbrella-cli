@@ -114,7 +114,7 @@ html {
     height: 100vh;
     overflow: scroll;
     .union-content {
-        height: 99%;
+        height: 93%;
         overflow: scroll;
         .content-school {
             margin: 0.5rem 0.3rem 0.1rem;
