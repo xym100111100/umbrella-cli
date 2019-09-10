@@ -127,6 +127,14 @@ const routes = [
         },
     },
     {
+        name: 'school-register',
+        path: '/mine/school-register',
+        component: () => import('./view/MinePage/SchoolRegister'),
+        meta: {
+            index: 10,
+        },
+    },
+    {
         name: 'shop',
         path: '/mine-shop',
         component: () => import('./view/MinePage/Shop'),

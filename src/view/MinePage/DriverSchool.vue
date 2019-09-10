@@ -6,6 +6,7 @@
                 right-text="报名"
                 left-arrow
                 @click-left="$router.go(-1)"
+                @click-right="schoolRegister"
             />
         </div>
         <div id="school-content" class="school-content">
@@ -52,13 +53,16 @@ export default {
     },
     data() {
         return {
-            name: this.$route.params.name,
+            name: '',
             commentList: [],
             loading: false,
             finished: false,
         };
     },
     methods: {
+        schoolRegister() {
+            this.$router.push({ name: 'school-register' });
+        },
         // 获取驾校数据
         handleLoad() {
             const params = { pageNum: this.pageNum + 1 };
@@ -96,7 +100,9 @@ export default {
         },
     },
     activated() {
-        this.name = this.$route.params.name;
+        if (this.$route.params.name != undefined) {
+            this.name = this.$route.params.name;
+        }
     },
 };
 </script>
