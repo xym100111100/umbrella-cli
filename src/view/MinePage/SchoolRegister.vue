@@ -66,6 +66,14 @@
                         <textarea></textarea>
                     </div>
                 </div>
+                <div class="finish-btn">
+                    <button @click="platformRegister">提交</button>
+                </div>
+            </div>
+            <div class="content-statement">
+                <p>声明</p>
+                <div class="statement-info">合约由广西保护伞科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
+                <div class="statement-autograph" >广西保护伞科技有限公司</div>
             </div>
         </div>
     </div>
@@ -112,6 +120,8 @@ html {
     overflow: scroll;
     .register-content {
         padding: 0 0.2rem;
+        height: 93%;
+        overflow: scroll;
         .content-step {
             p {
                 padding: 0;
@@ -249,7 +259,7 @@ html {
             }
         }
         .content-finish {
-             width: 97%;
+            width: 97%;
             margin-top: 0.3rem;
             background: rgba(123, 191, 234, 0.2);
             border-radius: 0.2rem;
@@ -270,12 +280,58 @@ html {
                 }
             }
             .finish-evaluate {
-                 width: 100%;
-                textarea{
+                width: 100%;
+                textarea {
                     width: 70vw;
                     border: none;
+                    height: 2rem;
                 }
             }
+            .finish-btn {
+                height: 1.8rem;
+                text-align: center;
+                width: 100%;
+                line-height: 1.8rem;
+                button {
+                    width: 50%;
+                    height: 1rem;
+                    font-size: 0.45rem;
+                    line-height: 1rem;
+                    border-radius: 0.2rem;
+                    border: none;
+                    background: greenyellow;
+                    color: white;
+                    margin-left: -0.5rem;
+                }
+                button:active {
+                    background: rgba(123, 191, 234, 0.2);
+                }
+            }
+        }
+        .content-statement {
+            background: #fff7cc;
+            width: 97%;
+            margin-top: 0.3rem;
+            border-radius: 0.2rem;
+            padding-top: 0.3rem;
+            font-size: 0.4rem;
+            padding-left: 0.3rem;
+            p {
+                color: #499df1;
+                padding: 0;
+                margin: 0;
+                font-size: 0.4rem;
+                padding-left: 0.3rem;
+            }
+            .statement-info{
+                padding: 0.5rem;
+            }
+            .statement-autograph{
+                width: 90%;
+                text-align: right;
+                padding-bottom:0.5rem;
+            }
+            
         }
     }
 }
