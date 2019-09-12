@@ -311,7 +311,7 @@ html {
         .content-statement {
             background: #fff7cc;
             width: 97%;
-            margin-top: 0.3rem;
+            margin: 0.3rem 0 0.5rem 0;
             border-radius: 0.2rem;
             padding-top: 0.3rem;
             font-size: 0.4rem;
