@@ -16,7 +16,7 @@
         >
             <div>
                 <ol>
-                    <li @click="choiceClass" >
+                    <li @click="choiceClass">
                         <span>第一</span>
                     </li>
                     <li>
@@ -98,7 +98,7 @@
             </div>
         </van-popup>
         <div class="do-notice-content">
-            <div @click="showPopup">ppp</div>
+            <div></div>
         </div>
     </div>
 </template>
@@ -142,44 +142,7 @@ body {
     height: 100vh;
     overflow: scroll;
     .do-notice-content {
-        height: 100%;
-    }
-}
-
-.van-popup--right {
-    div:first-child {
-        width: 100%;
-        text-align: center;
-        font-size: 0.45rem;
-        padding: 0.2rem 0;
-        border-bottom: solid 0.03rem #ededed;
-        color: #499df1;
-    }
-    div:last-child {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        overflow: scroll;
-        color: #4a4a4c;
-        font-size: 0.42rem;
-
-        ol {
-            padding-bottom: 1.5rem;
-            li {
-                margin: 0;
-                padding: 0;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                text-align: center;
-                span {
-                    padding: 0.1rem 0.2rem;
-                    border-bottom: solid 0.03rem #ededed;
-                }
-            }
-            li:active {
-                background: rgba(123, 191, 234, 0.2);
-            }
-        }
+        height: 100vh;
     }
 }
 </style>

@@ -1,4 +1,4 @@
-import { get } from '../util/Request';
+import { get } from '../../util/Request';
 
 export function list(options) {
     // 初始化options

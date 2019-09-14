@@ -42,7 +42,7 @@
 </template>
 <script>
 import { NavBar, List, Cell, Rate } from 'vant';
-import { getComment } from '../../svc/DriverSchool';
+import { getComment } from '../../svc/suc/DriverSchool';
 
 export default {
     components: {

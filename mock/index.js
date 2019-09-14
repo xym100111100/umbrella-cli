@@ -9,7 +9,8 @@ const PntAccount = require('./pnt/PntAccount');
 const ReturnGoods = require('./ord/ReturnGoods');
 const getGoodsData = require('./onl/getGoodsData');
 const Chat = require('./Chat');
-const driverSchool = require('./DriverSchool');
+const driverSchool = require('./suc/DriverSchool');
+const notice = require('./suc/Notice');
 
 const mock = {
     // 获取每日推荐
@@ -29,7 +30,7 @@ const mock = {
     'GET /chat-svr/chat': Chat.chatInfo,
     'GET /dri-svr/list': driverSchool.list,
     'GET /dri-svr/getComment': driverSchool.getComment,
-
+    'GET /suc-svr/getNotice': notice.getNotice,
 
 };
 

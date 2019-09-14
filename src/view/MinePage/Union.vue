@@ -37,7 +37,7 @@
 
 <script>
 import { NavBar, Rate, List, Cell, Card } from 'vant';
-import { list as driverSchoolList } from '../../svc/DriverSchool';
+import { list as driverSchoolList } from '../../svc/suc/DriverSchool';
 
 export default {
     components: {

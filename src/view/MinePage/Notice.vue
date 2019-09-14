@@ -3,102 +3,12 @@
         <header class="header">
             <van-nav-bar
                 title="需求公告"
-                right-text="发布/筛选"
+                right-text="发布公告"
                 left-arrow
                 @click-left="$router.go(-1)"
-                @click-right="showPopup"
+                @click-right="doNotice"
             />
         </header>
-        <van-popup
-            position="right"
-            :style="{ height: '100%',width:'25%' }"
-            get-container="body"
-            v-model="show"
-        >
-            <div @click="doNotice">发布公告</div>
-            <div>
-                <ol>
-                    <li @click="choiceClass">
-                        <span>第一</span>
-                    </li>
-                    <li @click="choiceClass">
-                        <span>电脑</span>
-                    </li>
-                    <li>
-                        <span>体育</span>
-                    </li>
-                    <li>
-                        <span>文具</span>
-                    </li>
-                    <li>
-                        <span>衣服</span>
-                    </li>
-                    <li>
-                        <span>凳子</span>
-                    </li>
-                    <li>
-                        <span>左边</span>
-                    </li>
-                    <li>
-                        <span>桌球</span>
-                    </li>
-                    <li>
-                        <span>耳机</span>
-                    </li>
-                    <li>
-                        <span>手机</span>
-                    </li>
-                    <li>
-                        <span>母婴</span>
-                    </li>
-                    <li>
-                        <span>玩具</span>
-                    </li>
-                    <li>
-                        <span>书本</span>
-                    </li>
-                    <li>
-                        <span>篮球</span>
-                    </li>
-                    <li>
-                        <span>火箭</span>
-                    </li>
-                    <li>
-                        <span>航母</span>
-                    </li>
-                    <li>
-                        <span>飞机</span>
-                    </li>
-                    <li>
-                        <span>坦克</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>手枪</span>
-                    </li>
-                    <li>
-                        <span>最后</span>
-                    </li>
-                </ol>
-            </div>
-        </van-popup>
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
             <div class="notice-content">
                 <van-list
@@ -140,12 +50,11 @@
 </template>
 
 <script>
-import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
+import { NavBar, Toast, Cell, Icon, Button, PullRefresh, List } from 'vant';
 export default {
     components: {
         [NavBar.name]: NavBar,
         [Button.name]: Button,
-        [Popup.name]: Popup,
         [Toast.name]: Toast,
         [PullRefresh.name]: PullRefresh,
         [List.name]: List,
@@ -156,7 +65,6 @@ export default {
         return {
             count: 0,
             isLoading: false,
-            show: false,
             list: [],
             loading: false,
             finished: false,
@@ -165,9 +73,6 @@ export default {
     methods: {
         doNotice() {
             this.$router.push({ name: 'do-notice' });
-        },
-        choiceClass() {
-            this.show = false;
         },
         onLoad() {
             // 异步更新数据
@@ -185,9 +90,6 @@ export default {
             }, 500);
         },
         onClickRight() {},
-        showPopup() {
-            this.show = true;
-        },
         onRefresh() {
             setTimeout(() => {
                 this.$toast('刷新成功');
@@ -231,6 +133,7 @@ body {
             }
             .item-right {
                 border-bottom: solid 0.03rem #ededed;
+                padding-bottom: 0.2rem;
                 display: flex;
                 width: 80vw;
                 .right-notice-info {
@@ -277,42 +180,6 @@ body {
         .van-nav-bar__text {
             font-size: 0.4rem;
             color: #499df1;
-        }
-    }
-}
-.van-popup--right {
-    div:first-child {
-        width: 100%;
-        text-align: center;
-        font-size: 0.45rem;
-        padding: 0.2rem 0;
-        border-bottom: solid 0.03rem #ededed;
-        color: #499df1;
-    }
-    div:last-child {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        overflow: scroll;
-        color: #4a4a4c;
-        font-size: 0.42rem;
-
-        ol {
-            padding-bottom: 1.5rem;
-            li {
-                margin: 0;
-                padding: 0;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                text-align: center;
-                span {
-                    padding: 0.1rem 0.2rem;
-                    border-bottom: solid 0.03rem #ededed;
-                }
-            }
-            li:active {
-                background: rgba(123, 191, 234, 0.2);
-            }
         }
     }
 }

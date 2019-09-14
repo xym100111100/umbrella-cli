@@ -2,7 +2,6 @@
     <div>
         <van-nav-bar
             title="米格走廊"
-            right-text="按钮"
             left-arrow
             @click-left="$router.go(-1)"
             @click-right="onClickRight"

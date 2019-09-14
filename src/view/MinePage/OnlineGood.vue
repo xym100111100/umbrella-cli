@@ -1,7 +1,7 @@
 <template>
     <div class="onlie-good">
         <van-nav-bar
-            title="我的小店"
+            title="发布商品"
             left-arrow
             @click-left="$router.go(-1)"
             @click-right="onClickRight"

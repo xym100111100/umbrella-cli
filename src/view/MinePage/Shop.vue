@@ -27,12 +27,12 @@
             >
                 <div class="content-item">
                     <template v-for="item in onlineGoodList">
-                        <div class="item-info" :key="item.id">
+                        <div @click="onlineGood" class="item-info" :key="item.id">
                             <div class="info-face">
-                                <img :src="item.thumb" />
+                                <img :src="item.picPath" />
                             </div>
                             <div class="info-bottom">
-                                <div class="good-title">{{item.text|filtersTitle}}</div>
+                                <div class="good-title">{{item.onlineTitle|filtersTitle}}</div>
                                 <div class="good-spec">
                                     <p>
                                         <span>即时出售</span>
@@ -57,7 +57,7 @@
 
 <script>
 import { NavBar, List, Cell } from 'vant';
-import { getComment as onlineGoods } from '../../svc/DriverSchool';
+import { list as onlineGoods } from '../../svc/onl/OnlOnlinePromo';
 
 export default {
     components: {
@@ -145,6 +145,7 @@ body {
 
 .shop {
     height: 100vh;
+
     .shop-title {
         .title-nav {
             font-size: 0.4rem;
@@ -171,10 +172,12 @@ body {
             display: flex;
             flex-wrap: wrap;
             padding: 0 0.2rem;
+            background: rgba(60, 47, 15, 0.041);
             .item-info {
+                background: white;
                 width: 46vw;
-                height: 8.2rem;
-                margin: 0.1rem;
+                height: 8.3rem;
+                margin: 0.2rem 0.1rem ;
                 border-radius: 0.3rem;
                 overflow: hidden;
                 .info-face {
