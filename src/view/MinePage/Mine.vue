@@ -21,11 +21,11 @@
                 :goPath="()=>this.$router.push({name:'school'})"
             />
             <DyCell MyIcon="shouye2" content="我的店铺" :goPath="()=>this.$router.push({name:'shop'})" />
-            <DyCell
+            <!-- <DyCell
                 MyIcon="fabuxuqiu"
                 content="需求公告"
                 :goPath="()=>this.$router.push({name:'notice'})"
-            />
+            /> -->
             <DyCell
                 MyIcon="lianheyingyong"
                 content="校企联盟"

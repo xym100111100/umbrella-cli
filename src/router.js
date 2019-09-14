@@ -144,6 +144,15 @@ const routes = [
         },
     },
     {
+        name: 'online-good',
+        path: '/mine-online-good',
+        component: () => import('./view/MinePage/OnlineGood'),
+        meta: {
+            index: 3,
+
+        },
+    },
+    {
         name: 'corridor',
         path: '/mine/corridor',
         component: () => import('./view/MinePage/Corridor'),
