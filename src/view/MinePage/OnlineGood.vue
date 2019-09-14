@@ -270,8 +270,6 @@
 
 <script>
 import { NavBar, NoticeBar, Stepper, Tab, Tabs, Popup, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
-import { upload } from '../../svc/Mine';
-import { list2 as ordList } from '../../svc/ord/Order';
 import axios from 'axios';
 export default {
     components: {
@@ -384,7 +382,7 @@ export default {
                 },
             };
 
-            axios.post('http://192.168.8.108:20180/ise/upload', param, config).then(res => {
+            axios.post('http://192.168.1.104:20180/ise/upload', param, config).then(res => {
                 console.log('数据保存成功');
             });
         },
@@ -432,11 +430,11 @@ export default {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         };
                         // 发送请求;
-                        axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
+                        axios.post('http://192.168.1.104:20180/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePaths);
                             let fileObj = {};
                             fileObj.id = new Date().getTime();
-                            fileObj.url = 'http://192.168.8.108:20180/files' + res.data.filePaths;
+                            fileObj.url = 'http://192.168.1.104:20180/files' + res.data.filePaths;
                             self.fileList.push(fileObj);
                         });
                     };

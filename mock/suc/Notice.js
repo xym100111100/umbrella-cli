@@ -11,6 +11,7 @@ const commentTemplate = {
         {
             'id|1000000000000000-9999999999999999': 1,
             text: '@ctitle(10,50)',
+            userName: '@ctitle(2,10)',
             'scoreValue|1-7': 1,
             thumb: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
         },
@@ -19,7 +20,7 @@ const commentTemplate = {
 
 
 
-exports.getNotice = function (req, res, u) {
+exports.list = function (req, res, u) {
     // 获取参数
     let url = u;
     if (!url || Object.prototype.toString.call(url) !== '[object String]') {

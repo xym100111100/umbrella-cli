@@ -15,21 +15,18 @@
                     v-model="loading"
                     :finished="finished"
                     finished-text="没有更多了"
-                    @load="onLoad"
+                    @load="handleLoad"
                 >
-                    <div v-for="item in list" :key="item">
-                        <div class="content-item">
+                    <div v-for="item in noticeData" :key="item.id">
+                        <div class="content-item" @click="handleLoad">
                             <div class="item-left">
-                                <img
-                                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                                />
+                                <img :src="item.thumb" />
                             </div>
                             <div class="item-right">
                                 <div class="right-notice-info">
-                                    <div class="user-wxname">保护伞</div>
+                                    <div class="user-wxname">{{item.userName|filtersUserName}}</div>
                                     <div class="notice-info">
-                                        <span>华为耳机</span>
-                                        <span>即刻出售</span>
+                                        <div class="info-text">{{item.text}}</div>
                                         <div class="info-price">
                                             <span>￥11</span>
                                             <span>～</span>
@@ -51,6 +48,8 @@
 
 <script>
 import { NavBar, Toast, Cell, Icon, Button, PullRefresh, List } from 'vant';
+import { list as noticeList } from '../../svc/suc/Notice';
+
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -65,37 +64,71 @@ export default {
         return {
             count: 0,
             isLoading: false,
-            list: [],
             loading: false,
             finished: false,
+            noticeData: [],
         };
     },
+    filters: {
+        filtersUserName(data) {
+            if (data.length > 5) {
+                return data.substr(1, 5) + '...';
+            }
+            return data;
+        },
+    },
+    activated() {
+        this.handleLoad();
+    },
     methods: {
+        handleLoad() {
+            const params = { pageNum: this.pageNum + 1 };
+            noticeList({
+                params,
+                onSuccess: data => {
+                    console.log(data);
+                    this.pageNum = data.pageNum;
+                    this.noticeData.push(...data.list);
+                    // 如果是最后一页
+                    if (data.pages === data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    }
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
+                },
+            });
+        },
         doNotice() {
             this.$router.push({ name: 'do-notice' });
         },
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 13; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
 
-                // 数据全部加载完成
-                if (this.list.length >= 50) {
-                    this.finished = true;
-                }
-            }, 500);
-        },
-        onClickRight() {},
         onRefresh() {
-            setTimeout(() => {
-                this.$toast('刷新成功');
-                this.isLoading = false;
-                this.count++;
-            }, 500);
+            const params = 0;
+            this.noticeData = [];
+            this.loading = true;
+            noticeList({
+                params,
+                onSuccess: data => {
+                    console.log(data);
+                    this.pageNum = data.pageNum;
+                    this.noticeData.push(...data.list);
+                    // 如果是最后一页
+                    if (data.pages === data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    }
+                    this.$toast('刷新成功');
+                    this.isLoading = false;
+                    this.count++;
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
+                },
+            });
         },
     },
 };
@@ -140,16 +173,14 @@ body {
                     flex-grow: 2;
                     .user-wxname {
                         font-size: 0.45rem;
-                        color: #4a4a4c;
                     }
                     .notice-info {
-                        margin-top: -0.2rem;
-                        padding-bottom: 0.1rem;
-                        span {
-                            padding: 0.1rem 0.1rem 0 0.1rem;
-                            margin-right: 0.15rem;
-                            color: #615c5c;
+                        .info-text {
+                            color: #4a4a4c;
+                            padding: 0;
+                            margin: 0;
                             font-size: 0.4rem;
+                            padding: 0.2rem 0.2rem;
                         }
                         .info-price {
                             font-size: 0.4rem;
