@@ -59,7 +59,6 @@
 <script>
 import Vue from 'vue';
 import { Search, List, Card, Icon, Toast } from 'vant';
-import { getGoodsData } from '../../svc/onl/OnlOnlinePromo';
 import { list as goodsList } from '../../svc/Cart';
 // Lazyload插件需要初始化
 

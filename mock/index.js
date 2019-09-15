@@ -5,7 +5,6 @@ const Cart = require('./Cart');
 const Order = require('./ord/Order');
 const OrderDetail = require('./ord/OrderDetail');
 const ReturnGoods = require('./ord/ReturnGoods');
-const getGoodsData = require('./onl/getGoodsData');
 const Chat = require('./Chat');
 const driverSchool = require('./suc/DriverSchool');
 const notice = require('./suc/Notice');
@@ -14,7 +13,6 @@ const mock = {
     // 获取每日推荐
     'GET /onl-svr/onl/onlinepromotion/list': OnlOnlinePromo.list,
     'GET /onl-svr/onl/online/getonlines': GoodsDetail.goodsList,
-    'GET /onl-svr/onl/getGoodsData': getGoodsData.list,
     'GET /onl-svr/onl/onlinespec/list': GoodsDetail.skuList,
     'GET /onl-svr/onl/cart': Cart.goodsList,
     'GET /ord-svr/ord/order': Order.list,

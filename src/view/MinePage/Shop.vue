@@ -13,7 +13,7 @@
                     color="#1989fa"
                     background="#ecf9ff"
                     left-icon="info-o"
-                    text="温馨提示:每个用户只能有六个已上线商品四个已下线商品，如需上线新的请将其中某个商品下线"
+                    text="温馨提示:每个商品上线的时间是两星期，超过后将自动下线，手动下线并重新上线将重新计算时间。"
                 />
             </div>
             <div class="title-nav">
@@ -41,14 +41,9 @@
                             </div>
                             <div class="info-bottom">
                                 <div class="good-title">{{item.onlineTitle|filtersTitle}}</div>
-                                <div class="good-spec">
+                                <div class="good-down-line-time">
                                     <p>
-                                        <span>即时出售</span>
-                                        <span>已用5年</span>
-                                    </p>
-                                    <p>
-                                        <span>不可议价</span>
-                                        <span>原价: ${{item.salePrice}}</span>
+                                        <span>下线时间: 2019:08:12</span>
                                     </p>
                                 </div>
                                 <div class="good-price">
@@ -115,7 +110,7 @@ export default {
             Dialog.confirm({
                 title: '提示',
                 message: '确定下线该商品?',
-                closeOnClickOverlay:true,
+                closeOnClickOverlay: true,
             }).then(() => {
                 // on close
             });
@@ -200,7 +195,7 @@ body {
             .item-info {
                 background: white;
                 width: 46vw;
-                height: 8.5rem;
+                height: 8rem;
                 margin: 0.2rem 0.1rem;
                 border-radius: 0.3rem;
                 overflow: hidden;
@@ -220,8 +215,8 @@ body {
                     .good-title {
                         height: 0.7rem;
                     }
-                    .good-spec {
-                        height: 1.2rem;
+                    .good-down-line-time {
+                        height: 0.5rem;
                         p {
                             padding: 0;
                             margin: 0;
@@ -229,7 +224,6 @@ body {
                             span {
                                 padding: 0.07rem;
                                 margin-right: 0.15rem;
-                                background: rgba(123, 191, 234, 0.2);
                                 color: #7bbfea;
                             }
                         }
@@ -249,7 +243,7 @@ body {
                             line-height: 0.5rem;
                             text-align: center;
                             .van-icon {
-                                background: rgba(55, 57, 58, 0.205);
+                                background: rgba(60, 47, 15, 0.1);
                                 padding: 0.1rem 0.13rem 0.15rem;
                                 margin: 0.2rem 0 0 -1rem;
                                 color: #499df1;
