@@ -8,6 +8,14 @@
                 @click-right="onlineGood"
                 right-text="发布商品"
             />
+            <div class="content-title">
+                <van-notice-bar
+                    color="#1989fa"
+                    background="#ecf9ff"
+                    left-icon="info-o"
+                    text="温馨提示:每个用户只能有六个已上线商品四个已下线商品，如需上线新的请将其中某个商品下线"
+                />
+            </div>
             <div class="title-nav">
                 <template v-for="item in  choiceList ">
                     <div
@@ -45,6 +53,9 @@
                                 </div>
                                 <div class="good-price">
                                     <div class="price">${{item.salePrice}}</div>
+                                    <div class="icon" @click.stop="downLineGood(item.id)">
+                                        <van-icon name="huaban" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,14 +67,17 @@
 </template>
 
 <script>
-import { NavBar, List, Cell } from 'vant';
+import { NavBar, List, Cell, NoticeBar, Dialog, Icon } from 'vant';
 import { list as onlineGoods } from '../../svc/onl/OnlOnlinePromo';
 
 export default {
     components: {
         [NavBar.name]: NavBar,
+        [Dialog.name]: Dialog,
         [List.name]: List,
         [Cell.name]: Cell,
+        [Icon.name]: Icon,
+        [NoticeBar.name]: NoticeBar,
     },
     data() {
         return {
@@ -96,6 +110,16 @@ export default {
     },
     computed: {},
     methods: {
+        downLineGood(id) {
+            console.log(id);
+            Dialog.confirm({
+                title: '提示',
+                message: '确定下线该商品?',
+                closeOnClickOverlay:true,
+            }).then(() => {
+                // on close
+            });
+        },
         // 获取驾校数据
         handleLoad() {
             const params = { pageNum: this.pageNum + 1 };
@@ -166,7 +190,7 @@ body {
         }
     }
     .shop-content {
-        height: 86%;
+        height: 81%;
         overflow: scroll;
         .content-item {
             display: flex;
@@ -176,8 +200,8 @@ body {
             .item-info {
                 background: white;
                 width: 46vw;
-                height: 8.3rem;
-                margin: 0.2rem 0.1rem ;
+                height: 8.5rem;
+                margin: 0.2rem 0.1rem;
                 border-radius: 0.3rem;
                 overflow: hidden;
                 .info-face {
@@ -218,6 +242,19 @@ body {
                             margin-top: 0.3rem;
                             color: #7bbfea;
                             padding-left: 0.2rem;
+                        }
+                        .icon {
+                            height: 0.5rem;
+                            width: 0.5rem;
+                            line-height: 0.5rem;
+                            text-align: center;
+                            .van-icon {
+                                background: rgba(55, 57, 58, 0.205);
+                                padding: 0.1rem 0.13rem 0.15rem;
+                                margin: 0.2rem 0 0 -1rem;
+                                color: #499df1;
+                                font-size: 0.5rem;
+                            }
                         }
                     }
                 }
