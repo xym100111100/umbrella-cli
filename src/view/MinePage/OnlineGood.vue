@@ -254,7 +254,7 @@
                                     <textarea maxlength="20" placeholder="请简短地输入宝贝标题 如:华为耳机黑色"></textarea>
                                 </div>
                                 <div class="bottom-textArea-detail">
-                                    <textarea placeholder="请简短地输入你对宝贝的描述"></textarea>
+                                    <textarea maxlength="50" placeholder="请简短地输入你对宝贝的描述"></textarea>
                                 </div>
                             </div>
                         </div>
