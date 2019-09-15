@@ -10,7 +10,7 @@
             />
         </header>
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-            <div class="notice-content">
+            <div id="notice-content" class="notice-content" @scroll="moving">
                 <van-list
                     v-model="loading"
                     :finished="finished"
@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="right-notice-contact">
+                                <div @click="contact(item.id,item.userName)" class="right-notice-contact">
                                     <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </div>
@@ -67,6 +67,7 @@ export default {
             loading: false,
             finished: false,
             noticeData: [],
+            scroll: 0,
         };
     },
     filters: {
@@ -78,15 +79,20 @@ export default {
         },
     },
     activated() {
-        this.handleLoad();
+        document.getElementById('notice-content').scrollTop = this.scroll;
     },
     methods: {
+        contact(id, name) {
+            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
+        },
+        moving(e) {
+            this.scroll = e.target.scrollTop;
+        },
         handleLoad() {
             const params = { pageNum: this.pageNum + 1 };
             noticeList({
                 params,
                 onSuccess: data => {
-                    console.log(data);
                     this.pageNum = data.pageNum;
                     this.noticeData.push(...data.list);
                     // 如果是最后一页
@@ -109,6 +115,7 @@ export default {
             const params = 0;
             this.noticeData = [];
             this.loading = true;
+            this.finished = false;
             noticeList({
                 params,
                 onSuccess: data => {
@@ -149,8 +156,9 @@ body {
         z-index: 99;
     }
     &-content {
-        height: 100%;
+        height: 93vh;
         padding: 1.4rem 0.2rem 0 0.2rem;
+        overflow: scroll;
         .content-item {
             display: flex;
             padding-top: 0.15rem;
