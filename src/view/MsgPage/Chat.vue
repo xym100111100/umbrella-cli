@@ -7,7 +7,7 @@
                 </van-nav-bar>
             </div>
         </header>
-        <div class="chat-centent" style="backround:red" id="chat-content">
+        <div class="chat-centent"  id="chat-content">
             <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
                 <template v-for="item in chatInfo">
                     <div v-if="item.id%2==0" :key="item.id" class="centent-node-you">
@@ -66,6 +66,7 @@ export default {
             chatInfo: [],
             isLoading: false,
             meClientHeight: 0, //这个值是用来计算当软键盘升起来应该控制内容的高度是多少
+            
         };
     },
     updated() {},
@@ -135,6 +136,7 @@ export default {
         this.id = this.$route.params.id;
         this.name = this.$route.params.name;
         document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
+        console.log('sss');
     },
 };
 </script>
@@ -175,6 +177,7 @@ html {
             img {
                 height: 1.2rem;
                 border-radius: 0.3rem;
+                width: 1.2rem;
             }
             span {
                 font-size: 0.4rem;
@@ -238,22 +241,5 @@ html {
         }
     }
 }
-.order-navbar {
-    width: 10rem;
-    .van-nav-bar {
-        background-color: red;
-        &__arrow {
-            font-size: 0.7rem;
-        }
 
-        &__title {
-            color: #fafafa;
-            font-size: 0.5rem;
-        }
-
-        .van-icon {
-            color: #fafafa;
-        }
-    }
-}
 </style>

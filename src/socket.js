@@ -5,7 +5,7 @@ export default {
     console.log(config.user.id);
     if (!this.ws) {
       // 实例化socket对象
-      this.ws = new WebSocket('ws://192.168.43.162:9100/?paramKey='+config.user.id);
+      this.ws = new WebSocket('ws://192.168.1.104:9100/?paramKey='+config.user.id);
     }
 
     // 客户端接收消息
@@ -13,8 +13,8 @@ export default {
       console.log("---------")
       console.log(event);
       console.log(event.data);
-      // let message = JSON.parse(event.data);
-      // onMessage && onMessage(message); // 接收到消息触发的回调
+       let message = JSON.parse(event.data);
+       onMessage && onMessage(message); // 接收到消息触发的回调
     };
 
     // 出错
