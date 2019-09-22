@@ -170,8 +170,8 @@
             </div>
             <div class="content-statement">
                 <p>声明</p>
-                <div class="statement-info">合约由广西保护伞科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
-                <div class="statement-autograph">广西保护伞科技有限公司</div>
+                <div class="statement-info">合约由广西安布雷拉科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
+                <div class="statement-autograph">广西安布雷拉科技有限公司</div>
             </div>
         </div>
     </div>

@@ -42,15 +42,15 @@ const  getOne ={
     name:'强大驾校',
     establishTime:'2019-03-05',
     address:'西明商业广场',
-    trainingCount:5,
-    trainingMeasure:56,
-    cartCount:5,
-    studentForYear:63,
-    isDeliver:true,
-    passingRate:50,
+    trainingCount:5, // 训练场地
+    trainingMeasure:56, // 训练面积
+    cartCount:5, // 训练车数量
+    studentForYear:63, // 年学生数量
+    isDeliver:true, // 是否接送
+    passingRate:50,  // 通过率
     ordinaryClass:2451,
-    allClass:5623
-
+    allClass:5623,
+    insureClass:3200,
 }
 
 

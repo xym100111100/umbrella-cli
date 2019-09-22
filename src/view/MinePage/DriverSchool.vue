@@ -10,7 +10,67 @@
             />
         </div>
         <div id="school-content" class="school-content">
-            <div class="content-school-info">{{driverSchoolDate.name}}</div>
+            <div class="content-school-info">
+                <div class="info-head">
+                    <div class="head-logo">
+                        <img
+                            src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                        />
+                    </div>
+                    <div class="head-detail">{{idriverSchoolData.name}}</div>
+                </div>
+                <div class="head-content">
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>报名:</span>
+                        <span>{{idriverSchoolData.ordinaryClass}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>保险班:</span>
+                        <span>{{idriverSchoolData.insureClass}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>全包班:</span>
+                        <span>{{idriverSchoolData.allClass}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练场数量与面积:</span>
+                        <span>{{idriverSchoolData.trainingCount}}个{{idriverSchoolData.trainingMeasure}}平方</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>年培训学员:</span>
+                        <span>{{idriverSchoolData.studentForYear}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练是否接送:</span>
+                        <span>{{idriverSchoolData.isDeliver}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>通过率:</span>
+                        <span>{{idriverSchoolData.passingRate}}%</span>
+                    </p>
+                </div>
+            </div>
             <div class="content-school-comment">学员评价</div>
             <van-list
                 v-model="loading"
@@ -41,7 +101,7 @@
     </div>
 </template>
 <script>
-import { NavBar, List, Cell, Rate } from 'vant';
+import { NavBar, List, Icon, Cell, Rate } from 'vant';
 import { getComment } from '../../svc/suc/DriverSchool';
 import { getById } from '../../svc/suc/DriverSchool';
 
@@ -51,6 +111,7 @@ export default {
         [List.name]: List,
         [Cell.name]: Cell,
         [Rate.name]: Rate,
+        [Icon.name]: Icon,
     },
     data() {
         return {
@@ -58,7 +119,7 @@ export default {
             commentList: [],
             loading: false,
             finished: false,
-            driverSchoolDate: {},
+            idriverSchoolData: {},
         };
     },
     methods: {
@@ -91,7 +152,7 @@ export default {
                 params,
                 onSuccess: data => {
                     console.log(data);
-                    this.driverSchoolDate = data;
+                    this.idriverSchoolData = data;
                 },
             });
         },
@@ -119,7 +180,44 @@ html {
         padding: 0 0.3rem;
         .content-school-info {
             height: 10rem;
-            background: red;
+            background: #fafafa;
+            border-radius: 0.2rem;
+            overflow: hidden;
+            margin-top: 0.2rem;
+            .info-head {
+                display: flex;
+                background: rgba(123, 191, 234, 0.2);
+                border-radius: 0.2rem;
+                overflow: hidden;
+                .head-logo {
+                    background: red;
+                    width: 3rem;
+                    height: 3rem;
+                    border-radius: 0.2rem;
+                    overflow: hidden;
+                    img {
+                        height: 3rem;
+                        width: 3rem;
+                    }
+                }
+                .head-detail {
+                    font-size: 0.4rem;
+                    padding: 0.2rem 0 0 0.3rem;
+                }
+            }
+            .head-content {
+                p {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 0.4rem;
+                    height: 0.8rem;
+                    line-height: 0.8rem;
+                    color: #7d7e80;
+                    span:first-child {
+                        font-size: 0.6rem;
+                    }
+                }
+            }
         }
         .content-school-comment {
             height: 1rem;
