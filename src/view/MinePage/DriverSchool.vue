@@ -10,7 +10,7 @@
             />
         </div>
         <div id="school-content" class="school-content">
-            <div class="content-school-info">驾校介绍</div>
+            <div class="content-school-info">{{driverSchoolDate.name}}</div>
             <div class="content-school-comment">学员评价</div>
             <van-list
                 v-model="loading"
@@ -43,6 +43,7 @@
 <script>
 import { NavBar, List, Cell, Rate } from 'vant';
 import { getComment } from '../../svc/suc/DriverSchool';
+import { getById } from '../../svc/suc/DriverSchool';
 
 export default {
     components: {
@@ -57,6 +58,7 @@ export default {
             commentList: [],
             loading: false,
             finished: false,
+            driverSchoolDate: {},
         };
     },
     methods: {
@@ -83,25 +85,21 @@ export default {
                 },
             });
         },
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
-
-                // 数据全部加载完成
-                if (this.list.length >= 40) {
-                    this.finished = true;
-                }
-            }, 500);
+        getDriverSchoolData() {
+            const params = { id: this.$route.params.id };
+            getById({
+                params,
+                onSuccess: data => {
+                    console.log(data);
+                    this.driverSchoolDate = data;
+                },
+            });
         },
     },
     activated() {
         if (this.$route.params.name != undefined) {
             this.name = this.$route.params.name;
+            this.getDriverSchoolData();
         }
     },
 };

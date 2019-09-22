@@ -9,6 +9,15 @@ export function list(options) {
     return get(`/dri-svr/list`, newOptions);
 }
 
+export function getById(options) {
+    // 初始化options
+    const defaultOptions = {
+        type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+    };
+    const newOptions = { ...defaultOptions, ...options };
+    return get(`/dri-svr/getById`, newOptions);
+}
+
 
 
 export function getComment(options) {

@@ -18,6 +18,8 @@ const mock = {
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
     'GET /chat-svr/chat': Chat.chatInfo,
     'GET /dri-svr/list': driverSchool.list,
+    'GET /dri-svr/getById': driverSchool.getById,
+
     'GET /dri-svr/getComment': driverSchool.getComment,
     'GET /suc-svr/notice': notice.list,
 

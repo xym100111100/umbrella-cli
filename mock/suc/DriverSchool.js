@@ -36,6 +36,34 @@ const commentTemplate = {
     ],
 };
 
+
+
+const  getOne ={
+    name:'强大驾校',
+    establishTime:'2019-03-05',
+    address:'西明商业广场',
+    trainingCount:5,
+    trainingMeasure:56,
+    cartCount:5,
+    studentForYear:63,
+    isDeliver:true,
+    passingRate:50,
+    ordinaryClass:2451,
+    allClass:5623
+
+}
+
+
+exports.getById = function (req, res, u) {
+    // 获取参数
+    let url = u;
+    if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+        url = req.url; // eslint-disable-line
+    }
+    const params = Url.parse(url, true).query;
+    return res.json(getOne);
+};
+
 exports.list = function (req, res, u) {
     // 获取参数
     let url = u;

@@ -13,7 +13,7 @@
                 <template v-for="item in unionData">
                     <div
                         class="content-school"
-                        @click="driverSchool(item.driverSchoolName)"
+                        @click="driverSchool(item.id,item.driverSchoolName)"
                         :key="item.id"
                     >
                         <van-card :thumb="item.thumb">
@@ -52,6 +52,8 @@
 <script>
 import { NavBar, Rate, List, Cell, Card } from 'vant';
 import { list as driverSchoolList } from '../../svc/suc/DriverSchool';
+
+
 
 export default {
     components: {
@@ -94,8 +96,8 @@ export default {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        driverSchool(driverSchoolName) {
-            this.$router.push({ name: 'driver-school', params: { name: driverSchoolName } });
+        driverSchool(id,driverSchoolName) {
+            this.$router.push({ name: 'driver-school', params: { id:id,name: driverSchoolName } });
         },
         onLoad() {
             // 异步更新数据
