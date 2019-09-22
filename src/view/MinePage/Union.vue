@@ -19,10 +19,24 @@
                         <van-card :thumb="item.thumb">
                             <div class="school-card" slot="tags">
                                 <p>{{item.driverSchoolName}}</p>
-                                <p>综合评分</p>
+                                <p class="card-score">综合评分</p>
                                 <van-rate
                                     readonly
-                                    v-model="item.scoreValue"
+                                    v-model="item.totalScoreValue"
+                                    void-icon="star"
+                                    :count="7"
+                                />
+                                <p class="card-score">学员评分</p>
+                                <van-rate
+                                    readonly
+                                    v-model="item.studentScoreValue"
+                                    void-icon="star"
+                                    :count="7"
+                                />
+                                <p class="card-score">平台评分</p>
+                                <van-rate
+                                    readonly
+                                    v-model="item.platformScoreValue"
                                     void-icon="star"
                                     :count="7"
                                 />
@@ -117,11 +131,12 @@ html {
         height: 93%;
         overflow: scroll;
         .content-school {
+            height: 5rem;
             margin: 0.5rem 0.3rem 0.1rem;
             border-radius: 0.2rem;
             overflow: hidden;
+            background: #fafafa;
             .school-card {
-                height: 100%;
                 padding-left: 0.2rem;
                 .van-card__title {
                     font-size: 0.5rem;
@@ -132,9 +147,9 @@ html {
                     padding-left: 0.15rem;
                     font-size: 0.4rem;
                 }
-                p:nth-child(2) {
+                .card-score {
                     color: #7d7e80;
-                    padding-bottom: 0.2rem;
+                    padding-bottom: 0.1rem;
                 }
             }
         }

@@ -113,6 +113,10 @@
                     <input placeholder="请输入您的手机号码" />
                 </p>
                 <p>
+                    <span>推荐人</span>
+                    <input placeholder="请输入推荐人，没有可不填" />
+                </p>
+                <p>
                     <span @click="changeTrainName">选择训练场地</span>
                     <span class="register-train">{{trainName}}</span>
                 </p>
@@ -257,9 +261,15 @@ html {
                     padding-right: 0.2rem;
                 }
             }
+            p:nth-child(4) {
+                span {
+                    padding-right: 0.6rem;
+                }
+            }
             p:nth-child(2),
             p:nth-child(3),
-            p:nth-child(4) {
+            p:nth-child(4),
+            p:nth-child(5) {
                 color: #499df1;
                 height: 1.5rem;
                 line-height: 1.5rem;
