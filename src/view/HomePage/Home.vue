@@ -2,12 +2,7 @@
     <div id="home" class="home" @scroll="moving">
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
             <div class="home-content" @scroll="moving">
-                <van-list
-                    v-model="loading"
-                    :finished="finished"
-                    finished-text="没有更多了"
-                    @load="handleLoad"
-                >
+                <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="handleLoad">
                     <div class="content-list">
                         <div v-for="item in goods" :key="item.id">
                             <div @click="contact" class="list-item">
@@ -45,6 +40,7 @@
 <script>
 import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
 import { list as listOnlOnlinePromo } from '../../svc/onl/OnlOnlinePromo';
+import { login } from '../../svc/suc/UserLogin';
 
 export default {
     components: {
@@ -69,7 +65,19 @@ export default {
         };
     },
     activated() {
+        console.log('获取参数');
+        let openid = this.$route.query.openid;
+        console.log(openid);
         document.getElementById('home').scrollTop = this.scroll;
+        if (openid) {
+            this.userLogin();
+        }
+    },
+    created() {
+        console.log('created');
+    },
+    mounted() {
+        console.log('mounted');
     },
     filters: {
         filtersTitle(data) {
@@ -79,7 +87,28 @@ export default {
             return data;
         },
     },
+    beforeRouteEnter(to, from, next) {
+        console.log('路由进入');
+        console.log(from);
+        console.log(next);
+        next();
+    },
     methods: {
+        userLogin() {
+            let openid = this.$route.query.openid;
+            const params = { openid: openid };
+            login({
+                params,
+                onSuccess: data => {
+                    console.log(data);
+                },
+                onFail: (code, msg) => {
+                    console.log(code);
+                    console.log('请求失败');
+                    // done();
+                },
+            });
+        },
         addToLove() {
             this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
         },
@@ -103,6 +132,7 @@ export default {
                         this.finished = true;
                     }
                 },
+
                 onFinish: () => {
                     // 结束加载状态
                     this.loading = false;
