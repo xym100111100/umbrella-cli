@@ -46,7 +46,7 @@
 <script>
 import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
 import { list as listOnlOnlinePromo } from '../../svc/onl/OnlOnlinePromo';
-import { login } from '../../svc/suc/UserLogin';
+import { login } from '../../svc/suc/User';
 
 export default {
     components: {

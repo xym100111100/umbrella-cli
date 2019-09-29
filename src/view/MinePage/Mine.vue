@@ -14,11 +14,11 @@
             </div>
         </header>
         <div class="user-content">
-            <DyCell
+            <!-- <DyCell
                 MyIcon="shouye"
                 content="我的大学"
                 :goPath="()=>this.$router.push({name:'school'})"
-            />
+            /> -->
             <DyCell MyIcon="shouye2" content="我的店铺" :goPath="()=>this.$router.push({name:'shop'})" />
             <DyCell
                 MyIcon="fabuxuqiu"
@@ -30,7 +30,11 @@
                 content="校企联盟"
                 :goPath="()=>this.$router.push({name:'union'})"
             />
-
+            <DyCell
+                MyIcon="xueshimao"
+                content="毕业季节"
+                :goPath="()=>this.$router.push({name:'school'})"
+            />
             <DyCell
                 MyIcon="xiangxishiyi"
                 :isBootomLine="false"

@@ -7,7 +7,7 @@ const OrderDetail = require('./ord/OrderDetail');
 const Chat = require('./Chat');
 const driverSchool = require('./suc/DriverSchool');
 const notice = require('./suc/Notice');
-const userLogin = require('./suc/UserLogin');
+const User = require('./suc/User');
 
 const mock = {
     // 获取每日推荐
@@ -23,7 +23,7 @@ const mock = {
 
     'GET /dri-svr/getComment': driverSchool.getComment,
     'GET /suc-svr/notice': notice.list,
-    // 'POST /suc-svr/user-login': userLogin.login,
+   // 'POST /suc-svr/suc/user/user-login': User.login,
 
 
 };
