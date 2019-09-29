@@ -4,13 +4,12 @@
             <div class="user-header">
                 <div class="header-face">
                     <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                        :src="userInfo.wxFacePath"
                     />
                 </div>
                 <div class="header-name">
-                    <span>Umbrella</span>
-
-                    <span class="Uid">UID:12345678</span>
+                    <span>{{userInfo.wxName}}</span>
+                    <span class="Uid">UID:{{userInfo.id|filtersUID}}</span>
                 </div>
             </div>
         </header>
@@ -57,6 +56,19 @@ export default {
         return {
             id: this.$route.params.id,
         };
+    },
+    filters: {
+        filtersUID(data) {
+            if (data.length > 7) {
+                return data.substr(1, 7);
+            }
+            return data;
+        },
+    },
+    computed: {
+        userInfo() {
+            return this.$store.getters.user;
+        },
     },
     methods: {},
 };

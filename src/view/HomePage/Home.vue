@@ -119,9 +119,11 @@ export default {
                 data,
                 onSuccess: data => {
                     console.log(data);
+                    this.$store.dispatch('setUser', data.sucUserMo);
                     if (data.newUser) {
                         this.$router.push({ name: 'school' });
                     } else {
+
                         this.handleLoad();
                     }
                 },
@@ -133,6 +135,7 @@ export default {
             });
         },
         addToLove() {
+           
             this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
         },
         moving(e) {
