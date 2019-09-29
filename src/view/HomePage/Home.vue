@@ -7,6 +7,7 @@
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="handleLoad"
+                    :immediate-check="false"
                 >
                     <div class="content-list">
                         <div v-for="item in goods" :key="item.id">
@@ -70,12 +71,14 @@ export default {
         };
     },
     activated() {
-        console.log('获取参数');
+        console.log('activated');
         let openid = this.$route.query.openid;
         console.log(openid);
         document.getElementById('home').scrollTop = this.scroll;
         if (openid) {
             this.userLogin();
+        } else {
+            this.handleLoad();
         }
     },
     created() {
@@ -83,6 +86,11 @@ export default {
     },
     mounted() {
         console.log('mounted');
+        let openid = this.$route.query.openid;
+        if (!openid) {
+            this.pageNum = 0;
+            this.handleLoad();
+        }
     },
     filters: {
         filtersTitle(data) {
@@ -105,12 +113,17 @@ export default {
                 wxOpenid: openid,
                 wxFacePath: headimgurl,
                 schoolName: '桂林理工大學',
-                wxName:nickname,
+                wxName: nickname,
             };
             login({
                 data,
                 onSuccess: data => {
                     console.log(data);
+                    if (data.newUser) {
+                        this.$router.push({ name: 'school' });
+                    } else {
+                        this.handleLoad();
+                    }
                 },
                 onFail: (code, msg) => {
                     console.log(code);
