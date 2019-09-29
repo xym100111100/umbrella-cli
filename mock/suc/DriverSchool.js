@@ -29,6 +29,7 @@ const commentTemplate = {
     'list|8': [
         {
             'id|1000000000000000-9999999999999999': 1,
+            userName: '@ctitle(3,8)',
             text: '@ctitle(10,50)',
             'scoreValue|1-7': 1,
             thumb: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,

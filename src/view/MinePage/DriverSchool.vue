@@ -60,7 +60,7 @@
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练是否接送:</span>
-                        <span>{{idriverSchoolData.isDeliver}}</span>
+                        <span>{{idriverSchoolData.isDeliver|filtersIsDeliver}}</span>
                     </p>
                     <p>
                         <span>
@@ -84,6 +84,7 @@
                             <img :src="item.thumb" />
                         </div>
                         <div class="comment-info">
+                            <div>{{item.userName}}</div>
                             <div class="info-rate">
                                 <van-rate
                                     readonly
@@ -122,6 +123,15 @@ export default {
             idriverSchoolData: {},
         };
     },
+    filters: {
+        filtersIsDeliver(isDeliver) {
+            if (isDeliver) {
+                return '是';
+            } else {
+                return '否';
+            }
+        },
+    },
     methods: {
         schoolRegister() {
             this.$router.push({ name: 'school-register' });
@@ -151,7 +161,7 @@ export default {
             getById({
                 params,
                 onSuccess: data => {
-                    console.log(data);
+                   
                     this.idriverSchoolData = data;
                 },
             });
