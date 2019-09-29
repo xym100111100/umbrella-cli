@@ -23,7 +23,7 @@ const mock = {
 
     'GET /dri-svr/getComment': driverSchool.getComment,
     'GET /suc-svr/notice': notice.list,
-    'POST /suc-svr/login': userLogin.login,
+    // 'POST /suc-svr/user-login': userLogin.login,
 
 
 };

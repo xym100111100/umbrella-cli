@@ -2,7 +2,12 @@
     <div id="home" class="home" @scroll="moving">
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
             <div class="home-content" @scroll="moving">
-                <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="handleLoad">
+                <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    finished-text="没有更多了"
+                    @load="handleLoad"
+                >
                     <div class="content-list">
                         <div v-for="item in goods" :key="item.id">
                             <div @click="contact" class="list-item">
@@ -89,16 +94,21 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         console.log('路由进入');
-        console.log(from);
-        console.log(next);
         next();
     },
     methods: {
         userLogin() {
             let openid = this.$route.query.openid;
-            const params = { openid: openid };
+            let headimgurl = this.$route.query.headimgurl;
+            let nickname = this.$route.query.nickname;
+            const data = {
+                wxOpenid: openid,
+                wxFacePath: headimgurl,
+                schoolName: '桂林理工大學',
+                wxName:nickname,
+            };
             login({
-                params,
+                data,
                 onSuccess: data => {
                     console.log(data);
                 },
