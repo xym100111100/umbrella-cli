@@ -80,13 +80,13 @@
                 :immediate-check="false"
             >
                 <template v-for="item in commentList">
-                    <div @click="handleLoad" class="school-comment" :key="item.id">
+                    <div  class="school-comment" :key="item.id">
                         <div class="comment-img">
                             <img :src="item.userFace" />
                         </div>
                         <div class="comment-info">
                             <div>{{item.userName}}</div>
-                            <div class="info-rate">
+                            <div  class="info-rate">
                                 <van-rate
                                     readonly
                                     v-model="item.rate"
@@ -135,6 +135,9 @@ export default {
         },
     },
     methods: {
+        testMath(){
+            console.log("sss")
+        },
         schoolRegister() {
             this.$router.push({ name: 'school-register' });
         },
