@@ -38,10 +38,10 @@ export default {
                 message: '大学只能选择一次，是否确认?',
             })
                 .then(() => {
-                        this.$router.push({ name: 'home' });
+                    this.$router.push({ name: 'home' });
                 })
                 .catch(() => {
-                    // on cancel
+                    Toast('您还未选择您的大学');
                 });
         },
     },

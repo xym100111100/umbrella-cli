@@ -112,7 +112,6 @@ export default {
             const data = {
                 wxOpenid: openid,
                 wxFacePath: headimgurl,
-                schoolName: '桂林理工大學',
                 wxName: nickname,
             };
             login({

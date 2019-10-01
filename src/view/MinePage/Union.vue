@@ -26,7 +26,7 @@
                                     void-icon="star"
                                     :count="7"
                                 />
-                                <p class="card-score">学员评分</p>
+                                <!-- <p class="card-score">学员评分</p>
                                 <van-rate
                                     readonly
                                     v-model="item.studentScoreValue"
@@ -39,7 +39,7 @@
                                     v-model="item.platformScoreValue"
                                     void-icon="star"
                                     :count="7"
-                                />
+                                /> -->
                             </div>
                         </van-card>
                     </div>
@@ -133,7 +133,6 @@ html {
         height: 93%;
         overflow: scroll;
         .content-school {
-            height: 5rem;
             margin: 0.5rem 0.3rem 0.1rem;
             border-radius: 0.2rem;
             overflow: hidden;

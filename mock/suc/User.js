@@ -23,9 +23,9 @@ const data = {
     msg: "登录成功",
     result: 1,
     sucUserMo: {
-        id: 123456,
+        id: "653596523128553475",
         wxName: "umbrella",
-        wxFacePath: "http%3A%2F%2Fthirdwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw%2F132",
+        wxFacePath: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132",
 
     }
 
