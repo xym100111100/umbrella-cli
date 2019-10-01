@@ -28,7 +28,7 @@
             <DyCell
                 MyIcon="lianheyingyong"
                 content="校企联盟"
-                :goPath="()=>this.$router.push({name:'union'})"
+                :goPath="()=>this.$router.push({name:'union', params: { load:true, }})"
             />
             <DyCell
                 MyIcon="xueshimao"

@@ -18,11 +18,13 @@ const mock = {
     'GET /ord-svr/ord/order': Order.list,
     'GET /ord-svr/ord/orderDetail': OrderDetail.list,
     'GET /chat-svr/chat': Chat.chatInfo,
-    'GET /dri-svr/list': driverSchool.list,
-    'GET /dri-svr/getById': driverSchool.getById,
 
-    'GET /dri-svr/getComment': driverSchool.getComment,
+   // 'GET /suc-svr/suc/driver-school/get-by-id': driverSchool.getById,
+
+   // 'GET /suc-svr/suc/user-driver': driverSchool.getComment,
     'GET /suc-svr/notice': notice.list,
+   // 'GET /suc-svr/suc/driver-school': driverSchool.list,
+    
     'POST /suc-svr/suc/user/user-login': User.login,
 
 

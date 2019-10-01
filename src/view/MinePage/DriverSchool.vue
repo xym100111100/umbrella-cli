@@ -14,10 +14,10 @@
                 <div class="info-head">
                     <div class="head-logo">
                         <img
-                            src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
+                            :src="idriverSchoolData.driverImg"
                         />
                     </div>
-                    <div class="head-detail">{{idriverSchoolData.name}}</div>
+                    <div class="head-detail">{{idriverSchoolData.driverName}}</div>
                 </div>
                 <div class="head-content">
                     <p>
@@ -53,7 +53,7 @@
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>年培训学员:</span>
-                        <span>{{idriverSchoolData.studentForYear}}</span>
+                        <span>{{idriverSchoolData.yearStudent}}</span>
                     </p>
                     <p>
                         <span>
@@ -77,23 +77,24 @@
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="handleLoad"
+                :immediate-check="false"
             >
                 <template v-for="item in commentList">
                     <div @click="handleLoad" class="school-comment" :key="item.id">
                         <div class="comment-img">
-                            <img :src="item.thumb" />
+                            <img :src="item.userFace" />
                         </div>
                         <div class="comment-info">
                             <div>{{item.userName}}</div>
                             <div class="info-rate">
                                 <van-rate
                                     readonly
-                                    v-model="item.scoreValue"
+                                    v-model="item.rate"
                                     void-icon="star"
                                     :count="7"
                                 />
                             </div>
-                            <span>{{item.text}}</span>
+                            <span>{{item.comment}}</span>
                         </div>
                     </div>
                 </template>
@@ -121,6 +122,7 @@ export default {
             loading: false,
             finished: false,
             idriverSchoolData: {},
+            pageNum:0,
         };
     },
     filters: {
@@ -138,7 +140,7 @@ export default {
         },
         // 获取驾校数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
+            const params = { pageNum: this.pageNum + 1,driverId:this.$route.params.id };
             getComment({
                 params,
                 onSuccess: data => {
@@ -171,6 +173,9 @@ export default {
         if (this.$route.params.name != undefined) {
             this.name = this.$route.params.name;
             this.getDriverSchoolData();
+            this.pageNum = 0;
+            this.commentList = [];
+            this.handleLoad();
         }
     },
 };

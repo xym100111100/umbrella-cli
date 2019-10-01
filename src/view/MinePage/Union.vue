@@ -9,20 +9,21 @@
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="handleLoad"
+                :immediate-check="false"
             >
                 <template v-for="item in unionData">
                     <div
                         class="content-school"
-                        @click="driverSchool(item.id,item.driverSchoolName)"
+                        @click="driverSchool(item.id,item.driverName)"
                         :key="item.id"
                     >
-                        <van-card :thumb="item.thumb">
+                        <van-card :thumb="item.driverImg">
                             <div class="school-card" slot="tags">
-                                <p>{{item.driverSchoolName}}</p>
+                                <p>{{item.driverName}}</p>
                                 <p class="card-score">综合评分</p>
                                 <van-rate
                                     readonly
-                                    v-model="item.totalScoreValue"
+                                    v-model="item.allRate"
                                     void-icon="star"
                                     :count="7"
                                 />
@@ -39,7 +40,7 @@
                                     v-model="item.platformScoreValue"
                                     void-icon="star"
                                     :count="7"
-                                /> -->
+                                />-->
                             </div>
                         </van-card>
                     </div>
@@ -52,8 +53,6 @@
 <script>
 import { NavBar, Rate, List, Cell, Card } from 'vant';
 import { list as driverSchoolList } from '../../svc/suc/DriverSchool';
-
-
 
 export default {
     components: {
@@ -96,26 +95,20 @@ export default {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        driverSchool(id,driverSchoolName) {
-            this.$router.push({ name: 'driver-school', params: { id:id,name: driverSchoolName } });
-        },
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.unionData.push(this.unionData.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
-
-                // 数据全部加载完成
-                if (this.unionData.length >= 40) {
-                    this.finished = true;
-                }
-            }, 500);
+        driverSchool(id, driverName) {
+            this.$router.push({ name: 'driver-school', params: { id: id, name: driverName } });
         },
     },
+    created() {
+        console.log('created');
+    },
     activated() {
+        console.log('activated');
+        if ((this.name = this.$route.params.load)) {
+            this.pageNum = 0;
+            this.unionData = [];
+            this.handleLoad();
+        }
         document.getElementById('union-content').scrollTop = this.scroll;
     },
 };

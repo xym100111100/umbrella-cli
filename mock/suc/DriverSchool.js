@@ -16,7 +16,7 @@ const schoolTemplate = {
             'totalScoreValue|1-7': 1,
             'studentScoreValue|1-7': 1,
             'platformScoreValue|1-7': 1,
-            thumb: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
+            driverImg: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
         },
     ],
 };
@@ -30,9 +30,9 @@ const commentTemplate = {
         {
             'id|1000000000000000-9999999999999999': 1,
             userName: '@ctitle(3,8)',
-            text: '@ctitle(10,50)',
-            'scoreValue|1-7': 1,
-            thumb: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
+            comment: '@ctitle(10,50)',
+            'rate|1-7': 1,
+            userFace: /https:\/\/picsum\.photos\/200\/200\/\?image=\d{3}/,
         },
     ],
 };
@@ -46,7 +46,7 @@ const  getOne ={
     trainingCount:5, // 训练场地
     trainingMeasure:56, // 训练面积
     cartCount:5, // 训练车数量
-    studentForYear:63, // 年学生数量
+    yearStudent:63, // 年学生数量
     isDeliver:true, // 是否接送
     passingRate:50,  // 通过率
     ordinaryClass:2451,

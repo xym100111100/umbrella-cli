@@ -1,7 +1,7 @@
 <template>
     <div class="school-register">
         <div class="register-title">
-            <van-nav-bar title="驾校报名" left-arrow @click-left="$router.go(-1)" />
+            <van-nav-bar title="驾校报名" right-text="报名步骤" left-arrow @click-left="$router.go(-1)" />
         </div>
         <van-popup
             position="right"
@@ -93,16 +93,8 @@
             </div>
         </van-popup>
         <div class="register-content">
-            <div class="content-step">
-                <p>报名步骤</p>
-                <van-steps :active="active">
-                    <van-step>驾校报名</van-step>
-                    <van-step>签订合约</van-step>
-                    <van-step>领证完成</van-step>
-                </van-steps>
-            </div>
             <div class="content-platform-register">
-                <p>驾校报名</p>
+                <p>报名</p>
                 <p>
                     <span>姓名</span>
                     <input placeholder="请输入您的姓名" />
@@ -178,7 +170,7 @@
 </template>
 
 <script>
-import { NavBar, Rate, Popup, Step, Steps, Uploader, Icon, Toast } from 'vant';
+import { NavBar, Rate, Popup, Step,  Uploader, Icon, Toast } from 'vant';
 
 export default {
     components: {
@@ -186,7 +178,6 @@ export default {
         [Uploader.name]: Uploader,
         [Icon.name]: Icon,
         [Step.name]: Step,
-        [Steps.name]: Steps,
         [Toast.name]: Toast,
         [Rate.name]: Rate,
         [Popup.name]: Popup,
@@ -230,14 +221,7 @@ html {
         padding: 0 0.2rem;
         height: 93%;
         overflow: scroll;
-        .content-step {
-            p {
-                padding: 0;
-                margin: 0;
-                font-size: 0.4rem;
-                padding-left: 0.3rem;
-            }
-        }
+
         .content-platform-register {
             background: rgba(123, 191, 234, 0.2);
             width: 97%;

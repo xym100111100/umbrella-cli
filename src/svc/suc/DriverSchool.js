@@ -6,7 +6,7 @@ export function list(options) {
         type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
     };
     const newOptions = { ...defaultOptions, ...options };
-    return get(`/dri-svr/list`, newOptions);
+    return get(`/suc-svr/suc/driver-school`, newOptions);
 }
 
 export function getById(options) {
@@ -15,7 +15,7 @@ export function getById(options) {
         type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
     };
     const newOptions = { ...defaultOptions, ...options };
-    return get(`/dri-svr/getById`, newOptions);
+    return get(`/suc-svr/suc/driver-school/get-by-id`, newOptions);
 }
 
 
@@ -26,5 +26,5 @@ export function getComment(options) {
         type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
     };
     const newOptions = { ...defaultOptions, ...options };
-    return get(`/dri-svr/getComment`, newOptions);
+    return get(`/suc-svr/suc/user-driver`, newOptions);
 }
