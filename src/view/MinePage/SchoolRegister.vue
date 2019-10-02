@@ -109,11 +109,6 @@
                     <button @click="onComment">{{buttonItem[2].name}}</button>
                 </div>
             </div>
-            <div class="content-statement">
-                <p>声明</p>
-                <div class="statement-info">合约由广西安布雷拉科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
-                <div class="statement-autograph">广西安布雷拉科技有限公司</div>
-            </div>
         </div>
     </div>
 </template>
@@ -159,17 +154,17 @@ export default {
                 {
                     isFinish: false,
                     name: '报名',
-                    index:1,
+                    index: 1,
                 },
                 {
                     isFinish: false,
                     name: '上传',
-                     index:2,
+                    index: 2,
                 },
                 {
                     isFinish: false,
                     name: '提交',
-                    index:4, // 这里不使用3是因为3的状态在后台是已审核，4才是已经评论
+                    index: 4, // 这里不使用3是因为3的状态在后台是已审核，4才是已经评论
                 },
             ],
         };
@@ -293,7 +288,9 @@ export default {
             }
             return new Blob([ia], { type: mimeString });
         },
-        registerDetail() {},
+        registerDetail() {
+            this.$router.push({ name: 'signup-detail' });
+        },
         choiceAddr(id, name) {
             this.show = false;
             this.trainAddr = {
@@ -333,9 +330,9 @@ export default {
                         }
 
                         // 修改步骤按钮
-                        
-                        this.buttonItem.map((item) => {
-                            if ( item.index <= data.state) {
+
+                        this.buttonItem.map(item => {
+                            if (item.index <= data.state) {
                                 item.isFinish = true;
                                 if (item.index === 1) item.name = '已报名';
                                 if (item.index === 2) item.name = '已上传';
@@ -607,30 +604,6 @@ html {
                 button:active {
                     background: rgba(123, 191, 234, 0.2);
                 }
-            }
-        }
-        .content-statement {
-            background: #fff7cc;
-            width: 97%;
-            margin: 0.3rem 0 0.5rem 0;
-            border-radius: 0.2rem;
-            padding-top: 0.3rem;
-            font-size: 0.4rem;
-            padding-left: 0.3rem;
-            p {
-                color: #499df1;
-                padding: 0;
-                margin: 0;
-                font-size: 0.4rem;
-                padding-left: 0.3rem;
-            }
-            .statement-info {
-                padding: 0.5rem;
-            }
-            .statement-autograph {
-                width: 90%;
-                text-align: right;
-                padding-bottom: 0.5rem;
             }
         }
     }

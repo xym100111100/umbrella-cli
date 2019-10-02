@@ -214,7 +214,6 @@ html {
                 border-radius: 0.2rem;
                 overflow: hidden;
                 .head-logo {
-                    background: red;
                     width: 3rem;
                     height: 3rem;
                     border-radius: 0.2rem;

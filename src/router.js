@@ -135,6 +135,14 @@ const routes = [
         },
     },
     {
+        name: 'signup-detail',
+        path: '/mine/signup-detail',
+        component: () => import('./view/MinePage/SignupDetail'),
+        meta: {
+            index: 12,
+        },
+    },
+    {
         name: 'shop',
         path: '/mine-shop',
         component: () => import('./view/MinePage/Shop'),
