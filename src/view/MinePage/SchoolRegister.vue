@@ -69,7 +69,15 @@
                 <div class="contract-upload">
                     <div class="upload-text">上传合约照片</div>
                     <div class="upload-file">
-                        <div class="file-icon">
+                        <div v-if="fileList.url!==''" class="file-img">
+                            <div class="img">
+                                <img :src="fileList.url" />
+                            </div>
+                            <div @click="deleteImg" class="delete">
+                                <van-icon color="white" name="shanchu" />
+                            </div>
+                        </div>
+                        <div v-if="fileList.url===''" class="file-icon">
                             <van-uploader :after-read="uploadIMG">
                                 <van-icon name="tianjiajiahaowubiankuang" />
                             </van-uploader>
@@ -115,7 +123,7 @@ import { NavBar, Rate, Popup, Step, Uploader, Icon, Toast } from 'vant';
 import { getTainingAddr as list } from '../../svc/suc/DriverSchool';
 import { addUserDriver } from '../../svc/suc/UserDriver';
 import { getOne } from '../../svc/suc/UserDriver';
-
+import axios from 'axios';
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -141,6 +149,9 @@ export default {
                 recommender: null,
                 isExist: false,
             },
+            fileList: {
+                url: '',
+            },
             buttonItem: [
                 {
                     isFinish: false,
@@ -158,6 +169,9 @@ export default {
         };
     },
     methods: {
+        deleteImg() {
+            this.fileList.url = '';
+        },
         uploadImg() {
             // 上传合约
         },
@@ -165,6 +179,85 @@ export default {
             // 上传合约文件
             this.picavalue = e.file;
             console.log('-----' + this.picavalue.size * 1024);
+            this.picavalue = e.file;
+            console.log('-----' + this.picavalue.size * 1024);
+            this.imgPreview(this.picavalue);
+        },
+        imgPreview(file, callback) {
+            let self = this;
+            //判断支不支持FileReader
+            if (!file || !window.FileReader) return;
+            if (/^image/.test(file.type)) {
+                //创建一个reader
+                let reader = new FileReader();
+
+                //将图片转成base64格式
+                reader.readAsDataURL(file);
+                //读取成功后的回调
+                reader.onloadend = function() {
+                    let result = this.result;
+                    let img = new Image();
+                    img.src = result;
+                    console.log('********未压缩前的图片大小********');
+                    console.log(result.length);
+                    img.onload = function() {
+                        let data = self.compress(img);
+                        self.imgUrl = result;
+                        let blob = self.dataURItoBlob(data);
+                        console.log('*******base64转blob对象******');
+                        // console.log(blob);
+                        var formData = new FormData();
+                        formData.append('file', blob);
+                        console.log('********将blob对象转成formData对象********');
+                        console.log(formData.get('file'));
+                        let config = {
+                            headers: { 'Content-Type': 'multipart/form-data' },
+                        };
+                        // 发送请求;
+                        axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
+                            console.log(res.data.filePath);
+                            self.fileList.url = 'http://192.168.8.108:20180/files' + res.data.filePath;
+                        });
+                    };
+                };
+            }
+        },
+        // 压缩图片
+        compress(img) {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            let initSize = img.src.length;
+            console.log('initSize:' + initSize);
+            let width = img.width;
+            let height = img.height;
+            canvas.width = width;
+            canvas.height = height;
+            // 铺底色
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, width, height);
+
+            //进行最小压缩
+            let ndata = canvas.toDataURL('image/jpeg', 0.1);
+            // console.log("*******压缩后的图片大小*******");
+            //  console.log(ndata)
+            console.log(ndata.length);
+            return ndata;
+        },
+        // base64转成bolb对象
+        dataURItoBlob(base64Data) {
+            var byteString;
+            if (base64Data.split(',')[0].indexOf('base64') >= 0) byteString = atob(base64Data.split(',')[1]);
+            else byteString = unescape(base64Data.split(',')[1]);
+            var mimeString = base64Data
+                .split(',')[0]
+                .split(':')[1]
+                .split(';')[0];
+            var ia = new Uint8Array(byteString.length);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ia], { type: mimeString });
         },
         registerDetail() {},
         choiceAddr(id, name) {
@@ -359,16 +452,40 @@ html {
                 }
                 .upload-file {
                     display: flex;
-                    margin-left: 1rem;
-
+                    .file-img {
+                        width: 2rem;
+                        margin: 0.1rem 0.1rem 0.1rem 1rem;
+                        overflow: hidden;
+                        height: 2.2rem;
+                        .img {
+                            height: 2.2rem;
+                            overflow: hidden;
+                            border-radius: 0.2rem;
+                        }
+                        img {
+                            width: 2rem;
+                            border-radius: 0.2rem;
+                        }
+                        .delete {
+                            margin-top: -1.1rem;
+                            margin-left: 1.1rem;
+                            font-size: 0.7rem;
+                            .van-icon {
+                                background: rgba(149, 163, 172, 0.3);
+                                padding-bottom: 0.2rem;
+                                
+                            }
+                        }
+                    }
                     .file-icon {
                         background: rgba(180, 194, 202, 0.3);
-                        height: 2rem;
+                        height: 2.2rem;
                         width: 2rem;
                         margin: 0.1rem;
-                        line-height: 2rem;
+                        line-height: 2.2rem;
                         text-align: center;
                         border-radius: 0.2rem;
+                        margin-left: 1rem;
                     }
                     .file-icon:active {
                         background: rgba(123, 191, 234, 0.2);
