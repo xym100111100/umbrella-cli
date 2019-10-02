@@ -69,15 +69,15 @@
                 <div class="contract-upload">
                     <div class="upload-text">上传合约照片</div>
                     <div class="upload-file">
-                        <div v-if="fileList.url!==''" class="file-img">
+                        <div v-if="filedata.url!==''" class="file-img">
                             <div class="img">
-                                <img :src="fileList.url" />
+                                <img :src="'http://192.168.8.108:20180/files'+filedata.url" />
                             </div>
-                            <div @click="deleteImg" class="delete">
+                            <div v-if="payload.state<2" @click="deleteImg" class="delete">
                                 <van-icon color="white" name="shanchu" />
                             </div>
                         </div>
-                        <div v-if="fileList.url===''" class="file-icon">
+                        <div v-if="filedata.url===''" class="file-icon">
                             <van-uploader :after-read="uploadIMG">
                                 <van-icon name="tianjiajiahaowubiankuang" />
                             </van-uploader>
@@ -96,17 +96,17 @@
                 <div class="finish-score">
                     <div>评分</div>
                     <div>
-                        <van-rate v-model="scoreValue" />
+                        <van-rate v-model="payload.rate" />
                     </div>
                 </div>
                 <div class="finish-evaluate">
                     <div>评论</div>
                     <div>
-                        <textarea></textarea>
+                        <textarea :readonly="payload.state > 3" v-model="payload.comment"></textarea>
                     </div>
                 </div>
                 <div class="finish-btn">
-                    <button @click="platformRegister">{{buttonItem[2].name}}</button>
+                    <button @click="onComment">{{buttonItem[2].name}}</button>
                 </div>
             </div>
             <div class="content-statement">
@@ -121,7 +121,7 @@
 <script>
 import { NavBar, Rate, Popup, Step, Uploader, Icon, Toast } from 'vant';
 import { getTainingAddr as list } from '../../svc/suc/DriverSchool';
-import { addUserDriver } from '../../svc/suc/UserDriver';
+import { addUserDriver, editUserDriver } from '../../svc/suc/UserDriver';
 import { getOne } from '../../svc/suc/UserDriver';
 import axios from 'axios';
 export default {
@@ -136,7 +136,6 @@ export default {
     },
     data() {
         return {
-            scoreValue: 3,
             trainAddr: {
                 id: null,
                 name: '未选择',
@@ -148,32 +147,67 @@ export default {
                 mobilePhone: null,
                 recommender: null,
                 isExist: false,
+                id: null,
+                state: null,
+                comment: null,
+                rate: 0,
             },
-            fileList: {
+            filedata: {
                 url: '',
             },
             buttonItem: [
                 {
                     isFinish: false,
                     name: '报名',
+                    index:1,
                 },
                 {
                     isFinish: false,
                     name: '上传',
+                     index:2,
                 },
                 {
                     isFinish: false,
                     name: '提交',
+                    index:4, // 这里不使用3是因为3的状态在后台是已审核，4才是已经评论
                 },
             ],
         };
     },
     methods: {
+        onComment() {
+            if (this.payload.state < 3) {
+                Toast({ message: '请在拿证后再评论', position: 'top' });
+                return;
+            }
+            if (this.payload.state > 3) {
+                Toast({ message: '不能重复评论哦', position: 'top' });
+                return;
+            }
+            // 上传评论
+            const data = { id: this.payload.id, comment: this.payload.comment, rate: this.payload.rate, state: 4 };
+            console.log(data);
+            editUserDriver({
+                data,
+                onSuccess: data => {
+                    Toast({ message: '感谢您对驾校的评论', position: 'top' });
+                    this.getUserDriverByUserId();
+                },
+            });
+        },
         deleteImg() {
-            this.fileList.url = '';
+            this.filedata.url = '';
         },
         uploadImg() {
             // 上传合约
+            const data = { id: this.payload.id, contractPath: this.filedata.url, state: 2 };
+            editUserDriver({
+                data,
+                onSuccess: data => {
+                    Toast({ message: '上次合约成功', position: 'top' });
+                    this.getUserDriverByUserId();
+                },
+            });
         },
         uploadIMG(e) {
             // 上传合约文件
@@ -216,7 +250,7 @@ export default {
                         // 发送请求;
                         axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePath);
-                            self.fileList.url = 'http://192.168.8.108:20180/files' + res.data.filePath;
+                            self.filedata.url = res.data.filePath;
                         });
                     };
                 };
@@ -285,15 +319,27 @@ export default {
                         this.payload.userName = data.userName;
                         this.payload.mobilePhone = data.mobilePhone;
                         this.payload.isExist = true;
+                        this.payload.id = data.id;
+                        this.payload.state = data.state;
+
                         this.trainAddr.id = data.tainingId;
                         this.trainAddr.name = data.tainingName;
+                        if (data.contractPath) {
+                            this.filedata.url = data.contractPath;
+                        }
+                        if (data.comment) {
+                            this.payload.comment = data.comment;
+                            this.payload.rate = data.rate;
+                        }
+
                         // 修改步骤按钮
-                        this.buttonItem.map((item, index) => {
-                            if (index + 1 <= data.state) {
+                        
+                        this.buttonItem.map((item) => {
+                            if ( item.index <= data.state) {
                                 item.isFinish = true;
-                                if (index === 0) item.name = '已报名';
-                                if (index === 1) item.name = '已上传';
-                                if (index === 2) item.name = '已评价';
+                                if (item.index === 1) item.name = '已报名';
+                                if (item.index === 2) item.name = '已上传';
+                                if (item.index === 4) item.name = '已评价';
                             }
                         });
                     } else {
@@ -331,6 +377,7 @@ export default {
                 onSuccess: data => {
                     console.log(data);
                     Toast({ message: '报名成功，请等待客服联系', position: 'top' });
+                    this.getUserDriverByUserId();
                 },
                 onFail: (code, msg) => {
                     Toast({ message: '报名失败，网络跑到外星了，请重新填写', position: 'top' });
@@ -473,7 +520,6 @@ html {
                             .van-icon {
                                 background: rgba(149, 163, 172, 0.3);
                                 padding-bottom: 0.2rem;
-                                
                             }
                         }
                     }
@@ -539,6 +585,7 @@ html {
                     width: 70vw;
                     border: none;
                     height: 2rem;
+                    color: #4a4a4c;
                 }
             }
             .finish-btn {
