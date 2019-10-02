@@ -1,7 +1,13 @@
 <template>
     <div class="school-register">
         <div class="register-title">
-            <van-nav-bar title="驾校报名" right-text="报名步骤" left-arrow @click-left="$router.go(-1)" />
+            <van-nav-bar
+                title="驾校报名"
+                right-text="报名步骤"
+                @click-right="registerDetail"
+                left-arrow
+                @click-left="$router.go(-1)"
+            />
         </div>
         <van-popup
             position="right"
@@ -11,139 +17,56 @@
         >
             <div>
                 <ol>
-                    <li @click="choiceClass('五一训练场')">
-                        <span>五一训练场</span>
-                    </li>
-                    <li @click="choiceClass('电脑/配件')">
-                        <span>电脑/配件</span>
-                    </li>
-                    <li>
-                        <span>体育</span>
-                    </li>
-                    <li>
-                        <span>文具</span>
-                    </li>
-                    <li>
-                        <span>衣服</span>
-                    </li>
-                    <li>
-                        <span>凳子</span>
-                    </li>
-                    <li>
-                        <span>左边</span>
-                    </li>
-                    <li>
-                        <span>桌球</span>
-                    </li>
-                    <li>
-                        <span>耳机</span>
-                    </li>
-                    <li>
-                        <span>手机</span>
-                    </li>
-                    <li>
-                        <span>母婴</span>
-                    </li>
-                    <li>
-                        <span>玩具</span>
-                    </li>
-                    <li>
-                        <span>书本</span>
-                    </li>
-                    <li>
-                        <span>篮球</span>
-                    </li>
-                    <li>
-                        <span>火箭</span>
-                    </li>
-                    <li>
-                        <span>航母</span>
-                    </li>
-                    <li>
-                        <span>飞机</span>
-                    </li>
-                    <li>
-                        <span>坦克</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>手枪</span>
-                    </li>
-                    <li>
-                        <span>最后</span>
-                    </li>
+                    <template v-for="item in tainingList">
+                        <li :key="item.id" @click="choiceAddr(item.id,item.trainingAddr)">
+                            <span>{{item.trainingAddr}}</span>
+                        </li>
+                    </template>
                 </ol>
             </div>
         </van-popup>
         <div class="register-content">
             <div class="content-platform-register">
-                <p>报名</p>
+                <p>立刻报名享受优质服务！</p>
                 <p>
                     <span>姓名</span>
-                    <input placeholder="请输入您的姓名" />
+                    <input  v-model="payload.userName" placeholder="请输入您的姓名" />
                 </p>
 
                 <p>
                     <span>手机号码</span>
-                    <input placeholder="请输入您的手机号码" />
+                    <input v-model="payload.mobilePhone" placeholder="请输入您的手机号码" />
                 </p>
                 <p>
                     <span>推荐人</span>
-                    <input placeholder="请输入推荐人，没有可不填" />
+                    <input v-model="payload.recommender" placeholder="请输入推荐人，没有可不填" />
                 </p>
                 <p>
                     <span @click="changeTrainName">选择训练场地</span>
-                    <span class="register-train">{{trainName}}</span>
+                    <span class="register-train">{{trainAddr.name}}</span>
                 </p>
                 <div>
-                    <button @click="platformRegister">提交</button>
+                    <button @click="platformRegister">报名</button>
                 </div>
             </div>
             <div class="content-contract">
-                <p>签订合约</p>
+                <p>上传合约，享受更多保障！</p>
                 <div class="contract-upload">
                     <div class="upload-text">上传合约照片</div>
                     <div class="upload-file">
-                        <div class="file-img">
-                            <div>
-                                <img
-                                    src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoM1LKFPNSBQA4iaeuHQuibYIicA/132"
-                                />
-                            </div>
-                            <div class="delete">
-                                <van-icon color="white" name="shanchu" />
-                            </div>
-                        </div>
-                        <!-- <div class="file-icon">
+                        <div class="file-icon">
                             <van-uploader :after-read="uploadIMG">
                                 <van-icon name="tianjiajiahaowubiankuang" />
                             </van-uploader>
-                        </div>-->
+                        </div>
                     </div>
                 </div>
                 <div class="contract-btn">
-                    <button @click="platformRegister">提交</button>
+                    <button @click="platformRegister">上传</button>
                 </div>
             </div>
             <div class="content-finish">
-                <p>领证完成</p>
+                <p>给驾校一个好评吧！</p>
                 <div class="finish-score">
                     <div>评分</div>
                     <div>
@@ -170,7 +93,10 @@
 </template>
 
 <script>
-import { NavBar, Rate, Popup, Step,  Uploader, Icon, Toast } from 'vant';
+import { NavBar, Rate, Popup, Step, Uploader, Icon, Toast } from 'vant';
+import { getTainingAddr as list } from '../../svc/suc/DriverSchool';
+import { addUserDriver } from '../../svc/suc/UserDriver';
+import { getOne } from '../../svc/suc/UserDriver';
 
 export default {
     components: {
@@ -184,27 +110,96 @@ export default {
     },
     data() {
         return {
-            active: -1,
             scoreValue: 3,
-            trainName: '未选择',
+            trainAddr: {
+                id: null,
+                name: '未选择',
+            },
             show: false,
+            tainingList: [],
+            payload: {
+                userName: null,
+                mobilePhone: null,
+                recommender: null,
+            },
         };
     },
     methods: {
-        choiceClass(name) {
+        registerDetail() {},
+        choiceAddr(id, name) {
             this.show = false;
-            this.trainName = name;
+            this.trainAddr = {
+                id,
+                name,
+            };
+        },
+        getTainingAddr() {
+            const params = { deriverId: this.$route.params.id };
+            list({
+                params,
+                onSuccess: data => {
+                    this.tainingList = data;
+                },
+            });
+        },
+        getUserDriverByUserId() {
+            const params = { userId: this.$store.getters.user.id, driverId: this.$route.params.id };
+            getOne({
+                params,
+                onSuccess: data => {
+                    if (data.id !== undefined && data.id !== null) {
+                    }
+                },
+            });
         },
         changeTrainName() {
             this.show = true;
         },
         platformRegister() {
-            Toast({ message: '报名成功，请等待客服联系', position: 'top' });
+            console.log(this.payload);
+            if (this.payload.userName === undefined || this.payload.userName === null) {
+                Toast({ message: '请填写姓名后再提交', position: 'top' });
+                return;
+            }
+            if (this.payload.mobilePhone === undefined || this.payload.mobilePhone === null) {
+                Toast({ message: '请填写手机号码后再提交', position: 'top' });
+                return;
+            }
+            if (this.trainAddr.id === null || this.trainAddr.id === undefined) {
+                Toast({ message: '请选择训练场后再提交', position: 'top' });
+                return;
+            }
+
+            let data = this.payload;
+            data.tainingId = this.trainAddr.id;
+            data.userId = this.$store.getters.user.id;
+            data.driverId = this.$route.params.id;
+            addUserDriver({
+                data,
+                onSuccess: data => {
+                    console.log(data);
+                    Toast({ message: '报名成功，请等待客服联系', position: 'top' });
+                },
+                onFail: (code, msg) => {
+                    Toast({ message: '报名失败，网络跑到外星了，请重新填写', position: 'top' });
+                },
+                
+            });
         },
         uploadIMG(e) {
             this.picavalue = e.file;
             console.log('-----' + this.picavalue.size * 1024);
         },
+    },
+    activated() {
+        if (this.$route.params.id !== undefined) {
+            this.trainAddr = {
+                id: null,
+                name: '未选择',
+            };
+            this.getTainingAddr();
+            this.getUserDriverByUserId();
+        }
     },
 };
 </script>
@@ -262,6 +257,7 @@ html {
                     width: 70%;
                     border: none;
                     padding-left: 0.2rem;
+                    color: #4a4a4c;
                 }
             }
             .register-train {
@@ -309,24 +305,8 @@ html {
                 }
                 .upload-file {
                     display: flex;
-                    .file-img {
-                        height: 2rem;
-                        width: 2rem;
-                        margin: 0.1rem 0.1rem 0.1rem 1rem;
-                        img {
-                            height: 2rem;
-                            border-radius: 0.2rem;
-                        }
-                        .delete {
-                            margin-top: -1.1rem;
-                            margin-left: 1.1rem;
-                            font-size: 0.7rem;
-                            .van-icon {
-                                background: rgba(180, 194, 202, 0.3);
-                                padding-bottom: 0.2rem;
-                            }
-                        }
-                    }
+                    margin-left: 1rem;
+
                     .file-icon {
                         background: rgba(180, 194, 202, 0.3);
                         height: 2rem;

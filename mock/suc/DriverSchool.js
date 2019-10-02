@@ -49,8 +49,8 @@ const  getOne ={
     yearStudent:63, // 年学生数量
     isDeliver:true, // 是否接送
     passingRate:50,  // 通过率
-    ordinaryClass:2451,
-    allClass:5623,
+    signupPrice:2451,
+    allPrice:5623,
     insureClass:3200,
 }
 

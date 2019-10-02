@@ -13,11 +13,11 @@
             <div class="content-school-info">
                 <div class="info-head">
                     <div class="head-logo">
-                        <img
-                            :src="idriverSchoolData.driverImg"
-                        />
+                        <img :src="driverSchoolData.driverImg" />
                     </div>
-                    <div class="head-detail">{{idriverSchoolData.driverName}}</div>
+                    <div
+                        class="head-detail"
+                    >成立于{{driverSchoolData.foundTime}},{{driverSchoolData.driverRemark}}</div>
                 </div>
                 <div class="head-content">
                     <p>
@@ -25,50 +25,63 @@
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>报名:</span>
-                        <span>{{idriverSchoolData.ordinaryClass}}</span>
+                        <span>{{driverSchoolData.signupPrice}}</span>
                     </p>
                     <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
-                        <span>保险班:</span>
-                        <span>{{idriverSchoolData.insureClass}}</span>
-                    </p>
-                    <p>
-                        <span>
-                            <van-icon color="#7bbfea" name="qianjin" />
-                        </span>
-                        <span>全包班:</span>
-                        <span>{{idriverSchoolData.allClass}}</span>
-                    </p>
-                    <p>
-                        <span>
-                            <van-icon color="#7bbfea" name="qianjin" />
-                        </span>
-                        <span>训练场数量与面积:</span>
-                        <span>{{idriverSchoolData.trainingCount}}个{{idriverSchoolData.trainingMeasure}}平方</span>
-                    </p>
-                    <p>
-                        <span>
-                            <van-icon color="#7bbfea" name="qianjin" />
-                        </span>
-                        <span>年培训学员:</span>
-                        <span>{{idriverSchoolData.yearStudent}}</span>
-                    </p>
-                    <p>
-                        <span>
-                            <van-icon color="#7bbfea" name="qianjin" />
-                        </span>
-                        <span>训练是否接送:</span>
-                        <span>{{idriverSchoolData.isDeliver|filtersIsDeliver}}</span>
+                        <span>全包:</span>
+                        <span>{{driverSchoolData.allPrice}}</span>
                     </p>
                     <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>通过率:</span>
-                        <span>{{idriverSchoolData.passingRate}}%</span>
+                        <span>{{driverSchoolData.passingRate}}%</span>
                     </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练场数量:</span>
+                        <span>{{driverSchoolData.trainingCount}}个</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练场面积:</span>
+                        <span>{{driverSchoolData.trainingCount}}平方</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>年培训学员:</span>
+                        <span>{{driverSchoolData.yearStudent}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练是否接送:</span>
+                        <span>{{driverSchoolData.deliverDetail}}</span>
+                    </p>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
+                        <span>训练场地址:</span>
+                    </p>
+                    <div class="content-bottom">
+                        <ol>
+                            <template v-for="item in tainingAddrList">
+                                <li :key="item.id">{{item.trainingAddr}}</li>
+                            </template>
+                        </ol>
+                    </div>
                 </div>
             </div>
             <div class="content-school-comment">学员评价</div>
@@ -80,19 +93,14 @@
                 :immediate-check="false"
             >
                 <template v-for="item in commentList">
-                    <div  class="school-comment" :key="item.id">
+                    <div class="school-comment" :key="item.id">
                         <div class="comment-img">
                             <img :src="item.userFace" />
                         </div>
                         <div class="comment-info">
                             <div>{{item.userName}}</div>
-                            <div  class="info-rate">
-                                <van-rate
-                                    readonly
-                                    v-model="item.rate"
-                                    void-icon="star"
-                                    :count="7"
-                                />
+                            <div class="info-rate">
+                                <van-rate readonly v-model="item.rate" void-icon="star" :count="7" />
                             </div>
                             <span>{{item.comment}}</span>
                         </div>
@@ -105,7 +113,7 @@
 <script>
 import { NavBar, List, Icon, Cell, Rate } from 'vant';
 import { getComment } from '../../svc/suc/DriverSchool';
-import { getById } from '../../svc/suc/DriverSchool';
+import { getOneById } from '../../svc/suc/DriverSchool';
 
 export default {
     components: {
@@ -121,29 +129,21 @@ export default {
             commentList: [],
             loading: false,
             finished: false,
-            idriverSchoolData: {},
-            pageNum:0,
+            driverSchoolData: {},
+            pageNum: 0,
+            tainingAddrList: [],
         };
     },
-    filters: {
-        filtersIsDeliver(isDeliver) {
-            if (isDeliver) {
-                return '是';
-            } else {
-                return '否';
-            }
-        },
-    },
     methods: {
-        testMath(){
-            console.log("sss")
+        testMath() {
+            console.log('sss');
         },
         schoolRegister() {
-            this.$router.push({ name: 'school-register' });
+            this.$router.push({ name: 'school-register', params: { id: this.driverSchoolData.id } });
         },
         // 获取驾校数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1,driverId:this.$route.params.id };
+            const params = { pageNum: this.pageNum + 1, driverId: this.$route.params.id };
             getComment({
                 params,
                 onSuccess: data => {
@@ -163,11 +163,11 @@ export default {
         },
         getDriverSchoolData() {
             const params = { id: this.$route.params.id };
-            getById({
+            getOneById({
                 params,
                 onSuccess: data => {
-                   
-                    this.idriverSchoolData = data;
+                    this.driverSchoolData = data.sucDriverSchoolMo;
+                    this.tainingAddrList = data.sucTainingAddrList;
                 },
             });
         },
@@ -178,6 +178,7 @@ export default {
             this.getDriverSchoolData();
             this.pageNum = 0;
             this.commentList = [];
+            this.finished = false;
             this.handleLoad();
         }
     },
@@ -197,7 +198,6 @@ html {
         overflow: scroll;
         padding: 0 0.3rem;
         .content-school-info {
-            height: 10rem;
             background: #fafafa;
             border-radius: 0.2rem;
             overflow: hidden;
@@ -233,6 +233,17 @@ html {
                     color: #7d7e80;
                     span:first-child {
                         font-size: 0.6rem;
+                    }
+                }
+                .content-bottom {
+                    padding-left: 1rem;
+                    ol,
+                    li {
+                        padding: 0;
+                        margin: 0;
+                        list-style: none;
+                        font-size: 0.4rem;
+                        color: #7d7e80;
                     }
                 }
             }

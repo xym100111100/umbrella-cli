@@ -27,20 +27,6 @@
                                     void-icon="star"
                                     :count="7"
                                 />
-                                <!-- <p class="card-score">学员评分</p>
-                                <van-rate
-                                    readonly
-                                    v-model="item.studentScoreValue"
-                                    void-icon="star"
-                                    :count="7"
-                                />
-                                <p class="card-score">平台评分</p>
-                                <van-rate
-                                    readonly
-                                    v-model="item.platformScoreValue"
-                                    void-icon="star"
-                                    :count="7"
-                                />-->
                             </div>
                         </van-card>
                     </div>
@@ -72,6 +58,9 @@ export default {
         };
     },
     methods: {
+        testMath(data) {
+            return Number(data);
+        },
         // 获取驾校数据
         handleLoad() {
             const params = { pageNum: this.pageNum + 1 };
@@ -99,14 +88,11 @@ export default {
             this.$router.push({ name: 'driver-school', params: { id: id, name: driverName } });
         },
     },
-    created() {
-        console.log('created');
-    },
     activated() {
-        console.log('activated');
         if ((this.name = this.$route.params.load)) {
             this.pageNum = 0;
             this.unionData = [];
+            this.finished = false;
             this.handleLoad();
         }
         document.getElementById('union-content').scrollTop = this.scroll;
