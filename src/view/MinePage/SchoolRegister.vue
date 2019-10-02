@@ -30,23 +30,38 @@
                 <p>立刻报名享受优质服务！</p>
                 <p>
                     <span>姓名</span>
-                    <input  v-model="payload.userName" placeholder="请输入您的姓名" />
+                    <input
+                        :readonly="payload.isExist"
+                        v-model="payload.userName"
+                        placeholder="请输入您的姓名"
+                    />
                 </p>
 
                 <p>
                     <span>手机号码</span>
-                    <input v-model="payload.mobilePhone" placeholder="请输入您的手机号码" />
+                    <input
+                        :readonly="payload.isExist"
+                        v-model="payload.mobilePhone"
+                        placeholder="请输入您的手机号码"
+                    />
                 </p>
                 <p>
                     <span>推荐人</span>
-                    <input v-model="payload.recommender" placeholder="请输入推荐人，没有可不填" />
+                    <input
+                        :readonly="payload.isExist"
+                        v-model="payload.recommender"
+                        placeholder="请输入推荐人，没有可不填"
+                    />
                 </p>
                 <p>
                     <span @click="changeTrainName">选择训练场地</span>
                     <span class="register-train">{{trainAddr.name}}</span>
                 </p>
                 <div>
-                    <button @click="platformRegister">报名</button>
+                    <button
+                        :disabled="buttonItem[0].isFinish"
+                        @click="platformRegister"
+                    >{{buttonItem[0].name}}</button>
                 </div>
             </div>
             <div class="content-contract">
@@ -62,7 +77,10 @@
                     </div>
                 </div>
                 <div class="contract-btn">
-                    <button @click="platformRegister">上传</button>
+                    <button
+                        :disabled="buttonItem[1].isFinish"
+                        @click="uploadImg"
+                    >{{buttonItem[1].name}}</button>
                 </div>
             </div>
             <div class="content-finish">
@@ -80,7 +98,7 @@
                     </div>
                 </div>
                 <div class="finish-btn">
-                    <button @click="platformRegister">提交</button>
+                    <button @click="platformRegister">{{buttonItem[2].name}}</button>
                 </div>
             </div>
             <div class="content-statement">
@@ -121,10 +139,33 @@ export default {
                 userName: null,
                 mobilePhone: null,
                 recommender: null,
+                isExist: false,
             },
+            buttonItem: [
+                {
+                    isFinish: false,
+                    name: '报名',
+                },
+                {
+                    isFinish: false,
+                    name: '上传',
+                },
+                {
+                    isFinish: false,
+                    name: '提交',
+                },
+            ],
         };
     },
     methods: {
+        uploadImg() {
+            // 上传合约
+        },
+        uploadIMG(e) {
+            // 上传合约文件
+            this.picavalue = e.file;
+            console.log('-----' + this.picavalue.size * 1024);
+        },
         registerDetail() {},
         choiceAddr(id, name) {
             this.show = false;
@@ -147,7 +188,26 @@ export default {
             getOne({
                 params,
                 onSuccess: data => {
-                    if (data.id !== undefined && data.id !== null) {
+                    if (data && data.id) {
+                        this.payload.userName = data.userName;
+                        this.payload.mobilePhone = data.mobilePhone;
+                        this.payload.isExist = true;
+                        this.trainAddr.id = data.tainingId;
+                        this.trainAddr.name = data.tainingName;
+                        // 修改步骤按钮
+                        this.buttonItem.map((item, index) => {
+                            if (index + 1 <= data.state) {
+                                item.isFinish = true;
+                                if (index === 0) item.name = '已报名';
+                                if (index === 1) item.name = '已上传';
+                                if (index === 2) item.name = '已评价';
+                            }
+                        });
+                    } else {
+                        this.payload.isExist = false;
+                    }
+                    if (data.recommender !== undefined && data.recommender !== null) {
+                        this.payload.recommender = data.recommender;
                     }
                 },
             });
@@ -156,7 +216,6 @@ export default {
             this.show = true;
         },
         platformRegister() {
-            console.log(this.payload);
             if (this.payload.userName === undefined || this.payload.userName === null) {
                 Toast({ message: '请填写姓名后再提交', position: 'top' });
                 return;
@@ -183,12 +242,7 @@ export default {
                 onFail: (code, msg) => {
                     Toast({ message: '报名失败，网络跑到外星了，请重新填写', position: 'top' });
                 },
-                
             });
-        },
-        uploadIMG(e) {
-            this.picavalue = e.file;
-            console.log('-----' + this.picavalue.size * 1024);
         },
     },
     activated() {

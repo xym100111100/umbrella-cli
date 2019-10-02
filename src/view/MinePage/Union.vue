@@ -73,6 +73,8 @@ export default {
                     if (data.pages === data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    }else{
+                         this.finished = false;
                     }
                 },
                 onFinish: () => {
@@ -92,7 +94,7 @@ export default {
         if ((this.name = this.$route.params.load)) {
             this.pageNum = 0;
             this.unionData = [];
-            this.finished = false;
+           
             this.handleLoad();
         }
         document.getElementById('union-content').scrollTop = this.scroll;

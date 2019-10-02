@@ -73,6 +73,13 @@
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
+                        <span>驾校优势:</span>
+                    </p>
+                    <div class="content-detail">{{driverSchoolData.schoolDetail}}</div>
+                    <p>
+                        <span>
+                            <van-icon color="#7bbfea" name="qianjin" />
+                        </span>
                         <span>训练场地址:</span>
                     </p>
                     <div class="content-bottom">
@@ -135,9 +142,6 @@ export default {
         };
     },
     methods: {
-        testMath() {
-            console.log('sss');
-        },
         schoolRegister() {
             this.$router.push({ name: 'school-register', params: { id: this.driverSchoolData.id } });
         },
@@ -153,6 +157,8 @@ export default {
                     if (data.pages === data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                 },
                 onFinish: () => {
@@ -178,7 +184,7 @@ export default {
             this.getDriverSchoolData();
             this.pageNum = 0;
             this.commentList = [];
-            this.finished = false;
+            this.tainingAddrList = [];
             this.handleLoad();
         }
     },
@@ -234,6 +240,12 @@ html {
                     span:first-child {
                         font-size: 0.6rem;
                     }
+                }
+                .content-detail {
+                
+                    padding-left: 1rem;
+                    font-size: 0.4rem;
+                    color: #7d7e80;
                 }
                 .content-bottom {
                     padding-left: 1rem;
