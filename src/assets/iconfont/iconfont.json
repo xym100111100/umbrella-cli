@@ -615,6 +615,13 @@
       "unicode_decimal": 59044
     },
     {
+      "icon_id": "5835478",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
       "icon_id": "5904272",
       "name": "积分",
       "font_class": "jifen",
@@ -662,6 +669,13 @@
       "font_class": "huaban",
       "unicode": "e63f",
       "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "6176577",
+      "name": "上线",
+      "font_class": "shangxian",
+      "unicode": "e641",
+      "unicode_decimal": 58945
     },
     {
       "icon_id": "6237071",

@@ -13,7 +13,7 @@
                     color="#1989fa"
                     background="#ecf9ff"
                     left-icon="info-o"
-                    text="温馨提示:每个商品上线的时间是两星期，超过后将自动下线，手动下线并重新上线将重新计算时间。"
+                    text="温馨提示:每个商品上线的时间是两星期，超过后将自动下线，可手动更新上线时间。且每人只能有上线与下线加起来四个商品。"
                 />
             </div>
             <div class="title-nav">
@@ -49,7 +49,10 @@
                                 <div class="good-price">
                                     <div class="price">${{item.salePrice}}</div>
                                     <div class="icon" @click.stop="downLineGood(item.id)">
-                                        <van-icon name="huaban" />
+                                        <van-icon name="shuaxin" />
+                                    </div>
+                                    <div class="icon" @click.stop="downLineGood(item.id)">
+                                        <van-icon name="shangxian" />
                                     </div>
                                 </div>
                             </div>
@@ -232,10 +235,11 @@ body {
                         display: flex;
                         justify-content: space-between;
                         padding-top: 0.15rem;
+                       
                         .price {
                             margin-top: 0.3rem;
                             color: #7bbfea;
-                            padding-left: 0.2rem;
+                            padding-left: 0.1rem;
                         }
                         .icon {
                             height: 0.5rem;
@@ -245,7 +249,7 @@ body {
                             .van-icon {
                                 background: rgba(60, 47, 15, 0.1);
                                 padding: 0.1rem 0.13rem 0.15rem;
-                                margin: 0.2rem 0 0 -1rem;
+                                margin: 0.2rem 0 0 -0.5rem;
                                 color: #499df1;
                                 font-size: 0.5rem;
                             }
