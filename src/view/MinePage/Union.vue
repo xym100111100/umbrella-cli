@@ -70,7 +70,7 @@ export default {
                     this.pageNum = data.pageNum;
                     this.unionData.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum ) {
                         // 数据全部加载完成
                         this.finished = true;
                     }else{

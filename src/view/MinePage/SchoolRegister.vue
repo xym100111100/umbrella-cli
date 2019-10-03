@@ -312,7 +312,7 @@ export default {
             getOne({
                 params,
                 onSuccess: data => {
-                    if (data && data.id) {
+                    if ( data.id !== undefined && data.id !== null ) {
                         this.payload.userName = data.userName;
                         this.payload.mobilePhone = data.mobilePhone;
                         this.payload.isExist = true;
@@ -340,7 +340,23 @@ export default {
                             }
                         });
                     } else {
-                        this.payload.isExist = false;
+                        this.payload = {
+                            userName: null,
+                            mobilePhone: null,
+                            recommender: null,
+                            isExist: false,
+                            id: null,
+                            state: null,
+                            comment: null,
+                            rate: 0,
+                        };
+                        this.buttonItem.map(item => {
+                                item.isFinish = false;
+                                if (item.index === 1) item.name = '报名';
+                                if (item.index === 2) item.name = '上传';
+                                if (item.index === 4) item.name = '评价';
+                        });
+                        this.filedata.url = '';
                     }
                     if (data.recommender !== undefined && data.recommender !== null) {
                         this.payload.recommender = data.recommender;
