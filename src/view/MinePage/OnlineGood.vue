@@ -14,86 +14,22 @@
         >
             <div>
                 <ol>
-                    <li @click="choiceClass('第一/配件')">
-                        <span>第一/配件</span>
-                    </li>
-                    <li @click="choiceClass('电脑/配件')">
-                        <span>电脑/配件</span>
-                    </li>
-                    <li>
-                        <span>体育</span>
-                    </li>
-                    <li>
-                        <span>文具</span>
-                    </li>
-                    <li>
-                        <span>衣服</span>
-                    </li>
-                    <li>
-                        <span>凳子</span>
-                    </li>
-                    <li>
-                        <span>左边</span>
-                    </li>
-                    <li>
-                        <span>桌球</span>
-                    </li>
-                    <li>
-                        <span>耳机</span>
-                    </li>
-                    <li>
-                        <span>手机</span>
-                    </li>
-                    <li>
-                        <span>母婴</span>
-                    </li>
-                    <li>
-                        <span>玩具</span>
-                    </li>
-                    <li>
-                        <span>书本</span>
-                    </li>
-                    <li>
-                        <span>篮球</span>
-                    </li>
-                    <li>
-                        <span>火箭</span>
-                    </li>
-                    <li>
-                        <span>航母</span>
-                    </li>
-                    <li>
-                        <span>飞机</span>
-                    </li>
-                    <li>
-                        <span>坦克</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>大炮</span>
-                    </li>
-                    <li>
-                        <span>步枪</span>
-                    </li>
-                    <li>
-                        <span>手枪</span>
-                    </li>
-                    <li>
-                        <span>最后</span>
-                    </li>
+                    <template v-for="item in goodsClassData">
+                        <li :key="item.id" @click="choiceClass(item.id,item.className)">
+                            <span>{{item.className}}</span>
+                        </li>
+                    </template>
                 </ol>
             </div>
+        </van-popup>
+        <van-popup position="bottom" v-model="showDate" :style="{ height: '35%' }">
+            <van-datetime-picker
+                @confirm="confimDate"
+                @cancel="cancelDate"
+                v-model="currentDate"
+                type="date"
+                :formatter="formatter"
+            />
         </van-popup>
         <div class="onlie-good-content">
             <div class="content-title">
@@ -105,17 +41,17 @@
                 />
             </div>
             <div class="content-upload">
-                <template v-for=" item in fileList">
+                <template v-for=" item in payload.fileList">
                     <div class="upload-file" :key="item.id">
                         <div class="file-img">
-                            <img :src="item.url" />
+                            <img :src="'http://192.168.8.108:20180/files' + item.imgPath" />
                         </div>
                         <div @click="deleteImg(item.id)" class="upload-delete">
                             <van-icon color="white" name="shanchu" />
                         </div>
                     </div>
                 </template>
-                <div v-if="fileList.length < 6" class="upload-icon">
+                <div v-if="payload.fileList.length < 6" class="upload-icon">
                     <van-uploader :after-read="uploadIMG">
                         <van-icon name="tianjiajiahaowubiankuang" />
                     </van-uploader>
@@ -123,7 +59,7 @@
             </div>
             <div class="content-info">
                 <van-tabs
-                    v-model="tabsActive"
+                    v-model="payload.goodType"
                     :swipeable="true"
                     color="greenyellow"
                     :animated="true"
@@ -133,10 +69,10 @@
                         <div class="info-tab1">
                             <div class="info-class">
                                 <span @click="showPopup">选择分类</span>
-                                <span>{{className}}</span>
+                                <span>{{payload.goodClass.name}}</span>
                             </div>
                             <div class="info-radio">
-                                <template v-for="item in radioList1">
+                                <template v-for="item in payload.isNowSell">
                                     <div
                                         :key="item.index"
                                         class="radio-sell"
@@ -151,7 +87,7 @@
                                 </template>
                             </div>
                             <div class="info-radio">
-                                <template v-for="item in radioList2">
+                                <template v-for="item in payload.isDiscuss">
                                     <div
                                         :key="item.index"
                                         class="radio-bargaining"
@@ -169,32 +105,38 @@
                                 </template>
                             </div>
                             <div class="info-bottom">
-                                <div class="bottom-left">
-                                    <span>已用</span>
-                                    <span @click="changeUseTime(-1)">
-                                        <van-icon color="#7bbfea" name="jianhao" />
-                                    </span>
-                                    <span>{{useTime}}</span>
-                                    <span @click="changeUseTime(1)">
-                                        <van-icon color="#7bbfea" name="tianjiajiahaowubiankuang" />
-                                    </span>
-                                    <span>/月</span>
+                                <div @click="choiceBuyTime" class="bottom-buyTime">
+                                    <span>选择购买时间:</span>
+                                    <span>{{payload.buyTime}}</span>
                                 </div>
-                                <div class="bottom-right">
+                                <div class="bottom-price">
                                     <span>原价:</span>
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="只能输入千位价格"
-                                        :value="oldPrice"
-                                        maxlength="4"
-                                        @input="changeOldPrice"
+                                        v-model="payload.oldPrice"
+                                    />
+                                </div>
+                                <div class="bottom-price">
+                                    <span>现价:</span>
+                                    <input
+                                        type="number"
+                                        placeholder="只能输入千位价格"
+                                        v-model="payload.newPrice"
                                     />
                                 </div>
                                 <div class="bottom-textArea-title">
-                                    <textarea maxlength="20" placeholder="请简短地输入宝贝标题 如:华为耳机黑色"></textarea>
+                                    <textarea
+                                        v-model="payload.goodTitle"
+                                        maxlength="20"
+                                        placeholder="请简短地输入宝贝标题 如:华为耳机黑色"
+                                    ></textarea>
                                 </div>
                                 <div class="bottom-textArea-detail">
-                                    <textarea placeholder="请简短地输入你对宝贝的描述"></textarea>
+                                    <textarea
+                                        v-model="payload.goodDetail"
+                                        placeholder="请简短地输入你对宝贝的描述"
+                                    ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -203,10 +145,10 @@
                         <div class="info-tab2">
                             <div class="info-class">
                                 <span @click="showPopup">选择分类</span>
-                                <span>{{className}}</span>
+                                <span>{{payload.goodClass.name}}</span>
                             </div>
                             <div class="info-radio">
-                                <template v-for="item in radioList1">
+                                <template v-for="item in payload.isNowSell">
                                     <div
                                         :key="item.index"
                                         class="radio-sell"
@@ -221,7 +163,7 @@
                                 </template>
                             </div>
                             <div class="info-radio">
-                                <template v-for="item in radioList2">
+                                <template v-for="item in payload.isDiscuss">
                                     <div
                                         :key="item.index"
                                         class="radio-bargaining"
@@ -244,17 +186,25 @@
                                     <span @click="changeUseTime(-1)">
                                         <van-icon color="#7bbfea" name="jianhao" />
                                     </span>
-                                    <span>{{useTime}}</span>
+                                    <span>{{payload.priceDay}}</span>
                                     <span @click="changeUseTime(1)">
                                         <van-icon color="#7bbfea" name="tianjiajiahaowubiankuang" />
                                     </span>
                                     <span>/元/天</span>
                                 </div>
                                 <div class="bottom-textArea-title">
-                                    <textarea maxlength="20" placeholder="请简短地输入宝贝标题 如:华为耳机黑色"></textarea>
+                                    <textarea
+                                        v-model="payload.goodTitle"
+                                        maxlength="20"
+                                        placeholder="请简短地输入宝贝标题 如:华为耳机黑色"
+                                    ></textarea>
                                 </div>
                                 <div class="bottom-textArea-detail">
-                                    <textarea maxlength="50" placeholder="请简短地输入你对宝贝的描述"></textarea>
+                                    <textarea
+                                        v-model="payload.goodDetail"
+                                        maxlength="50"
+                                        placeholder="请简短地输入你对宝贝的描述"
+                                    ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -269,8 +219,11 @@
 </template>
 
 <script>
-import { NavBar, NoticeBar, Stepper, Tab, Tabs, Popup, Icon, RadioGroup, Radio, Toast, Uploader } from 'vant';
+import { NavBar, NoticeBar, Stepper, Tab, Tabs, DatetimePicker, Popup, Icon, Toast, Uploader } from 'vant';
 import axios from 'axios';
+import { list as goodsClassList } from '../../svc/suc/SucGoodsClass';
+import { add as addGoodsClass } from '../../svc/suc/SucGoods';
+
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -278,53 +231,123 @@ export default {
         [Uploader.name]: Uploader,
         [NoticeBar.name]: NoticeBar,
         [Icon.name]: Icon,
-        [RadioGroup.name]: RadioGroup,
-        [Radio.name]: Radio,
         [Popup.name]: Popup,
         [Stepper.name]: Stepper,
         [Tabs.name]: Tabs,
         [Tab.name]: Tab,
+        [DatetimePicker.name]: DatetimePicker,
     },
     data() {
         return {
-            fileList: [],
-            useTime: 1, // 商品使用时间,单位是月
-            oldPrice: '',
-            radioList1: [
-                {
-                    index: 1,
-                    value: '即时出售',
-                    active: true,
+            payload: {
+                goodClass: {
+                    name: '未选择',
+                    id: null,
                 },
-                {
-                    index: 2,
-                    value: '议时出售',
-                    active: false,
-                },
-            ],
-            radioList2: [
-                {
-                    index: 1,
-                    value: '可议价',
-                    active: true,
-                },
-                {
-                    index: 2,
-                    value: '不可议价',
-                    active: false,
-                },
-            ],
-            tabsActive: 2,
+                oldPrice: '',
+                newPrice: '',
+                goodTitle: '',
+                goodDetail: '',
+                buyTime: '未选择',
+                priceDay: 1,
+                isNowSell: [
+                    {
+                        index: 1,
+                        value: '即时出售',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '议时出售',
+                        active: false,
+                    },
+                ],
+                isDiscuss: [
+                    {
+                        index: 1,
+                        value: '可议价',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '不可议价',
+                        active: false,
+                    },
+                ],
+                goodType: 0,
+                fileList: [],
+            },
+            goodsClassData: [],
             show: false,
-            className: '未选择',
+            showDate: false,
+            currentDate: new Date(),
         };
     },
     computed: {},
+
     methods: {
-        doSubmit() {
-            console.log(this.data);
+        getGoodsClassList() {
+            goodsClassList({
+                onSuccess: data => {
+                    this.goodsClassData = data;
+                },
+            });
         },
-        changeOldPrice(even) {
+        confimDate(e) {
+            this.showDate = false;
+            let d = new Date(e);
+            let buyTime = d.getFullYear() + '-' + this.checkTime(d.getMonth() + 1) + '-' + this.checkTime(d.getDate());
+            console.log(buyTime);
+            this.payload.buyTime = buyTime;
+        },
+        checkTime(i) {
+            if (i < 10) {
+                i = '0' + i;
+            }
+            return i;
+        },
+        cancelDate() {
+            this.showDate = false;
+        },
+        choiceBuyTime() {
+            this.showDate = true;
+        },
+        formatter(type, value) {
+            if (type === 'year') {
+                return `${value}年`;
+            } else if (type === 'month') {
+                return `${value}月`;
+            }
+            return value;
+        },
+        doSubmit() {
+            console.log(this.payload);
+            let data = this.payload;
+            this.payload.isNowSell.map(item => {
+                if (item.active && item.index === 1) {
+                    data.isNowSell = true;
+                } else {
+                    data.isNowSell = false;
+                }
+            });
+            this.payload.isDiscuss.map(item => {
+                if (item.active && item.index === 1) {
+                    data.isDiscuss = true;
+                } else {
+                    data.isDiscuss = false;
+                }
+            });
+            this.payload.classId = this.payload.goodClass.id;
+            this.payload.userId = this.$store.getters.user.id;
+            console.log(data);
+            addGoodsClass({
+                data,
+                onSuccess: result => {
+                    console.log(result);
+                },
+            });
+        },
+        changePrice(even) {
             console.log(even.target.value);
             this.oldPrice = even.target.value.replace(/[^\d]/g, '');
         },
@@ -334,7 +357,7 @@ export default {
             console.log(this.useTime);
         },
         changeRadio1(index) {
-            this.radioList1.map(item => {
+            this.payload.isNowSell.map(item => {
                 if (item.index === index) {
                     item.active = true;
                 } else {
@@ -343,7 +366,7 @@ export default {
             });
         },
         changeRadio2(index) {
-            this.radioList2.map(item => {
+            this.payload.isDiscuss.map(item => {
                 if (item.index === index) {
                     item.active = true;
                 } else {
@@ -354,38 +377,39 @@ export default {
         showPopup() {
             this.show = true;
         },
-        choiceClass(name) {
-            this.className = name;
+        choiceClass(id, name) {
+            this.payload.goodClass.name = name;
+            this.payload.goodClass.id = id;
             this.show = false;
         },
         deleteImg(index) {
-            this.fileList.map((item, i) => {
+            this.payload.fileList.map((item, i) => {
                 if (item.id === index) {
-                    this.fileList.splice(i, 1);
-                    console.log(this.fileList);
+                    this.payload.fileList.splice(i, 1);
+                    console.log(this.payload.fileList);
                 }
             });
         },
-        afterRead(file) {
-            let param = new FormData();
-            param.append('name', 'wiiiiiinney');
-            //通过append向form对象添加数据
-            param.append('file', file.file);
-            //FormData私有类对象，访问不到，可以通过get判断值是否传进去
-            console.log(file);
-            let config = {
-                //添加请求头
-                headers: { 'Content-Type': 'multipart/form-data' },
-                onUploadProgress: e => {
-                    var completeProgress = (((e.loaded / e.total) * 100) | 0) + '%';
-                    this.progress = completeProgress;
-                },
-            };
+        // afterRead(file) {
+        //     let param = new FormData();
+        //     param.append('name', 'wiiiiiinney');
+        //     //通过append向form对象添加数据
+        //     param.append('file', file.file);
+        //     //FormData私有类对象，访问不到，可以通过get判断值是否传进去
+        //     console.log(file);
+        //     let config = {
+        //         //添加请求头
+        //         headers: { 'Content-Type': 'multipart/form-data' },
+        //         onUploadProgress: e => {
+        //             var completeProgress = (((e.loaded / e.total) * 100) | 0) + '%';
+        //             this.progress = completeProgress;
+        //         },
+        //     };
 
-            axios.post('http://192.168.8.108:20180/ise/upload', param, config).then(res => {
-                console.log('数据保存成功');
-            });
-        },
+        //     axios.post('http://192.168.8.108:20180/ise/upload', param, config).then(res => {
+        //         console.log('数据保存成功');
+        //     });
+        // },
         onClickLeft() {
             Toast('返回');
         },
@@ -434,8 +458,8 @@ export default {
                             console.log(res.data.filePath);
                             let fileObj = {};
                             fileObj.id = new Date().getTime();
-                            fileObj.url = 'http://192.168.8.108:20180/files' + res.data.filePath;
-                            self.fileList.push(fileObj);
+                            fileObj.imgPath = res.data.filePath;
+                            self.payload.fileList.push(fileObj);
                         });
                     };
                 };
@@ -483,6 +507,9 @@ export default {
             this.imgUrl = null;
         },
     },
+    activated() {
+        this.getGoodsClassList();
+    },
 };
 </script>
 
@@ -494,7 +521,10 @@ body {
 
 .onlie-good {
     height: 100vh;
+
     .onlie-good-content {
+        height: 93%;
+        overflow: scroll;
         width: 100vw;
         .content-upload {
             display: flex;
@@ -558,8 +588,8 @@ body {
                     background: rgba(123, 191, 234, 0.2);
                     border-radius: 0.2rem;
                     padding: 0.15rem;
-                    margin-left: 1rem;
                     color: #499df1;
+                    margin-left: 0.5rem;
                 }
                 span:last-child {
                     padding-left: 0.4rem;
@@ -619,7 +649,6 @@ body {
                 }
             }
             .info-bottom {
-                height: 6rem;
                 width: 100%;
                 display: flex;
                 font-size: 0.5rem;
@@ -645,21 +674,37 @@ body {
                         background: rgba(123, 191, 234, 0.5);
                     }
                 }
-                .bottom-right {
-                    width: 50%;
+
+                .bottom-buyTime {
+                    height: 1rem;
+                    line-height: 1rem;
+                    width: 100%;
+                    font-size: 0.38rem;
+                    padding-left: 0.5rem;
+                    span:first-child {
+                        color: #499df1;
+                        margin-right: 0.2rem;
+                        padding: 0.15rem;
+                        background: rgba(123, 191, 234, 0.2);
+                        border-radius: 0.2rem;
+                    }
+                }
+                .bottom-price {
+                    width: 100%;
                     overflow: hidden;
                     height: 1.3rem;
                     line-height: 1.3rem;
                     font-size: 0.38rem;
+                    margin-left: 0.5rem;
                     span:first-child {
                         padding-right: 0.15rem;
                     }
                     input {
                         width: 70%;
                         height: 0.7rem;
-                        border-radius: 0.2rem;
                         border: none;
                         font-size: 0.35rem;
+                        padding-left: 0.2rem;
                     }
                 }
                 .bottom-textArea-title {
@@ -670,6 +715,7 @@ body {
                         font-size: 0.35rem;
                         height: 1.2rem;
                         border: none;
+                        padding-left: 0.2rem;
                     }
                 }
                 .bottom-textArea-detail {
@@ -680,6 +726,7 @@ body {
                         font-size: 0.35rem;
                         height: 2rem;
                         border: none;
+                        padding-left: 0.2rem;
                     }
                 }
             }
