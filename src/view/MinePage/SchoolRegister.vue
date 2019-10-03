@@ -11,7 +11,7 @@
         </div>
         <van-popup
             position="right"
-            :style="{ height: '100%',width:'25%' }"
+            :style="{ height: '100%',width:'60%' }"
             get-container="body"
             v-model="show"
         >
@@ -43,6 +43,7 @@
                         :readonly="payload.isExist"
                         v-model="payload.mobilePhone"
                         placeholder="请输入您的手机号码"
+                        type="number"
                     />
                 </p>
                 <p>
@@ -376,6 +377,11 @@ export default {
                 Toast({ message: '请填写手机号码后再提交', position: 'top' });
                 return;
             }
+            if (this.payload.mobilePhone.indexOf(".") !== -1 || this.payload.mobilePhone.length !==11) {
+                console.log(this.payload.mobilePhone.length)
+                Toast({ message: '手机号码格式有误', position: 'top' });
+                return;
+            }
             if (this.trainAddr.id === null || this.trainAddr.id === undefined) {
                 Toast({ message: '请选择训练场后再提交', position: 'top' });
                 return;
@@ -640,10 +646,10 @@ html {
                 padding: 0;
                 height: 1.4rem;
                 line-height: 1.4rem;
-                text-align: center;
+               
                 span {
                     padding: 0.1rem 0.2rem;
-                    border-bottom: solid 0.03rem #ededed;
+                   
                     color: #499df1;
                 }
             }
