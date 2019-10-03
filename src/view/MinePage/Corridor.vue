@@ -9,11 +9,11 @@
         />
         <div class="corridor-content">
             <header>
-                <span>米格走廊</span>是广西安布雷拉科技有限公司开发一款专门属于大学生使用的公众号，宗旨是为大学生提供
-                更多的资源，更优质的服务，更全面的保障。
+                <span>米格走廊</span>是广西安布雷拉科技有限公司开发一款专门属于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
             </header>
-            <p>目前提供的主要服务有</p>
+            
             <div class="content-function">
+                <p class="fonction-title" >目前提供的主要服务有</p>
                 <p class="fonction-title">驾校报名:</p>
                 <p class="function-detail">
                     为解决现有驾校行业给人混乱的现象，收费不明确，多次收费，教练质量良莠不齐
