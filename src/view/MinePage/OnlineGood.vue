@@ -374,7 +374,7 @@ export default {
             }
             data.classId = this.payload.goodClass.id;
             data.userId = this.$store.getters.user.id;
-
+            data.schoolName = this.$store.getters.user.schoolName;
             addGoodsClass({
                 data,
                 onSuccess: result => {

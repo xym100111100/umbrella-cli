@@ -3,10 +3,9 @@
         <header class="header">
             <van-nav-bar
                 title="需求公告"
-                right-text="发布公告"
                 left-arrow
                 @click-left="$router.go(-1)"
-                @click-right="doNotice"
+                @click-right="myNotice"
             />
         </header>
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -107,8 +106,8 @@ export default {
                 },
             });
         },
-        doNotice() {
-            this.$router.push({ name: 'do-notice' });
+        myNotice() {
+            this.$router.push({ name: 'my-notice' });
         },
 
         onRefresh() {

@@ -25,6 +25,7 @@ const data = {
     sucUserMo: {
         id: "653596523128553475",
         wxName: "umbrella",
+        schoolName:"桂林理工大学",
         wxFacePath: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132",
 
     }

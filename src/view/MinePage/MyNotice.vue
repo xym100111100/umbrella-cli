@@ -1,11 +1,12 @@
 <template>
-    <div class="do-notice">
+    <div class="my-notice">
         <header class="header">
             <van-nav-bar
-                title="发布公告"
+                title="我的公告"
                 left-arrow
                 @click-left="$router.go(-1)"
                 @click-right="onClickRight"
+                 right-text="发布公告"
             />
         </header>
         <div>
@@ -13,10 +14,10 @@
                 color="#1989fa"
                 background="#ecf9ff"
                 left-icon="info-o"
-                text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可在我的公告里面手动更新，且每个人只能有三个公告。"
+                text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可手动更新自动下线时间，且每个人上线下线只能有四个公告。"
             />
         </div>
-        <div class="do-notice-content">
+        <div class="my-notice-content">
             <div class="content-textarea">
                 <textarea v-model="payload.noticeContent" maxlength="100" placeholder="请输入公告内容"></textarea>
             </div>
@@ -78,10 +79,10 @@ body {
     height: 100%;
     width: 100%;
 }
-.do-notice {
+.my-notice {
     height: 100vh;
     overflow: scroll;
-    .do-notice-content {
+    .my-notice-content {
         margin-left: 0.2rem;
         width: 96vw;
         background: rgba(123, 191, 234, 0.2);
