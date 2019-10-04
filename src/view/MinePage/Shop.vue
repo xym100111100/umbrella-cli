@@ -4,7 +4,7 @@
             <van-nav-bar
                 title="我的小店"
                 left-arrow
-                @click-left="$router.go(-1)"
+                @click-left="onClickLeft"
                 @click-right="onlineGood"
                 right-text="发布商品"
             />
@@ -17,7 +17,7 @@
                 />
             </div>
             <div class="title-nav">
-                <template v-for="item in  choiceList ">
+                <template v-for="item in  payload.choiceList ">
                     <div
                         :class="{choice:item.active === true}"
                         @click="changeChoice(item.index)"
@@ -32,27 +32,52 @@
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="handleLoad"
+                :immediate-check="false"
             >
                 <div class="content-item">
-                    <template v-for="item in onlineGoodList">
-                        <div @click="onlineGood" class="item-info" :key="item.id">
+                    <template v-for="item in payload.onlineGoodList">
+                        <div @click="onlineGood(item.id)" class="item-info" :key="item.id">
                             <div class="info-face">
-                                <img :src="item.picPath" />
+                                <img
+                                    :src="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
+                                />
                             </div>
                             <div class="info-bottom">
-                                <div class="good-title">{{item.onlineTitle|filtersTitle}}</div>
+                                <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
                                 <div class="good-down-line-time">
                                     <p>
-                                        <span>下线时间: 2019:08:12</span>
+                                        <span>下线时间: {{item.state?item.aotuDownTime:'已下线'}}</span>
                                     </p>
                                 </div>
                                 <div class="good-price">
-                                    <div class="price">${{item.salePrice}}</div>
-                                    <div class="icon" @click.stop="downLineGood(item.id)">
+                                    <div class="price">￥{{item.newPrice}}</div>
+                                    <div
+                                        v-if="item.state"
+                                        class="icon"
+                                        @click.stop="updateAutoDownTime(item.id)"
+                                    >
                                         <van-icon name="shuaxin" />
                                     </div>
-                                    <div class="icon" @click.stop="downLineGood(item.id)">
+                                    <div
+                                        v-if="!item.state"
+                                        class="icon"
+                                        @click.stop="changeState(item.id,true)"
+                                    >
                                         <van-icon name="shangxian" />
+                                    </div>
+                                    <div
+                                        v-if="!item.state"
+                                        class="icon"
+                                        @click.stop="deleteGood(item.id)"
+                                    >
+                                        <van-icon name="shanchu" />
+                                    </div>
+                                    <div
+                                        v-if="item.state"
+                                        class="icon"
+                                        @click.stop="changeState(item.id,false)"
+                                    >
+                                        <van-icon name="huaban" />
                                     </div>
                                 </div>
                             </div>
@@ -65,12 +90,15 @@
 </template>
 
 <script>
-import { NavBar, List, Cell, NoticeBar, Dialog, Icon } from 'vant';
-import { list as onlineGoods } from '../../svc/onl/OnlOnlinePromo';
+import { NavBar, List, Cell, NoticeBar, Toast, Dialog, Icon } from 'vant';
+import { list as listGoods, deleteGoods } from '../../svc/suc/SucGoods';
+import { modify as modifyGoods } from '../../svc/suc/SucGoods';
+import { formatTime } from '../../util/SysUtils.js';
 
 export default {
     components: {
         [NavBar.name]: NavBar,
+        [Toast.name]: Toast,
         [Dialog.name]: Dialog,
         [List.name]: List,
         [Cell.name]: Cell,
@@ -79,28 +107,30 @@ export default {
     },
     data() {
         return {
-            list: [],
             loading: false,
             finished: false,
-            onlineGoodList: [],
-            choiceList: [
-                {
-                    index: 1,
-                    name: '已上线',
-                    active: true,
-                },
-                {
-                    index: 2,
-                    name: '已下线',
-                    active: false,
-                },
-            ],
+            payload: {
+                onlineGoodList: [],
+                choiceList: [
+                    {
+                        index: 1,
+                        name: '已上线',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        name: '已下线',
+                        active: false,
+                    },
+                ],
+            },
+
             pageNum: 0,
         };
     },
     filters: {
         filtersTitle(data) {
-            if (data.length > 11) {
+            if (data && data.length > 11) {
                 return data.substr(1, 10) + '...';
             }
             return data;
@@ -108,29 +138,101 @@ export default {
     },
     computed: {},
     methods: {
-        downLineGood(id) {
-            console.log(id);
-            Dialog.confirm({
-                title: '提示',
-                message: '确定下线该商品?',
-                closeOnClickOverlay: true,
-            }).then(() => {
-                // on close
+        onClickLeft(){
+            this.$router.push({name:'mine'});
+        },
+        updateAutoDownTime(id) {
+        
+            let sjc = new Date().getTime() + 2073600000;
+            let aotuDownTime = formatTime(sjc, 'Y-M-D');
+            let data = { id: id, aotuDownTime: aotuDownTime };
+            modifyGoods({
+                data,
+                onSuccess: result => {
+                    // 不再查询，从data中更新就行，否则页面不好看
+                    let good = this.payload.onlineGoodList.find(item => item.id === id);
+                    good.aotuDownTime = aotuDownTime;
+                    Toast({
+                        message: '更新自动下线时间成功',
+                        position: 'top',
+                    });
+                },
             });
         },
-        // 获取驾校数据
+        deleteGood(id) {
+            Dialog.confirm({
+                title: '提示',
+                message: '确定删除该商品?',
+                closeOnClickOverlay: true,
+            })
+                .then(() => {
+                    let params = { id: id };
+                    deleteGoods({
+                        params,
+                        onSuccess: result => {
+                            Toast({
+                                message: '删除成功',
+                                position: 'top',
+                            });
+                            this.payload.onlineGoodList.map((item, index) => {
+                                if (item.id === id) {
+                                    this.payload.onlineGoodList.splice(index, 1);
+                                }
+                            });
+                        },
+                    });
+                })
+                .catch(() => {
+                  //  console.log('取消');
+                });
+        },
+        changeState(id, state) {
+            let msg = state === true ? '上线' : '下线';
+            Dialog.confirm({
+                title: '提示',
+                message: '确定'+msg+'该商品?',
+                closeOnClickOverlay: true,
+            })
+                .then(() => {
+                    let data = { id: id, state: state };
+                    modifyGoods({
+                        data,
+                        onSuccess: result => {
+                            Toast({
+                                message: msg+'成功',
+                                position: 'top',
+                            });
+                            this.payload.onlineGoodList.map((item, index) => {
+                                if (item.id === id) {
+                                    this.payload.onlineGoodList.splice(index, 1);
+                                }
+                            });
+                        },
+                    });
+                })
+                .catch(() => {
+                   // console.log('取消');
+                });
+        },
+        // 获取店铺数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
-            onlineGoods({
+            const params = {
+                pageNum: this.pageNum + 1,
+                userId: this.$store.getters.user.id,
+                state: this.payload.choiceList[0].active === true ? true : false,
+            };
+            listGoods({
                 params,
                 onSuccess: data => {
-                    console.log(data);
+                   
                     this.pageNum = data.pageNum;
-                    this.onlineGoodList.push(...data.list);
+                    this.payload.onlineGoodList.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                 },
                 onFinish: () => {
@@ -139,22 +241,43 @@ export default {
                 },
             });
         },
-        onlineGood() {
-            this.$router.push({ name: 'online-good' });
+        onlineGood(id) {
+            let payload = this.payload.onlineGoodList.find(item => item.id === id);
+            this.$router.push({ name: 'online-good', params: { payload: payload } });
         },
         changeChoice(index) {
-            this.choiceList.map(item => {
+            this.payload.choiceList.map(item => {
                 if (item.index === index) {
                     item.active = true;
                 } else {
                     item.active = false;
                 }
             });
-            this.finished = false;
-            this.onlineGoodList = [];
+            this.payload.onlineGoodList = [];
             this.pageNum = 0;
             this.handleLoad();
         },
+    },
+    activated() {
+        if (this.$route.params.load) {
+            this.pageNum = 0;
+            this.payload = {
+                onlineGoodList: [],
+                choiceList: [
+                    {
+                        index: 1,
+                        name: '已上线',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        name: '已下线',
+                        active: false,
+                    },
+                ],
+            };
+            this.handleLoad();
+        }
     },
 };
 </script>
@@ -235,7 +358,7 @@ body {
                         display: flex;
                         justify-content: space-between;
                         padding-top: 0.15rem;
-                       
+
                         .price {
                             margin-top: 0.3rem;
                             color: #7bbfea;

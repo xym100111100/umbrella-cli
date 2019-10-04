@@ -3,9 +3,7 @@
         <header>
             <div class="user-header">
                 <div class="header-face">
-                    <img
-                        :src="userInfo.wxFacePath"
-                    />
+                    <img :src="userInfo.wxFacePath" />
                 </div>
                 <div class="header-name">
                     <span>{{userInfo.wxName}}</span>
@@ -18,8 +16,12 @@
                 MyIcon="shouye"
                 content="我的大学"
                 :goPath="()=>this.$router.push({name:'school'})"
-            /> -->
-            <DyCell MyIcon="shouye2" content="我的店铺" :goPath="()=>this.$router.push({name:'shop'})" />
+            />-->
+            <DyCell
+                MyIcon="shouye2"
+                content="我的店铺"
+                :goPath="()=>this.$router.push({name:'shop', params: { load:true, }})"
+            />
             <DyCell
                 MyIcon="fabuxuqiu"
                 content="需求公告"

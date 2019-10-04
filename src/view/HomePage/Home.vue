@@ -24,11 +24,11 @@
                                         </p>
                                         <p>
                                             <span>不可议价</span>
-                                            <span>原价: ${{item.salePrice}}</span>
+                                            <span>原价: ￥{{item.salePrice}}</span>
                                         </p>
                                     </div>
                                     <div class="good-price">
-                                        <div class="price">${{item.salePrice}}</div>
+                                        <div class="price">￥{{item.salePrice}}</div>
                                         <div class="icon" @click.stop="addToLove">
                                             <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                                         </div>

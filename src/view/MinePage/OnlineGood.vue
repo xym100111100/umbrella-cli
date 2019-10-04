@@ -240,6 +240,7 @@ export default {
     data() {
         return {
             payload: {
+                id: null,
                 goodClass: {
                     name: '未选择',
                     id: null,
@@ -253,12 +254,12 @@ export default {
                 isNowSell: [
                     {
                         index: 1,
-                        value: '即时出售',
+                        value: '即时交易',
                         active: true,
                     },
                     {
                         index: 2,
-                        value: '议时出售',
+                        value: '议时交易',
                         active: false,
                     },
                 ],
@@ -321,29 +322,55 @@ export default {
             return value;
         },
         doSubmit() {
-            console.log(this.payload);
+            // 校验参数
             let data = this.payload;
-            this.payload.isNowSell.map(item => {
-                if (item.active && item.index === 1) {
-                    data.isNowSell = true;
-                } else {
-                    data.isNowSell = false;
-                }
-            });
-            this.payload.isDiscuss.map(item => {
-                if (item.active && item.index === 1) {
-                    data.isDiscuss = true;
-                } else {
-                    data.isDiscuss = false;
-                }
-            });
-            this.payload.classId = this.payload.goodClass.id;
-            this.payload.userId = this.$store.getters.user.id;
-            console.log(data);
+            console.log(this.payload);
+            if (data.fileList.length < 1) {
+                Toast('请上传商品图片');
+                return;
+            }
+            if (data.buyTime === '未选择') {
+                Toast('请选择购买时间');
+                return;
+            }
+            if (data.goodClass.id === null) {
+                Toast('请选择分类');
+                return;
+            }
+            if (data.oldPrice === '' || data.oldPrice.length > 4) {
+                Toast('输入原价且只能输入到千位');
+                return;
+            }
+            if (data.newPrice === '' || data.newPrice.length > 4) {
+                Toast('输入现价且只能输入到千位');
+                return;
+            }
+            if (data.goodTitle.trim() === '') {
+                Toast('请输入商品标题');
+                return;
+            }
+            if (data.goodDetail.trim() === '') {
+                Toast('请输入详情');
+                return;
+            }
+
+            if (data.isNowSell[0].active) {
+                data.isNowSell = true;
+            } else {
+                data.isNowSell = false;
+            }
+            if (data.isDiscuss[0].active) {
+                data.isDiscuss = true;
+            } else {
+                data.isDiscuss = false;
+            }
+            data.classId = this.payload.goodClass.id;
+            data.userId = this.$store.getters.user.id;
+
             addGoodsClass({
                 data,
                 onSuccess: result => {
-                    console.log(result);
+                    this.$router.push({ name: 'shop', params: { load: true } });
                 },
             });
         },
@@ -410,9 +437,6 @@ export default {
         //         console.log('数据保存成功');
         //     });
         // },
-        onClickLeft() {
-            Toast('返回');
-        },
         onClickRight() {
             this.$router.push({ name: 'school' });
         },
@@ -509,6 +533,110 @@ export default {
     },
     activated() {
         this.getGoodsClassList();
+        if (this.$route.params.payload !== undefined) {
+            // 构造回显参数。
+            let data = this.$route.params.payload;
+            data.goodClass = {
+                id: data.classId,
+                name: data.className,
+            };
+            if (data.isNowSell) {
+                data.isNowSell = [
+                    {
+                        index: 1,
+                        value: '即时交易',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '议时交易',
+                        active: false,
+                    },
+                ];
+            } else {
+                data.isNowSell = [
+                    {
+                        index: 1,
+                        value: '即时交易',
+                        active: false,
+                    },
+                    {
+                        index: 2,
+                        value: '议时交易',
+                        active: true,
+                    },
+                ];
+            }
+            if (data.isDiscuss) {
+                data.isDiscuss = [
+                    {
+                        index: 1,
+                        value: '可议价',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '不可议价',
+                        active: false,
+                    },
+                ];
+            } else {
+                data.isDiscuss = [
+                    {
+                        index: 1,
+                        value: '可议价',
+                        active: false,
+                    },
+                    {
+                        index: 2,
+                        value: '不可议价',
+                        active: true,
+                    },
+                ];
+            }
+            this.payload = data;
+        } else {
+            this.payload = {
+                id: null,
+                goodClass: {
+                    name: '未选择',
+                    id: null,
+                },
+                oldPrice: '',
+                newPrice: '',
+                goodTitle: '',
+                goodDetail: '',
+                buyTime: '未选择',
+                priceDay: 1,
+                isNowSell: [
+                    {
+                        index: 1,
+                        value: '即时交易',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '议时交易',
+                        active: false,
+                    },
+                ],
+                isDiscuss: [
+                    {
+                        index: 1,
+                        value: '可议价',
+                        active: true,
+                    },
+                    {
+                        index: 2,
+                        value: '不可议价',
+                        active: false,
+                    },
+                ],
+                goodType: 0,
+                fileList: [],
+            };
+            console.log(this.payload);
+        }
     },
 };
 </script>
