@@ -53,7 +53,10 @@
                                     </p>
                                 </div>
                                 <div class="good-price">
-                                    <div class="price">￥{{item.newPrice}}</div>
+                                    <div class="price">
+                                        <span v-if="item.goodType === 0" >￥{{item.newPrice}}</span>
+                                         <span v-if="item.goodType === 1" >￥{{item.priceDay}}/天</span>
+                                    </div>
                                     <div
                                         v-if="item.state"
                                         class="icon"
@@ -139,7 +142,7 @@ export default {
             return data;
         },
         filtersTime(str){
-            console.log(str);
+            
             return str.split(" ")[0];
         }
     },
@@ -249,7 +252,6 @@ export default {
             });
         },
         onlineGood(id) {
-            console.log(this.goodsCount);
             if (this.goodsCount >= 4) {
                 Toast({
                     message: '商品已超过四个，不能再继续上线。',
