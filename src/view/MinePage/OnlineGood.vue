@@ -329,22 +329,30 @@ export default {
                 Toast('请上传商品图片');
                 return;
             }
-            if (data.buyTime === '未选择') {
-                Toast('请选择购买时间');
-                return;
-            }
             if (data.goodClass.id === null) {
                 Toast('请选择分类');
                 return;
             }
-            if (data.oldPrice === '' || data.oldPrice.length > 4) {
-                Toast('输入原价且只能输入到千位');
-                return;
+            // 是出售的商品才判断这几个
+            if (data.goodType === 0) {
+                if (data.buyTime === '未选择') {
+                    Toast('请选择购买时间');
+                    return;
+                }
+                let reg = new RegExp('^[0-9]*$');
+                if (!reg.test(data.oldPrice) || data.oldPrice === '' || data.oldPrice.length > 4) {
+                    Toast('输入原价且只能输入到千位');
+                    return;
+                }
+                if (!reg.test(data.newPrice) || data.newPrice === '' || data.newPrice.length > 4) {
+                    Toast('输入现价且只能输入到千位');
+                    return;
+                }
+                data.buyTime = data.buyTime + ' 00:00:00';
+            }else{
+                data.buyTime = null;
             }
-            if (data.newPrice === '' || data.newPrice.length > 4) {
-                Toast('输入现价且只能输入到千位');
-                return;
-            }
+
             if (data.goodTitle.trim() === '') {
                 Toast('请输入商品标题');
                 return;
@@ -379,9 +387,9 @@ export default {
             this.oldPrice = even.target.value.replace(/[^\d]/g, '');
         },
         changeUseTime(count) {
-            if ((this.useTime === 1 && count === -1) || (this.useTime === 99 && count === 1)) return;
-            this.useTime += count;
-            console.log(this.useTime);
+            if ((this.payload.priceDay === 1 && count === -1) || (this.payload.priceDay === 99 && count === 1)) return;
+            this.payload.priceDay += count;
+            console.log(this.payload.priceDay);
         },
         changeRadio1(index) {
             this.payload.isNowSell.map(item => {

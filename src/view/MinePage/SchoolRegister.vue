@@ -40,10 +40,11 @@
                 <p>
                     <span>手机号码</span>
                     <input
+                        type="number"
                         :readonly="payload.isExist"
                         v-model="payload.mobilePhone"
                         placeholder="请输入您的手机号码"
-                        type="number"
+                        
                     />
                 </p>
                 <p>
@@ -313,7 +314,7 @@ export default {
             getOne({
                 params,
                 onSuccess: data => {
-                    if ( data.id !== undefined && data.id !== null ) {
+                    if (data.id !== undefined && data.id !== null) {
                         this.payload.userName = data.userName;
                         this.payload.mobilePhone = data.mobilePhone;
                         this.payload.isExist = true;
@@ -352,10 +353,10 @@ export default {
                             rate: 0,
                         };
                         this.buttonItem.map(item => {
-                                item.isFinish = false;
-                                if (item.index === 1) item.name = '报名';
-                                if (item.index === 2) item.name = '上传';
-                                if (item.index === 4) item.name = '评价';
+                            item.isFinish = false;
+                            if (item.index === 1) item.name = '报名';
+                            if (item.index === 2) item.name = '上传';
+                            if (item.index === 4) item.name = '评价';
                         });
                         this.filedata.url = '';
                     }
@@ -377,8 +378,9 @@ export default {
                 Toast({ message: '请填写手机号码后再提交', position: 'top' });
                 return;
             }
-            if (this.payload.mobilePhone.indexOf(".") !== -1 || this.payload.mobilePhone.length !==11) {
-                console.log(this.payload.mobilePhone.length)
+            let reg = new  RegExp("^[0-9]*$");
+            if (!reg.test(this.payload.mobilePhone) || this.payload.mobilePhone.length !== 11) {
+                console.log(this.payload.mobilePhone.length);
                 Toast({ message: '手机号码格式有误', position: 'top' });
                 return;
             }
@@ -646,10 +648,10 @@ html {
                 padding: 0;
                 height: 1.4rem;
                 line-height: 1.4rem;
-               
+
                 span {
                     padding: 0.1rem 0.2rem;
-                   
+
                     color: #499df1;
                 }
             }

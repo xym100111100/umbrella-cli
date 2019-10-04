@@ -46,7 +46,10 @@
                                 <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
                                 <div class="good-down-line-time">
                                     <p>
-                                        <span>下线时间: {{item.state?item.aotuDownTime:'已下线'}}</span>
+                                        <span>下线时间: 
+                                            <span v-if="item.state" > {{item.aotuDownTime|filtersTime}}</span>
+                                             <span v-if="!item.state" >已下线</span>
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="good-price">
@@ -91,8 +94,8 @@
 
 <script>
 import { NavBar, List, Cell, NoticeBar, Toast, Dialog, Icon } from 'vant';
-import { list as listGoods, deleteGoods } from '../../svc/suc/SucGoods';
-import { modify as modifyGoods } from '../../svc/suc/SucGoods';
+import { modify as modifyGoods, list as listGoods, deleteGoods, goodsCountByUserId } from '../../svc/suc/SucGoods';
+
 import { formatTime } from '../../util/SysUtils.js';
 
 export default {
@@ -124,7 +127,7 @@ export default {
                     },
                 ],
             },
-
+            goodsCount: 0,
             pageNum: 0,
         };
     },
@@ -135,16 +138,19 @@ export default {
             }
             return data;
         },
+        filtersTime(str){
+            console.log(str);
+            return str.split(" ")[0];
+        }
     },
     computed: {},
     methods: {
-        onClickLeft(){
-            this.$router.push({name:'mine'});
+        onClickLeft() {
+            this.$router.push({ name: 'mine' });
         },
         updateAutoDownTime(id) {
-        
-            let sjc = new Date().getTime() + 2073600000;
-            let aotuDownTime = formatTime(sjc, 'Y-M-D');
+            let sjc = new Date().getTime() + 1209600000;
+            let aotuDownTime = formatTime(sjc, 'Y-M-D h:m:s');
             let data = { id: id, aotuDownTime: aotuDownTime };
             modifyGoods({
                 data,
@@ -174,6 +180,8 @@ export default {
                                 message: '删除成功',
                                 position: 'top',
                             });
+                            // 将商品数量减一，以免删除后还是不能上线
+                            this.goodsCount = this.goodsCount - 1;
                             this.payload.onlineGoodList.map((item, index) => {
                                 if (item.id === id) {
                                     this.payload.onlineGoodList.splice(index, 1);
@@ -183,14 +191,14 @@ export default {
                     });
                 })
                 .catch(() => {
-                  //  console.log('取消');
+                    //  console.log('取消');
                 });
         },
         changeState(id, state) {
             let msg = state === true ? '上线' : '下线';
             Dialog.confirm({
                 title: '提示',
-                message: '确定'+msg+'该商品?',
+                message: '确定' + msg + '该商品?',
                 closeOnClickOverlay: true,
             })
                 .then(() => {
@@ -199,7 +207,7 @@ export default {
                         data,
                         onSuccess: result => {
                             Toast({
-                                message: msg+'成功',
+                                message: msg + '成功',
                                 position: 'top',
                             });
                             this.payload.onlineGoodList.map((item, index) => {
@@ -211,7 +219,7 @@ export default {
                     });
                 })
                 .catch(() => {
-                   // console.log('取消');
+                    // console.log('取消');
                 });
         },
         // 获取店铺数据
@@ -224,7 +232,6 @@ export default {
             listGoods({
                 params,
                 onSuccess: data => {
-                   
                     this.pageNum = data.pageNum;
                     this.payload.onlineGoodList.push(...data.list);
                     // 如果是最后一页
@@ -242,6 +249,14 @@ export default {
             });
         },
         onlineGood(id) {
+            console.log(this.goodsCount);
+            if (this.goodsCount >= 4) {
+                Toast({
+                    message: '商品已超过四个，不能再继续上线。',
+                    position: 'top',
+                });
+                return;
+            }
             let payload = this.payload.onlineGoodList.find(item => item.id === id);
             this.$router.push({ name: 'online-good', params: { payload: payload } });
         },
@@ -257,8 +272,20 @@ export default {
             this.pageNum = 0;
             this.handleLoad();
         },
+        getGoodsCount() {
+            const params = {
+                userId: this.$store.getters.user.id,
+            };
+            goodsCountByUserId({
+                params,
+                onSuccess: data => {
+                    this.goodsCount = data.length;
+                },
+            });
+        },
     },
     activated() {
+        this.getGoodsCount();
         if (this.$route.params.load) {
             this.pageNum = 0;
             this.payload = {

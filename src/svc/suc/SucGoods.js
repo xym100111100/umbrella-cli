@@ -37,3 +37,17 @@ export function deleteGoods(options) {
               const newOptions = { ...defaultOptions, ...options };
               return del(`/suc-svr/suc/goods`, newOptions);
 }
+
+/**
+ * 这里使用的是list不分页的方法，但是这里名字
+ * 是获取商品数量，其实是为了省事的写法
+ * @param {} options 
+ */
+export function goodsCountByUserId(options) {
+              // 初始化options
+              const defaultOptions = {
+                            type: 'GET', // 请求的方法类型(GET/POST/PUT/DELETE)，默认为GET
+              };
+              const newOptions = { ...defaultOptions, ...options };
+              return get(`/suc-svr/suc/goods/list-goods`, newOptions);
+}
