@@ -222,7 +222,7 @@
 import { NavBar, NoticeBar, Stepper, Tab, Tabs, DatetimePicker, Popup, Icon, Toast, Uploader } from 'vant';
 import axios from 'axios';
 import { list as goodsClassList } from '../../svc/suc/SucGoodsClass';
-import { add as addGoodsClass } from '../../svc/suc/SucGoods';
+import { add as addGoods, modify } from '../../svc/suc/SucGoods';
 
 export default {
     components: {
@@ -335,7 +335,7 @@ export default {
             }
             // 是出售的商品才判断这几个
             if (data.goodType === 0) {
-                if (data.buyTime === '未选择') {
+                if (data.buyTime === '未选择'  || data.buyTime === null || data.buyTime === undefined) {
                     Toast('请选择购买时间');
                     return;
                 }
@@ -348,8 +348,9 @@ export default {
                     Toast('输入现价且只能输入到千位');
                     return;
                 }
+                
                 data.buyTime = data.buyTime + ' 00:00:00';
-            }else{
+            } else {
                 data.buyTime = null;
             }
 
@@ -375,12 +376,21 @@ export default {
             data.classId = this.payload.goodClass.id;
             data.userId = this.$store.getters.user.id;
             data.schoolName = this.$store.getters.user.schoolName;
-            addGoodsClass({
-                data,
-                onSuccess: result => {
-                    this.$router.push({ name: 'shop', params: { load: true } });
-                },
-            });
+            if (data.id === null) {
+                addGoods({
+                    data,
+                    onSuccess: result => {
+                        this.$router.push({ name: 'shop', params: { load: true } });
+                    },
+                });
+            } else {
+                modify({
+                    data,
+                    onSuccess: result => {
+                        this.$router.push({ name: 'shop', params: { load: true } });
+                    },
+                });
+            }
         },
         changePrice(even) {
             console.log(even.target.value);
