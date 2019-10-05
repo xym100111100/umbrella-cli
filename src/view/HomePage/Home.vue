@@ -67,7 +67,7 @@
 import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
 import { list as listOnlOnlinePromo } from '../../svc/suc/SucGoods';
 import { login } from '../../svc/suc/User';
-import { add as addLove } from '../../svc/suc/SucLove';
+import { add as addLove, loveCount } from '../../svc/suc/SucLove';
 
 export default {
     components: {
@@ -166,6 +166,7 @@ export default {
                 data,
                 onSuccess: data => {
                     this.$store.dispatch('setUser', data.sucUserMo);
+                    this.getLoveCount();
                     if (data.newUser) {
                         this.$router.push({ name: 'school' });
                     } else {
@@ -176,6 +177,19 @@ export default {
                     //console.log(code);
                     //  console.log('请求失败');
                     // done();
+                },
+            });
+        },
+        getLoveCount() {
+            let params = { userId: this.$store.getters.user.id };
+            loveCount({
+                params,
+                onSuccess: result => {
+                    this.$store.getters.active.loveCount = result;
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
                 },
             });
         },
@@ -223,10 +237,7 @@ export default {
                 },
             });
         },
-        onClickRight() {},
-        showPopup() {
-            this.show = true;
-        },
+
         onRefresh() {
             const params = { pageNum: 0 };
             this.goods = [];
@@ -236,9 +247,11 @@ export default {
                     this.pageNum = data.pageNum;
                     this.goods.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                     this.$toast('刷新成功');
                     this.isLoading = false;
@@ -289,10 +302,10 @@ export default {
                         p {
                             padding: 0;
                             margin: 0;
-                            margin-top: 0.1rem;
+                            margin-top: 0.15rem;
                             span {
                                 padding: 0.07rem;
-                                margin-right: 0.15rem;
+                                margin: 0.15rem 0.1rem;
                                 background: rgba(123, 191, 234, 0.2);
                                 color: #7bbfea;
                             }
