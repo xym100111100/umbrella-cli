@@ -49,7 +49,7 @@
                                             v-if="item.goodType === 1"
                                             class="price"
                                         >￥{{item.priceDay}}/天</div>
-                                        <div class="icon" @click.stop="addToLove">
+                                        <div class="icon" @click.stop="addToLove(item.id)">
                                             <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                                         </div>
                                     </div>
@@ -67,6 +67,7 @@
 import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
 import { list as listOnlOnlinePromo } from '../../svc/suc/SucGoods';
 import { login } from '../../svc/suc/User';
+import { add as addLove } from '../../svc/suc/SucLove';
 
 export default {
     components: {
@@ -95,7 +96,7 @@ export default {
         document.getElementById('home').scrollTop = this.scroll;
         if (openid && this.$store.getters.user.id === undefined) {
             this.userLogin();
-        } 
+        }
     },
     mounted() {
         let openid = this.$route.query.openid;
@@ -178,8 +179,20 @@ export default {
                 },
             });
         },
-        addToLove() {
-            this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
+        addToLove(id) {
+            let data = {
+                userId: this.$store.getters.user.id,
+                goodsId: id,
+            };
+            addLove({
+                data,
+                onSuccess: result => {
+                    Toast({ message: '收藏成功', position: 'top' });
+                    if (result.result === 1 && result.msg !== '已有商品') {
+                        this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
+                    }
+                },
+            });
         },
         moving(e) {
             this.scroll = e.target.scrollTop;
@@ -189,7 +202,7 @@ export default {
         },
         // 获取商品数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
+            const params = { pageNum: this.pageNum + 1, state: true, schoolName: this.$store.getters.user.schoolName };
             listOnlOnlinePromo({
                 params,
                 onSuccess: data => {
@@ -294,7 +307,8 @@ export default {
                             color: #7bbfea;
                             padding-left: 0.2rem;
                         }
-                        .icon {
+                        .icon:active {
+                            background: rgba(123, 191, 234, 0.2);
                         }
                     }
                 }

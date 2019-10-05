@@ -13,8 +13,8 @@ const state = {
   user: {}, // 存储用户信息,可以一开始就在app.vue里面设置默认值
   targetUser: {},
   active:{
-    msgCount:5,
-    loveCount:6
+    msgCount:0,
+    loveCount:0
   },
 };
 
