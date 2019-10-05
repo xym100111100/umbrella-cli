@@ -6,27 +6,40 @@
         </div>
         <div class="goods-detial-main">
             <van-swipe class="goods-detial-swipe" :autoplay="5000">
-                <van-swipe-item v-for="thumb in goodsThumb" :key="thumb">
-                    <img :src="thumb" />
+                <van-swipe-item v-for="item in payload.fileList" :key="item.id">
+                    <img :src="'http://192.168.8.108:20180/files'+item.imgPath" />
                 </van-swipe-item>
             </van-swipe>
 
             <van-cell-group>
                 <van-cell>
                     <div class="goods-detial-info">
-                        <div class="info-title">{{ goodsData.title }}</div>
+                        <div class="info-title">{{ payload.goodTitle }}</div>
                         <div class="info-list">
-                            <div class="list-left">
+                            <div v-if="payload.goodType === 0" class="list-left">
                                 <p>
-                                    <span>即时出售</span>
-                                    <span>已用5年</span>
+                                    <span v-if="payload.isNowSell" >即时出售</span>
+                                    <span v-if="!payload.isNowSell" >议时出售</span>
+                                    <span v-if="!payload.isDiscuss" >可议价</span>
+                                    <span v-if="payload.isDiscuss" >不可议价</span>
                                 </p>
                                 <p>
-                                    <span>不可议价</span>
-                                    <span>原价: $165</span>
+                                    <span>已用5年</span>
+                                    <span>原价:￥ 165</span>
                                 </p>
                             </div>
-                            <div class="list-right" @click="contact(1,'小明同学')">
+                            <div v-if="payload.goodType === 1" class="list-left">
+                                <p>
+                                    <span v-if="payload.isNowSell">即时出租</span>
+                                    <span v-if="!payload.isNowSell">议时出租</span>
+                                    <span v-if="!payload.isDiscuss">可议价</span>
+                                    <span v-if="payload.isDiscuss">不可议价</span>
+                                </p>
+                                <p>
+                                    <span>原价:￥ 165</span>
+                                </p>
+                            </div>
+                            <div class="list-right" @click="contact(payload.id,payload.userName)">
                                 <van-icon color="rgb(186, 191, 202)" size=".7rem" name="liaotian" />
                             </div>
                         </div>
@@ -34,7 +47,7 @@
                 </van-cell>
                 <van-cell>
                     <template>
-                        <div>{{goodsData.detail}}</div>
+                        <div>{{payload.goodDetail}}</div>
                     </template>
                 </van-cell>
             </van-cell-group>
@@ -59,13 +72,22 @@ export default {
     },
     data() {
         return {
-            goodsData: {},
-            // 轮播图
-            goodsThumb: [],
+            payload: {
+                goodTitle: '',
+                // 轮播图
+                goodDetail: '',
+                fileList: [],
+                isNowSell:false,
+                isDiscuss:false,
+                goodType:0,
+            },
         };
     },
     activated() {
-        this.getGoods();
+        if (this.$route.params.payload !== undefined) {
+            console.log(this.$route.params.payload);
+            this.payload = this.$route.params.payload;
+        } 
     },
     created() {},
     methods: {
@@ -75,23 +97,6 @@ export default {
         },
         contact(id, name) {
             this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
-        },
-        /**
-         * 获取商品信息
-         */
-        getGoods() {
-            goodsList({
-                onSuccess: data => {
-                    this.goodsData = data;
-                    this.goodsThumb = data.thumb;
-                    // 数据全部加载完成
-                    this.finished = true;
-                },
-                onFinish: () => {
-                    // 结束加载状态
-                    this.loading = false;
-                },
-            });
         },
     },
 };

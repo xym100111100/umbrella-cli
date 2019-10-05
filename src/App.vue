@@ -14,11 +14,11 @@ export default {
         };
     },
     created() {
-        const user = {
-            name: '小明同学',
-            id: 1,
-        };
-        this.$store.dispatch('setUser', user);
+        // const user = {
+        //     name: '小明同学',
+        //     id: 1,
+        // };
+        // this.$store.dispatch('setUser', user);
     },
     // 接着在父组件内
     // watch $route 决定使用哪种过渡

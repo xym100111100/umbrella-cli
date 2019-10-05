@@ -11,24 +11,44 @@
                 >
                     <div class="content-list">
                         <div v-for="item in goods" :key="item.id">
-                            <div @click="contact" class="list-item">
+                            <div @click="contact(item)" class="list-item">
                                 <div class="item-top">
-                                    <img :src="item.picPath" />
+                                    <img
+                                        :src="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
+                                    />
                                 </div>
                                 <div class="item-bottom">
-                                    <div class="good-title">{{item.onlineTitle|filtersTitle}}</div>
-                                    <div class="good-spec">
+                                    <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
+
+                                    <div v-if="item.goodType === 0" class="good-spec">
                                         <p>
-                                            <span>即时出售</span>
-                                            <span>已用5年</span>
+                                            <span v-if="item.isNowSell">即时出售</span>
+                                            <span v-if="!item.isNowSell">议时出售</span>
+                                            <span>{{item.buyTime|filtersBuyTime}}</span>
                                         </p>
                                         <p>
-                                            <span>不可议价</span>
-                                            <span>原价: ￥{{item.salePrice}}</span>
+                                            <span v-if="item.isDiscuss">可议价</span>
+                                            <span v-if="!item.isDiscuss">不可议价</span>
+                                            <span>原价: ￥{{item.oldPrice}}</span>
+                                        </p>
+                                    </div>
+                                    <div v-if="item.goodType === 1" class="good-spec">
+                                        <p>
+                                            <span v-if="item.isNowSell">即时出租</span>
+                                            <span v-if="!item.isNowSell">议时出租</span>
+                                            <span v-if="item.isDiscuss">可议价</span>
+                                            <span v-if="!item.isDiscuss">不可议价</span>
                                         </p>
                                     </div>
                                     <div class="good-price">
-                                        <div class="price">￥{{item.salePrice}}</div>
+                                        <div
+                                            v-if="item.goodType === 0"
+                                            class="price"
+                                        >￥{{item.newPrice}}</div>
+                                        <div
+                                            v-if="item.goodType === 1"
+                                            class="price"
+                                        >￥{{item.priceDay}}/天</div>
                                         <div class="icon" @click.stop="addToLove">
                                             <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
                                         </div>
@@ -45,7 +65,7 @@
 
 <script>
 import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'vant';
-import { list as listOnlOnlinePromo } from '../../svc/onl/OnlOnlinePromo';
+import { list as listOnlOnlinePromo } from '../../svc/suc/SucGoods';
 import { login } from '../../svc/suc/User';
 
 export default {
@@ -71,23 +91,16 @@ export default {
         };
     },
     activated() {
-        console.log('activated');
         let openid = this.$route.query.openid;
-        console.log(openid);
         document.getElementById('home').scrollTop = this.scroll;
-        if (openid) {
+        if (openid && this.$store.getters.user.id === undefined) {
             this.userLogin();
-        } else {
-            this.handleLoad();
-        }
-    },
-    created() {
-        console.log('created');
+        } 
     },
     mounted() {
-        console.log('mounted');
         let openid = this.$route.query.openid;
         if (!openid) {
+            this.goods = [];
             this.pageNum = 0;
             this.handleLoad();
         }
@@ -99,9 +112,43 @@ export default {
             }
             return data;
         },
+        filtersBuyTime(date) {
+            let endTime = parseInt(new Date().getTime() / 1000) - new Date(date).getTime() / 1000;
+            let timeDay = parseInt(endTime / 60 / 60 / 24); //相差天数
+            // 先判断是否大于一年
+            if (timeDay >= 360) {
+                // 计算年
+                let year = parseInt(timeDay / 360);
+
+                if (timeDay % 360 < 30) {
+                    return '已用' + year + '年';
+                } else {
+                    // 计算月
+                    let month = parseInt((timeDay % 360) / 30);
+                    return '已用' + year + '年' + month + '月';
+                }
+            } else {
+                if (timeDay >= 30) {
+                    //计算月
+                    let month = parseInt(timeDay / 30);
+                    if (timeDay % 30 === 0) {
+                        return '已用' + month + '月';
+                    } else {
+                        let day = timeDay % 30;
+                        return '已用' + month + '月' + day + '天';
+                    }
+                } else {
+                    if (timeDay > 1) {
+                        // 计算天
+                        return '已用' + timeDay + '天';
+                    } else {
+                        return '已用1天';
+                    }
+                }
+            }
+        },
     },
     beforeRouteEnter(to, from, next) {
-        console.log('路由进入');
         next();
     },
     methods: {
@@ -117,31 +164,28 @@ export default {
             login({
                 data,
                 onSuccess: data => {
-                    console.log(data);
                     this.$store.dispatch('setUser', data.sucUserMo);
                     if (data.newUser) {
                         this.$router.push({ name: 'school' });
                     } else {
-
                         this.handleLoad();
                     }
                 },
                 onFail: (code, msg) => {
-                    console.log(code);
-                    console.log('请求失败');
+                    //console.log(code);
+                    //  console.log('请求失败');
                     // done();
                 },
             });
         },
         addToLove() {
-           
             this.$store.getters.active.loveCount = this.$store.getters.active.loveCount + 1;
         },
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        contact() {
-            this.$router.push({ name: 'goods-detail' });
+        contact(item) {
+            this.$router.push({ name: 'goods-detail', params: { payload: item } });
         },
         // 获取商品数据
         handleLoad() {
@@ -152,9 +196,11 @@ export default {
                     this.pageNum = data.pageNum;
                     this.goods.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                 },
 
@@ -170,6 +216,7 @@ export default {
         },
         onRefresh() {
             const params = { pageNum: 0 };
+            this.goods = [];
             listOnlOnlinePromo({
                 params,
                 onSuccess: data => {

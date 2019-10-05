@@ -10,7 +10,7 @@ const types = {
 
 const state = {
   // 需要维护的状态
-  user: {}, // 存储用户信息
+  user: {}, // 存储用户信息,可以一开始就在app.vue里面设置默认值
   targetUser: {},
   active:{
     msgCount:5,
