@@ -18,14 +18,14 @@
                         <div class="info-list">
                             <div v-if="payload.goodType === 0" class="list-left">
                                 <p>
-                                    <span v-if="payload.isNowSell" >即时出售</span>
-                                    <span v-if="!payload.isNowSell" >议时出售</span>
-                                    <span v-if="!payload.isDiscuss" >可议价</span>
-                                    <span v-if="payload.isDiscuss" >不可议价</span>
+                                    <span v-if="payload.isNowSell">即时出售</span>
+                                    <span v-if="!payload.isNowSell">议时出售</span>
+                                    <span v-if="!payload.isDiscuss">可议价</span>
+                                    <span v-if="payload.isDiscuss">不可议价</span>
                                 </p>
                                 <p>
-                                    <span>已用5年</span>
-                                    <span>原价:￥ 165</span>
+                                    <span>{{payload.buyTime|filtersBuyTime}}</span>
+                                    <span>原价:￥{{payload.oldPrice}}</span>
                                 </p>
                             </div>
                             <div v-if="payload.goodType === 1" class="list-left">
@@ -34,9 +34,6 @@
                                     <span v-if="!payload.isNowSell">议时出租</span>
                                     <span v-if="!payload.isDiscuss">可议价</span>
                                     <span v-if="payload.isDiscuss">不可议价</span>
-                                </p>
-                                <p>
-                                    <span>原价:￥ 165</span>
                                 </p>
                             </div>
                             <div class="list-right" @click="contact(payload.id,payload.userName)">
@@ -77,17 +74,53 @@ export default {
                 // 轮播图
                 goodDetail: '',
                 fileList: [],
-                isNowSell:false,
-                isDiscuss:false,
-                goodType:0,
+                isNowSell: false,
+                isDiscuss: false,
+                goodType: 0,
             },
         };
     },
     activated() {
         if (this.$route.params.payload !== undefined) {
-            console.log(this.$route.params.payload);
             this.payload = this.$route.params.payload;
-        } 
+        }
+    },
+    filters: {
+        filtersBuyTime(date) {
+            let endTime = parseInt(new Date().getTime() / 1000) - new Date(date).getTime() / 1000;
+            let timeDay = parseInt(endTime / 60 / 60 / 24); //相差天数
+            // 先判断是否大于一年
+            if (timeDay >= 360) {
+                // 计算年
+                let year = parseInt(timeDay / 360);
+
+                if (timeDay % 360 < 30) {
+                    return '已用' + year + '年';
+                } else {
+                    // 计算月
+                    let month = parseInt((timeDay % 360) / 30);
+                    return '已用' + year + '年' + month + '月';
+                }
+            } else {
+                if (timeDay >= 30) {
+                    //计算月
+                    let month = parseInt(timeDay / 30);
+                    if (timeDay % 30 === 0) {
+                        return '已用' + month + '月';
+                    } else {
+                        let day = timeDay % 30;
+                        return '已用' + month + '月' + day + '天';
+                    }
+                } else {
+                    if (timeDay > 1) {
+                        // 计算天
+                        return '已用' + timeDay + '天';
+                    } else {
+                        return '已用1天';
+                    }
+                }
+            }
+        },
     },
     created() {},
     methods: {

@@ -3,12 +3,7 @@
     <div class="cart-view">
         <div class="cart-view__main">
             <div class="cart-nav">
-                <van-nav-bar
-                    :border="false"
-                    title="喜欢"
-                    :right-text="checkedGoods.length > 0? '删除':'管理'"
-                    @click-right="manageBtn"
-                />
+                <van-nav-bar :border="false" title="喜欢" right-text="删除" @click-right="deleteLove" />
             </div>
             <div id="cart-content" class="cart-content" @scroll="moving">
                 <van-list
@@ -16,6 +11,7 @@
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="handleLoad"
+                    :immediate-check="false"
                 >
                     <div class="card-goods" v-for="item in goods" :key="item.id" :name="item.id">
                         <div class="cart-checkbox">
@@ -23,24 +19,38 @@
                                 <van-checkbox :key="item.id" :name="item.id"></van-checkbox>
                             </van-checkbox-group>
                         </div>
-                        <div class="cart-card"  @click="()=>goGoodsDetail(item.id)" >
+                        <div class="cart-card" @click="()=>goGoodsDetail(item)">
                             <van-card
-                                :title="item.title|filtersTitle"
-                                :price="formatPrice(item.price)"
-                                :thumb="item.thumb"
+                                :title="item.goodTitle|filtersTitle"
+                                :price="item.goodType === 0? item.newPrice:item.priceDay+'/天'"
+                                :thumb="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
                             >
-                                <div slot="tags" class="card-tags">
+                                <div v-if="item.goodType === 0" slot="tags" class="card-tags">
                                     <p>
-                                        <span>即时出售</span>
-                                        <span>已用5年</span>
+                                        <span v-if="item.isNowSell">即时出售</span>
+                                        <span v-if="!item.isNowSell">议时出售</span>
+                                        <span>{{item.buyTime|filtersBuyTime}}</span>
                                     </p>
                                     <p>
-                                        <span>不可议价</span>
-                                        <span>原价:${{item.price}}</span>
+                                        <span v-if="item.isDiscuss">可议价</span>
+                                        <span v-if="!item.isDiscuss">不可议价</span>
+                                        <span>原价:￥{{item.oldPrice}}</span>
+                                    </p>
+                                </div>
+                                <div v-if="item.goodType === 1" slot="tags" class="card-tags">
+                                    <p class="tags-paading">
+                                        <span v-if="item.isNowSell">即时出租</span>
+                                        <span v-if="!item.isNowSell">议时出租</span>
+                                        <span v-if="item.isDiscuss">可议价</span>
+                                        <span v-if="!item.isDiscuss">不可议价</span>
                                     </p>
                                 </div>
 
-                                <div @click.stop="()=>contact(1,'猫咪')" slot="footer" class="cart-footer">
+                                <div
+                                    @click.stop="()=>contact(1,'猫咪')"
+                                    slot="footer"
+                                    class="cart-footer"
+                                >
                                     <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </van-card>
@@ -53,9 +63,9 @@
 </template>
 
 <script>
-import { NavBar, Icon, Checkbox, Card, SubmitBar, Row, Col, Stepper, List, checkboxGroup } from 'vant';
+import { NavBar, Icon,Dialog, Checkbox, Toast, Card, SubmitBar, Row, Col, Stepper, List, checkboxGroup } from 'vant';
 
-import { list as goodsList } from '../../svc/Cart';
+import { list as goodsList, deleteByids } from '../../svc/suc/SucLove';
 
 export default {
     components: {
@@ -69,6 +79,8 @@ export default {
         [Stepper.name]: Stepper,
         [List.name]: List,
         [checkboxGroup.name]: checkboxGroup,
+        [Toast.name]: Toast,
+                [Dialog.name]: Dialog,
     },
 
     data() {
@@ -81,7 +93,6 @@ export default {
             pageNum: 0, // 当前页码
             loading: false, // 是否正在加载商品列表
             finished: false, // 是否全部加载完成商品列表
-            manage: '管理',
             scroll: 0,
         };
     },
@@ -92,23 +103,45 @@ export default {
             }
             return data;
         },
-    },
-    computed: {
-        submitBarText() {
-            const count = this.checkedGoods.length;
-            return '结算' + (count ? `(${count})` : '');
-        },
+        filtersBuyTime(date) {
+            let endTime = parseInt(new Date().getTime() / 1000) - new Date(date).getTime() / 1000;
+            let timeDay = parseInt(endTime / 60 / 60 / 24); //相差天数
+            // 先判断是否大于一年
+            if (timeDay >= 360) {
+                // 计算年
+                let year = parseInt(timeDay / 360);
 
-        totalPrice() {
-            if (this.goods !== undefined) {
-                return this.goods.reduce(
-                    (total, item) => total + (this.checkedGoods.indexOf(item.id) !== -1 ? item.price * item.num : 0),
-                    0
-                );
+                if (timeDay % 360 < 30) {
+                    return '已用' + year + '年';
+                } else {
+                    // 计算月
+                    let month = parseInt((timeDay % 360) / 30);
+                    return '已用' + year + '年' + month + '月';
+                }
             } else {
-                return 0;
+                if (timeDay >= 30) {
+                    //计算月
+                    let month = parseInt(timeDay / 30);
+                    if (timeDay % 30 === 0) {
+                        return '已用' + month + '月';
+                    } else {
+                        let day = timeDay % 30;
+                        return '已用' + month + '月' + day + '天';
+                    }
+                } else {
+                    if (timeDay > 1) {
+                        // 计算天
+                        return '已用' + timeDay + '天';
+                    } else {
+                        return '已用1天';
+                    }
+                }
             }
         },
+    },
+
+    mounted() {
+        this.handleLoad();
     },
     activated() {
         document.getElementById('cart-content').scrollTop = this.scroll;
@@ -117,45 +150,49 @@ export default {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        formatPrice(price) {
-            return (price / 100).toFixed(2);
-        },
-        goGoodsDetail(id) {
-            this.$router.push({ name: 'goods-detail' });
+        goGoodsDetail(item) {
+            this.$router.push({ name: 'goods-detail', params: { payload: item } });
         },
         contact(id, name) {
             this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
         },
         toggle(e) {
             this.checkedGoods = e;
-            if (e.length > 0) {
-                this.manage = '删除';
-            } else {
-                this.manage = '管理';
-            }
         },
-        // 全选
-        manageBtn() {
-            if (!this.checked) {
-                const goods = this.goods;
-                let checkedGoods = new Array();
-                for (let i = 0; i < goods.length; i++) {
-                    const element = goods[i];
-                    checkedGoods.push(element.id);
-                }
-                this.checkedGoods = checkedGoods;
-                this.checked = true;
-                this.manage = '删除';
-            } else {
-                this.checkedGoods = [];
-                this.checked = false;
-                this.manage = '管理';
+        deleteLove() {
+            if (this.checkedGoods.length < 1) {
+                Toast({ message: '没有商品被选择', position: 'top' });
+                return;
             }
+
+            Dialog.confirm({
+                title: '温馨提示',
+                message: '确定删除选中商品?',
+            })
+                .then(() => {
+                    let data = this.checkedGoods;
+                    deleteByids({
+                        data,
+                        onSuccess: result => {
+                            if (result.result === 1) {
+                                Toast({ message: '删除成功', position: 'top' });
+                                this.checkedGoods.map((id, index) => {
+                                    this.goods.forEach((item, i, arr) => {
+                                        if (item.id === id) arr.splice(i, 1);
+                                    });
+                                });
+                            }
+                        },
+                    });
+                })
+                .catch(() => {
+                    Toast('您还未选择您的大学');
+                });
         },
 
         // 获取商品数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
+            const params = { pageNum: this.pageNum + 1, userId: this.$store.getters.user.id };
             goodsList({
                 params,
                 onSuccess: data => {
@@ -205,7 +242,7 @@ body {
                 bottom: -0.1rem;
                 .van-nav-bar__text {
                     font-size: 0.4rem;
-                    color: #7bbfea;
+                    color: red;
                 }
             }
         }
@@ -239,6 +276,11 @@ body {
                 width: 85vw;
                 padding-top: 0.5rem;
                 margin-left: 0.3rem;
+                .van-card__thumb {
+                    img {
+                        width: 100%;
+                    }
+                }
             }
             .card-tags {
                 p {
@@ -252,6 +294,9 @@ body {
                         background: rgba(123, 191, 234, 0.2);
                         color: #7bbfea;
                     }
+                }
+                .tags-paading {
+                    padding: 0.5rem 0;
                 }
             }
             .cart-footer {
