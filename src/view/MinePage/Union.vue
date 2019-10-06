@@ -91,7 +91,7 @@ export default {
         },
     },
     activated() {
-        if ((this.name = this.$route.params.load)) {
+        if (this.$route.params.load) {
             this.pageNum = 0;
             this.unionData = [];
            

@@ -13,7 +13,7 @@
                 color="#1989fa"
                 background="#ecf9ff"
                 left-icon="info-o"
-                text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可在我的公告里面手动更新，且每个人只能有三个公告。"
+                text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可手动更新自动下线时间，更新后公告将显示在需求公告前面。注:每个人上线下线一个只能有四个公告。"
             />
         </div>
         <div class="do-notice-content">
@@ -63,7 +63,9 @@ export default {
             add({
                 data,
                 onSuccess: result => {
-                    // this.$router.push({ name: 'shop', params: { load: true } });
+                    if (result.result === 1) {
+                        this.$router.push({ name: 'my-notice', params: { load: true } });
+                    }
                 },
             });
         },

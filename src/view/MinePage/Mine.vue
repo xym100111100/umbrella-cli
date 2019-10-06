@@ -25,7 +25,7 @@
             <DyCell
                 MyIcon="fabuxuqiu"
                 content="需求公告"
-                :goPath="()=>this.$router.push({name:'notice'})"
+                :goPath="()=>this.$router.push({name:'notice', params: { load:true, }})"
             />
             <DyCell
                 MyIcon="lianheyingyong"

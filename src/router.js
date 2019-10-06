@@ -115,7 +115,7 @@ const routes = [
         path: '/mine/do-notice',
         component: () => import('./view/MinePage/DoNotice'),
         meta: {
-            index: 3,
+            index: 5,
         },
     },
     {
@@ -123,7 +123,7 @@ const routes = [
         path: '/mine/my-notice',
         component: () => import('./view/MinePage/MyNotice'),
         meta: {
-            index: 5,
+            index: 3,
         },
     },
     {

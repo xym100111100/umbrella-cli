@@ -4,8 +4,9 @@
             <van-nav-bar
                 title="需求公告"
                 left-arrow
-                @click-left="$router.go(-1)"
+                @click-left="onClickLeft"
                 @click-right="myNotice"
+                right-text="我的公告"
             />
         </header>
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -15,25 +16,24 @@
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="handleLoad"
+                    :immediate-check="false"
                 >
                     <div v-for="item in noticeData" :key="item.id">
-                        <div class="content-item" @click="handleLoad">
+                        <div class="content-item">
                             <div class="item-left">
-                                <img :src="item.thumb" />
+                                <img :src="item.wxFacePath" />
                             </div>
                             <div class="item-right">
                                 <div class="right-notice-info">
                                     <div class="user-wxname">{{item.userName|filtersUserName}}</div>
                                     <div class="notice-info">
-                                        <div class="info-text">{{item.text}}</div>
-                                        <div class="info-price">
-                                            <span>￥11</span>
-                                            <span>～</span>
-                                            <span>￥121</span>
-                                        </div>
+                                        <div class="info-text">{{item.noticeContent}}</div>
                                     </div>
                                 </div>
-                                <div @click="contact(item.id,item.userName)" class="right-notice-contact">
+                                <div
+                                    @click="contact(item.id,item.userName)"
+                                    class="right-notice-contact"
+                                >
                                     <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
 
 <script>
 import { NavBar, Toast, Cell, Icon, Button, PullRefresh, List } from 'vant';
-import { list as noticeList } from '../../svc/suc/Notice';
+import { list as noticeList } from '../../svc/suc/SucNotice';
 
 export default {
     components: {
@@ -61,26 +61,35 @@ export default {
     },
     data() {
         return {
-            count: 0,
             isLoading: false,
             loading: false,
             finished: false,
             noticeData: [],
             scroll: 0,
+            pageNum: 0,
+            timeout: null,
         };
     },
     filters: {
         filtersUserName(data) {
-            if (data.length > 5) {
-                return data.substr(1, 5) + '...';
+            if (data.length > 8) {
+                return data.substr(0, 8) + '...';
             }
             return data;
         },
     },
     activated() {
         document.getElementById('notice-content').scrollTop = this.scroll;
+        if (this.$route.params.load) {
+            this.pageNum = 0;
+            this.noticeData = [];
+            this.handleLoad();
+        }
     },
     methods: {
+        onClickLeft() {
+            this.$router.push({ name: 'mine' });
+        },
         contact(id, name) {
             this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
         },
@@ -88,16 +97,18 @@ export default {
             this.scroll = e.target.scrollTop;
         },
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
+            const params = { pageNum: this.pageNum + 1, schoolName: this.$store.getters.user.schoolName, state: true };
             noticeList({
                 params,
                 onSuccess: data => {
                     this.pageNum = data.pageNum;
                     this.noticeData.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                 },
                 onFinish: () => {
@@ -107,34 +118,18 @@ export default {
             });
         },
         myNotice() {
-            this.$router.push({ name: 'my-notice' });
+            this.$router.push({ name: 'my-notice', params: { load: true } });
         },
 
         onRefresh() {
-            const params = 0;
-            this.noticeData = [];
-            this.loading = true;
-            this.finished = false;
-            noticeList({
-                params,
-                onSuccess: data => {
-                    console.log(data);
-                    this.pageNum = data.pageNum;
-                    this.noticeData.push(...data.list);
-                    // 如果是最后一页
-                    if (data.pages === data.pageNum) {
-                        // 数据全部加载完成
-                        this.finished = true;
-                    }
-                    this.$toast('刷新成功');
-                    this.isLoading = false;
-                    this.count++;
-                },
-                onFinish: () => {
-                    // 结束加载状态
-                    this.loading = false;
-                },
-            });
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.pageNum = 0;
+                this.noticeData = [];
+                 this.handleLoad();
+                this.$toast({message:'刷新成功',position:'top'});
+                this.isLoading = false;
+            }, 500);
         },
     },
 };
@@ -188,15 +183,6 @@ body {
                             margin: 0;
                             font-size: 0.4rem;
                             padding: 0.2rem 0.2rem;
-                        }
-                        .info-price {
-                            font-size: 0.4rem;
-                            padding-left: 0.2rem;
-                            span {
-                                background: unset;
-                                padding: unset;
-                                color: #7bbfea;
-                            }
                         }
                     }
                 }

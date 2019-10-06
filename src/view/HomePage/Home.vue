@@ -50,7 +50,7 @@
                                             class="price"
                                         >￥{{item.priceDay}}/天</div>
                                         <div class="icon" @click.stop="addToLove(item.id)">
-                                            <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
+                                             <van-icon name="xihuan" color="rgba(115, 169, 199,0.8 )" size=".7rem" /> 
                                         </div>
                                     </div>
                                 </div>
@@ -296,6 +296,7 @@ export default {
                     padding: 0 0.1rem;
                     .good-title {
                         height: 0.7rem;
+                        padding-left: 0.2rem;
                     }
                     .good-spec {
                         height: 1.2rem;
@@ -306,8 +307,8 @@ export default {
                             span {
                                 padding: 0.07rem;
                                 margin: 0.15rem 0.1rem;
-                                background: rgba(123, 191, 234, 0.2);
-                                color: #7bbfea;
+                                color: #808385;
+                                font-size: 0.37rem;
                             }
                         }
                     }
@@ -317,11 +318,11 @@ export default {
                         padding-top: 0.15rem;
                         .price {
                             margin-top: 0.3rem;
-                            color: #7bbfea;
+                            
                             padding-left: 0.2rem;
                         }
                         .icon:active {
-                            background: rgba(123, 191, 234, 0.2);
+                            background: rgba(195, 202, 206, 0.2);
                         }
                     }
                 }
