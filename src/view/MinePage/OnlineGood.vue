@@ -494,7 +494,7 @@ export default {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         };
                         // 发送请求;
-                        axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
+                        axios.post('http://192.168.8.201/ise-svr/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePath);
                             let fileObj = {};
                             fileObj.id = new Date().getTime();

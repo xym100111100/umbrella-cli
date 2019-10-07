@@ -91,18 +91,6 @@ export default {
             return this.$store.getters.user;
         },
     },
-    mounted() {
-        WSocket.init(
-            { user: this.user },
-            message => {
-                console.log(message);
-                this.setMsgCount(message);
-            },
-            error => {
-                console.log(error);
-            }
-        );
-    },
     activated() {
         document.getElementById('msg-content').scrollTop = this.scroll;
     },

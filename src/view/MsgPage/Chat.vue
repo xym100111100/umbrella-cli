@@ -7,7 +7,7 @@
                 </van-nav-bar>
             </div>
         </header>
-        <div class="chat-centent"  id="chat-content">
+        <div class="chat-centent" id="chat-content">
             <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
                 <template v-for="item in chatInfo">
                     <div v-if="item.id%2==0" :key="item.id" class="centent-node-you">
@@ -66,10 +66,37 @@ export default {
             chatInfo: [],
             isLoading: false,
             meClientHeight: 0, //这个值是用来计算当软键盘升起来应该控制内容的高度是多少
-            
         };
     },
     updated() {},
+    computed: {
+        computeText() {
+            return this.dataInfo.filter(function(data) {
+                if (data.text.length > 20) {
+                    data.text = data.text.slice(1, 20) + '...';
+                    return data;
+                } else {
+                    return data;
+                }
+            });
+        },
+        user() {
+            return this.$store.getters.user;
+        },
+    },
+
+    mounted() {
+        WSocket.init(
+            { user: this.user },
+            message => {
+                console.log(message);
+                this.setMsgCount(message);
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    },
     created() {
         console.log('created');
         this.meClientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -78,6 +105,25 @@ export default {
         console.log('destroyed');
     },
     methods: {
+        setMsgCount(message) {
+            // 判断消息列表中是否有该用户
+            // let chatUser = this.chatDataList.filter(chatItem => {
+            //     return chatItem.target._id == message.from;
+            // });
+            // // console.log(chatUser);
+            // // 如果存在， count + 1 并将消息保存在列表中
+            // if (chatUser.length > 0) {
+            //     chatUser[0].count++;
+            //     chatUser[0].message.push({
+            //         msg: message.msg,
+            //         source: 'other',
+            //     });
+            //     this.saveMsg(chatUser[0].target, chatUser[0].count, chatUser[0].message);
+            // } else {
+            //     // 如果不存在， 那么获取用户信息 并现实提醒
+            //     this.getUserInfo(message);
+            // }
+        },
         onRefresh() {
             const params = { pageNum: this.pageNum + 1 };
             getChatInfo({
@@ -241,5 +287,4 @@ html {
         }
     }
 }
-
 </style>
