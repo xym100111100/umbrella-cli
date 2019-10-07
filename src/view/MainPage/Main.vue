@@ -13,10 +13,10 @@
         消息
       </van-tabbar-item> 
       <van-tabbar-item icon="xihuan" v-if="loveCount>0" v-bind:info="loveCount"  to="cart">
-        喜欢
+        收藏
       </van-tabbar-item>
       <van-tabbar-item  v-if="loveCount===0" icon="xihuan"  to="cart">
-        喜欢
+        收藏
       </van-tabbar-item>
       <van-tabbar-item icon="tabbar-mine" to="mine">
         我

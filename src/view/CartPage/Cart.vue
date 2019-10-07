@@ -22,7 +22,6 @@
                         <div class="cart-card" @click="()=>goGoodsDetail(item)">
                             <van-card
                                 :title="item.goodTitle|filtersTitle"
-                                :price="item.goodType === 0? item.newPrice:item.priceDay+'/天'"
                                 :thumb="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
                             >
                                 <div v-if="item.goodType === 0" slot="tags" class="card-tags">
@@ -51,7 +50,19 @@
                                     slot="footer"
                                     class="cart-footer"
                                 >
-                                    <van-icon color="rgb(186, 191, 202)" name="liaotian" />
+                                    <div></div>
+                                    <div class="footer-price">
+                                        <span class="price-symbol">￥</span>
+                                        <span>{{item.goodType === 0? item.newPrice:item.priceDay}}</span>
+                                        <span v-if="item.goodType === 1" class="price-symbol">/天</span>
+                                    </div>
+                                    <div>
+                                        <van-icon
+                                            size=".7rem"
+                                            color="rgb(186, 191, 202)"
+                                            name="liaotian"
+                                        />
+                                    </div>
                                 </div>
                             </van-card>
                         </div>
@@ -63,7 +74,7 @@
 </template>
 
 <script>
-import { NavBar, Icon,Dialog, Checkbox, Toast, Card, SubmitBar, Row, Col, Stepper, List, checkboxGroup } from 'vant';
+import { NavBar, Icon, Dialog, Checkbox, Toast, Card, SubmitBar, Row, Col, Stepper, List, checkboxGroup } from 'vant';
 
 import { list as goodsList, deleteByids } from '../../svc/suc/SucLove';
 
@@ -80,7 +91,7 @@ export default {
         [List.name]: List,
         [checkboxGroup.name]: checkboxGroup,
         [Toast.name]: Toast,
-                [Dialog.name]: Dialog,
+        [Dialog.name]: Dialog,
     },
 
     data() {
@@ -274,12 +285,15 @@ body {
         .cart-card {
             .van-card {
                 width: 85vw;
-                padding-top: 0.5rem;
+                padding-top: 0.3rem;
                 margin-left: 0.3rem;
                 .van-card__thumb {
                     img {
                         width: 100%;
                     }
+                }
+                .van-card__title {
+                    color: rgb(86, 88, 90);
                 }
             }
             .card-tags {
@@ -291,8 +305,7 @@ body {
                     span {
                         padding: 0 0.1rem;
                         margin-right: 0.15rem;
-                        background: rgba(123, 191, 234, 0.2);
-                        color: #7bbfea;
+                        color: rgb(141, 148, 153);
                     }
                 }
                 .tags-paading {
@@ -300,8 +313,28 @@ body {
                 }
             }
             .cart-footer {
-                font-size: 0.7rem;
-                margin-top: -0.5rem;
+                margin-top: -0.6rem;
+                display: flex;
+                justify-content: space-between;
+                .footer-price {
+                    height: 0.75rem;
+                    line-height: 0.75rem;
+                    width: 2rem;
+                    text-align: left;
+                    margin-left: 0.6rem;
+                    span {
+                        font-size: 0.42rem;
+                        color: rgba(115, 169, 199, 0.8);
+                    }
+                    .price-symbol {
+                        font-size: 0.32rem;
+                    }
+                }
+                .footer-icon {
+                    i:active {
+                        background: rgba(123, 191, 234, 0.2);
+                    }
+                }
             }
         }
     }

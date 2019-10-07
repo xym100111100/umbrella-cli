@@ -26,10 +26,10 @@
                                             <span v-if="!item.isNowSell">议时出售</span>
                                             <span>{{item.buyTime|filtersBuyTime}}</span>
                                         </p>
-                                        <p>
+                                        <p class="spec-item">
                                             <span v-if="item.isDiscuss">可议价</span>
                                             <span v-if="!item.isDiscuss">不可议价</span>
-                                            <span>原价: ￥{{item.oldPrice}}</span>
+                                            <span>原价:￥{{item.oldPrice}}</span>
                                         </p>
                                     </div>
                                     <div v-if="item.goodType === 1" class="good-spec">
@@ -41,16 +41,23 @@
                                         </p>
                                     </div>
                                     <div class="good-price">
-                                        <div
-                                            v-if="item.goodType === 0"
-                                            class="price"
-                                        >￥{{item.newPrice}}</div>
-                                        <div
-                                            v-if="item.goodType === 1"
-                                            class="price"
-                                        >￥{{item.priceDay}}/天</div>
+                                        <div v-if="item.goodType === 0" class="price">
+                                            <span class="spec-symbol">￥</span>
+                                            <span>{{item.newPrice}}</span>
+                                        </div>
+                                        <div v-if="item.goodType === 1" class="price">
+                                            <span class="spec-symbol">￥</span>
+                                            {{item.priceDay}}
+                                            <span
+                                                class="spec-symbol"
+                                            >/天</span>
+                                        </div>
                                         <div class="icon" @click.stop="addToLove(item.id)">
-                                             <van-icon name="xihuan" color="rgba(115, 169, 199,0.8 )" size=".7rem" /> 
+                                            <van-icon
+                                                name="xihuan"
+                                                color="rgba(167, 158, 158, 0.99)"
+                                                size=".7rem"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +246,7 @@ export default {
         },
 
         onRefresh() {
-            const params = { pageNum: 0 };
+            const params = { pageNum: 0, state: true, schoolName: this.$store.getters.user.schoolName };
             this.goods = [];
             listOnlOnlinePromo({
                 params,
@@ -253,7 +260,7 @@ export default {
                     } else {
                         this.finished = false;
                     }
-                    this.$toast('刷新成功');
+                    this.$toast({ message: '刷新成功', position: 'top' });
                     this.isLoading = false;
                 },
                 onFinish: () => {
@@ -280,7 +287,7 @@ export default {
                 width: 46vw;
                 margin: 0.1rem;
                 background: white;
-                height: 8.2rem;
+                height: 8rem;
                 border-radius: 0.3rem;
                 .item-top {
                     img {
@@ -292,34 +299,50 @@ export default {
                 }
                 .item-bottom {
                     width: 96%;
-                    font-size: 0.4rem;
+                    font-size: 0.38rem;
                     padding: 0 0.1rem;
                     .good-title {
-                        height: 0.7rem;
-                        padding-left: 0.2rem;
+                        height: 0.5rem;
+                        line-height: 0.5rem;
+                        padding-left: 0.1rem;
+                        overflow: hidden;
+                        color: rgb(70, 72, 73);
                     }
                     .good-spec {
                         height: 1.2rem;
                         p {
                             padding: 0;
                             margin: 0;
-                            margin-top: 0.15rem;
+                            margin-top: 0.1rem;
                             span {
-                                padding: 0.07rem;
-                                margin: 0.15rem 0.1rem;
-                                color: #808385;
-                                font-size: 0.37rem;
+                                padding: 0.07rem 0.09rem;
+                                margin: 0.15rem 0rem;
+                                color: rgb(141, 148, 153);
+                                font-size: 0.3rem;
+                                // border: solid 0.01rem rgba(194, 205, 211, 1);
                             }
+                        }
+                        .spec-item {
+                            padding-top: 0.13rem;
                         }
                     }
                     .good-price {
                         display: flex;
                         justify-content: space-between;
                         padding-top: 0.15rem;
+                        .spec-symbol {
+                            font-size: 0.32rem;
+                            color: rgba(115, 169, 199, 0.8);
+                        }
                         .price {
-                            margin-top: 0.3rem;
-                            
-                            padding-left: 0.2rem;
+                            margin-top: 0.1rem;
+                            padding-left: 0.1rem;
+                            color: rgba(115, 169, 199, 0.8);
+
+                            font-size: 0.45rem;
+                        }
+                        .icon {
+                            padding-right: 0.2rem;
                         }
                         .icon:active {
                             background: rgba(195, 202, 206, 0.2);

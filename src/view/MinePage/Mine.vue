@@ -231,35 +231,12 @@ html {
                 }
             }
 
-            .line-left .left-concent {
-                border-top: dashed 1px #e7e4e4;
-                margin: 0 0.6rem;
-            }
+
         }
 
-        .content-money {
-            margin-top: 0.35rem;
-        }
 
-        .content-setting {
-            background: white;
-            font-size: 0.42rem;
-            display: flex;
-            color: #7d7e80;
-            margin-top: 0.35rem;
-            div {
-                margin: 0 0.3rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                .van-icon {
-                    font-size: 0.85rem;
-                }
-                span {
-                    margin-top: 0.2rem;
-                }
-            }
-        }
+
+
     }
 }
 </style>

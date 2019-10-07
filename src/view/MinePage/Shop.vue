@@ -8,21 +8,21 @@
                 @click-right="onlineGood"
                 right-text="发布商品"
             />
-            <div class="content-title">
+            <!-- <div class="content-title">
                 <van-notice-bar
-                    color="#1989fa"
-                    background="#ecf9ff"
                     left-icon="info-o"
                     text="温馨提示:每个商品上线的时间是两星期，超过后将自动下线，可手动更新上线时间，更新后商品在首页将处于前面!!! 注:每人只能有上线与下线加起来四个商品。"
                 />
-            </div>
+            </div>-->
             <div class="title-nav">
                 <template v-for="item in  payload.choiceList ">
                     <div
                         :class="{choice:item.active === true}"
                         @click="changeChoice(item.index)"
                         :key="item.index"
-                    >{{item.name}}</div>
+                    >
+                        <span>{{item.name}}</span>
+                    </div>
                 </template>
             </div>
         </div>
@@ -46,16 +46,28 @@
                                 <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
                                 <div class="good-down-line-time">
                                     <p>
-                                        <span>下线时间: 
-                                            <span v-if="item.state" > {{item.aotuDownTime|filtersTime}}</span>
-                                             <span v-if="!item.state" >已下线</span>
+                                        <span>
+                                            下线时间:
+                                            <span
+                                                v-if="item.state"
+                                            >{{item.aotuDownTime|filtersTime}}</span>
+                                            <span v-if="!item.state">已下线</span>
                                         </span>
                                     </p>
                                 </div>
                                 <div class="good-price">
                                     <div class="price">
-                                        <span v-if="item.goodType === 0" >￥{{item.newPrice}}</span>
-                                         <span v-if="item.goodType === 1" >￥{{item.priceDay}}/天</span>
+                                        <span v-if="item.goodType === 0">
+                                            <span class="price-symbol">￥</span>
+                                            {{item.newPrice}}
+                                        </span>
+                                        <span v-if="item.goodType === 1">
+                                            <span class="price-symbol">￥</span>
+                                            {{item.priceDay}}
+                                            <span
+                                                class="price-symbol"
+                                            >/天</span>
+                                        </span>
                                     </div>
                                     <div
                                         v-if="item.state"
@@ -69,14 +81,14 @@
                                         class="icon"
                                         @click.stop="changeState(item.id,true)"
                                     >
-                                        <van-icon name="shangxian" />
+                                        <van-icon size="0.6rem" name="shangxian" />
                                     </div>
                                     <div
                                         v-if="!item.state"
                                         class="icon"
                                         @click.stop="deleteGood(item.id)"
                                     >
-                                        <van-icon name="shanchu" />
+                                        <van-icon size="0.7rem" name="shanchu" />
                                     </div>
                                     <div
                                         v-if="item.state"
@@ -141,10 +153,9 @@ export default {
             }
             return data;
         },
-        filtersTime(str){
-            
-            return str.split(" ")[0];
-        }
+        filtersTime(str) {
+            return str.split(' ')[0];
+        },
     },
     computed: {},
     methods: {
@@ -154,7 +165,7 @@ export default {
         updateAutoDownTime(id) {
             let sjc = new Date().getTime() + 1209600000;
             let aotuDownTime = formatTime(sjc, 'Y-M-D h:m:s');
-            let data = { id: id, aotuDownTime: aotuDownTime };
+            let data = { id: id, aotuDownTime: aotuDownTime, state: true };
             modifyGoods({
                 data,
                 onSuccess: result => {
@@ -327,20 +338,25 @@ body {
             height: 1rem;
             line-height: 1rem;
             justify-content: space-around;
-            padding: 0 0.3rem;
-            margin-top: 0.3rem;
+            margin: 0.2rem 0 0.1rem;
             div {
-                background: rgba(60, 47, 15, 0.1);
                 width: 50%;
                 text-align: center;
+                background: white;
+                color: rgb(112, 114, 116);
             }
             .choice {
-                background: rgba(123, 191, 234, 0.4);
+                background: white;
+                color: #1989fa;
+                span {
+                    border-bottom: #1989fa solid 0.04rem;
+                    padding-bottom: 0.18rem;
+                }
             }
         }
     }
     .shop-content {
-        height: 81%;
+        height: 88%;
         overflow: scroll;
         .content-item {
             display: flex;
@@ -365,10 +381,11 @@ body {
                 }
                 .info-bottom {
                     width: 96%;
-                    font-size: 0.4rem;
+                    font-size: 0.37rem;
                     padding: 0 0.1rem;
                     .good-title {
                         height: 0.7rem;
+                        color: rgb(70, 72, 73);
                     }
                     .good-down-line-time {
                         height: 0.5rem;
@@ -377,32 +394,34 @@ body {
                             margin: 0;
                             margin-top: 0.1rem;
                             span {
-                                padding: 0.07rem;
                                 margin-right: 0.15rem;
-                                color: #7bbfea;
+                                color: rgb(166, 176, 182);
+                                font-size: 0.35rem;
                             }
                         }
                     }
                     .good-price {
                         display: flex;
-                        justify-content: space-between;
                         padding-top: 0.15rem;
-
                         .price {
                             margin-top: 0.3rem;
                             color: #7bbfea;
                             padding-left: 0.1rem;
+                            font-size: 0.4rem;
+                            padding-right: 1rem;
+                            .price-symbol {
+                                font-size: 0.3rem;
+                            }
                         }
                         .icon {
                             height: 0.5rem;
                             width: 0.5rem;
                             line-height: 0.5rem;
                             text-align: center;
+                            margin: 0.2rem 0 0 0.5rem;
                             .van-icon {
-                                background: rgba(60, 47, 15, 0.1);
-                                padding: 0.1rem 0.13rem 0.15rem;
-                                margin: 0.2rem 0 0 -0.5rem;
-                                color: #499df1;
+                                padding-bottom: 0.2rem;
+                                color: rgb(126, 134, 138);
                                 font-size: 0.5rem;
                             }
                         }
@@ -418,7 +437,6 @@ body {
         bottom: -0.1rem;
         .van-nav-bar__text {
             font-size: 0.4rem;
-            color: #499df1;
         }
     }
 }

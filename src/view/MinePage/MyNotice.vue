@@ -226,7 +226,7 @@ body {
             border-bottom: solid 0.03rem #a6a6aa;
             padding: 0.2rem 0 0.1rem;
             overflow: hidden;
-            margin-bottom: 0.2rem;
+           
             p {
                 color: #4a4a4c;
                 padding: 0.1rem;

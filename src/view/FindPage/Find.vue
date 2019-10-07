@@ -39,7 +39,6 @@
                             <van-card
                                 :title="item.goodTitle|filtersTitle"
                                 :thumb="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
-                                :price="item.goodType === 0? item.newPrice:item.priceDay+'/天'"
                             >
                                 <div v-if="item.goodType === 0" slot="tags" class="right-tags">
                                     <p>
@@ -66,9 +65,20 @@
                                     class="right-footer"
                                     slot="footer"
                                 >
-                                    <span class="footer-icon" >
-                                        <van-icon name="xihuan1" color="#FF5706" size=".9rem" />
-                                    </span>
+                                    <div></div>
+                                    <div class="footer-price">
+                                        <span>￥</span>
+                                        <span>55</span>
+                                    </div>
+                                    <div>
+                                        <span class="footer-icon">
+                                            <van-icon
+                                                name="xihuan"
+                                                color="rgba(167, 158, 158, 0.99)"
+                                                size=".7rem"
+                                            />
+                                        </span>
+                                    </div>
                                 </div>
                             </van-card>
                         </div>
@@ -284,7 +294,7 @@ body {
                     span {
                         padding: 0 0 0 0.5rem;
                         margin: 0 0 0 0.1rem;
-                        font-size: 0.45rem;
+                        font-size: 0.42rem;
                         width: 100%;
                         color: #907777;
                         border-left: solid 2px rgba(60, 47, 15, 0.041);
@@ -316,16 +326,27 @@ body {
                     span {
                         padding: 0 0.2rem;
                         margin-right: 0.15rem;
-                        // background: rgba(123, 191, 234, 0.2);
-                        background: rgba(60, 47, 15, 0.1);
-                        color: #7bbfea;
+                        color: rgb(141, 148, 153);
                     }
                 }
             }
             .right-footer {
-                margin-top: -1rem;
-                .footer-icon{
-                    i:active{
+                margin-top: -0.7rem;
+                display: flex;
+                justify-content: space-between;
+                .footer-price {
+                    height: 0.75rem;
+                    line-height: 0.75rem;
+                    span {
+                        font-size: 0.4rem;
+                        color: rgba(115, 169, 199, 0.8);
+                    }
+                    span:first-child {
+                        font-size: 0.25rem;
+                    }
+                }
+                .footer-icon {
+                    i:active {
                         background: rgba(123, 191, 234, 0.2);
                     }
                 }
@@ -348,6 +369,9 @@ body {
         img {
             width: 100%;
         }
+    }
+    .van-card__title {
+        color: rgb(70, 72, 73);
     }
 }
 .van-card__price {

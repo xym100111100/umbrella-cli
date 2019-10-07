@@ -34,10 +34,8 @@
         <div class="onlie-good-content">
             <div class="content-title">
                 <van-notice-bar
-                    color="#1989fa"
-                    background="#ecf9ff"
                     left-icon="info-o"
-                    text="温馨提示:拍摄时请将宝贝置于镜头的上部分,以防商品无法完整展示出来。"
+                    text="温馨提示:拍摄时请将商品置于镜头的上部分,以防商品无法完整展示出来。"
                 />
             </div>
             <div class="content-upload">
@@ -65,7 +63,7 @@
                     :animated="true"
                     background="rgba(123, 191, 234, 0.1)"
                 >
-                    <van-tab title="出售宝贝">
+                    <van-tab title="出售商品">
                         <div class="info-tab1">
                             <div class="info-class">
                                 <span @click="showPopup">选择分类</span>
@@ -129,19 +127,19 @@
                                     <textarea
                                         v-model="payload.goodTitle"
                                         maxlength="20"
-                                        placeholder="请简短地输入宝贝标题 如:华为耳机黑色"
+                                        placeholder="请简短地输入商品标题 如:华为耳机黑色"
                                     ></textarea>
                                 </div>
                                 <div class="bottom-textArea-detail">
                                     <textarea
                                         v-model="payload.goodDetail"
-                                        placeholder="请简短地输入你对宝贝的描述"
+                                        placeholder="请简短地输入你对商品的描述"
                                     ></textarea>
                                 </div>
                             </div>
                         </div>
                     </van-tab>
-                    <van-tab title="出租宝贝">
+                    <van-tab title="出租商品">
                         <div class="info-tab2">
                             <div class="info-class">
                                 <span @click="showPopup">选择分类</span>
@@ -196,14 +194,14 @@
                                     <textarea
                                         v-model="payload.goodTitle"
                                         maxlength="20"
-                                        placeholder="请简短地输入宝贝标题 如:华为耳机黑色"
+                                        placeholder="请简短地输入商品标题 如:华为耳机黑色"
                                     ></textarea>
                                 </div>
                                 <div class="bottom-textArea-detail">
                                     <textarea
                                         v-model="payload.goodDetail"
                                         maxlength="50"
-                                        placeholder="请简短地输入你对宝贝的描述"
+                                        placeholder="请简短地输入你对商品的描述"
                                     ></textarea>
                                 </div>
                             </div>
