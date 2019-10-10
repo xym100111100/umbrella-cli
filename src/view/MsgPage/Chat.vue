@@ -44,7 +44,7 @@
 
 <script>
 import { NavBar, PullRefresh, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
-import { getChatInfo } from '../../svc/Chat';
+import { getChatInfo } from '../../svc/wst/Chat';
 import WSocket from '../../socket.js';
 export default {
     components: {
@@ -106,6 +106,9 @@ export default {
     },
     methods: {
         setMsgCount(message) {
+            console.log('ssss');
+            console.log(message);
+            alert('ss');
             // 判断消息列表中是否有该用户
             // let chatUser = this.chatDataList.filter(chatItem => {
             //     return chatItem.target._id == message.from;
@@ -162,11 +165,15 @@ export default {
             console.log('发送');
             //连接建立之后执行send方法发送数据
             // if (this.inputValue !== null) {
-            let actions = { username: '徐亚明', msg: this.inputValue };
+            let actions = {
+                fromUserId: this.$store.getters.user.id,
+                toUserId: this.$store.getters.user.id === '653596523128553475'?'654231946032971776':'653596523128553475',
+                msg: this.inputValue,
+            };
             //     this.websocket.send(JSON.stringify(actions));
             //     this.inputValue = null;
             // }
-
+            console.log(actions)
             WSocket.send(actions);
         },
         websoketclose(e) {

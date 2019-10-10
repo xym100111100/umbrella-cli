@@ -5,12 +5,13 @@
                 <van-nav-bar title="消息"></van-nav-bar>
             </div>
         </header>
-        <div id="msg-content"  class="msg-content" @scroll="moving">
+        <div id="msg-content" class="msg-content" @scroll="moving">
             <van-list
                 v-model="loading"
                 :finished="finished"
                 finished-text="没有更多了"
                 @load="handleLoad"
+                :immediate-check="false"
             >
                 <ul>
                     <li
@@ -24,17 +25,17 @@
                         <div class="content-item">
                             <div class="item-right">
                                 <div class="right-user-face">
-                                    <img :src="item.thumb" />
+                                    <img :src="item.toUserWxfacePath" />
                                 </div>
                             </div>
                             <div class="item-left">
                                 <div class="left-content">
                                     <div class="content-top">
                                         <p>{{item.name}}</p>
-                                        <p>2019-03-16</p>
+                                        <p>{{item.fromTime|filtersTime}}</p>
                                     </div>
                                     <div class="content-bottom">
-                                        <p>{{item.text}}</p>
+                                        <p>{{item.content}}</p>
                                     </div>
                                 </div>
                                 <div class="left-del" @click.stop="deleteItem(index)">
@@ -51,9 +52,7 @@
 
 <script>
 import { Search, Icon, NavBar, List, Cell, CellGroup } from 'vant';
-import WSocket from '../../socket.js';
-import { getChatInfo as goodsList } from '../../svc/Chat';
-// import { list as goodsList } from '../../svc/Cart';
+import { getChatByUserId } from '../../svc/wst/Chat';
 
 export default {
     components: {
@@ -74,13 +73,19 @@ export default {
             loading: false,
             finished: false,
             scroll: 0,
+            pageNum: 0,
         };
+    },
+    filters: {
+        filtersTime(str) {
+            return str.split(' ')[0];
+        },
     },
     computed: {
         computeText() {
             return this.dataInfo.filter(function(data) {
-                if (data.text.length > 20) {
-                    data.text = data.text.slice(1, 20) + '...';
+                if (data.content.length > 20) {
+                    data.content = data.content.slice(1, 20) + '...';
                     return data;
                 } else {
                     return data;
@@ -94,22 +99,27 @@ export default {
     activated() {
         document.getElementById('msg-content').scrollTop = this.scroll;
     },
+    mounted() {
+        this.handleLoad();
+    },
     methods: {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
         // 获取商品数据
         handleLoad() {
-            const params = { pageNum: this.pageNum + 1 };
-            goodsList({
+            const params = { userId: this.$store.getters.user.id, pageNum: this.pageNum + 1 };
+            getChatByUserId({
                 params,
                 onSuccess: data => {
                     this.pageNum = data.pageNum;
                     this.dataInfo.push(...data.list);
                     // 如果是最后一页
-                    if (data.pages === data.pageNum) {
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
                         // 数据全部加载完成
                         this.finished = true;
+                    } else {
+                        this.finished = false;
                     }
                 },
                 onFinish: () => {

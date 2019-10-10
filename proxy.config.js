@@ -1,9 +1,7 @@
 // 配置代理
 const proxy = {};
-addProxy('onl-svr', 'http://127.0.0.1:9100/');
-addProxy('swa-svr', 'http://127.0.0.1:8888/');
-addProxy('ise-svr', 'http://127.0.0.1:20180/');
 addProxy('suc-svr', 'http://127.0.0.1:9750/');
+addProxy('wst-svr', 'http://127.0.0.1:9860/');
 
 /**
  * 添加联调的微服务
