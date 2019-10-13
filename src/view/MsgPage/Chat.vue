@@ -87,13 +87,13 @@ export default {
             MySetTimeOut: null,
             divHeight: 0,
             isDown: true, // 滚动条是否在最下面
+            finished: false,
         };
     },
     computed: {
         userInfo() {
             return this.$store.getters.user;
         },
-        
     },
     watch: {
         myHeight: newClienHeight => {
@@ -110,29 +110,40 @@ export default {
     },
     methods: {
         onRefresh() {
-            // 设置滚动条不要滚到最下面
-            this.isDown = false;
-            setTimeout(() => {
-                const params = {
-                    pageNum: this.pageNum + 1,
-                    fromUserId: this.$store.getters.user.id,
-                    toUserId: this.toUserInfo.id,
-                };
+            if (this.finished) {
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 500);
+            } else {
+                // 设置滚动条不要滚到最下面
+                this.isDown = false;
+                setTimeout(() => {
+                    const params = {
+                        pageNum: this.pageNum + 1,
+                        fromUserId: this.$store.getters.user.id,
+                        toUserId: this.toUserInfo.id,
+                    };
 
-                listChat({
-                    params,
-                    onSuccess: data => {
-                        this.pageNum = data.pageNum;
-                        let arr = data.list.sort((a, b) => {
-                            return a.id - b.id;
-                        });
-                        this.chatInfo.unshift(...arr);
-                        this.$toast('刷新成功');
-                        this.isLoading = false;
-                    },
-                    onFinish: () => {},
-                });
-            }, 500);
+                    listChat({
+                        params,
+                        onSuccess: data => {
+                            if (data.pages === data.pageNum || data.pages < data.pageNum) {
+                                // 数据全部加载完成
+                                this.finished = true;
+                            } else {
+                                this.finished = false;
+                            }
+                            this.pageNum = data.pageNum;
+                            let arr = data.list.sort((a, b) => {
+                                return a.id - b.id;
+                            });
+                            this.chatInfo.unshift(...arr);
+                            this.isLoading = false;
+                        },
+                        onFinish: () => {},
+                    });
+                }, 500);
+            }
         },
         computeHeight() {
             this.$store.scrollInterval = setInterval(() => {
@@ -141,6 +152,9 @@ export default {
             }, 100);
         },
         handleLoad() {
+            if (this.finished) {
+                return;
+            }
             const params = {
                 pageNum: this.pageNum + 1,
                 fromUserId: this.$store.getters.user.id,
@@ -151,6 +165,12 @@ export default {
                 params,
                 onSuccess: data => {
                     this.pageNum = data.pageNum;
+                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
+                        // 数据全部加载完成
+                        this.finished = true;
+                    } else {
+                        this.finished = false;
+                    }
                     let arr = data.list.sort((a, b) => {
                         return a.id - b.id;
                     });
@@ -214,6 +234,8 @@ export default {
         this.computeHeight();
         this.chatInfo = [];
         this.pageNum = 0;
+        this.isLoading = false;
+        this.finished = false;
         this.toUserInfo = {
             id: this.$route.params.id,
             name: this.$route.params.name,
