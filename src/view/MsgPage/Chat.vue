@@ -2,7 +2,7 @@
     <div class="chat">
         <div class="chat-header">
             <van-nav-bar
-                v-bind:title="toUserInfo.name+String(myHeight)"
+                v-bind:title="toUserInfo.name+String(myHeight)+':'+divHeight"
                 v-on:click-left="handleBack"
                 left-arrow
             >
@@ -10,8 +10,8 @@
             </van-nav-bar>
         </div>
 
-        <div class="chat-centent" id="chat-centent">
-            <van-pull-refresh v-model="isLoading" @refresh="handleLoad">
+        <div class="chat-centent" ref="companyStyle" id="chat-centent">
+            <van-pull-refresh loosing-text=" " v-model="isLoading" @refresh="onRefresh">
                 <template v-for="item in chatInfo">
                     <div
                         v-if="item.fromUserId == toUserInfo.id"
@@ -30,96 +30,6 @@
                         <img :src="userInfo.wxFacePath" />
                     </div>
                 </template>
-                <!--    <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题1</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题2</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题3</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题4</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题5</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题6</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题7</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题8</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题9</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题10</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题11</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题12</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题13</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼问题14</span>
-                </div>
-                <div class="centent-node-you">
-                    <img
-                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
-                    />
-                    <span id="num">就这点傻逼111问题</span>
-                </div>-->
             </van-pull-refresh>
         </div>
         <div class="chat-footer">
@@ -175,23 +85,59 @@ export default {
             mySetInterval: null,
             myHeight: 0,
             MySetTimeOut: null,
+            divHeight: 0,
+            isDown: true, // 滚动条是否在最下面
         };
     },
     computed: {
         userInfo() {
             return this.$store.getters.user;
         },
+        
     },
     watch: {
         myHeight: newClienHeight => {
             document.getElementById('chat-centent').scrollTop = document.getElementById('chat-centent').scrollHeight;
         },
+        divHeight: function(newV, oldV) {
+            //这里不使用箭头函数是为了能获取到this
+            if (this.isDown) {
+                document.getElementById('chat-centent').scrollTop = document.getElementById(
+                    'chat-centent'
+                ).scrollHeight;
+            }
+        },
     },
-
     methods: {
+        onRefresh() {
+            // 设置滚动条不要滚到最下面
+            this.isDown = false;
+            setTimeout(() => {
+                const params = {
+                    pageNum: this.pageNum + 1,
+                    fromUserId: this.$store.getters.user.id,
+                    toUserId: this.toUserInfo.id,
+                };
+
+                listChat({
+                    params,
+                    onSuccess: data => {
+                        this.pageNum = data.pageNum;
+                        let arr = data.list.sort((a, b) => {
+                            return a.id - b.id;
+                        });
+                        this.chatInfo.unshift(...arr);
+                        this.$toast('刷新成功');
+                        this.isLoading = false;
+                    },
+                    onFinish: () => {},
+                });
+            }, 500);
+        },
         computeHeight() {
-           this.$store.scrollInterval = setInterval(() => {
+            this.$store.scrollInterval = setInterval(() => {
                 this.myHeight = document.getElementById('chat-centent').clientHeight;
+                this.divHeight = document.getElementsByClassName('van-pull-refresh__track')[0].offsetHeight;
             }, 100);
         },
         handleLoad() {
@@ -200,9 +146,7 @@ export default {
                 fromUserId: this.$store.getters.user.id,
                 toUserId: this.toUserInfo.id,
             };
-            if (this.MySetTimeOut) {
-                clearTimeout();
-            }
+
             listChat({
                 params,
                 onSuccess: data => {
@@ -222,7 +166,10 @@ export default {
             });
         },
 
-        inputFocus() {},
+        inputFocus() {
+            // 设置滚动条在最下面
+            this.isDown = true;
+        },
         inputBlur() {},
         handleBack(e) {
             clearInterval(this.$store.scrollInterval);
@@ -237,6 +184,18 @@ export default {
                 msg: this.inputValue,
             };
             WSocket.send(actions);
+            // 将消息添加到本地列表
+            let localData = {
+                fromUserId: this.$store.getters.user.id,
+                toUserId: this.$route.params.id,
+                content: this.inputValue,
+                id: new Date().getTime(),
+            };
+            this.chatInfo.push(localData);
+            //清除input
+            this.inputValue = null;
+            // 让input获得焦点
+            document.getElementById('inputNode').focus();
             //修改消息列表
             this.$store.getters.chatList.map(item => {
                 if (item.toUserId === actions.toUserId || item.toUserId === actions.fromUserId) {

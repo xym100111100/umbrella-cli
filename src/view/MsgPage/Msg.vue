@@ -86,16 +86,6 @@ export default {
         },
     },
     computed: {
-        computeText() {
-            return this.dataInfo.filter(function(data) {
-                if (data.content.length > 20) {
-                    data.content = data.content.slice(1, 20) + '...';
-                    return data;
-                } else {
-                    return data;
-                }
-            });
-        },
         userInfo() {
             return this.$store.getters.user;
         },
@@ -222,7 +212,7 @@ export default {
          * index是下标
          */
         deleteItem(index) {
-            this.dataInfo.splice(index, 1);
+            this.$store.getters.chatList.splice(index, 1);
             // splice方法是删除数组某条数据，或者向某个位置添加数据
         },
         touchStart(item) {
