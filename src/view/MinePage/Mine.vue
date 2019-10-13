@@ -66,7 +66,7 @@ export default {
     filters: {
         filtersUID(data) {
             if (data.length > 7) {
-                return data.substr(1, 7);
+                return data.substr(0, 7);
             }
             return data;
         },

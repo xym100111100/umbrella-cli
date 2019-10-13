@@ -1,28 +1,129 @@
 <template>
     <div class="chat">
-        <header>
-            <div class="chat-header">
-                <van-nav-bar v-bind:title="name" v-on:click-left="handleBack" left-arrow>
-                    <van-icon size="0.8rem" slot="right" />
-                </van-nav-bar>
-            </div>
-        </header>
-        <div class="chat-centent" id="chat-content">
-            <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <div class="chat-header">
+            <van-nav-bar
+                v-bind:title="toUserInfo.name+String(myHeight)"
+                v-on:click-left="handleBack"
+                left-arrow
+            >
+                <van-icon size="0.8rem" slot="right" />
+            </van-nav-bar>
+        </div>
+
+        <div class="chat-centent" id="chat-centent">
+            <van-pull-refresh v-model="isLoading" @refresh="handleLoad">
                 <template v-for="item in chatInfo">
-                    <div v-if="item.id%2==0" :key="item.id" class="centent-node-you">
-                        <img :src="item.thumb" />
-                        <span id="num">{{item.text}}</span>
+                    <div
+                        v-if="item.fromUserId == toUserInfo.id"
+                        :key="item.id"
+                        class="centent-node-you"
+                    >
+                        <img :src="toUserInfo.face" />
+                        <span id="num">{{item.content}}</span>
                     </div>
-                    <div v-if="item.id%2!=0" :key="item.id" class="centent-node-me">
-                        <span id="num">{{item.text}}</span>
-                        <img :src="item.thumb" />
+                    <div
+                        v-if="item.fromUserId != toUserInfo.id"
+                        :key="item.id"
+                        class="centent-node-me"
+                    >
+                        <span id="num">{{item.content}}</span>
+                        <img :src="userInfo.wxFacePath" />
                     </div>
                 </template>
+                <!--    <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题1</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题2</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题3</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题4</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题5</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题6</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题7</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题8</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题9</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题10</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题11</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题12</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题13</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼问题14</span>
+                </div>
+                <div class="centent-node-you">
+                    <img
+                        src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
+                    />
+                    <span id="num">就这点傻逼111问题</span>
+                </div>-->
             </van-pull-refresh>
         </div>
         <div class="chat-footer">
-            <div id="addImg" v-on:click="addImg" class="footer-add-img">+</div>
+            <div class="footer-add-img"></div>
             <div class="footer-input">
                 <van-cell-group>
                     <van-field
@@ -44,8 +145,9 @@
 
 <script>
 import { NavBar, PullRefresh, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
-import { getChatInfo } from '../../svc/wst/Chat';
+import { list as listChat } from '../../svc/wst/Chat';
 import WSocket from '../../socket.js';
+import { clearTimeout } from 'timers';
 export default {
     components: {
         [Search.name]: Search,
@@ -60,121 +162,88 @@ export default {
     },
     data() {
         return {
-            id: this.$route.params.id,
-            name: this.$route.params.name,
+            toUserInfo: {
+                id: null,
+                name: null,
+                face: null,
+            },
+
             inputValue: null,
             chatInfo: [],
             isLoading: false,
-            meClientHeight: 0, //这个值是用来计算当软键盘升起来应该控制内容的高度是多少
+            pageNum: 0,
+            mySetInterval: null,
+            myHeight: 0,
+            MySetTimeOut: null,
         };
     },
-    updated() {},
     computed: {
-        computeText() {
-            return this.dataInfo.filter(function(data) {
-                if (data.text.length > 20) {
-                    data.text = data.text.slice(1, 20) + '...';
-                    return data;
-                } else {
-                    return data;
-                }
-            });
-        },
-        user() {
+        userInfo() {
             return this.$store.getters.user;
         },
     },
-
-    mounted() {
-        WSocket.init(
-            { user: this.user },
-            message => {
-                console.log(message);
-                this.setMsgCount(message);
-            },
-            error => {
-                console.log(error);
-            }
-        );
-    },
-    created() {
-        console.log('created');
-        this.meClientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    },
-    destroyed() {
-        console.log('destroyed');
-    },
-    methods: {
-        setMsgCount(message) {
-            console.log('ssss');
-            console.log(message);
-            alert('ss');
-            // 判断消息列表中是否有该用户
-            // let chatUser = this.chatDataList.filter(chatItem => {
-            //     return chatItem.target._id == message.from;
-            // });
-            // // console.log(chatUser);
-            // // 如果存在， count + 1 并将消息保存在列表中
-            // if (chatUser.length > 0) {
-            //     chatUser[0].count++;
-            //     chatUser[0].message.push({
-            //         msg: message.msg,
-            //         source: 'other',
-            //     });
-            //     this.saveMsg(chatUser[0].target, chatUser[0].count, chatUser[0].message);
-            // } else {
-            //     // 如果不存在， 那么获取用户信息 并现实提醒
-            //     this.getUserInfo(message);
-            // }
+    watch: {
+        myHeight: newClienHeight => {
+            document.getElementById('chat-centent').scrollTop = document.getElementById('chat-centent').scrollHeight;
         },
-        onRefresh() {
-            const params = { pageNum: this.pageNum + 1 };
-            getChatInfo({
+    },
+
+    methods: {
+        computeHeight() {
+           this.$store.scrollInterval = setInterval(() => {
+                this.myHeight = document.getElementById('chat-centent').clientHeight;
+            }, 100);
+        },
+        handleLoad() {
+            const params = {
+                pageNum: this.pageNum + 1,
+                fromUserId: this.$store.getters.user.id,
+                toUserId: this.toUserInfo.id,
+            };
+            if (this.MySetTimeOut) {
+                clearTimeout();
+            }
+            listChat({
                 params,
                 onSuccess: data => {
                     this.pageNum = data.pageNum;
-                    this.chatInfo.unshift(...data.list);
-                    setTimeout(() => {
+                    let arr = data.list.sort((a, b) => {
+                        return a.id - b.id;
+                    });
+                    this.chatInfo.push(...arr);
+                    this.MySetTimeOut = setTimeout(() => {
                         this.isLoading = false;
+                        document.getElementById('chat-centent').scrollTop = document.getElementById(
+                            'chat-centent'
+                        ).scrollHeight;
                     }, 500);
                 },
                 onFinish: () => {},
             });
         },
 
-        addImg() {},
-        inputFocus() {
-            // 这里这延迟必须有，否则页面将显示为0，因为可是区域还没有被
-            // 软键盘挡住.
-            setTimeout(() => {
-                let centent = document.getElementById('chat-content');
-                let height = this.meClientHeight - document.body.clientHeight;
-                centent.style.height = height + 'px';
-                document.getElementById('chat-content').scrollTop =
-                    document.getElementById('chat-content').offsetHeight + 1000;
-            }, 500);
-        },
-        inputBlur() {
-            let centent = document.getElementById('chat-content');
-            centent.style.height = this.meClientHeight + 'px';
-        },
+        inputFocus() {},
+        inputBlur() {},
         handleBack(e) {
+            clearInterval(this.$store.scrollInterval);
             this.$router.go(-1);
         },
         websoketsend() {
-            console.log('发送');
             //连接建立之后执行send方法发送数据
-            // if (this.inputValue !== null) {
+            if (this.inputValue == null) return;
             let actions = {
                 fromUserId: this.$store.getters.user.id,
-                toUserId: this.$store.getters.user.id === '653596523128553475'?'654231946032971776':'653596523128553475',
+                toUserId: this.$route.params.id,
                 msg: this.inputValue,
             };
-            //     this.websocket.send(JSON.stringify(actions));
-            //     this.inputValue = null;
-            // }
-            console.log(actions)
             WSocket.send(actions);
+            //修改消息列表
+            this.$store.getters.chatList.map(item => {
+                if (item.toUserId === actions.toUserId || item.toUserId === actions.fromUserId) {
+                    item.content = actions.msg;
+                    return;
+                }
+            });
         },
         websoketclose(e) {
             console.log('关闭');
@@ -183,13 +252,15 @@ export default {
         },
     },
     activated() {
-        console.log('activated');
+        this.computeHeight();
         this.chatInfo = [];
-        this.onRefresh();
-        this.id = this.$route.params.id;
-        this.name = this.$route.params.name;
-        document.getElementById('chat-content').scrollTop = document.getElementById('chat-content').offsetHeight;
-        console.log('sss');
+        this.pageNum = 0;
+        this.toUserInfo = {
+            id: this.$route.params.id,
+            name: this.$route.params.name,
+            face: this.$route.params.userWxfacePath,
+        };
+        this.handleLoad();
     },
 };
 </script>
@@ -199,26 +270,23 @@ html {
     height: 100%;
 }
 .chat {
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
-    height: 100%;
     &-header {
+        height: 1.2rem;
         background: #fafafa;
-        border-bottom: 1px solid #ededed;
-        position: fixed;
-        top: 0;
         width: 100%;
-        z-index: 99;
         span {
             font-size: 0.5rem;
         }
     }
     &-centent {
-        //  display: flex;
-        flex-direction: column;
-        padding: 1.5rem 0 1.5rem;
-        height: 90vh;
-        overflow: scroll;
+        height: 5rem;
+        overflow-y: scroll;
+        background: white;
+        flex-grow: 2;
         div {
             margin: 0.2rem 0 0.2rem 0;
         }
@@ -263,18 +331,17 @@ html {
         }
     }
     &-footer {
-        position: fixed;
-        bottom: 0;
+        height: 1.4rem;
+        background: #e4e1e1;
         width: 100%;
         display: flex;
-        background: #fafafa;
+        //background: #fafafa;
         align-items: center;
         .footer-add-img {
             width: 0.6rem;
             height: 0.6rem;
             font-size: 0.4rem;
             margin: 0 0.3rem 0 0.3rem;
-            border: solid 1px #947777;
             border-radius: 100%;
             justify-content: center;
             align-items: center;
@@ -285,7 +352,9 @@ html {
         }
         .footer-send {
             width: 1.7rem;
+
             button {
+                background: #aacee4;
                 font-size: 0.4rem;
                 border-radius: 0.2rem;
                 border: none;

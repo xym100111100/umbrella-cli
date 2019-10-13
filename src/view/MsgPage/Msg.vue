@@ -15,23 +15,26 @@
             >
                 <ul>
                     <li
-                        v-for="(item,index) in computeText"
+                        v-for="(item,index) in chatList"
                         :class="{move:candelete.id==item.id}"
                         @touchstart="touchStart(item)"
                         @touchend="touchEnd(item)"
                         :key="item.id"
-                        @click="contact(item.id,item.name)"
+                        @click="contact(item)"
                     >
                         <div class="content-item">
                             <div class="item-right">
                                 <div class="right-user-face">
-                                    <img :src="item.toUserWxfacePath" />
+                                    <div>
+                                        <img :src="item.toUserWxfacePath" />
+                                    </div>
+                                    <div v-if="item.notReadCount > 0" class="right-user-msg">.</div>
                                 </div>
                             </div>
                             <div class="item-left">
                                 <div class="left-content">
                                     <div class="content-top">
-                                        <p>{{item.name}}</p>
+                                        <p>{{item.toUserName}}</p>
                                         <p>{{item.fromTime|filtersTime}}</p>
                                     </div>
                                     <div class="content-bottom">
@@ -53,6 +56,7 @@
 <script>
 import { Search, Icon, NavBar, List, Cell, CellGroup } from 'vant';
 import { getChatByUserId } from '../../svc/wst/Chat';
+import WSocket from '../../socket.js';
 
 export default {
     components: {
@@ -71,7 +75,7 @@ export default {
             clientNum: {}, // 记录开始滑动（x1）,结束滑动（x2）的鼠标指针的位置
             candelete: {}, // 滑动的item
             loading: false,
-            finished: false,
+            finished: true,
             scroll: 0,
             pageNum: 0,
         };
@@ -92,35 +96,51 @@ export default {
                 }
             });
         },
-        user() {
+        userInfo() {
             return this.$store.getters.user;
+        },
+        chatList() {
+            return this.$store.getters.chatList.filter(function(data) {
+                if (data.content.length > 20) {
+                    data.content = data.content.slice(1, 20) + '...';
+                    return data;
+                } else {
+                    return data;
+                }
+            });
         },
     },
     activated() {
         document.getElementById('msg-content').scrollTop = this.scroll;
+        if (this.$store.scrollInterval) {
+            clearInterval(this.$store.scrollInterval);
+        }
     },
     mounted() {
         this.handleLoad();
+
+        console.log('mounted');
+        WSocket.init(
+            { user: this.userInfo },
+            message => {
+                this.setMsgCount(message);
+            },
+            error => {
+                console.log(error);
+            }
+        );
     },
     methods: {
         moving(e) {
             this.scroll = e.target.scrollTop;
         },
-        // 获取商品数据
+        // 获取聊天数据
         handleLoad() {
-            const params = { userId: this.$store.getters.user.id, pageNum: this.pageNum + 1 };
+            const params = { userId: this.$store.getters.user.id };
             getChatByUserId({
                 params,
                 onSuccess: data => {
-                    this.pageNum = data.pageNum;
-                    this.dataInfo.push(...data.list);
-                    // 如果是最后一页
-                    if (data.pages === data.pageNum || data.pages < data.pageNum) {
-                        // 数据全部加载完成
-                        this.finished = true;
-                    } else {
-                        this.finished = false;
-                    }
+                    this.$store.dispatch('setChatList', data);
                 },
                 onFinish: () => {
                     // 结束加载状态
@@ -130,6 +150,14 @@ export default {
         },
 
         setMsgCount(message) {
+            console.log(this.$store.getters.chatList);
+            this.$store.getters.chatList.map(item => {
+                if (item.toUserId === message.toUserId || item.toUserId === message.fromUserId) {
+                    item.content = message.msg;
+                    return;
+                }
+            });
+            this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 5;
             // 判断消息列表中是否有该用户
             // let chatUser = this.chatDataList.filter(chatItem => {
             //     return chatItem.target._id == message.from;
@@ -182,8 +210,12 @@ export default {
             //     console.log('数据保存成功');
             // });
         },
-        contact(id, name) {
-            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
+        contact(item) {
+            let id = this.$store.getters.user.id === item.fromUserId ? item.toUserId : item.fromUserId;
+            this.$router.push({
+                name: 'msg-chat',
+                params: { id: id, name: item.toUserName, userWxfacePath: item.toUserWxfacePath },
+            });
         },
         /**
          * 删除item
@@ -262,12 +294,19 @@ img {
                     line-height: 1.2rem;
                     height: 1.2rem;
                     width: 1.2rem;
+                    display: flex;
                     img {
                         height: 1.2rem;
                         border: #fff 1px solid;
                         border-radius: 20%;
                         padding: 0;
                         margin: 0;
+                    }
+                    .right-user-msg {
+                        margin: -1.05rem 0 0 -0.3rem;
+                        height: 0.2rem;
+                        color: red;
+                        font-size: 2rem;
                     }
                 }
             }
