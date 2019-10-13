@@ -15,7 +15,7 @@
             >
                 <ul>
                     <li
-                        v-for="(item,index) in chatList"
+                        v-for="(item,index) in msgList"
                         :class="{move:candelete.id==item.id}"
                         @touchstart="touchStart(item)"
                         @touchend="touchEnd(item)"
@@ -55,7 +55,7 @@
 
 <script>
 import { Search, Icon, NavBar, List, Cell, CellGroup } from 'vant';
-import { getChatByUserId } from '../../svc/wst/Chat';
+import { getChatByUserId, cleanUnreadContent } from '../../svc/wst/Chat';
 import WSocket from '../../socket.js';
 
 export default {
@@ -89,10 +89,10 @@ export default {
         userInfo() {
             return this.$store.getters.user;
         },
-        chatList() {
-            return this.$store.getters.chatList.filter(function(data) {
-                if (data.content.length > 20) {
-                    data.content = data.content.slice(1, 20) + '...';
+        msgList() {
+            return this.$store.getters.msgList.filter(function(data) {
+                if (data.content.length > 20 && data.content.slice(data.content.length,3) !=='...') {
+                    data.content = data.content.slice(0, 20) + '...';
                     return data;
                 } else {
                     return data;
@@ -113,7 +113,7 @@ export default {
         WSocket.init(
             { user: this.userInfo },
             message => {
-                this.setMsgCount(message);
+                this.saveMsg(message);
             },
             error => {
                 console.log(error);
@@ -130,7 +130,7 @@ export default {
             getChatByUserId({
                 params,
                 onSuccess: data => {
-                    this.$store.dispatch('setChatList', data);
+                    this.$store.dispatch('setMsgList', data);
                 },
                 onFinish: () => {
                     // 结束加载状态
@@ -139,15 +139,14 @@ export default {
             });
         },
 
-        setMsgCount(message) {
-            console.log(this.$store.getters.chatList);
-            this.$store.getters.chatList.map(item => {
+        saveMsg(message) {
+            this.$store.getters.msgList.map(item => {
                 if (item.toUserId === message.toUserId || item.toUserId === message.fromUserId) {
                     item.content = message.msg;
                     return;
                 }
             });
-            this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 5;
+            this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
             // 判断消息列表中是否有该用户
             // let chatUser = this.chatDataList.filter(chatItem => {
             //     return chatItem.target._id == message.from;
@@ -184,35 +183,43 @@ export default {
             //     this.saveMsg(res.data, 1, msg);
             // });
         },
-        // 保存方法
-        saveMsg(targetUser, count, msg) {
-            // const messageObj = {
-            //     target: {
-            //         avatar: targetUser.avatar,
-            //         name: targetUser.name,
-            //         _id: targetUser._id,
-            //     },
-            //     count: count,
-            //     message: msg,
-            //     user_id: this.user.id,
-            // };
-            // this.$axios.post('/api/profile/addmsg', messageObj).then(res => {
-            //     console.log('数据保存成功');
-            // });
-        },
+
         contact(item) {
-            let id = this.$store.getters.user.id === item.fromUserId ? item.toUserId : item.fromUserId;
+            const id = this.$store.getters.user.id === item.fromUserId ? item.toUserId : item.fromUserId;
             this.$router.push({
                 name: 'msg-chat',
                 params: { id: id, name: item.toUserName, userWxfacePath: item.toUserWxfacePath },
             });
+
+            // 将未读消息减去该条记录未读的数量,且将该条记录的未读数量设置为0
+            if (item.notReadCount > 0) {
+                this.$store.getters.msgList.map(data => {
+                    if (item.id === data.id) {
+                        this.$store.getters.active.msgCount = this.$store.getters.active.msgCount - data.notReadCount;
+                        data.notReadCount = 0;
+                    }
+                });
+                // 在数据库将当前用户对于该被点击的用户的未读消息全部设置为已读取
+
+                const data = { toUserId: this.$store.getters.user.id, fromUserId: id };
+                cleanUnreadContent({
+                    data,
+                    onSuccess: data => {
+                        console.log(data);
+                    },
+                    onFinish: () => {
+                        // 结束加载状态
+                        this.loading = false;
+                    },
+                });
+            }
         },
         /**
          * 删除item
          * index是下标
          */
         deleteItem(index) {
-            this.$store.getters.chatList.splice(index, 1);
+            this.$store.getters.msgList.splice(index, 1);
             // splice方法是删除数组某条数据，或者向某个位置添加数据
         },
         touchStart(item) {
@@ -329,6 +336,7 @@ img {
                             font-size: 0.35rem;
                             color: #907777;
                             padding: 0.1rem 0 0.2rem;
+                            overflow: hidden;
                         }
                     }
                 }

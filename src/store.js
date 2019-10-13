@@ -6,7 +6,8 @@ Vue.use(Vuex);
 const types = {
   SET_USER: 'SET_USER', // 用户信息
   SET_TARGET_USER: 'SET_TARGET_USER',
-  SET_CHAT_LIST: 'SET_CHAT_LIST'
+  SET_CHAT_LIST: 'SET_CHAT_LIST',
+  SET_MSG_LIST: 'SET_MSG_LIST'
 
 };
 
@@ -20,6 +21,7 @@ const state = {
   },
   chatList: [],
   scrollInterval:null,
+  msgList:[],
 };
 
 const getters = {
@@ -27,6 +29,7 @@ const getters = {
   targetUser: state => state.targetUser,
   active: state => state.active,
   chatList: state => state.chatList,
+  msgList: state => state.msgList,
   scrollInterval:state=>state.scrollInterval,
 };
 
@@ -43,6 +46,10 @@ const mutations = {
   [types.SET_CHAT_LIST](state, chatList) {
     if (chatList) state.chatList = chatList;
     else state.chatList = [];
+  },
+  [types.SET_MSG_LIST](state, msgList) {
+    if (msgList) state.msgList = msgList;
+    else state.msgList = [];
   }
 };
 
@@ -55,6 +62,9 @@ const actions = {
   },
   setChatList: ({ commit }, chatList) => {
     commit(types.SET_CHAT_LIST, chatList);
+  },
+  setMsgList: ({ commit }, msgList) => {
+    commit(types.SET_MSG_LIST, msgList);
   }
 };
 

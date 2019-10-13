@@ -75,6 +75,7 @@ import { NavBar, Toast, Popup, Cell, Icon, Button, PullRefresh, List } from 'van
 import { list as listOnlOnlinePromo } from '../../svc/suc/SucGoods';
 import { login } from '../../svc/suc/User';
 import { add as addLove, loveCount } from '../../svc/suc/SucLove';
+import { getUnreadContentByToUserId as msgCount } from '../../svc/wst/Chat';
 
 export default {
     components: {
@@ -174,6 +175,7 @@ export default {
                 onSuccess: data => {
                     this.$store.dispatch('setUser', data.sucUserMo);
                     this.getLoveCount();
+                    this.getMsgCount();
                     if (data.newUser) {
                         this.$router.push({ name: 'school' });
                     } else {
@@ -193,6 +195,19 @@ export default {
                 params,
                 onSuccess: result => {
                     this.$store.getters.active.loveCount = result;
+                },
+                onFinish: () => {
+                    // 结束加载状态
+                    this.loading = false;
+                },
+            });
+        },
+        getMsgCount() {
+            let params = { toUserId: this.$store.getters.user.id };
+            msgCount({
+                params,
+                onSuccess: result => {
+                    this.$store.getters.active.msgCount = result;
                 },
                 onFinish: () => {
                     // 结束加载状态

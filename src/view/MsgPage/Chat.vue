@@ -12,7 +12,7 @@
 
         <div class="chat-centent" ref="companyStyle" id="chat-centent">
             <van-pull-refresh loosing-text=" " v-model="isLoading" @refresh="onRefresh">
-                <template v-for="item in chatInfo">
+                <template v-for="item in chatList">
                     <div
                         v-if="item.fromUserId == toUserInfo.id"
                         :key="item.id"
@@ -94,6 +94,9 @@ export default {
         userInfo() {
             return this.$store.getters.user;
         },
+        chatList() {
+            return this.$store.getters.chatList;
+        },
     },
     watch: {
         myHeight: newClienHeight => {
@@ -137,7 +140,7 @@ export default {
                             let arr = data.list.sort((a, b) => {
                                 return a.id - b.id;
                             });
-                            this.chatInfo.unshift(...arr);
+                            this.$store.getters.chatList.unshift(...arr);
                             this.isLoading = false;
                         },
                         onFinish: () => {},
@@ -174,7 +177,7 @@ export default {
                     let arr = data.list.sort((a, b) => {
                         return a.id - b.id;
                     });
-                    this.chatInfo.push(...arr);
+                    this.$store.getters.chatList.push(...arr);
                     this.MySetTimeOut = setTimeout(() => {
                         this.isLoading = false;
                         document.getElementById('chat-centent').scrollTop = document.getElementById(
@@ -211,13 +214,13 @@ export default {
                 content: this.inputValue,
                 id: new Date().getTime(),
             };
-            this.chatInfo.push(localData);
+            this.$store.getters.chatList.push(localData);
             //清除input
             this.inputValue = null;
             // 让input获得焦点
             document.getElementById('inputNode').focus();
             //修改消息列表
-            this.$store.getters.chatList.map(item => {
+            this.$store.getters.msgList.map(item => {
                 if (item.toUserId === actions.toUserId || item.toUserId === actions.fromUserId) {
                     item.content = actions.msg;
                     return;
@@ -232,7 +235,7 @@ export default {
     },
     activated() {
         this.computeHeight();
-        this.chatInfo = [];
+        this.$store.dispatch('setChatList', []);
         this.pageNum = 0;
         this.isLoading = false;
         this.finished = false;
