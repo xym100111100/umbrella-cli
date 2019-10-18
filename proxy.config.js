@@ -1,6 +1,6 @@
 // 配置代理
 const proxy = {};
-addProxy('suc-svr', 'http://127.0.0.1:9750/');
+addProxy('suc-svr', 'http://192.168.8.201/');
 addProxy('wst-svr', 'http://127.0.0.1:9860/');
 
 /**

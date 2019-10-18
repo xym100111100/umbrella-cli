@@ -221,9 +221,11 @@ export default {
             document.getElementById('inputNode').focus();
             //修改消息列表
             this.$store.getters.msgList.map(item => {
-                if (item.toUserId === actions.toUserId || item.toUserId === actions.fromUserId) {
+                if (
+                    (item.toUserId === actions.toUserId && item.fromUserId === actions.fromUserId) ||
+                    (item.toUserId === actions.fromUserId && item.fromUserId === actions.toUserId)
+                ) {
                     item.content = actions.msg;
-                    return;
                 }
             });
         },

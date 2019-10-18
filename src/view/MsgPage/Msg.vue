@@ -91,7 +91,7 @@ export default {
         },
         msgList() {
             return this.$store.getters.msgList.filter(function(data) {
-                if (data.content.length > 20 && data.content.slice(data.content.length,3) !=='...') {
+                if (data.content.length > 20 && data.content.slice(data.content.length, 3) !== '...') {
                     data.content = data.content.slice(0, 20) + '...';
                     return data;
                 } else {
@@ -141,9 +141,12 @@ export default {
 
         saveMsg(message) {
             this.$store.getters.msgList.map(item => {
-                if (item.toUserId === message.toUserId || item.toUserId === message.fromUserId) {
+                if (
+                    (item.toUserId === message.toUserId && item.fromUserId === message.fromUserId) ||
+                    (item.toUserId === message.fromUserId && item.fromUserId === message.toUserId)
+                ) {
                     item.content = message.msg;
-                    return;
+                    
                 }
             });
             this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
