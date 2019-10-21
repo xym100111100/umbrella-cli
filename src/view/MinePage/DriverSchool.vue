@@ -53,7 +53,7 @@
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练场面积:</span>
-                        <span>{{driverSchoolData.trainingCount}}平方</span>
+                        <span>{{driverSchoolData.tainingArea}}平方</span>
                     </p>
                     <p>
                         <span>
