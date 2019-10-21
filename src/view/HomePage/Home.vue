@@ -105,6 +105,9 @@ export default {
         if (openid && this.$store.getters.user.id === undefined) {
             this.userLogin();
         }
+        if (this.$route.params.load) {
+            this.handleLoad();
+        }
     },
     mounted() {
         let openid = this.$route.query.openid;
