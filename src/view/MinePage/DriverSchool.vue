@@ -34,27 +34,27 @@
                         <span>全包:</span>
                         <span>{{driverSchoolData.allPrice}}</span>
                     </p>
-                    <p>
+                    <!-- <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>通过率:</span>
                         <span>{{driverSchoolData.passingRate}}%</span>
-                    </p>
-                    <p>
+                    </p> -->
+                    <!-- <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练场数量:</span>
                         <span>{{driverSchoolData.trainingCount}}个</span>
-                    </p>
-                    <p>
+                    </p> -->
+                    <!-- <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练场面积:</span>
                         <span>{{driverSchoolData.tainingArea}}平方</span>
-                    </p>
+                    </p> -->
                     <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
@@ -73,7 +73,7 @@
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
-                        <span>驾校优势:</span>
+                        <span>驾校详情:</span>
                     </p>
                     <div class="content-detail">{{driverSchoolData.schoolDetail}}</div>
                     <p>

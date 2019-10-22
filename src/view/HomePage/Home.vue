@@ -120,7 +120,7 @@ export default {
     filters: {
         filtersTitle(data) {
             if (data.length > 11) {
-                return data.substr(1, 10) + '...';
+                return data.substr(0, 10) + '...';
             }
             return data;
         },

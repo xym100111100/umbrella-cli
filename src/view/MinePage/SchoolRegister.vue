@@ -174,7 +174,7 @@ export default {
     methods: {
         onComment() {
             if (this.payload.state < 3) {
-                Toast({ message: '请在拿证后再评论', position: 'top' });
+                Toast({ message: '请在第二天客服确认协议再评论哦', position: 'top' });
                 return;
             }
             if (this.payload.state > 3) {
