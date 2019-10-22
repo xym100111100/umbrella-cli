@@ -73,7 +73,7 @@
                     <div class="upload-file">
                         <div v-if="filedata.url!==''" class="file-img">
                             <div class="img">
-                                <img :src="'http://192.168.8.108:20180/files'+filedata.url" />
+                                <img :src="'/ise-svr/files'+filedata.url" />
                             </div>
                             <div v-if="payload.state<2" @click="deleteImg" class="delete">
                                 <van-icon color="white" name="shanchu" />
@@ -245,7 +245,7 @@ export default {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         };
                         // 发送请求;
-                        axios.post('http://192.168.8.108:20180/ise/upload', formData, config).then(res => {
+                        axios.post('/ise-svr/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePath);
                             self.filedata.url = res.data.filePath;
                         });
