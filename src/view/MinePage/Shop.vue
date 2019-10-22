@@ -8,12 +8,14 @@
                 @click-right="onlineGood"
                 right-text="发布商品"
             />
-            <!-- <div class="content-title">
+            <div class="content-title">
                 <van-notice-bar
+                    color="#1989fa"
+                    background="#ecf9ff"
                     left-icon="info-o"
-                    text="温馨提示:每个商品上线的时间是两星期，超过后将自动下线，可手动更新上线时间，更新后商品在首页将处于前面!!! 注:每人只能有上线与下线加起来四个商品。"
+                    text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可手动更新自动下线时间，更新后公告将显示在需求公告前面。注:每个人上线下线一个只能有四个公告。"
                 />
-            </div>-->
+            </div>
             <div class="title-nav">
                 <template v-for="item in  payload.choiceList ">
                     <div
@@ -38,9 +40,7 @@
                     <template v-for="item in payload.onlineGoodList">
                         <div @click="onlineGood(item.id)" class="item-info" :key="item.id">
                             <div class="info-face">
-                                <img
-                                    :src="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
-                                />
+                                <img :src="'/ise-svr/files'+item.fileList[0].imgPath" />
                             </div>
                             <div class="info-bottom">
                                 <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
@@ -263,13 +263,13 @@ export default {
             });
         },
         onlineGood(id) {
-            // if (this.goodsCount >= 4) {
-            //     Toast({
-            //         message: '商品已超过四个，不能再继续上线。',
-            //         position: 'top',
-            //     });
-            //     return;
-            // }
+            if (this.goodsCount >= 4) {
+                Toast({
+                    message: '商品已超过四个，不能再继续上线。',
+                    position: 'top',
+                });
+                return;
+            }
             let payload = this.payload.onlineGoodList.find(item => item.id === id);
             this.$router.push({ name: 'online-good', params: { payload: payload } });
         },

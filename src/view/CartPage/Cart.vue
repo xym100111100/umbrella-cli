@@ -22,7 +22,7 @@
                         <div class="cart-card" @click="()=>goGoodsDetail(item)">
                             <van-card
                                 :title="item.goodTitle|filtersTitle"
-                                :thumb="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
+                                :thumb="'/ise-svr/files'+item.fileList[0].imgPath"
                             >
                                 <div v-if="item.goodType === 0" slot="tags" class="card-tags">
                                     <p>
@@ -46,7 +46,7 @@
                                 </div>
 
                                 <div
-                                    @click.stop="()=>contact(1,'猫咪')"
+                                    @click.stop="()=>contact(item)"
                                     slot="footer"
                                     class="cart-footer"
                                 >
@@ -164,8 +164,15 @@ export default {
         goGoodsDetail(item) {
             this.$router.push({ name: 'goods-detail', params: { payload: item } });
         },
-        contact(id, name) {
-            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
+        contact(item) {
+            if (item.userId === this.$store.getters.user.id) {
+                this.$toast({ message: '不能向自己发起聊天', position: 'top' });
+                return;
+            }
+            this.$router.push({
+                name: 'msg-chat',
+                params: { id: item.userId, name: item.userName, userWxfacePath: item.wxFacePath },
+            });
         },
         toggle(e) {
             this.checkedGoods = e;
@@ -192,13 +199,13 @@ export default {
                                         if (item.id === id) arr.splice(i, 1);
                                     });
                                 });
+                                this.$store.getters.active.loveCount =
+                                    this.$store.getters.active.loveCount - this.checkedGoods.length;
                             }
                         },
                     });
                 })
-                .catch(() => {
-                    Toast('您还未选择您的大学');
-                });
+                .catch(() => {});
         },
 
         // 获取商品数据
@@ -259,6 +266,7 @@ body {
         }
 
         .cart-content {
+            width: 100%;
             height: 100%;
             overflow: auto;
             position: absolute;

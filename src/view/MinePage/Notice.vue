@@ -30,10 +30,7 @@
                                         <div class="info-text">{{item.noticeContent}}</div>
                                     </div>
                                 </div>
-                                <div
-                                    @click="contact(item.id,item.userName)"
-                                    class="right-notice-contact"
-                                >
+                                <div @click="contact(item)" class="right-notice-contact">
                                     <van-icon color="rgb(186, 191, 202)" name="liaotian" />
                                 </div>
                             </div>
@@ -90,8 +87,15 @@ export default {
         onClickLeft() {
             this.$router.push({ name: 'mine' });
         },
-        contact(id, name) {
-            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
+        contact(item) {
+            if (item.userId === this.$store.getters.user.id) {
+                this.$toast({ message: '不能向自己发起聊天', position: 'top' });
+                return;
+            }
+            this.$router.push({
+                name: 'msg-chat',
+                params: { id: item.userId, name: item.userName, userWxfacePath: item.wxFacePath },
+            });
         },
         moving(e) {
             this.scroll = e.target.scrollTop;
@@ -126,8 +130,8 @@ export default {
             this.timeout = setTimeout(() => {
                 this.pageNum = 0;
                 this.noticeData = [];
-                 this.handleLoad();
-                this.$toast({message:'刷新成功',position:'top'});
+                this.handleLoad();
+                this.$toast({ message: '刷新成功', position: 'top' });
                 this.isLoading = false;
             }, 500);
         },

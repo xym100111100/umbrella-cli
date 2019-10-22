@@ -9,7 +9,7 @@
       <van-tabbar-item icon="tabbar-find" to="find">
         查找
       </van-tabbar-item>
-       <van-tabbar-item icon="tabbar-msg" v-if="msgCount===0"   to="msg">
+       <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0"   to="msg">
         消息
       </van-tabbar-item> 
        <van-tabbar-item icon="tabbar-msg" v-if="msgCount>0" v-bind:info="msgCount"  to="msg">

@@ -7,7 +7,7 @@
         <div class="goods-detial-main">
             <van-swipe class="goods-detial-swipe" :autoplay="5000">
                 <van-swipe-item v-for="item in payload.fileList" :key="item.id">
-                    <img :src="'http://192.168.8.108:20180/files'+item.imgPath" />
+                    <img :src="'/ise-svr/files'+item.imgPath" />
                 </van-swipe-item>
             </van-swipe>
 
@@ -36,7 +36,7 @@
                                     <span v-if="payload.isDiscuss">不可议价</span>
                                 </p>
                             </div>
-                            <div class="list-right" @click="contact(payload.id,payload.userName)">
+                            <div class="list-right" @click="contact(payload)">
                                 <van-icon color="rgb(186, 191, 202)" size=".7rem" name="liaotian" />
                             </div>
                         </div>
@@ -128,8 +128,16 @@ export default {
         handleBack() {
             this.$router.go(-1);
         },
-        contact(id, name) {
-            this.$router.push({ name: 'msg-chat', params: { id: id, name: name } });
+        contact(item) {
+            console.log(item)
+            if (item.userId === this.$store.getters.user.id) {
+                this.$toast({ message: '不能向自己发起聊天', position: 'top' });
+                return;
+            }
+            this.$router.push({
+                name: 'msg-chat',
+                params: { id: item.userId, name: item.userName, userWxfacePath: item.wxFacePath },
+            });
         },
     },
 };

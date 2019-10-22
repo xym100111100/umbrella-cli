@@ -12,11 +12,6 @@
             </div>
         </header>
         <div class="user-content">
-            <!-- <DyCell
-                MyIcon="shouye"
-                content="我的大学"
-                :goPath="()=>this.$router.push({name:'school'})"
-            />-->
             <DyCell
                 MyIcon="shouye2"
                 content="我的店铺"
@@ -32,10 +27,11 @@
                 content="校企联盟"
                 :goPath="()=>this.$router.push({name:'union', params: { load:true, }})"
             />
+            <DyCell MyIcon="xueshimao" content="毕业季节" :goPath="this.TempClose" />
             <DyCell
-                MyIcon="xueshimao"
-                content="毕业季节"
-                :goPath="()=>this.$router.push({name:'school'})"
+                MyIcon="jianzhi"
+                content="暑假兼职"
+                :goPath="this.willOpen"
             />
             <DyCell
                 MyIcon="xiangxishiyi"
@@ -48,7 +44,7 @@
 </template>
 
 <script>
-import { Row, Col, Cell } from 'vant';
+import { Row, Col, Cell, Toast } from 'vant';
 import DyCell from '../../comp/common/DyCell.vue';
 
 export default {
@@ -56,6 +52,7 @@ export default {
         [Row.name]: Row,
         [Col.name]: Col,
         [Cell.name]: Cell,
+        [Toast.name]: Toast,
         DyCell,
     },
     data() {
@@ -76,7 +73,14 @@ export default {
             return this.$store.getters.user;
         },
     },
-    methods: {},
+    methods: {
+        TempClose() {
+            this.$toast({ message: '服务暂时关闭咯~~~~~', position: 'top' });
+        },
+        willOpen(){
+            this.$toast({ message: '暑假还没到呢~~~~~', position: 'top' });
+        }
+    },
 };
 </script>
 
@@ -230,13 +234,7 @@ html {
                     }
                 }
             }
-
-
         }
-
-
-
-
     }
 }
 </style>

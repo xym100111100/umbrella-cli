@@ -5,8 +5,7 @@ export default {
    
     if (!this.ws) {
       // 实例化socket对象
-      this.ws = new WebSocket('ws://192.168.8.108:9100/?paramKey='+config.user.id);
-    }
+      this.ws = new WebSocket('wss://temp.duamai.com:9888/?paramKey='+config.user.id);    }
 
     // 客户端接收消息
     this.ws.onmessage = event => {

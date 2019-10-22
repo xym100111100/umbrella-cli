@@ -8,14 +8,12 @@
                 @click-right="onClickRight"
             />
         </header>
-        <div>
+        <!-- <div>
             <van-notice-bar
-                color="#1989fa"
-                background="#ecf9ff"
                 left-icon="info-o"
                 text="温馨提示:每个公告上线的时间是两星期，超过后将自动下线，可手动更新自动下线时间，更新后公告将显示在需求公告前面。注:每个人上线下线一个只能有四个公告。"
             />
-        </div>
+        </div>-->
         <div class="do-notice-content">
             <div class="content-textarea">
                 <textarea v-model="payload.noticeContent" maxlength="100" placeholder="请输入公告内容"></textarea>
@@ -65,11 +63,20 @@ export default {
                 onSuccess: result => {
                     if (result.result === 1) {
                         this.$router.push({ name: 'my-notice', params: { load: true } });
+                    } else {
+                        Toast({ message: '发布公告失败', position: 'top' });
                     }
                 },
             });
         },
         onClickRight() {},
+    },
+    activated() {
+        this.payload = {
+            noticeContent: null,
+            userId: this.$store.getters.user.id,
+            schoolName: this.$store.getters.user.schoolName,
+        };
     },
 };
 </script>

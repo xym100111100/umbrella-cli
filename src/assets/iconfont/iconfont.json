@@ -13,6 +13,13 @@
       "unicode_decimal": 58908
     },
     {
+      "icon_id": "101292",
+      "name": "兼职",
+      "font_class": "jianzhi",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
       "icon_id": "292250",
       "name": "我的",
       "font_class": "wode",

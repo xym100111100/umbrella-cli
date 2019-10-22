@@ -14,7 +14,7 @@
                             <div @click="contact(item)" class="list-item">
                                 <div class="item-top">
                                     <img
-                                        :src="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
+                                        :src="'/ise-svr/files'+item.fileList[0].imgPath"
                                     />
                                 </div>
                                 <div class="item-bottom">

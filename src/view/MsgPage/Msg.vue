@@ -140,51 +140,43 @@ export default {
         },
 
         saveMsg(message) {
+            // this.$store.getters.msgList.map(item => {
+            //     if (
+            //         (item.toUserId === message.toUserId && item.fromUserId === message.fromUserId) ||
+            //         (item.toUserId === message.fromUserId && item.fromUserId === message.toUserId)
+            //     ) {
+            //         item.content = message.msg;
+
+            //     }
+            // });
+            // this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
+
+            // 如果在聊天列表中了,就更新与那个用户的聊天记录
             this.$store.getters.msgList.map(item => {
                 if (
                     (item.toUserId === message.toUserId && item.fromUserId === message.fromUserId) ||
                     (item.toUserId === message.fromUserId && item.fromUserId === message.toUserId)
                 ) {
                     item.content = message.msg;
-                    
+                    item.notReadCount = item.notReadCount + 1;
                 }
             });
-            this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
-            // 判断消息列表中是否有该用户
-            // let chatUser = this.chatDataList.filter(chatItem => {
-            //     return chatItem.target._id == message.from;
-            // });
-            // // console.log(chatUser);
-            // // 如果存在， count + 1 并将消息保存在列表中
-            // if (chatUser.length > 0) {
-            //     chatUser[0].count++;
-            //     chatUser[0].message.push({
-            //         msg: message.msg,
-            //         source: 'other',
-            //     });
-            //     this.saveMsg(chatUser[0].target, chatUser[0].count, chatUser[0].message);
-            // } else {
-            //     // 如果不存在， 那么获取用户信息 并现实提醒
-            //     this.getUserInfo(message);
-            // }
-        },
-        getUserInfo(message) {
-            // 根据id查询用户信息
-            // this.$axios(`/api/users/${message.from}`).then(res => {
-            //     // console.log(res.data);
-            //     const msg = [];
-            //     msg.push({
-            //         msg: message.msg,
-            //         source: 'other',
-            //     });
-            //     // 将消息保存在聊天列表中 count为1
-            //     this.chatDataList.push({
-            //         target: res.data,
-            //         count: 1,
-            //         message: msg,
-            //     });
-            //     this.saveMsg(res.data, 1, msg);
-            // });
+            // 如果是当前页面的聊天用户,就将该消息添加进去聊天消息中
+            let chatList = this.$store.getters.chatList;
+            for (let i = 0; i < chatList.length; i++) {
+                if (
+                    (chatList[i].toUserId === message.toUserId && chatList[i].fromUserId === message.fromUserId) ||
+                    (chatList[i].toUserId === message.fromUserId && chatList[i].fromUserId === message.toUserId)
+                ) {
+                    let data = message;
+                    data.content = message.msg;
+                    data.id = new Date().getTime();
+                    this.$store.getters.chatList.push(data);
+                } else {
+                    this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
+                }
+                return;
+            }
         },
 
         contact(item) {

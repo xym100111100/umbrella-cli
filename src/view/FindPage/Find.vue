@@ -38,7 +38,7 @@
                         <div @click="()=>goGoodsDetail(item)">
                             <van-card
                                 :title="item.goodTitle|filtersTitle"
-                                :thumb="'http://192.168.8.108:20180/files'+item.fileList[0].imgPath"
+                                :thumb="'/ise-svr/files'+item.fileList[0].imgPath"
                             >
                                 <div v-if="item.goodType === 0" slot="tags" class="right-tags">
                                     <p>

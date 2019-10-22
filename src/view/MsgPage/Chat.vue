@@ -1,11 +1,7 @@
 <template>
     <div class="chat">
         <div class="chat-header">
-            <van-nav-bar
-                v-bind:title="toUserInfo.name+String(myHeight)+':'+divHeight"
-                v-on:click-left="handleBack"
-                left-arrow
-            >
+            <van-nav-bar v-bind:title="toUserInfo.name" v-on:click-left="handleBack" left-arrow>
                 <van-icon size="0.8rem" slot="right" />
             </van-nav-bar>
         </div>
@@ -54,7 +50,7 @@
 </template>
 
 <script>
-import { NavBar, PullRefresh, Button, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
+import { NavBar, PullRefresh, Button, Toast, Field, Icon, Search, List, Cell, CellGroup } from 'vant';
 import { list as listChat } from '../../svc/wst/Chat';
 import WSocket from '../../socket.js';
 import { clearTimeout } from 'timers';
@@ -69,6 +65,7 @@ export default {
         [Icon.name]: Icon,
         [Button.name]: Button,
         [PullRefresh.name]: PullRefresh,
+        [Toast.name]: Toast,
     },
     data() {
         return {
@@ -112,6 +109,39 @@ export default {
         },
     },
     methods: {
+        saveMsg(message) {
+            let isUurrentUser = false;
+            // 如果是当前页面的聊天用户,就将该消息添加进去聊天消息中
+            let chatList = this.$store.getters.chatList;
+            for (let i = 0; i < chatList.length; i++) {
+                if (
+                    (chatList[i].toUserId === message.toUserId && chatList[i].fromUserId === message.fromUserId) ||
+                    (chatList[i].toUserId === message.fromUserId && chatList[i].fromUserId === message.toUserId)
+                ) {
+                    let data = message;
+                    data.content = message.msg;
+                    data.id = new Date().getTime();
+                    this.$store.getters.chatList.push(data);
+                    isUurrentUser = true;
+                } else {
+                    this.$store.getters.active.msgCount = this.$store.getters.active.msgCount + 1;
+                }
+                break;
+            }
+
+            // 如果在聊天列表中了,就更新与那个用户的聊天记录
+            this.$store.getters.msgList.map(item => {
+                if (
+                    (item.toUserId === message.toUserId && item.fromUserId === message.fromUserId) ||
+                    (item.toUserId === message.fromUserId && item.fromUserId === message.toUserId)
+                ) {
+                    item.content = message.msg;
+                    if (!isUurrentUser) {
+                        item.notReadCount = item.notReadCount + 1;
+                    }
+                }
+            });
+        },
         onRefresh() {
             if (this.finished) {
                 setTimeout(() => {
@@ -201,6 +231,14 @@ export default {
         websoketsend() {
             //连接建立之后执行send方法发送数据
             if (this.inputValue == null) return;
+            if(this.inputValue.length > 200){
+                Toast('呃呃呃~~~~内容太多啦');
+                return;
+            }
+            if (this.$store.getters.user.id === this.$route.params.id) {
+                Toast('不能给自己发消息');
+                return;
+            }
             let actions = {
                 fromUserId: this.$store.getters.user.id,
                 toUserId: this.$route.params.id,
@@ -247,6 +285,15 @@ export default {
             face: this.$route.params.userWxfacePath,
         };
         this.handleLoad();
+        WSocket.init(
+            { user: this.userInfo },
+            message => {
+                this.saveMsg(message);
+            },
+            error => {
+                console.log(error);
+            }
+        );
     },
 };
 </script>

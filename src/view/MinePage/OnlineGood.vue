@@ -32,17 +32,14 @@
             />
         </van-popup>
         <div class="onlie-good-content">
-            <div class="content-title">
-                <van-notice-bar
-                    left-icon="info-o"
-                    text="温馨提示:拍摄时请将商品置于镜头的上部分,以防商品无法完整展示出来。"
-                />
-            </div>
+            <!-- <div class="content-title">
+                <van-notice-bar left-icon="info-o" text="温馨提示:每个商品的上线时间是两个星期,超出后将自动下线可手动更新下线。注:每个人同时只能有上线下线四个商品" />
+            </div> -->
             <div class="content-upload">
                 <template v-for=" item in payload.fileList">
                     <div class="upload-file" :key="item.id">
                         <div class="file-img">
-                            <img :src="'http://192.168.8.108:20180/files' + item.imgPath" />
+                            <img :src="'/ise-svr/files' + item.imgPath" />
                         </div>
                         <div @click="deleteImg(item.id)" class="upload-delete">
                             <van-icon color="white" name="shanchu" />
@@ -132,8 +129,9 @@
                                 </div>
                                 <div class="bottom-textArea-detail">
                                     <textarea
+                                        maxlength="70"
                                         v-model="payload.goodDetail"
-                                        placeholder="请简短地输入你对商品的描述"
+                                        placeholder="请简短地输入你对商品的描述(由于不在公众号里面将无法及时通知,如急需出售请留下联系方式哦)"
                                     ></textarea>
                                 </div>
                             </div>
@@ -200,8 +198,8 @@
                                 <div class="bottom-textArea-detail">
                                     <textarea
                                         v-model="payload.goodDetail"
-                                        maxlength="50"
-                                        placeholder="请简短地输入你对商品的描述"
+                                        maxlength="70"
+                                        placeholder="请简短地输入你对商品的描述(由于不在公众号里面将无法及时通知,如急需出售请留下联系方式哦)"
                                     ></textarea>
                                 </div>
                             </div>
@@ -333,7 +331,7 @@ export default {
             }
             // 是出售的商品才判断这几个
             if (data.goodType === 0) {
-                if (data.buyTime === '未选择'  || data.buyTime === null || data.buyTime === undefined) {
+                if (data.buyTime === '未选择' || data.buyTime === null || data.buyTime === undefined) {
                     Toast('请选择购买时间');
                     return;
                 }
@@ -346,7 +344,7 @@ export default {
                     Toast('输入现价且只能输入到千位');
                     return;
                 }
-                
+
                 data.buyTime = data.buyTime + ' 00:00:00';
             } else {
                 data.buyTime = null;
@@ -494,7 +492,7 @@ export default {
                             headers: { 'Content-Type': 'multipart/form-data' },
                         };
                         // 发送请求;
-                        axios.post('http://192.168.8.201/ise-svr/ise/upload', formData, config).then(res => {
+                        axios.post('/ise-svr/ise/upload', formData, config).then(res => {
                             console.log(res.data.filePath);
                             let fileObj = {};
                             fileObj.id = new Date().getTime();

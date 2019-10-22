@@ -11,9 +11,16 @@
             <header>
                 <span>米格走廊</span>是广西安布雷拉科技有限公司开发一款专门属于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
             </header>
-            
+
             <div class="content-function">
-                <p class="fonction-title" >目前提供的主要服务有</p>
+                <!-- <p class="fonction-title">目前提供的主要服务有</p> -->
+
+                <p class="fonction-title">出售闲置:</p>
+                <p class="function-detail">
+                    在毕业季来临之时，难免有很多带不走的物品，却又不舍得丢弃。在选择一些学科后
+                    有些临时使用的工具。在冲动买下的商品后发觉并不是那么地适合自己。那赶紧让其上线吧！！
+                    为学弟学妹提供物美价廉的宝贝是学长学姐的义务哦。
+                </p>
                 <p class="fonction-title">驾校报名:</p>
                 <p class="function-detail">
                     为解决现有驾校行业给人混乱的现象，收费不明确，多次收费，教练质量良莠不齐
@@ -23,32 +30,25 @@
                     退还所有费用，让学生不再是一个人学车，而是一个人和一个团队！协议详细请移步驾校
                     <router-link :to="{name:'signup-detail'}">报名详细</router-link>
                 </p>
-
-                <p class="fonction-title">闲置物品出售/出租:</p>
+                <p class="fonction-title">需求公告：</p>
                 <p class="function-detail">
-                    在毕业季来临之时，难免有很多带不走的物品，却又不舍得丢弃。在选择一些学科后
-                    有些临时使用的工具。在冲动买下的商品后发觉并不是那么地适合自己。那赶紧让其上线吧！！
-                    为学弟学妹提供物美价廉的宝贝是学长学姐的义务哦。
+                    是否还在为临时的健身器材所纠结要不要买？是否还在因为不小心丢掉了专业书网上又没不到？
+                    发出公告吧，你要想的学长学姐都有！
                 </p>
                 <p class="fonction-title">毕业服/毕业照</p>
                 <p class="function-detail">
                     美好的大学生活即将过去，除了回忆还是回忆吗？或许我们应该用相机记录更多美好的瞬间。
                     我们提供学士服/唐装/旗袍/各种款式的毕业服还有专业的摄影师。
                 </p>
-                <p class="fonction-title">需求公告：</p>
-                <p class="function-detail">
-                    是否还在为临时的健身器材所纠结要不要买？是否还在因为不小心丢掉了专业书网上又没不到？
-                    发出公告吧，你要想的学长学姐都有！
-                </p>
-                <p class="fonction-title">即将上线服务：</p>
-                <p>暑假工</p>
+                <!-- <p class="fonction-title">即将上线服务：</p> -->
+                <p>暑假兼职</p>
                 <p class="function-detail">
                     每当暑假都会想该如何度过漫长假期？最正确的姿势当然是外出兼职工作！！不仅有收入还能拥有充实的假期，本平台届时将与一些厂家合作，以学校为单位为厂家输送热血青年，同时提供专人跟踪
                     保障学生假期工作(届时名额有限，关注公众号以便收到服务开通消息抢先报名!)。
                 </p>
                 <p class="function-detail">未完待续....点击右上角关注吧！！你关注的不只是一个公众号，是一个提供资源/服务/保障的平台。</p>
-                <p class="fonction-bottom umbrella " >安布雷拉</p>
-                <p class="fonction-bottom"  >您生活的管家</p>
+                <!-- <p class="fonction-bottom umbrella">安布雷拉</p>
+                <p class="fonction-bottom">您生活的管家</p>-->
             </div>
         </div>
         <div></div>
@@ -104,10 +104,10 @@ body {
             .function-detail {
                 padding: 0 0 0.2rem 0.2rem;
             }
-            .umbrella{
+            .umbrella {
                 padding-right: 0.73rem;
             }
-            .fonction-bottom{
+            .fonction-bottom {
                 text-align: right;
                 color: #499df1;
             }
