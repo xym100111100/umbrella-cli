@@ -31,12 +31,13 @@
                 <p class="padding-left">拿到驾驶证后对驾校进行评论。</p>
                 <p>备注:</p>
                 <p class="padding-left">如有对报名有疑问或报名后一个工作日内没有收到客服来电的请致电下方客服电话或加微信了解详情</p>
-                <p class="info-service">客服:18278904219(微信同号)</p>
+                <p class="info-service">客服:18577093618(微信同号)</p>
             </div>
             <div class="content-statement">
-                <p>声明</p>
-                <div class="statement-info">合约由广西安布雷拉科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
-                <div class="statement-autograph">广西安布雷拉科技有限公司</div>
+                <!-- <div class="statement-info">合约由广西安布雷拉科技有限公司声明，本公司对此合约承担法律责任与郑重承诺会履行合约中的条款。</div>
+                <div class="statement-autograph">广西安布雷拉科技有限公司</div> -->
+               <img src="https://temp.duamai.com/ise-svr/files/umbrella/contract.jpg" class="" width="100%"/>
+              <!-- <img width="100%" src="/img/contract.jpg"  /> -->
             </div>
         </div>
     </div>
@@ -44,6 +45,7 @@
 
 <script>
 import { NavBar, NoticeBar, Icon } from 'vant';
+
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -90,19 +92,16 @@ body {
             }
         }
         .content-statement {
-            background: #fff7cc;
-            width: 97%;
-            margin: 0rem 0 0.5rem 0;
+            width: 98%;
+            margin: 0.1rem 0 0rem 0.1rem;
             border-radius: 0.2rem;
-            padding-top: 0.3rem;
             font-size: 0.4rem;
-            padding-left: 0.3rem;
             p {
                 color: #499df1;
                 padding: 0;
                 margin: 0;
                 font-size: 0.4rem;
-                padding-left: 0.3rem;
+               
             }
             .statement-info {
                 padding: 0.5rem;

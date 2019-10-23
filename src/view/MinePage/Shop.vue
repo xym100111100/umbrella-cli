@@ -263,13 +263,13 @@ export default {
             });
         },
         onlineGood(id) {
-            if (this.goodsCount >= 4) {
-                Toast({
-                    message: '商品已超过四个，不能再继续上线。',
-                    position: 'top',
-                });
-                return;
-            }
+            // if (this.goodsCount >= 4) {
+            //     Toast({
+            //         message: '商品已超过四个，不能再继续上线。',
+            //         position: 'top',
+            //     });
+            //     return;
+            // }
             let payload = this.payload.onlineGoodList.find(item => item.id === id);
             this.$router.push({ name: 'online-good', params: { payload: payload } });
         },

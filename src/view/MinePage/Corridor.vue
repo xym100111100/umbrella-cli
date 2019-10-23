@@ -57,6 +57,7 @@
 
 <script>
 import { NavBar, Toast } from 'vant';
+import axios from 'axios';
 export default {
     components: {
         [NavBar.name]: NavBar,
@@ -70,7 +71,11 @@ export default {
             Toast('返回');
         },
         onClickRight() {
-            Toast('按钮');
+            axios
+                .get(
+                    'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU3OTMwNDE4OQ==&scene=110#wechat_redirect'
+                )
+                .then(function(res) {});
         },
     },
 };
