@@ -42,10 +42,10 @@
                         </div>
                     </div>
                 </van-cell>
+
                 <van-cell>
-                    <template>
-                        <div>{{payload.goodDetail}}</div>
-                    </template>
+                    <div class="info-price" v-if="payload.newPrice"><span>￥</span>{{payload.newPrice}}</div>
+                    <div>{{payload.goodDetail}}</div>
                 </van-cell>
             </van-cell-group>
         </div>
@@ -129,7 +129,7 @@ export default {
             this.$router.go(-1);
         },
         contact(item) {
-            console.log(item)
+            console.log(item);
             if (item.userId === this.$store.getters.user.id) {
                 this.$toast({ message: '不能向自己发起聊天', position: 'top' });
                 return;
@@ -186,14 +186,20 @@ export default {
                     span {
                         padding: 0.07rem;
                         margin-right: 0.15rem;
-                        background: rgba(123, 191, 234, 0.2);
-                        color: #7bbfea;
+                        color: rgb(141, 148, 153);
+                        font-size: 0.35rem;
                     }
                 }
             }
             .list-right {
                 padding-top: 0.5rem;
             }
+        }
+    }
+    .info-price {
+        color: rgba(115, 169, 199, 0.8);
+        span{
+            font-size: 0.3rem;
         }
     }
 }

@@ -25,7 +25,7 @@ const mock = {
     'GET /suc-svr/notice': notice.list,
    // 'GET /suc-svr/suc/driver-school': driverSchool.list,
     
-    'POST /suc-svr/suc/user/user-login': User.login,
+   // 'POST /suc-svr/suc/user/user-login': User.login,
 
 
 };

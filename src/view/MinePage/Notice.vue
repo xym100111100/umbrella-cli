@@ -25,7 +25,13 @@
                             </div>
                             <div class="item-right">
                                 <div class="right-notice-info">
-                                    <div class="user-wxname">{{item.userName|filtersUserName}}</div>
+                                    <div class="info-user">
+                                        <div class="user-name">{{item.userName|filtersUserName}}</div>
+                                        <div class="user-scholl">
+                                            <van-icon size="0.4rem" color="rgb(186, 191, 202)" name="dizhi" />
+                                            <span>桂林理工大学</span> 
+                                        </div>
+                                    </div>
                                     <div class="notice-info">
                                         <div class="info-text">{{item.noticeContent}}</div>
                                     </div>
@@ -177,8 +183,16 @@ body {
                 width: 80vw;
                 .right-notice-info {
                     flex-grow: 2;
-                    .user-wxname {
+                    .info-user {
                         font-size: 0.45rem;
+                        display: flex;
+                        .user-name {
+                            flex-grow: 2;
+                        }
+                        .user-scholl {
+                            color: #4a4a4c;
+                            font-size: 0.35rem;
+                        }
                     }
                     .notice-info {
                         .info-text {
