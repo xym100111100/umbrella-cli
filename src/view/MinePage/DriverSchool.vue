@@ -25,14 +25,14 @@
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>报名:</span>
-                        <span>{{driverSchoolData.signupPrice}}</span>
+                        <span>{{driverSchoolData.signupPrice - 700}} - {{driverSchoolData.signupPrice}}</span>
                     </p>
                     <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>全包:</span>
-                        <span>{{driverSchoolData.allPrice}}</span>
+                        <span>{{driverSchoolData.allPrice - 700}}- {{driverSchoolData.allPrice}}</span>
                     </p>
                     <!-- <p>
                         <span>
@@ -40,21 +40,21 @@
                         </span>
                         <span>通过率:</span>
                         <span>{{driverSchoolData.passingRate}}%</span>
-                    </p> -->
+                    </p>-->
                     <!-- <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练场数量:</span>
                         <span>{{driverSchoolData.trainingCount}}个</span>
-                    </p> -->
+                    </p>-->
                     <!-- <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
                         </span>
                         <span>训练场面积:</span>
                         <span>{{driverSchoolData.tainingArea}}平方</span>
-                    </p> -->
+                    </p>-->
                     <p>
                         <span>
                             <van-icon color="#7bbfea" name="qianjin" />
@@ -241,7 +241,6 @@ html {
                     }
                 }
                 .content-detail {
-                
                     padding-left: 1rem;
                     font-size: 0.4rem;
                     color: #7d7e80;
