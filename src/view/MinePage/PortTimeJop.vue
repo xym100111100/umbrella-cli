@@ -18,7 +18,7 @@
         <div class="portTimeJop-content">
             <div class="content-top">
                 <p>平台发布</p>
-                <p class="top-detile">招聘校内发传单,工作时间约一个小时¥50,公众号推广扫码关注¥0.5/人(永久有效)</p>
+                <p class="top-detile">招聘校内发传单,工作时间约一个小时¥50,公众号推广扫码关注¥0.5/人(qq:253274870)</p>
             </div>
             <div class="content-bottom">
                 <p>第三方发布</p>

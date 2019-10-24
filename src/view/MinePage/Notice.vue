@@ -29,7 +29,7 @@
                                         <div class="user-name">{{item.userName|filtersUserName}}</div>
                                         <div class="user-scholl">
                                             <van-icon size="0.4rem" color="rgb(186, 191, 202)" name="dizhi" />
-                                            <span>桂林理工大学</span> 
+                                            <span>{{item.schoolName}}</span> 
                                         </div>
                                     </div>
                                     <div class="notice-info">
