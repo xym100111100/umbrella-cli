@@ -9,7 +9,7 @@
         />
         <div class="corridor-content">
             <header>
-                <span>米格走廊</span>是广西安布雷拉科技有限公司开发一款专门属于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
+                <span>米格走廊</span>是一款专门属于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
             </header>
 
             <div class="content-function">
