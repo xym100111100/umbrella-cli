@@ -178,6 +178,15 @@ const routes = [
         },
     },
     {
+        name: 'portTimeJop',
+        path: '/mine/portTimeJop',
+        component: () => import('./view/MinePage/PortTimeJop'),
+        meta: {
+            index: 2,
+
+        },
+    },
+    {
         name: 'union',
         path: '/mine/union',
         component: () => import('./view/MinePage/Union'),

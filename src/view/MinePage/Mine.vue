@@ -28,10 +28,10 @@
                 :goPath="()=>this.$router.push({name:'union', params: { load:true, }})"
             />
             <DyCell MyIcon="xueshimao" content="毕业季节" :goPath="this.TempClose" />
-            <DyCell
+            <DyCell 
                 MyIcon="jianzhi"
-                content="暑假兼职"
-                :goPath="this.willOpen"
+                content="学生兼职"
+                :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
             />
             <DyCell
                 MyIcon="xiangxishiyi"
