@@ -12,6 +12,8 @@
             </div>
         </header>
         <div class="user-content">
+            <DyCell MyIcon="928shouxi" content="赏金猎人" :goPath="this.TempClose" />
+
             <DyCell
                 MyIcon="shouye2"
                 content="我的店铺"
@@ -22,23 +24,23 @@
                 content="需求公告"
                 :goPath="()=>this.$router.push({name:'notice', params: { load:true, }})"
             />
-            <DyCell
+            <!-- <DyCell
                 MyIcon="lianheyingyong"
                 content="校企联盟"
                 :goPath="()=>this.$router.push({name:'union', params: { load:true, }})"
             />
-            <DyCell MyIcon="xueshimao" content="毕业季节" :goPath="this.TempClose" />
-            <DyCell 
+            <DyCell MyIcon="xueshimao" content="毕业季节" :goPath="this.TempClose" />-->
+            <DyCell
                 MyIcon="jianzhi"
                 content="学生兼职"
                 :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
             />
-            <DyCell
+            <!-- <DyCell
                 MyIcon="xiangxishiyi"
                 :isBootomLine="false"
                 content="米格走廊"
                 :goPath="()=>this.$router.push({name:'corridor'})"
-            />
+            />-->
         </div>
     </div>
 </template>
@@ -77,9 +79,9 @@ export default {
         TempClose() {
             this.$toast({ message: '服务暂时关闭咯~~~~~', position: 'top' });
         },
-        willOpen(){
+        willOpen() {
             this.$toast({ message: '暑假还没到呢~~~~~', position: 'top' });
-        }
+        },
     },
 };
 </script>

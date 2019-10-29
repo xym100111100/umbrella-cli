@@ -20,6 +20,13 @@
       "unicode_decimal": 58973
     },
     {
+      "icon_id": "191924",
+      "name": "928-狩猎",
+      "font_class": "928shouxi",
+      "unicode": "eb2f",
+      "unicode_decimal": 60207
+    },
+    {
       "icon_id": "292250",
       "name": "我的",
       "font_class": "wode",
@@ -263,6 +270,13 @@
       "font_class": "shangpinxiangxishuoming",
       "unicode": "e614",
       "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "1314154",
+      "name": "生产任务单管理",
+      "font_class": "shengchanrenwudanguanli",
+      "unicode": "e643",
+      "unicode_decimal": 58947
     },
     {
       "icon_id": "1486817",
@@ -664,6 +678,13 @@
       "unicode_decimal": 58924
     },
     {
+      "icon_id": "6114928",
+      "name": "金币",
+      "font_class": "jinbi",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
       "icon_id": "6160765",
       "name": "shop",
       "font_class": "goodscard-cart1",
@@ -776,6 +797,13 @@
       "unicode_decimal": 58910
     },
     {
+      "icon_id": "7524758",
+      "name": "金币",
+      "font_class": "jinbi1",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
       "icon_id": "7865418",
       "name": "服装-02",
       "font_class": "fuzhuang-",
@@ -804,11 +832,32 @@
       "unicode_decimal": 58927
     },
     {
+      "icon_id": "9663992",
+      "name": "标签 (1)",
+      "font_class": "biaoqian",
+      "unicode": "e7a2",
+      "unicode_decimal": 59298
+    },
+    {
+      "icon_id": "9664041",
+      "name": "标签",
+      "font_class": "biaoqian1",
+      "unicode": "e7ad",
+      "unicode_decimal": 59309
+    },
+    {
       "icon_id": "10099705",
       "name": "喜欢",
       "font_class": "xihuan1",
       "unicode": "e635",
       "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "11045021",
+      "name": "标签",
+      "font_class": "biaoqian2",
+      "unicode": "e644",
+      "unicode_decimal": 58948
     }
   ]
 }

@@ -3,8 +3,8 @@
   <div id="main-page"  >
     <router-view class="main-content" />
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="shouye2" to="home"  >
-        首页
+      <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter"  >
+        任务
       </van-tabbar-item>
       <van-tabbar-item icon="tabbar-find" to="find">
         查找
@@ -32,7 +32,7 @@
 import { Tabbar, TabbarItem } from 'vant';
 // 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
-    home: 0,
+    hunter: 0,
     find: 1,
     msg: 2,
     cart: 3,

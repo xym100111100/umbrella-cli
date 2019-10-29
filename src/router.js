@@ -13,9 +13,18 @@ const routes = [
     {
         name: 'main',
         path: '/main',
-        redirect: '/home',
+        redirect: '/hunter',
         component: () => import('./view/MainPage/Main'),
         children: [
+            {
+                name: 'hunter',
+                path: '/hunter',
+                component: () => import('./view/HunterPage/Hunter'),
+                meta: {
+                    index: 1,
+
+                },
+            },
             {
                 name: 'home',
                 path: '/home',
@@ -25,6 +34,7 @@ const routes = [
 
                 },
             },
+
             {
                 name: 'find',
                 path: '/find',
@@ -82,6 +92,14 @@ const routes = [
         component: () => import('./view/MsgPage/Chat'),
         meta: {
             index: 5,
+        },
+    },
+    {
+        name: 'add-hunter',
+        path: '/add-hunter',
+        component: () => import('./view/HunterPage/AddHunter'),
+        meta: {
+            index: 2,
         },
     },
     {

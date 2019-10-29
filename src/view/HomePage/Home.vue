@@ -13,9 +13,7 @@
                         <div v-for="item in goods" :key="item.id">
                             <div @click="contact(item)" class="list-item">
                                 <div class="item-top">
-                                    <img
-                                        :src="'/ise-svr/files'+item.fileList[0].imgPath"
-                                    />
+                                    <img :src="'/ise-svr/files'+item.fileList[0].imgPath" />
                                 </div>
                                 <div class="item-bottom">
                                     <div class="good-title">{{item.goodTitle|filtersTitle}}</div>
@@ -60,6 +58,14 @@
                                             />
                                         </div>
                                     </div>
+                                    <div class="dizhi">
+                                        <van-icon
+                                            size="0.4rem"
+                                            color="rgb(186, 191, 202)"
+                                            name="dizhi"
+                                        />
+                                        <span>广西民族大学相思湖学院</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -93,6 +99,18 @@ export default {
             count: 0,
             isLoading: false,
             goods: [],
+            goods2: [
+                {
+                    fileList: [{ imgPath: 'sss' }],
+                    isNowSell: true,
+                    buyTime: '2015-08-02 00:00:00',
+                    isDiscuss: true,
+                    oldPrice: 11,
+                    goodType: 0,
+                    newPrice: 2,
+                    goodTitle: '5555',
+                },
+            ],
             loading: false,
             finished: false,
             scroll: 0,
@@ -305,7 +323,7 @@ export default {
                 width: 46vw;
                 margin: 0.1rem;
                 background: white;
-                height: 8rem;
+                height: 8.5rem;
                 border-radius: 0.3rem;
                 .item-top {
                     img {
@@ -365,6 +383,12 @@ export default {
                         .icon:active {
                             background: rgba(195, 202, 206, 0.2);
                         }
+                    }
+                    .dizhi {
+                        text-align: right;
+                        color: rgb(141, 148, 153);
+                        font-size: 0.3rem;
+                        padding-right: 0.2rem;
                     }
                 }
             }
