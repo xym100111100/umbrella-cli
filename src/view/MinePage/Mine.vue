@@ -38,7 +38,7 @@
             <!-- <DyCell
                 MyIcon="xiangxishiyi"
                 :isBootomLine="false"
-                content="米格走廊"
+                content="随时随DI"
                 :goPath="()=>this.$router.push({name:'corridor'})"
             />-->
         </div>

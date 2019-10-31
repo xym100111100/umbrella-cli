@@ -370,6 +370,13 @@
       "unicode_decimal": 58968
     },
     {
+      "icon_id": "2120425",
+      "name": "注意",
+      "font_class": "zhuyi",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "2162766",
       "name": "查找_f",
       "font_class": "chazhao_f",
@@ -769,6 +776,13 @@
       "unicode_decimal": 59167
     },
     {
+      "icon_id": "7356299",
+      "name": "标签",
+      "font_class": "biaoqian3",
+      "unicode": "e6b5",
+      "unicode_decimal": 59061
+    },
+    {
       "icon_id": "7440460",
       "name": "拨打电话",
       "font_class": "bodadianhua",
@@ -844,6 +858,13 @@
       "font_class": "biaoqian1",
       "unicode": "e7ad",
       "unicode_decimal": 59309
+    },
+    {
+      "icon_id": "9917201",
+      "name": "疑问",
+      "font_class": "yiwen",
+      "unicode": "e651",
+      "unicode_decimal": 58961
     },
     {
       "icon_id": "10099705",

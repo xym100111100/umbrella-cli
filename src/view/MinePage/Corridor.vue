@@ -1,7 +1,7 @@
 <template>
     <div class="corridor">
         <van-nav-bar
-            title="A米格走廊"
+            title="A随时随DI"
             left-arrow
             @click-left="$router.go(-1)"
             @click-right="onClickRight"
@@ -9,7 +9,7 @@
         />
         <div class="corridor-content">
             <header>
-                <span>A米格走廊</span>一款服务于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
+                <span>A随时随DI</span>一款服务于大学生使用的公众号，宗旨是为大学生提供更多的资源，更优质的服务，更全面的保障。
             </header>
 
             <div class="content-function">
