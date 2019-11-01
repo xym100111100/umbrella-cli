@@ -26,19 +26,13 @@
                         </span>
                     </div>
                     <div class="title-name">
-                        <input @input="oninput" :value="inputValue" placeholder="请输入任务标题" />
+                        <input :value="inputValue" placeholder="请输入任务标题" />
                     </div>
                 </div>
             </div>
             <div class="content-bottom">
                 <div class="bottom-detail">
-                    <textarea
-                        @input="ontextarea"
-                        :value="textareaValue"
-                        placeholder="请输入任务详情"
-                        cols="30"
-                        rows="10"
-                    ></textarea>
+                    <textarea :value="textareaValue" placeholder="请输入任务详情" cols="30" rows="10"></textarea>
                 </div>
                 <div class="button-setting">
                     <div class="setting-header">
@@ -80,7 +74,7 @@
                             <div @click="onChangeMoney(-1)" class="stepper-reduce">
                                 <van-icon size="0.4rem" color="white" name="jianhao" />
                             </div>
-                            <div class="stepper-number">￥{{money}}</div>
+                            <div class="stepper-number">￥{{ money }}</div>
                             <div @click="onChangeMoney(1)" class="stepper-add">
                                 <van-icon
                                     size="0.4rem"
@@ -113,13 +107,6 @@ export default {
     },
     data() {
         return {
-            pageNum: 0, // 当前页码
-            loading: false, // 是否正在加载商品列表
-            finished: false, // 是否全部加载完成商品列表
-            scroll: 0,
-            list: [],
-            count: 0,
-            isLoading: false,
             checked: true,
             show: false,
             money: 2,
@@ -130,7 +117,6 @@ export default {
     filters: {},
     activated() {},
     methods: {
-   
         onChangeMoney(value) {
             if (this.money < 3 && value === -1) {
                 Toast({ message: '佣金不能少于2', position: 'top' });
@@ -144,25 +130,6 @@ export default {
         },
         showPopup() {
             this.show = true;
-        },
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
-
-                // 数据全部加载完成
-                if (this.list.length >= 40) {
-                    this.finished = true;
-                    console.log('sss');
-                } else {
-                    console.log('222');
-                    this.finished = false;
-                }
-            }, 500);
         },
     },
 };
