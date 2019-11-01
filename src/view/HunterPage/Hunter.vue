@@ -25,7 +25,7 @@
                     @load="onLoad"
                 >
                     <template v-for="item in list">
-                        <div class="content-item" :key="item">
+                        <div @click="getHonter" class="content-item" :key="item">
                             <div class="item-top">
                                 <div class="top-title">
                                     <div class="title-icon">
@@ -113,8 +113,11 @@ export default {
     filters: {},
     activated() {},
     methods: {
-        addHunter(){
-            this.$router.push({name:'add-hunter', params: { load:true, }})
+        getHonter() {
+            this.$router.push({ name: 'get-hunter', params: { load: true } });
+        },
+        addHunter() {
+            this.$router.push({ name: 'add-hunter', params: { load: true } });
         },
         onLoad() {
             // 异步更新数据
@@ -128,9 +131,7 @@ export default {
                 // 数据全部加载完成
                 if (this.list.length >= 40) {
                     this.finished = true;
-                    console.log('sss');
                 } else {
-                    console.log('222');
                     this.finished = false;
                 }
             }, 500);

@@ -1,13 +1,13 @@
 <template>
-    <div class="add-hunter">
-        <header class="add-hunter-header">
+    <div class="get-hunter">
+        <header class="get-hunter-header">
             <div class="header-title">
                 <div class="title-left">
                     <p>权利越大,责任越大</p>
                     <p class="title-english">With great power comes great responsibility</p>
                     <div class="title-detail">
-                        <p>严禁虚假发布</p>
-                        <p class="title-english">Prohibit false publications</p>
+                        <p>禁止虚假领取</p>
+                        <p class="title-english">Prohibition of false collection</p>
                     </div>
                 </div>
                 <div class="title-right">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </header>
-        <div class="add-hunter-content">
+        <div class="get-hunter-content">
             <div class="content-top">
                 <div class="top-title">
                     <div class="title-icon">
@@ -25,28 +25,28 @@
                             <van-icon size="0.6rem" color="#7bbfea" name="biaoqian2" />
                         </span>
                     </div>
-                    <div class="title-name">
-                        <input :value="inputValue" placeholder="请输入任务标题" />
-                    </div>
+                    <div class="title-name">取餐</div>
                 </div>
             </div>
             <div class="content-bottom">
-                <div class="bottom-detail">
-                    <textarea :value="textareaValue" placeholder="请输入任务详情" cols="30" rows="10"></textarea>
-                </div>
-                <div class="button-setting">
-                    <div class="setting-header">
+                <div class="bottom-detail">在第一节课下课后,估计是九点钟,去饭堂打包一个饭上去一栋A303宿舍,交给一个叫大专的同学。</div>
+                <div class="button-contact">
+                    <div class="contact-header">
                         <div>
                             <van-icon size="0.5rem" color="#a09dd4" name="zhuyi" />
                         </div>
-                        <div class="header-text">设置</div>
+                        <div class="header-text">雇主信息</div>
                     </div>
-                    <div class="setting-content">
+                    <div class="contact-top" >
+                        <div>姓名<span class="top-name" >波多野结衣</span></div>
+                    </div>
+                    <div class="contact-content">
                         <div @click="showPopup" class="content-text">
-                            是否显示手机号码
+                            手机
+                            <span class="text-number">132*******</span>
                             <van-icon size="0.6rem" color="#7bbfea" name="yiwen" />
                         </div>
-                        <van-popup v-model="show" position="top" :style="{ height: '30%' }">
+                        <van-popup v-model="show" position="top" :style="{ height: '20%' }">
                             <div class="content-popup">
                                 <div class="popup-header">
                                     <div class="header-icon">
@@ -54,38 +54,22 @@
                                     </div>
                                     <div
                                         class="heander-text"
-                                    >为防止信息泄露造成损失,请在以下或可能造成损失情况下将手机号码设置为在同意猎人接受任务后再显示手机号码。</div>
+                                    >雇主设置了同意才能看到电话号码,请领取任务后等待雇主同意后显示,或发消息给雇主获取。</div>
                                 </div>
-                                <div class="popup-content">猎人领取快递</div>
                             </div>
                         </van-popup>
-                        <div class="content-switch">
-                            <van-switch
-                                size="0.5rem"
-                                active-color="#a09dd4"
-                                inactive-color="#fff"
-                                v-model="checked"
-                            />
+                        <div class="content-contact">
+                            <van-icon size="0.6rem" color="#a09dd4" name="liaotian" />
                         </div>
                     </div>
-                    <div class="setting-bottom">
-                        <div class="bottom-money">佣金</div>
-                        <div class="bottom-stepper">
-                            <div @click="onChangeMoney(-1)" class="stepper-reduce">
-                                <van-icon size="0.4rem" color="white" name="jianhao" />
-                            </div>
-                            <div class="stepper-number">￥{{ money }}</div>
-                            <div @click="onChangeMoney(1)" class="stepper-add">
-                                <van-icon
-                                    size="0.4rem"
-                                    color="white"
-                                    name="tianjiajiahaowubiankuang"
-                                />
-                            </div>
+                    <div class="contact-bottom">
+                        <div class="bottom-money">
+                            佣金
+                            <span class="money-number" >￥{{ money }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="button-submit">发布</div>
+                <div class="button-submit" @click="onGethunter">{{buttonText}}</div>
             </div>
         </div>
     </div>
@@ -112,11 +96,17 @@ export default {
             money: 2,
             textareaValue: null,
             inputValue: null,
+            buttonText: '领取',
         };
     },
     filters: {},
     activated() {},
     methods: {
+        onGethunter() {
+            if (this.buttonText === '领取') {
+                this.buttonText = '正在等待雇主同意';
+            }
+        },
         onChangeMoney(value) {
             if (this.money < 3 && value === -1) {
                 Toast({ message: '佣金不能少于2', position: 'top' });
@@ -140,11 +130,11 @@ html,
 body {
     height: 100%;
 }
-.add-hunter {
+.get-hunter {
     overflow: scroll;
     background: #ebe6e6;
     height: 100vh;
-    .add-hunter-header {
+    .get-hunter-header {
         background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
         height: 3rem;
         .header-title {
@@ -186,7 +176,7 @@ body {
             }
         }
     }
-    .add-hunter-content {
+    .get-hunter-content {
         margin: 0.3rem 0 0 3%;
         background: white;
         width: 94%;
@@ -208,11 +198,7 @@ body {
                 }
                 .title-name {
                     margin: 0.2rem 0 0 0.5rem;
-                    input {
-                        border: none;
-                        color: #b6c4c7;
-                        font-size: 0.4rem;
-                    }
+                    font-size: 0.45rem;
                 }
             }
         }
@@ -224,17 +210,17 @@ body {
             .bottom-detail {
                 width: 70%;
                 margin-left: 13%;
-                textarea {
-                    border: none;
-                }
+                max-height: 4rem;
+                overflow: scroll;
+                padding-bottom: 0.3rem;
             }
-            .button-setting {
+            .button-contact {
                 margin-left: 2%;
                 padding-top: 0.2rem;
                 border-top: #cad8db solid 0.01rem;
                 width: 96%;
                 height: 2rem;
-                .setting-header {
+                .contact-header {
                     height: 1rem;
                     display: flex;
 
@@ -243,60 +229,36 @@ body {
                         color: #768588;
                     }
                 }
-                .setting-content {
+                .contact-top{
+                    padding-left: 0.2rem;
+                    .top-name{
+                        padding-left: 0.3rem;
+                    }
+                }
+                .contact-content {
                     display: flex;
                     .content-text {
                         flex-grow: 2;
                         padding-left: 0.2rem;
+                        .text-number {
+                            padding-left: 0.2rem;
+                        }
                     }
-                    .content-switch {
-                        padding: 0.2rem 0.4rem 0 0;
+                    .content-contact {
+                        padding: 0.1rem 0.4rem 0 0;
                         text-align: right;
                         width: 3rem;
                     }
                 }
-                .setting-bottom {
+                .contact-bottom {
                     width: 96%;
                     margin: 0.3rem 0 0 2%;
-                    display: flex;
+                   
                     height: 1rem;
                     align-items: center;
-                    .bottom-money {
-                        flex-grow: 2;
-                    }
-                    .bottom-stepper {
-                        width: 39%;
-                        display: flex;
-                        align-items: center;
-                        .stepper-number {
-                            width: 1.2rem;
-                            text-align: center;
-                        }
-                        .stepper-reduce,
-                        .stepper-add {
-                            width: 1rem;
-                            text-align: center;
-                            padding-top: -0.5rem;
-                        }
-                        .stepper-reduce {
-                            background-image: linear-gradient(
-                                to right,
-                                rgba(170, 234, 240, 0.514),
-                                rgba(94, 235, 248, 0.514)
-                            );
-                            border-top-left-radius: 0.3rem;
-                            border-bottom-left-radius: 0.3rem;
-                        }
-                        .stepper-add {
-                            background-image: linear-gradient(to right, rgba(94, 235, 248, 0.514), #8cc0e0);
-                            border-top-right-radius: 0.3rem;
-                            border-bottom-right-radius: 0.3rem;
-                        }
-                        .stepper-add:active {
-                            background: #7bbfea;
-                        }
-                        .stepper-reduce:active {
-                            background: #7bbfea;
+                    .bottom-money{
+                        .money-number{
+                            padding-left: 0.2rem;
                         }
                     }
                 }
@@ -331,16 +293,6 @@ body {
         .heander-text {
             padding: 0.2rem;
         }
-    }
-    .popup-content {
-        background: white;
-        height: 1rem;
-        width: 84%;
-        margin-left: 9%;
-        line-height: 1rem;
-        padding-left: 0.2rem;
-        border-radius: 0.2rem;
-        color: #768588;
     }
 }
 </style>

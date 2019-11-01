@@ -103,6 +103,14 @@ const routes = [
         },
     },
     {
+        name: 'get-hunter',
+        path: '/get-hunter',
+        component: () => import('./view/HunterPage/GetHunter'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
         name: 'login-fail',
         path: '/login-fail',
         component: () => import('./view/LoginPage/LoginFail'),
