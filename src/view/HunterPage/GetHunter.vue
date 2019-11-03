@@ -211,6 +211,7 @@ body {
                 width: 70%;
                 margin-left: 13%;
                 max-height: 4rem;
+                min-height: 2rem;
                 overflow: scroll;
                 padding-bottom: 0.3rem;
             }

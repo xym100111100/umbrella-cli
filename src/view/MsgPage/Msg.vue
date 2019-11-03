@@ -393,13 +393,12 @@ img {
         }
     }
 }
-.van-nav-bar__title {
-    font-size: 0.5rem;
-}
-.van-nav-bar__right {
-    .van-nav-bar__text {
-        font-size: 0.4rem;
-        color: #7bbfea;
+
+.van-nav-bar {
+    background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+    .van-nav-bar__title {
+        color: white;
+        font-size: 0.45rem;
     }
 }
 </style>

@@ -249,11 +249,12 @@ body {
         .van-nav-bar {
             height: 1.15rem;
             font-family: monospace;
-            background: white;
+            background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
             &__title {
                 padding: 0 0.3rem;
-                font-size: 0.5rem;
+                font-size: 0.45rem;
                 max-width: unset;
+                color: white;
             }
 
             &__right {

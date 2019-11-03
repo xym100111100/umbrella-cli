@@ -6,15 +6,15 @@
       <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter"  >
         任务
       </van-tabbar-item>
-      <van-tabbar-item icon="tabbar-find" to="find">
-        查找
-      </van-tabbar-item>
        <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0"   to="msg">
         消息
       </van-tabbar-item> 
        <van-tabbar-item icon="tabbar-msg" v-if="msgCount>0" v-bind:info="msgCount"  to="msg">
         消息
       </van-tabbar-item> 
+            <van-tabbar-item icon="tabbar-find" to="find">
+        查找
+      </van-tabbar-item>
       <van-tabbar-item icon="xihuan" v-if="loveCount>0" v-bind:info="loveCount"  to="cart">
         收藏
       </van-tabbar-item>
@@ -33,8 +33,8 @@ import { Tabbar, TabbarItem } from 'vant';
 // 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
     hunter: 0,
-    find: 1,
-    msg: 2,
+    msg: 1,
+    find: 2,
     cart: 3,
     mine: 4,
 };
