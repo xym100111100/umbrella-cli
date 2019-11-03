@@ -194,7 +194,7 @@ export default {
             login({
                 data,
                 onSuccess: data => {
-                    this.$store.dispatch('setUser', data.sucUserMo);
+                   // this.$store.dispatch('setUser', data.sucUserMo);
                     this.getLoveCount();
                     this.getMsgCount();
                     if (data.newUser) {

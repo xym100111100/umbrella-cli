@@ -11,7 +11,7 @@ const User = require('./suc/User');
 
 const mock = {
     // 获取每日推荐
-    'GET /onl-svr/onl/onlinepromotion/list': OnlOnlinePromo.list,
+    'GET /suc-svr/suc/goods': OnlOnlinePromo.list,
     'GET /onl-svr/onl/online/getonlines': GoodsDetail.goodsList,
     'GET /onl-svr/onl/onlinespec/list': GoodsDetail.skuList,
     'GET /onl-svr/onl/cart': Cart.goodsList,
@@ -27,7 +27,7 @@ const mock = {
     
     'POST /suc-svr/suc/user/user-login': User.login,
 
-
+    
 };
 
 module.exports = mock;

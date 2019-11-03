@@ -1,5 +1,5 @@
 <template>
-    <div class="hunter">
+    <div @scroll="moving" id="hunter" class="hunter">
         <van-pull-refresh loading-text=" " v-model="isLoading" @refresh="onRefresh">
             <header class="hunter-header">
                 <div class="header-title">Welcome to anytime anywhere</div>
@@ -22,7 +22,8 @@
                     v-model="loading"
                     :finished="finished"
                     finished-text="没有更多了"
-                    @load="onLoad"
+                    @load="handleLoad"
+                    :immediate-check="false"
                 >
                     <template v-for="item in list">
                         <div @click="getHonter" class="content-item" :key="item">
@@ -87,7 +88,7 @@
 <script>
 import Vue from 'vue';
 import { Search, List, PullRefresh, Card, Cell, Icon, Toast } from 'vant';
-
+import { login } from '../../svc/suc/User';
 // Lazyload插件需要初始化
 
 export default {
@@ -106,42 +107,90 @@ export default {
             finished: false, // 是否全部加载完成商品列表
             scroll: 0,
             list: [],
-            count: 0,
             isLoading: false,
         };
     },
     filters: {},
-    activated() {},
+    activated() {
+        alert('sss');
+        //  console.log("sss2")
+        // let openid = this.$route.query.openid;
+        // document.getElementById('hunter').scrollTop = this.scroll;
+        // if (openid && this.$store.getters.user.id === undefined) {
+        //     this.userLogin();
+        // }
+        // if (this.$route.params.load) {
+        //     this.handleLoad();
+        // }
+    },
+    mounted() {
+        alert('rrr');
+        // console.log("sss")
+        // let openid = this.$route.query.openid;
+        // if (!openid) {
+        //     this.list = [];
+        //     this.pageNum = 0;
+        //     this.handleLoad();
+        // }
+        this.userLogin();
+    },
     methods: {
+        userLogin() {
+            let openid = this.$route.query.openid;
+            let headimgurl = this.$route.query.headimgurl;
+            let nickname = this.$route.query.nickname;
+            const data = {
+                wxOpenid: openid,
+                wxFacePath: headimgurl,
+                wxName: nickname,
+            };
+            login({
+                data,
+                onSuccess: data => {
+                    this.$store.dispatch('setUser', data.sucUserMo);
+                    if (data.newUser) {
+                        this.$router.push({ name: 'school' });
+                    } else {
+                        this.handleLoad();
+                    }
+                },
+                onFail: (code, msg) => {
+                    //  console.log('请求失败');
+                    // done();
+                },
+            });
+        },
+        moving(e) {
+            this.scroll = e.target.scrollTop;
+        },
         getHonter() {
             this.$router.push({ name: 'get-hunter', params: { load: true } });
         },
         addHunter() {
-            this.$router.push({ name: 'add-hunter', params: { load: true } });
+            //this.$router.push({ name: 'add-hunter', params: { load: true } });
         },
-        onLoad() {
+        handleLoad() {
             // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
+            //  setTimeout(() => {
+            for (let i = 0; i < 10; i++) {
+                this.list.push(this.list.length + 1);
+            }
+            // 加载状态结束
+            this.loading = false;
 
-                // 数据全部加载完成
-                if (this.list.length >= 40) {
-                    this.finished = true;
-                } else {
-                    this.finished = false;
-                }
-            }, 500);
+            // 数据全部加载完成
+            if (this.list.length >= 40) {
+                this.finished = true;
+            } else {
+                this.finished = false;
+            }
+            //  }, 500);
         },
         onRefresh() {
             setTimeout(() => {
                 this.isLoading = false;
-                this.count++;
                 this.list = [];
-                this.onLoad();
+                this.handleLoad();
             }, 500);
         },
     },
