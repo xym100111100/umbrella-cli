@@ -112,27 +112,22 @@ export default {
     },
     filters: {},
     activated() {
-        alert('sss');
-        //  console.log("sss2")
-        // let openid = this.$route.query.openid;
-        // document.getElementById('hunter').scrollTop = this.scroll;
-        // if (openid && this.$store.getters.user.id === undefined) {
-        //     this.userLogin();
-        // }
-        // if (this.$route.params.load) {
-        //     this.handleLoad();
-        // }
+        let openid = this.$route.query.openid;
+        document.getElementById('hunter').scrollTop = this.scroll;
+        if (openid && this.$store.getters.user.id === undefined) {
+            this.userLogin();
+        }
+        if (this.$route.params.load) {
+            this.handleLoad();
+        }
     },
     mounted() {
-        alert('rrr');
-        // console.log("sss")
-        // let openid = this.$route.query.openid;
-        // if (!openid) {
-        //     this.list = [];
-        //     this.pageNum = 0;
-        //     this.handleLoad();
-        // }
-        this.userLogin();
+        let openid = this.$route.query.openid;
+        if (!openid) {
+            this.list = [];
+            this.pageNum = 0;
+            this.handleLoad();
+        }
     },
     methods: {
         userLogin() {
@@ -171,7 +166,7 @@ export default {
         },
         handleLoad() {
             // 异步更新数据
-            //  setTimeout(() => {
+              setTimeout(() => {
             for (let i = 0; i < 10; i++) {
                 this.list.push(this.list.length + 1);
             }
@@ -184,7 +179,7 @@ export default {
             } else {
                 this.finished = false;
             }
-            //  }, 500);
+              }, 500);
         },
         onRefresh() {
             setTimeout(() => {
