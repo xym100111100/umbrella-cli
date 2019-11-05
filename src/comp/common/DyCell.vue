@@ -1,15 +1,15 @@
 <template>
-  <div class="dy-cell" @click="goPath" >
-    <div class="cell-left">
-      <van-icon color="#7bbfea"  v-bind:name="MyIcon" />
+    <div class="dy-cell" @click="goPath">
+        <div class="cell-left">
+            <van-icon v-bind:color="color" v-bind:name="MyIcon" />
+        </div>
+        <div class="cell-right" v-bind:class="{isBootomLine:isBootomLine}">
+            <div class="right-content">{{content}}</div>
+            <div class="right-icon">
+                <van-icon name="qianjin" />
+            </div>
+        </div>
     </div>
-    <div class="cell-right" v-bind:class="{isBootomLine:isBootomLine}"  >
-      <div  class="right-content">{{content}}</div>
-      <div class="right-icon">
-        <van-icon name="qianjin" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -30,7 +30,8 @@ export default {
             default: true,
         },
         MyIcon: String,
-        goPath:Function,
+        goPath: Function,
+        color: String,
     },
 };
 </script>

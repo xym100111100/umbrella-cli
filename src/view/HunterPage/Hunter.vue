@@ -162,7 +162,7 @@ export default {
             this.$router.push({ name: 'get-hunter', params: { load: true } });
         },
         addHunter() {
-            //this.$router.push({ name: 'add-hunter', params: { load: true } });
+            this.$router.push({ name: 'add-hunter', params: { load: true } });
         },
         handleLoad() {
             // 异步更新数据

@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="title-right">
-                    <div @click="textMath">
+                    <div @click="$router.go(-1)">
                         <van-icon size="0.5rem" name="back-search" />
                     </div>
                 </div>
@@ -102,9 +102,7 @@ export default {
     filters: {},
     activated() {},
     methods: {
-        textMath(){
-            alert(this.$store.getters.user.id)
-        },
+
         onGethunter() {
             if (this.buttonText === '领取') {
                 this.buttonText = '正在等待雇主同意';

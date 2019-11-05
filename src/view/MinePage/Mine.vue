@@ -12,35 +12,26 @@
             </div>
         </header>
         <div class="user-content">
-            <DyCell MyIcon="928shouxi" content="赏金猎人" :goPath="this.TempClose" />
+            <DyCell color="#7bbfea" MyIcon="928shouxi" content="赏金猎人" :goPath="this.TempClose" />
 
             <DyCell
+                color="#7bbfea"
                 MyIcon="shouye2"
                 content="我的店铺"
                 :goPath="()=>this.$router.push({name:'shop', params: { load:true, }})"
             />
             <DyCell
+                color="#7bbfea"
                 MyIcon="fabuxuqiu"
-                content="需求公告"
+                content="失物招领"
                 :goPath="()=>this.$router.push({name:'notice', params: { load:true, }})"
             />
-            <!-- <DyCell
-                MyIcon="lianheyingyong"
-                content="校企联盟"
-                :goPath="()=>this.$router.push({name:'union', params: { load:true, }})"
-            />
-            <DyCell MyIcon="xueshimao" content="毕业季节" :goPath="this.TempClose" />-->
             <DyCell
+                color="#7bbfea"
                 MyIcon="jianzhi"
                 content="学生兼职"
                 :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
             />
-            <!-- <DyCell
-                MyIcon="xiangxishiyi"
-                :isBootomLine="false"
-                content="随时随DI"
-                :goPath="()=>this.$router.push({name:'corridor'})"
-            />-->
         </div>
     </div>
 </template>
@@ -101,11 +92,9 @@ html {
         height: 3rem;
         display: flex;
         align-items: center;
-        // background: linear-gradient(to right, rgb(241, 101, 50), red);
-        background: #fff;
+        background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
         margin-bottom: 0.2rem;
-        padding: 0.4rem 0 0.6rem;
-
+        padding: 0.2rem 0 0.6rem;
         .header-face {
             height: 1.5rem;
             width: 1.5rem;
@@ -125,13 +114,14 @@ html {
             flex-direction: column;
             margin-left: 0.3rem;
             font-size: 0.6rem;
+            color: white;
         }
 
         .header-name .Uid {
             margin-top: 0.4rem;
             font-size: 0.4rem;
             margin-left: 0.2rem;
-            color: #615c5c;
+            color: white;
         }
         .header-setting {
             display: flex;
