@@ -34,6 +34,15 @@ const routes = [
 
                 },
             },
+            {
+                name: 'store',
+                path: '/store',
+                component: () => import('./view/StorePage/Store'),
+                meta: {
+                    index: 1,
+
+                },
+            },
 
             {
                 name: 'find',

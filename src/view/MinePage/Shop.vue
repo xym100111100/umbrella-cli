@@ -2,7 +2,7 @@
     <div class="shop">
         <div class="shop-title">
             <van-nav-bar
-                title="我的小店"
+                title="我的闲置"
                 left-arrow
                 @click-left="onClickLeft"
                 @click-right="onlineGood"

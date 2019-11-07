@@ -37,8 +37,11 @@
                         </div>
                         <div class="header-text">雇主信息</div>
                     </div>
-                    <div class="contact-top" >
-                        <div>姓名<span class="top-name" >波多野结衣</span></div>
+                    <div class="contact-top">
+                        <div>
+                            姓名
+                            <span class="top-name">波多野结衣</span>
+                        </div>
                     </div>
                     <div class="contact-content">
                         <div @click="showPopup" class="content-text">
@@ -58,14 +61,14 @@
                                 </div>
                             </div>
                         </van-popup>
-                        <div class="content-contact">
+                        <div @click="contact" class="content-contact">
                             <van-icon size="0.6rem" color="#a09dd4" name="liaotian" />
                         </div>
                     </div>
                     <div class="contact-bottom">
                         <div class="bottom-money">
                             佣金
-                            <span class="money-number" >￥{{ money }}</span>
+                            <span class="money-number">￥{{ money }}</span>
                         </div>
                     </div>
                 </div>
@@ -102,10 +105,12 @@ export default {
     filters: {},
     activated() {},
     methods: {
-
+        contact() {
+            
+        },
         onGethunter() {
             if (this.buttonText === '领取') {
-                this.buttonText = '正在等待雇主同意';
+                this.buttonText = '正在等待雇主同意,可点击取消领取';
             }
         },
         onChangeMoney(value) {
@@ -231,9 +236,9 @@ body {
                         color: #768588;
                     }
                 }
-                .contact-top{
+                .contact-top {
                     padding-left: 0.2rem;
-                    .top-name{
+                    .top-name {
                         padding-left: 0.3rem;
                     }
                 }
@@ -249,17 +254,17 @@ body {
                     .content-contact {
                         padding: 0.1rem 0.4rem 0 0;
                         text-align: right;
-                        width: 3rem;
+                        width: 2rem;
                     }
                 }
                 .contact-bottom {
                     width: 96%;
                     margin: 0.3rem 0 0 2%;
-                   
+
                     height: 1rem;
                     align-items: center;
-                    .bottom-money{
-                        .money-number{
+                    .bottom-money {
+                        .money-number {
                             padding-left: 0.2rem;
                         }
                     }
@@ -274,7 +279,7 @@ body {
                 line-height: 1rem;
                 border-radius: 0.1rem;
                 color: white;
-                font-size: 0.5rem;
+                font-size: 0.4rem;
             }
             .button-submit:active {
                 background: #7bbfea;

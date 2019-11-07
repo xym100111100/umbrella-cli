@@ -223,6 +223,13 @@
       "unicode_decimal": 58934
     },
     {
+      "icon_id": "1113698",
+      "name": "点餐",
+      "font_class": "diancan",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
       "icon_id": "1137822",
       "name": "站内消息",
       "font_class": "zhanneixiaoxi",
@@ -839,6 +846,13 @@
       "unicode_decimal": 59308
     },
     {
+      "icon_id": "8966887",
+      "name": "备忘录",
+      "font_class": "beiwanglu",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
       "icon_id": "9512584",
       "name": "喜欢",
       "font_class": "like-fill",
@@ -858,6 +872,13 @@
       "font_class": "biaoqian1",
       "unicode": "e7ad",
       "unicode_decimal": 59309
+    },
+    {
+      "icon_id": "9883482",
+      "name": "手持点餐_首页",
+      "font_class": "shouchidiancan_shouye",
+      "unicode": "e674",
+      "unicode_decimal": 58996
     },
     {
       "icon_id": "9917201",

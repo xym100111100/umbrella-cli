@@ -6,18 +6,33 @@
                     <img :src="userInfo.wxFacePath" />
                 </div>
                 <div class="header-name">
-                    <span>{{userInfo.wxName}}</span>
-                    <span class="Uid">UID:{{userInfo.id|filtersUID}}</span>
+                    <div>{{userInfo.wxName}}</div>
+                    <div class="school">
+                        <van-icon size="0.45rem" color="white" name="dizhi" />
+                        <span>桂林理工大学</span>
+                    </div>
+                </div>
+                <div @click="showPopup" class="header-setting">
+                    <van-icon size="0.6rem" color="white" name="yiwen" />
                 </div>
             </div>
         </header>
         <div class="user-content">
+            <van-popup v-model="show" position="top" :style="{ height: '20%' }">
+                <div class="content-popup">
+                    <div class="popup-header">
+                        <div class="header-icon">
+                            <van-icon size="0.5rem" color="#a09dd4" name="zhuyi" />
+                        </div>
+                        <div class="heander-text">为保障信息安全，所有学生只能浏览选择的学校信息，如学校选择错误需要修改，请提交请求与修改原因。</div>
+                    </div>
+                </div>
+            </van-popup>
             <DyCell color="#7bbfea" MyIcon="928shouxi" content="赏金猎人" :goPath="this.TempClose" />
-
             <DyCell
                 color="#7bbfea"
                 MyIcon="shouye2"
-                content="我的店铺"
+                content="我的闲置"
                 :goPath="()=>this.$router.push({name:'shop', params: { load:true, }})"
             />
             <DyCell
@@ -27,9 +42,10 @@
                 :goPath="()=>this.$router.push({name:'notice', params: { load:true, }})"
             />
             <DyCell
+                :isBootomLine="false"
                 color="#7bbfea"
                 MyIcon="jianzhi"
-                content="学生兼职"
+                content="需求公告"
                 :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
             />
         </div>
@@ -37,7 +53,7 @@
 </template>
 
 <script>
-import { Row, Col, Cell, Toast } from 'vant';
+import { Row, Col, Cell, Popup, Icon, Toast } from 'vant';
 import DyCell from '../../comp/common/DyCell.vue';
 
 export default {
@@ -47,10 +63,14 @@ export default {
         [Cell.name]: Cell,
         [Toast.name]: Toast,
         DyCell,
+        [Popup.name]: Popup,
+
+        [Icon.name]: Icon,
     },
     data() {
         return {
             id: this.$route.params.id,
+            show: false,
         };
     },
     filters: {
@@ -67,6 +87,9 @@ export default {
         },
     },
     methods: {
+        showPopup() {
+            this.show = true;
+        },
         TempClose() {
             this.$toast({ message: '服务暂时关闭咯~~~~~', position: 'top' });
         },
@@ -80,20 +103,15 @@ export default {
 <style lang="less" scoped>
 body,
 html {
-    height: 100%;
-    background: rgba(60, 47, 15, 0.0001);
+    height: 100vh;
 }
 .user {
-    &-box {
-        height: 100%;
-        background: rgba(60, 47, 15, 0.0001);
-    }
     &-header {
-        height: 3rem;
+        height: 2.4rem;
         display: flex;
         align-items: center;
         background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
-        margin-bottom: 0.2rem;
+
         padding: 0.2rem 0 0.6rem;
         .header-face {
             height: 1.5rem;
@@ -109,7 +127,6 @@ html {
 
         .header-name {
             height: 1.5rem;
-            display: flex;
             align-items: center;
             flex-direction: column;
             margin-left: 0.3rem;
@@ -117,115 +134,33 @@ html {
             color: white;
         }
 
-        .header-name .Uid {
-            margin-top: 0.4rem;
+        .header-name .school {
+            padding: 0.2rem 0 0 0;
             font-size: 0.4rem;
-            margin-left: 0.2rem;
             color: white;
         }
         .header-setting {
-            display: flex;
+            width: 1rem;
             flex-grow: 1;
-            justify-content: flex-end;
             margin-right: 1rem;
             height: 2rem;
+            text-align: right;
         }
     }
-    &-content {
-        .content-order {
-            height: 3.4rem;
-            background: #fff;
-            padding-top: 0.2rem;
-            .order-top {
-                margin: 0 auto;
-                width: inherit;
-                padding: 0.2rem;
-                display: flex;
-                justify-content: space-between;
-                font-size: 0.4rem;
-                align-items: center;
-                .top-right {
-                    font-size: 0.5rem;
-                }
-                .top-left {
-                    color: #7d7e80;
-                    font-size: 0.35rem;
-                }
-            }
-            .hr {
-                height: 0.1rem;
-                border-top: solid 0.01rem #ddd9d9;
-            }
-            .order-buttom {
-                .user-links {
-                    font-size: 0.5rem;
-                    text-align: center;
-                    background-color: #fff;
-                    .van-icon {
-                        font-size: 1rem;
-                    }
-                }
-            }
-            .order-buttom span {
-                color: #7d7e80;
-                font-size: 0.42rem;
-            }
-            .order-buttom p {
-                color: #7d7e80;
-                font-size: 0.42rem;
-                font-weight: bold;
-            }
-        }
-        .content-line,
-        .content-money,
-        .content-point {
-            background: white;
-            font-size: 0.42rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
+}
 
-            .line-left,
-            .money-left,
-            .point-left {
-                flex-grow: 20;
-                display: flex;
-                div {
-                    flex-grow: 20;
-                    display: flex;
-                    justify-items: space-around;
-                    flex-direction: column;
-                    align-items: center;
-                    .value {
-                        padding: 0.18rem 0 0.2rem 0;
-                    }
-                    .key {
-                        margin-bottom: -0.1rem;
-                    }
-                }
-            }
-            .money-right,
-            .line-right,
-            .point-right {
-                flex-grow: 0;
-                width: 2rem;
-                display: flex;
-                align-items: center;
-                div {
-                    flex-grow: 1;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    border-left: dashed 1px #e7e4e4;
-                    margin: 0.2rem 0;
-                    .van-icon {
-                        font-size: 0.85rem;
-                    }
-                    span {
-                        padding-top: 0.2rem;
-                    }
-                }
-            }
+.content-popup {
+    height: 100%;
+    background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+    .popup-header {
+        font-size: 0.4rem;
+        color: white;
+        display: flex;
+        .header-icon {
+            padding: 0.3rem 0 0 0.2rem;
+        }
+        .heander-text {
+            padding: 0.2rem;
         }
     }
 }

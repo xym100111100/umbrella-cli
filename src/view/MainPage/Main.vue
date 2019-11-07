@@ -1,31 +1,16 @@
 <template>
-  <!-- 主框架页面 -->
-  <div id="main-page"  >
-    <router-view class="main-content" />
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter"  >
-        任务
-      </van-tabbar-item>
-       <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0"   to="msg">
-        消息
-      </van-tabbar-item> 
-       <van-tabbar-item icon="tabbar-msg" v-if="msgCount>0" v-bind:info="msgCount"  to="msg">
-        消息
-      </van-tabbar-item> 
-            <van-tabbar-item icon="tabbar-find" to="find">
-        查找
-      </van-tabbar-item>
-      <van-tabbar-item icon="xihuan" v-if="loveCount>0" v-bind:info="loveCount"  to="cart">
-        收藏
-      </van-tabbar-item>
-      <van-tabbar-item  v-if="loveCount===0" icon="xihuan"  to="cart">
-        收藏
-      </van-tabbar-item>
-      <van-tabbar-item icon="tabbar-mine" to="mine">
-        我
-      </van-tabbar-item>
-    </van-tabbar>
-  </div>
+    <!-- 主框架页面 -->
+    <div id="main-page">
+        <router-view class="main-content" />
+        <van-tabbar v-model="active">
+            <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter">任务</van-tabbar-item>
+            <van-tabbar-item icon="shouchidiancan_shouye" to="store">点餐</van-tabbar-item>
+            <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0" to="msg">消息</van-tabbar-item>
+            <van-tabbar-item icon="tabbar-msg" v-if="msgCount>0" v-bind:info="msgCount" to="msg">消息</van-tabbar-item>
+            <van-tabbar-item icon="xihuan" to="cart">闲置</van-tabbar-item>
+            <van-tabbar-item icon="tabbar-mine" to="mine">我</van-tabbar-item>
+        </van-tabbar>
+    </div>
 </template>
 
 <script>
@@ -33,8 +18,8 @@ import { Tabbar, TabbarItem } from 'vant';
 // 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
     hunter: 0,
-    msg: 1,
-    find: 2,
+    store: 1,
+    msg: 2,
     cart: 3,
     mine: 4,
 };
@@ -49,13 +34,13 @@ export default {
             active: 0,
         };
     },
-    computed:{
-      msgCount(){
-        return this.$store.getters.active.msgCount
-      },
-      loveCount(){
-        return this.$store.getters.active.loveCount;
-      }
+    computed: {
+        msgCount() {
+            return this.$store.getters.active.msgCount;
+        },
+        loveCount() {
+            return this.$store.getters.active.loveCount;
+        },
     },
     beforeRouteUpdate(to, from, next) {
         //  console.log('beforeRouteUpdate\r\nfrom', from, '\r\nto', to);
