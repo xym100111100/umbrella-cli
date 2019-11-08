@@ -1,88 +1,58 @@
 <template>
     <div @scroll="moving" id="store" class="store">
-        <van-pull-refresh loading-text=" " v-model="isLoading" @refresh="onRefresh">
-            <header class="store-header">
-                <div class="header-title">Welcome to anytime anywhere</div>
-                <div class="header-detail">
-                    <div class="detail-search">
-                        <van-search background="none" shape="round" placeholder="请输入搜索关键词" />
-                    </div>
-                    <div @click="addHunter" class="detail-button">
-                        <div>搜索</div>
-                    </div>
+        <header class="store-header">
+            <div class="header-title">Welcome to anytime anywhere</div>
+            <div class="header-detail">
+                <div class="detail-search">
+                    <van-search background="none" shape="round" placeholder="请输入搜索关键词" />
                 </div>
-            </header>
-            <div class="store-content">
-                <van-list
-                    v-model="loading"
-                    :finished="finished"
-                    finished-text="没有更多了"
-                    @load="handleLoad"
-                    :immediate-check="false"
-                >
-                    <template v-for="item in list">
-                        <div @click="getHonter" class="content-item" :key="item">
-                            <div class="item-top">
-                                <div class="top-title">
-                                    <div class="title-icon">
-                                        <span v-if="item===1">
-                                            <van-icon
-                                                size="0.6rem"
-                                                color="#7bbfea"
-                                                name="biaoqian2"
-                                            />
-                                        </span>
-                                        <span v-if=" item ===2  ">
-                                            <van-icon
-                                                size="0.6rem"
-                                                color="#a09dd4"
-                                                name="biaoqian2"
-                                            />
-                                        </span>
-                                        <span v-if=" item ===3  ">
-                                            <van-icon
-                                                size="0.6rem"
-                                                color="#a09dd4"
-                                                name="biaoqian2"
-                                            />
-                                        </span>
-                                        <span v-if="item !==1 && item !==2 &&  item !==3   ">
-                                            <van-icon
-                                                size="0.6rem"
-                                                color="#7bbfea"
-                                                name="biaoqian2"
-                                            />
-                                        </span>
-                                    </div>
-                                    <div class="title-name">
-                                        <span>送餐</span>
-                                        <span></span>
-                                    </div>
-                                </div>
-                                <div class="top-time">
-                                    <div class="time-number">12:15:33</div>
-                                </div>
+                <div @click="addHunter" class="detail-button">
+                    <div>搜索</div>
+                </div>
+            </div>
+        </header>
+        <div class="store-content">
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="handleLoad"
+                :immediate-check="false"
+            >
+                <template v-for="item in list">
+                    <div @click="getHonter" class="content-item" :key="item">
+                        <div class="item-img">
+                            <img
+                                src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLGN4iahcwOsVTgqB9PibmdCQY7gnicgQOV5HBCTWiaHv5jDRJwtudlAlghZskmh02Z5oH846zWTwuOWA/132"
+                            />
+                        </div>
+                        <div class="item-detail">
+                            <div class="detail-name">太平洋小姐姐(A01)</div>
+                            <div class="detail-rate">
+                                <van-icon color="#F90" name="favorite" />
+                                <van-icon color="#F90" name="favorite" />
+                                <van-icon color="#F90" name="favorite" />
+                                <van-icon color="#F90" name="favorite" />
+                                <van-icon color="#F90" name="favorite" />
+                                <span class="rate-number">5.0分</span>
                             </div>
-                            <div class="item-bottom">
-                                <div class="bottom-detail">去时代广场拿一份饭到男生宿舍1#A303宿舍,放点辣椒不要,要一份辣子鸡.....</div>
-                                <div class="bottom-money">
-                                    <div>
-                                        <van-icon size="0.5rem" name="jinbi1" />
-                                        <span class="money-number">5</span>
-                                    </div>
-                                </div>
+                            <div class="detail-class">
+                                <span>螺蛳粉</span>
+                                <span>螺蛳粉</span>
+                                <span>螺蛳粉</span>
+                                <span>螺蛳粉</span>
                             </div>
                         </div>
-                    </template>
-                </van-list>
-            </div>
-        </van-pull-refresh>
+                    </div>
+                </template>
+            </van-list>
+        </div>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Search, List, PullRefresh, Card, Cell, Icon, Toast } from 'vant';
+import { Search, List, Card, Rate, Cell, Icon, Toast } from 'vant';
 import { login } from '../../svc/suc/User';
 // Lazyload插件需要初始化
 
@@ -93,7 +63,7 @@ export default {
         [List.name]: List,
         [Card.name]: Card,
         [Cell.name]: Cell,
-        [PullRefresh.name]: PullRefresh,
+        [Rate.name]: Rate,
     },
     data() {
         return {
@@ -102,7 +72,7 @@ export default {
             finished: false, // 是否全部加载完成商品列表
             scroll: 0,
             list: [],
-            isLoading: false,
+            value: 3,
         };
     },
     filters: {},
@@ -176,13 +146,6 @@ export default {
                 }
             }, 500);
         },
-        onRefresh() {
-            setTimeout(() => {
-                this.isLoading = false;
-                this.list = [];
-                this.handleLoad();
-            }, 500);
-        },
     },
 };
 </script>
@@ -211,7 +174,6 @@ body {
                 margin-left: 1rem;
                 flex-grow: 2;
                 font-size: 0.4rem;
-                
             }
             .detail-button {
                 width: 2.3rem;
@@ -219,7 +181,7 @@ body {
                     width: 1rem;
                     text-align: center;
                     line-height: 1rem;
-                    margin-top: 0.2rem ;
+                    margin-top: 0.2rem;
                     font-size: 0.4rem;
                     color: white;
                 }
@@ -228,56 +190,42 @@ body {
     }
     .store-content {
         .content-item {
-            height: 3rem;
-            margin: 0.3rem 0 0 3%;
+            display: flex;
             background: white;
-            width: 94%;
-            border-radius: 0.2rem;
-            overflow: hidden;
-            .item-top {
-                display: flex;
-                border-bottom: #cad8db solid 0.01rem;
-                width: 96%;
-                margin-left: 2%;
-                height: 1.2rem;
-                .top-title {
-                    font-size: 0.5rem;
-                    flex-grow: 2;
-                    height: 1.2rem;
-                    display: flex;
-                    .title-icon {
-                        margin-top: -0.1rem;
-                    }
-                    .title-name {
-                        margin: 0.2rem 0 0 0.5rem;
-                    }
-                }
-                .top-time {
-                    font-size: 0.35rem;
-                    width: 20%;
-                    color: #b6c4c7;
-                    height: 1.2rem;
-                    line-height: 1.2rem;
-                    display: flex;
+            margin: 0.3rem 0 0 3%;
+            width: 90%;
+            padding: 0.2rem;
+            .item-img {
+                img {
+                    height: 2.2rem;
+                    width: 2.2rem;
+                    border-radius: 0.1rem;
                 }
             }
-            .item-bottom {
-                font-size: 0.37rem;
-                color: #b6c4c7;
-                overflow: hidden;
-                padding-top: 0.3rem;
-                display: flex;
-                .bottom-detail {
-                    width: 70%;
-                    margin-left: 13%;
+            .item-detail {
+                padding-left: 0.2rem;
+                font-size: 0.47rem;
+                p {
+                    padding: 0;
+                    margin: 0;
                 }
-                .bottom-money {
-                    width: 17%;
-                    display: flex;
-                    align-items: flex-end;
-                    color: rgba(255, 204, 0, 0.938);
-                    .money-number {
-                        font-size: 0.4rem;
+
+                .detail-rate {
+                    padding-top: 0.1rem;
+                    font-size: 0.38rem;
+                    .rate-number {
+                        color: #b6c4c7;
+                        padding-left: 0.1rem;
+                    }
+                }
+                .detail-class {
+                    padding-top: 0.1rem;
+                    color: #b6c4c7;
+                    font-size: 0.35rem;
+                    overflow: hidden;
+                    height: 0.5rem;
+                    span{
+                        padding-left: 0.1rem;
                     }
                 }
             }
