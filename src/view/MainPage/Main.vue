@@ -85,7 +85,7 @@ export default {
         background-color: white;
         z-index: 9999 !important;
         .van-tabbar-item {
-            color: #a8a5a5;
+            color: #777777;
             // 图标下部的字体大小
             font-size: 0.35rem;
             .van-icon {
@@ -94,7 +94,7 @@ export default {
             }
         }
         .van-tabbar-item--active {
-            color: #7bbfea;
+            color: #9ad0f1;
         }
         .van-submit-bar {
             border-top: 1px red solid;

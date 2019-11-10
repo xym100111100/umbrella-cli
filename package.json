@@ -2,10 +2,10 @@
   "name": "umbrella-cli",
   "version": "1.0.0",
   "description": "随时随DI",
-  "author": "zbz",
+  "author": "xym",
   "license": "MIT",
   "private": true,
-  "repository": "https://www.duamai.com",
+  "repository": "https://www.gxabll.com",
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
