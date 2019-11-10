@@ -3,11 +3,10 @@
     <div id="main-page">
         <router-view class="main-content" />
         <van-tabbar v-model="active">
-            <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter">任务</van-tabbar-item>
             <van-tabbar-item icon="shouchidiancan_shouye" to="store">点餐</van-tabbar-item>
+            <van-tabbar-item icon="fabuxuqiu" to="cart">订单</van-tabbar-item>
             <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0" to="msg">消息</van-tabbar-item>
-            <van-tabbar-item icon="tabbar-msg" v-if="msgCount>0" v-bind:info="msgCount" to="msg">消息</van-tabbar-item>
-            <van-tabbar-item icon="xihuan" to="cart">闲置</van-tabbar-item>
+            <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter">任务</van-tabbar-item>
             <van-tabbar-item icon="tabbar-mine" to="mine">我</van-tabbar-item>
         </van-tabbar>
     </div>
@@ -17,10 +16,10 @@
 import { Tabbar, TabbarItem } from 'vant';
 // 路由索引，据此根据跳转的路由设置激活的tabbar图标
 const routeIndex = {
-    hunter: 0,
-    store: 1,
+    store: 0,
+    cart: 1,
     msg: 2,
-    cart: 3,
+    hunter: 3,
     mine: 4,
 };
 

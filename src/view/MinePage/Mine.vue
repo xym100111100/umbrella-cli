@@ -105,6 +105,9 @@ body,
 html {
     height: 100vh;
 }
+.user-box {
+    background: #f2f2f2;
+}
 .user {
     &-header {
         height: 2.4rem;

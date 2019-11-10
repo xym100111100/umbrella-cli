@@ -277,6 +277,7 @@ img {
         top: 1.2rem;
         height: 100%;
         overflow: scroll;
+        background: #f2f2f2;
         .content-item {
             display: flex;
             align-items: center;

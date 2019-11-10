@@ -1,6 +1,6 @@
 <template>
-    <div @scroll="moving" id="store" class="store">
-        <header class="store-header">
+    <div @scroll="moving" id="shop-order" class="shop-order">
+        <header class="shop-order-header">
             <div class="header-title">Welcome to anytime anywhere</div>
             <div class="header-detail">
                 <div class="detail-search">
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </header>
-        <div class="store-content">
+        <div class="shop-order-content">
             <van-list
                 v-model="loading"
                 :finished="finished"
@@ -78,7 +78,7 @@ export default {
     filters: {},
     activated() {
         let openid = this.$route.query.openid;
-        document.getElementById('store').scrollTop = this.scroll;
+        document.getElementById('shop-order').scrollTop = this.scroll;
         if (openid && this.$store.getters.user.id === undefined) {
             this.userLogin();
         }
@@ -156,10 +156,9 @@ body {
     height: 100%;
     background: white;
 }
-.store {
+.shop-order {
     overflow: scroll;
-    background: #f2f2f2;
-    .store-header {
+    .shop-order-header {
         background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
         height: 3rem;
         .header-title {
@@ -189,7 +188,7 @@ body {
             }
         }
     }
-    .store-content {
+    .shop-order-content {
         .content-item {
             display: flex;
             background: white;

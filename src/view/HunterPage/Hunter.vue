@@ -200,6 +200,7 @@ body {
 }
 .hunter {
     overflow: scroll;
+     background: #f2f2f2;
     .hunter-header {
         background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
         height: 3rem;
@@ -256,6 +257,7 @@ body {
         }
     }
     .hunter-content {
+        background: #f2f2f2;
         .content-item {
             height: 3rem;
             margin: 0.3rem 0 0 3%;

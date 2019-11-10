@@ -13,7 +13,7 @@ const routes = [
     {
         name: 'main',
         path: '/main',
-        redirect: '/hunter',
+        redirect: '/store',
         component: () => import('./view/MainPage/Main'),
         children: [
             {
