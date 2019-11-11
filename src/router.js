@@ -26,6 +26,15 @@ const routes = [
                 },
             },
             {
+                name: 'shop',
+                path: '/shop',
+                component: () => import('./view/ShopPage/Shop'),
+                meta: {
+                    index: 1,
+
+                },
+            },
+            {
                 name: 'home',
                 path: '/home',
                 component: () => import('./view/HomePage/Home'),
@@ -90,6 +99,14 @@ const routes = [
         name: 'text',
         path: '/text',
         component: () => import('./view/MsgPage/Text'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
+        name: 'shop-good',
+        path: '/shop-good',
+        component: () => import('./view/ShopPage/ShopGood'),
         meta: {
             index: 2,
         },
@@ -235,7 +252,7 @@ const routes = [
         path: '/goods/detail',
         component: () => import('./view/GoodsPage/GoodsDetail'),
         meta: {
-            index: 2,
+            index: 4,
         },
     },
 

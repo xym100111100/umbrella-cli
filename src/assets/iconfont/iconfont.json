@@ -209,6 +209,13 @@
       "unicode_decimal": 58979
     },
     {
+      "icon_id": "1041105",
+      "name": "钱包",
+      "font_class": "wallet1",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
       "icon_id": "1054706",
       "name": "联合应用",
       "font_class": "lianheyingyong",
@@ -487,6 +494,13 @@
       "font_class": "xiaoxi1",
       "unicode": "e61a",
       "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "3638996",
+      "name": "座位",
+      "font_class": "zuowei",
+      "unicode": "e654",
+      "unicode_decimal": 58964
     },
     {
       "icon_id": "3843466",
@@ -825,6 +839,13 @@
       "unicode_decimal": 58955
     },
     {
+      "icon_id": "7736504",
+      "name": "座位 (1)",
+      "font_class": "zuowei1",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
       "icon_id": "7865418",
       "name": "服装-02",
       "font_class": "fuzhuang-",
@@ -851,6 +872,13 @@
       "font_class": "beiwanglu",
       "unicode": "e652",
       "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "9352418",
+      "name": "星星",
+      "font_class": "xingxing1",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
     },
     {
       "icon_id": "9512584",

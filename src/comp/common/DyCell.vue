@@ -44,7 +44,7 @@ export default {
     font-family: PingFang-SC-Regular, Helvetica Neue, Helvetica, microsoft yahei, sans-serif;
 
     .cell-left {
-        padding: 0.05rem 0.2rem 0 0.35rem;
+        padding: 0.05rem 0.3rem 0 0.35rem;
     }
     .cell-right {
         display: flex;

@@ -1,7 +1,7 @@
 <template>
-    <div id="user-box" class="user-box">
+    <div class="shop">
         <header>
-            <div class="user-header">
+            <div class="shop-header">
                 <div class="header-face">
                     <img :src="userInfo.wxFacePath" />
                 </div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </header>
-        <div class="user-content">
+        <div class="shop-content">
             <van-popup v-model="show" position="top" :style="{ height: '20%' }">
                 <div class="content-popup">
                     <div class="popup-header">
@@ -28,32 +28,50 @@
                     </div>
                 </div>
             </van-popup>
-            <DyCell color="#7bbfea" MyIcon="928shouxi" content="猎人" :goPath="this.TempClose" />
-            <DyCell
-                color="#f96a64"
-                MyIcon="wallet1"
-                content="钱包"
-                :goPath="()=>this.$router.push({name:'notice', params: { load:true, }})"
-            />
-            <DyCell
-                color="#47b508"
-                MyIcon="tabbar-order"
-                content="公告"
-                :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
-            />
-            <DyCell
-                color="#5f94fc"
-                MyIcon="fabuxuqiu"
-                content="反馈"
-                :goPath="()=>this.$router.push({name:'shop', params: { load:true, }})"
-            />
-            <DyCell
-                :isBootomLine="false"
-                color="#5f94fc"
-                MyIcon="shezhi"
-                content="设置"
-                :goPath="()=>this.$router.push({name:'portTimeJop', params: { load:true, }})"
-            />
+            <div class="content-shop-data">
+                <div>
+                    <p>今日营业额(元)</p>
+                    <p>100200</p>
+                </div>
+                <div>
+                    <p>今日付款单数(元)</p>
+                    <p>152432</p>
+                </div>
+                <div>
+                    <p>可用余额(元)</p>
+                    <p>120</p>
+                </div>
+            </div>
+            <div class="content-list">
+                <div class="list-item">
+                    <div @click="goShopGood">
+                        <p>
+                            <van-icon size="1rem" color="#5f94fc" name="shangpin2" />
+                        </p>
+                        <p>商品管理</p>
+                    </div>
+                    <div>
+                        <p>
+                            <van-icon size="1rem" color="#47b508" name="zuowei1" />
+                        </p>
+                        <p>桌位管理</p>
+                    </div>
+                    <div>
+                        <p>
+                            <van-icon size="1rem" color="#5f94fc" name="shezhi" />
+                        </p>
+                        <p>设置</p>
+                    </div>
+                </div>
+                <div class="list-item item-align-left">
+                    <div>
+                        <p>
+                            <van-icon size="1rem" color="#f96a64" name="wallet1" />
+                        </p>
+                        <p>资产中心</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -96,6 +114,11 @@ export default {
         showPopup() {
             this.show = true;
         },
+        goShopGood() {
+            this.$router.push({
+                name: 'shop-good',
+            });
+        },
         TempClose() {
             this.$toast({ message: '服务暂时关闭咯~~~~~', position: 'top' });
         },
@@ -111,12 +134,12 @@ body,
 html {
     height: 100vh;
 }
-.user-box {
+.shop {
     background: #f2f2f2;
 }
-.user {
+.shop {
     &-header {
-        height: 2.4rem;
+        height: 2.5rem;
         display: flex;
         align-items: center;
         background: #0d4055;
@@ -155,11 +178,54 @@ html {
             text-align: right;
         }
     }
+    .shop-content {
+        .content-shop-data {
+            height: 2rem;
+            background: #0d4055;
+            display: flex;
+            font-size: 0.37rem;
+            justify-content: space-around;
+            align-content: center;
+            color: #89afbc;
+            div {
+                text-align: center;
+                height: 2rem;
+                p {
+                    padding: 0;
+                    margin: 0;
+                    padding-top: 0.2rem;
+                }
+            }
+        }
+        .content-list {
+            background: white;
+            margin-top: 0.7rem;
+            .list-item {
+                display: flex;
+                justify-content: space-around;
+                div {
+                    text-align: center;
+                    padding: 0.6rem 0;
+                    p {
+                        padding: 0;
+                        margin: 0;
+                    }
+                    p:nth-child(2) {
+                        font-size: 0.4rem;
+                    }
+                }
+            }
+            .item-align-left {
+                justify-content: left;
+                margin-left: 10%;
+            }
+        }
+    }
 }
 
 .content-popup {
     height: 100%;
-    background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+    background: #0d4055;
     .popup-header {
         font-size: 0.4rem;
         color: white;

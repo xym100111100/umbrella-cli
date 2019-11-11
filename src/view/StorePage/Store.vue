@@ -29,18 +29,16 @@
                         <div class="item-detail">
                             <div class="detail-name">(A01)太平洋小姐姐</div>
                             <div class="detail-rate">
-                                <van-icon color="#F90" name="favorite" />
-                                <van-icon color="#F90" name="favorite" />
-                                <van-icon color="#F90" name="favorite" />
-                                <van-icon color="#F90" name="favorite" />
-                                <van-icon color="#F90" name="favorite" />
+                                <van-icon color="#fe7c30" name="xingxing1" />
+                                <van-icon color="#fc7021" name="xingxing1" />
+                                <van-icon color="#fb6914" name="xingxing1" />
+                                <van-icon color="#ff552a" name="xingxing1" />
+                                <van-icon color="#fc5119" name="xingxing1" />
                                 <span class="rate-number">5.0分</span>
                             </div>
                             <div class="detail-class">
                                 <span>螺蛳粉</span>
-                                <span>螺蛳粉</span>
-                                <span>螺蛳粉</span>
-                                <span>螺蛳粉</span>
+                                <span>桂林理工大学</span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +52,6 @@
 import Vue from 'vue';
 import { Search, List, Card, Rate, Cell, Icon, Toast } from 'vant';
 import { login } from '../../svc/suc/User';
-
 
 // Lazyload插件需要初始化
 
@@ -162,7 +159,7 @@ body {
     overflow: scroll;
     background: #f2f2f2;
     .store-header {
-        background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+        background: #0d4055;
         height: 3rem;
         .header-title {
             font-size: 0.5rem;
@@ -207,8 +204,7 @@ body {
             }
             .item-detail {
                 padding-left: 0.2rem;
-                font-size: 0.45rem;
-                color: #0c0c0c;
+                font-size: 0.42rem;
                 p {
                     padding: 0;
                     margin: 0;
@@ -218,17 +214,17 @@ body {
                     padding-top: 0.1rem;
                     font-size: 0.38rem;
                     .rate-number {
-                        color: #b6c4c7;
+                        color: #537177;
                         padding-left: 0.1rem;
                     }
                 }
                 .detail-class {
                     padding-top: 0.1rem;
-                    color: #b6c4c7;
+                    color: #537177;
                     font-size: 0.35rem;
                     overflow: hidden;
                     height: 0.5rem;
-                    span{
+                    span {
                         padding-left: 0.1rem;
                     }
                 }
@@ -241,18 +237,20 @@ body {
     font-family: 'store';
     font-display: swap;
     src: url('../../assets/webfont/webfont.eot'); /* IE9 */
-    src: url('../../assets/webfont/webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../../assets/webfont/webfont.woff2') format('woff2'),
-    url('../../assets/webfont/webfont.woff') format('woff'), /* chrome、firefox */
-    url('../../assets/webfont/webfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('../../assets/webfont/webfont.svg#webfont') format('svg'); /* iOS 4.1- */
-}   
+    src: url('../../assets/webfont/webfont.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */ url('../../assets/webfont/webfont.woff2') format('woff2'),
+        url('../../assets/webfont/webfont.woff') format('woff'),
+        /* chrome、firefox */ url('../../assets/webfont/webfont.ttf') format('truetype'),
+        /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('../../assets/webfont/webfont.svg#webfont')
+            format('svg'); /* iOS 4.1- */
+}
 
 .store {
-    font-family: "store" !important;
+    font-family: 'store' !important;
     font-size: 0.42rem;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+     
 }
 </style>

@@ -159,7 +159,7 @@ body {
 .shop-order {
     overflow: scroll;
     .shop-order-header {
-        background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+        background: #0d4055;
         height: 3rem;
         .header-title {
             font-size: 0.5rem;
@@ -224,7 +224,7 @@ body {
                     font-size: 0.35rem;
                     overflow: hidden;
                     height: 0.5rem;
-                    span{
+                    span {
                         padding-left: 0.1rem;
                     }
                 }

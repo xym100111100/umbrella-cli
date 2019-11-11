@@ -166,20 +166,20 @@ export default {
         },
         handleLoad() {
             // 异步更新数据
-              setTimeout(() => {
-            for (let i = 0; i < 10; i++) {
-                this.list.push(this.list.length + 1);
-            }
-            // 加载状态结束
-            this.loading = false;
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                    this.list.push(this.list.length + 1);
+                }
+                // 加载状态结束
+                this.loading = false;
 
-            // 数据全部加载完成
-            if (this.list.length >= 40) {
-                this.finished = true;
-            } else {
-                this.finished = false;
-            }
-              }, 500);
+                // 数据全部加载完成
+                if (this.list.length >= 40) {
+                    this.finished = true;
+                } else {
+                    this.finished = false;
+                }
+            }, 500);
         },
         onRefresh() {
             setTimeout(() => {
@@ -200,9 +200,9 @@ body {
 }
 .hunter {
     overflow: scroll;
-     background: #f2f2f2;
+    background: #f2f2f2;
     .hunter-header {
-        background-image: linear-gradient(to right, rgba(170, 234, 240, 0.514), #7bbfea);
+        background: #0d4055;
         height: 3rem;
         .header-title {
             font-size: 0.5rem;
@@ -294,7 +294,7 @@ body {
             }
             .item-bottom {
                 font-size: 0.37rem;
-                color: #b6c4c7;
+                color: #537177;
                 overflow: hidden;
                 padding-top: 0.3rem;
                 display: flex;

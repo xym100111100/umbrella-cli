@@ -8,6 +8,7 @@
             <van-tabbar-item icon="tabbar-msg" v-if="msgCount<=0" to="msg">消息</van-tabbar-item>
             <van-tabbar-item icon="shengchanrenwudanguanli" to="hunter">任务</van-tabbar-item>
             <van-tabbar-item icon="tabbar-mine" to="mine">我</van-tabbar-item>
+            <van-tabbar-item icon="tabbar-mine" to="shop">店铺</van-tabbar-item>
         </van-tabbar>
     </div>
 </template>
@@ -21,6 +22,7 @@ const routeIndex = {
     msg: 2,
     hunter: 3,
     mine: 4,
+    shop: 5,
 };
 
 export default {
@@ -87,14 +89,18 @@ export default {
         .van-tabbar-item {
             color: #777777;
             // 图标下部的字体大小
-            font-size: 0.35rem;
+            font-size: 0.32rem;
+            
             .van-icon {
+                padding-bottom: 0.1rem;
                 // 图标的大小
-                font-size: 0.78rem;
+                font-size: 0.75rem;
             }
         }
         .van-tabbar-item--active {
-            color: #9ad0f1;
+            .van-icon {
+                color: #47b508;
+            }
         }
         .van-submit-bar {
             border-top: 1px red solid;
