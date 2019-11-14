@@ -1,6 +1,83 @@
 <template>
     <div class="shop-good">
         <header class="shop-good-header">
+            <div class="header-title">
+                <div @click="$router.go(-1)">
+                    <van-icon name="back-search" color="rgba(167, 158, 158, 0.99)" size=".7rem" />
+                </div>
+                <div @click="showPopup">
+                    <span style="padding-right:0.3rem;">操作</span>
+                    <van-icon name="down" color="rgba(167, 158, 158, 0.99)" size=".3rem" />
+                </div>
+            </div>
+            <van-popup v-model="show" position="top" :style="{ height: '30%' }">
+                <div class="popup-content">
+                    <div class="content-item">
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="shangpin"
+                                    color="rgb(95, 148, 252)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>全部商品</p>
+                        </div>
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="huaban"
+                                    color="rgb(160, 157, 212)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>已下架</p>
+                        </div>
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="jiantou2"
+                                    color="rgb(71, 181, 8)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>已卖完</p>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="tianjiajiahaowubiankuang"
+                                    color="rgb(71, 181, 8)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>新建商品</p>
+                        </div>
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="category1"
+                                    color="rgb(249, 106, 100)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>分组管理</p>
+                        </div>
+                        <div>
+                            <p>
+                                <van-icon
+                                    name="lianheyingyong"
+                                    color="rgb(160, 157, 212)"
+                                    size=".7rem"
+                                />
+                            </p>
+                            <p>批量管理</p>
+                        </div>
+                    </div>
+                </div>
+            </van-popup>
             <div>
                 <van-search
                     @input="searchInput"
@@ -38,7 +115,7 @@
                         <div @click="()=>goGoodsDetail(item)">
                             <van-card
                                 :title="item.goodTitle|filtersTitle"
-                                thumb='http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132'
+                                thumb="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKRKfIfaPknhWsvfKH394wkdqecxib6TO3sTpsx8Flwj696Cabq39XoMjjGbIZlstK74IZk2tfkCGw/132"
                             >
                                 <div v-if="item.goodType === 0" slot="tags" class="right-tags">
                                     <p>
@@ -91,7 +168,7 @@
 
 <script>
 import Vue from 'vue';
-import { Search, List, Card, Icon, Toast } from 'vant';
+import { Search, List, Card, Icon, Popup, Toast } from 'vant';
 // import { list as goodsList } from '../../svc/Cart';
 import { list as goodsClassList } from '../../svc/suc/SucGoodsClass';
 import { list as goodsList } from '../../svc/suc/SucGoods';
@@ -105,6 +182,7 @@ export default {
         [Search.name]: Search,
         [List.name]: List,
         [Card.name]: Card,
+        [Popup.name]: Popup,
     },
     data() {
         return {
@@ -117,6 +195,7 @@ export default {
             goodsClassData: [],
             timeout: null,
             InputGoodTitle: null,
+            show: false,
         };
     },
     filters: {
@@ -166,6 +245,9 @@ export default {
         document.getElementById('content-right').scrollTop = this.scroll;
     },
     methods: {
+        showPopup() {
+            this.show = true;
+        },
         searchInput(str) {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
@@ -265,9 +347,17 @@ body {
     &-header {
         position: fixed;
         width: 100%;
-        height: 2rem;
+        height: 3rem;
         z-index: 99;
         background: white;
+        .header-title {
+            display: flex;
+            font-size: 0.5rem;
+            height: 1.1rem;
+            margin-top: 0.2rem;
+            justify-content: space-between;
+            padding: 0 0.3rem;
+        }
     }
     &-content {
         height: 100%;
@@ -278,7 +368,7 @@ body {
             width: 20%;
             height: 100%;
             overflow: scroll;
-            top: 2rem;
+            top: 3rem;
             padding: 0;
             margin: 0;
             background: rgba(60, 47, 15, 0.041);
@@ -289,21 +379,21 @@ body {
                 li {
                     margin: 0;
                     padding: 0;
-                    height: 1.4rem;
+                    height: 1.5rem;
                     span {
                         padding: 0 0 0 0.5rem;
                         margin: 0 0 0 0.1rem;
-                        font-size: 0.42rem;
+                        font-size: 0.45rem;
                         width: 100%;
                         color: #907777;
                         border-left: solid 2px rgba(60, 47, 15, 0.041);
                     }
                 }
                 .focus2 {
-                    background: #fafafa;
+                    background: white;
                     span {
-                        border-left: solid 2px #7bbfea;
-                        color: #7bbfea;
+                        border-left: solid 2px #47b508;
+                        color: #47b508;
                     }
                 }
             }
@@ -313,7 +403,7 @@ body {
             margin-left: 2rem;
             overflow: scroll;
             height: 100vh;
-            top: 2rem;
+            top: 3rem;
             width: 80%;
             .right-tags {
                 padding-top: 0.1rem;
@@ -361,8 +451,8 @@ body {
 }
 
 .van-card {
-    background-color: #fafafa;
-    margin-bottom: 0.2rem;
+    background: white;
+    padding-bottom: 0.2rem;
     .van-card__thumb {
         img {
             width: 100%;
@@ -370,6 +460,8 @@ body {
     }
     .van-card__title {
         color: rgb(70, 72, 73);
+        padding-top: 0.2rem;
+        font-size: 0.38rem;
     }
 }
 .van-card__price {
@@ -380,5 +472,25 @@ body {
 .shop-good-content {
     height: 100%;
     overflow: scroll;
+}
+
+.popup-content {
+    height: 100%;
+    .content-item {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        div {
+            background: rgba(60, 47, 15, 0.041);
+            margin: 0.3rem;
+            width: 2rem;
+            p {
+                padding: 0;
+                margin: 0;
+                font-size: 0.35rem;
+                padding: 0.15rem 0;
+            }
+        }
+    }
 }
 </style>
