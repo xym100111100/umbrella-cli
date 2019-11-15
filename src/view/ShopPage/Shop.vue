@@ -56,7 +56,7 @@
                         </p>
                         <p>桌位管理</p>
                     </div>
-                    <div>
+                    <div @click="goShopSetting">
                         <p>
                             <van-icon size="1rem" color="#5f94fc" name="shezhi" />
                         </p>
@@ -64,11 +64,11 @@
                     </div>
                 </div>
                 <div class="list-item item-align-left">
-                    <div>
+                    <div @click="goShopMoney">
                         <p>
                             <van-icon size="1rem" color="#f96a64" name="wallet1" />
                         </p>
-                        <p>资产中心</p>
+                        <p>资产管理</p>
                     </div>
                 </div>
             </div>
@@ -117,6 +117,16 @@ export default {
         goShopGood() {
             this.$router.push({
                 name: 'shop-good',
+            });
+        },
+        goShopMoney() {
+            this.$router.push({
+                name: 'shop-money',
+            });
+        },
+        goShopSetting() {
+            this.$router.push({
+                name: 'shop-setting',
             });
         },
         TempClose() {

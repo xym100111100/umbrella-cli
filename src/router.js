@@ -111,7 +111,23 @@ const routes = [
             index: 2,
         },
     },
-
+    
+    {
+        name: 'shop-setting',
+        path: '/shop-setting',
+        component: () => import('./view/ShopPage/ShopSetting'),
+        meta: {
+            index: 2,
+        },
+    },
+    {
+        name: 'shop-money',
+        path: '/shop-money',
+        component: () => import('./view/ShopPage/ShopMoney'),
+        meta: {
+            index: 2,
+        },
+    },
     {
         name: 'msg-chat',
         path: '/msg-chat',
