@@ -21,7 +21,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="info-name">
+                <div class="info-name" @click="modifyShopName">
                     <div>店铺名称</div>
                     <div>
                         <span>安布雷拉</span>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="content-shop-remark">
-                <div class="remark-item show-border-bottom">
+                <div @click="modifyShopArea" class="remark-item show-border-bottom">
                     <div>店铺地址</div>
                     <div>
                         <span>广西南宁市区江南区</span>
@@ -61,16 +61,46 @@
                 </div>
             </div>
         </div>
+        <van-popup v-model="show" position="bottom" :style="{ height: heights }">
+            <div class="popupBtton">
+                <div>取消</div>
+                <div>确认</div>
+            </div>
+            <div style="font-size:0.5rem;text-align:center;">营业开始时间</div>
+            <div class="popup-modify-time">
+                <van-datetime-picker
+                    @change="showPopup2"
+                    :show-toolbar="false"
+                    v-model="currentTime2"
+                    type="time"
+                    :visible-item-count="showNumber"
+                />
+            </div>
+            <div style="font-size:0.5rem;text-align:center;margin-top:0.8rem; ">营业结束时间</div>
+            <div class="popup-modify-time">
+                <van-datetime-picker
+                    @change="showPopup"
+                    :show-toolbar="false"
+                    v-model="currentTime"
+                    type="time"
+                    :visible-item-count="showNumber"
+                />
+            </div>
+        </van-popup>
+        <van-popup v-model="showArea" position="bottom" :style="{ height: heights }">
+            <van-area :area-list="schollData" :columns-num="2" />
+        </van-popup>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Search, List, Card, Icon, Popup, Toast } from 'vant';
+import { Search, List, Area, Card, DatetimePicker, Icon, Popup, Toast } from 'vant';
 // import { list as goodsList } from '../../svc/Cart';
 import { list as goodsClassList } from '../../svc/suc/SucGoodsClass';
 import { list as goodsList } from '../../svc/suc/SucGoods';
 import { add as addLove } from '../../svc/suc/SucLove';
+import schoolData from '../../util/SchoolData';
 
 // Lazyload插件需要初始化
 
@@ -81,17 +111,35 @@ export default {
         [List.name]: List,
         [Card.name]: Card,
         [Popup.name]: Popup,
+        [Area.name]: Area,
+        [DatetimePicker.name]: DatetimePicker,
     },
     data() {
         return {
             goodsData: [],
             InputGoodTitle: null,
+            show: false,
+            showArea: false,
+            currentTime: '12:00',
+            currentTime2: '12:00',
+            heights: '60%',
+            showNumber: 2,
+            schollData: schoolData(),
         };
     },
     activated() {},
     methods: {
-        showPopup() {
+        modifyShopName() {
             this.show = true;
+        },
+        modifyShopArea() {
+            this.showArea = true;
+        },
+        showPopup(e) {
+            console.log(this.currentTime);
+        },
+        showPopup2(e) {
+            console.log(this.currentTime);
         },
         // 获取商品数据
         handleLoad() {
@@ -198,6 +246,21 @@ body {
         .show-border-bottom {
             border-bottom: solid 0.03rem #f2f2f2;
             padding-bottom: 0.2rem;
+        }
+    }
+}
+.van-popup {
+    .popupBtton {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: #f2f2f2 solid 1px;
+        padding-bottom: 0.3rem;
+        div {
+            width: 1.5rem;
+            text-align: center;
+            font-size: 0.4rem;
+            padding-top: 0.2rem;
+            color: #1989fa;
         }
     }
 }

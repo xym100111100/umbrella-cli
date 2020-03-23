@@ -531,6 +531,13 @@
       "unicode_decimal": 58913
     },
     {
+      "icon_id": "4282592",
+      "name": "店铺",
+      "font_class": "dianpu2",
+      "unicode": "e84d",
+      "unicode_decimal": 59469
+    },
+    {
       "icon_id": "4322191",
       "name": "热门",
       "font_class": "remen4",
@@ -769,6 +776,13 @@
       "unicode_decimal": 59307
     },
     {
+      "icon_id": "6888018",
+      "name": "完成",
+      "font_class": "wancheng",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
       "icon_id": "6980866",
       "name": "签收",
       "font_class": "qianshou",
@@ -781,6 +795,13 @@
       "font_class": "wo1",
       "unicode": "e612",
       "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "7088724",
+      "name": "完成",
+      "font_class": "wancheng1",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
     },
     {
       "icon_id": "7316261",
@@ -818,6 +839,13 @@
       "unicode_decimal": 59025
     },
     {
+      "icon_id": "7483979",
+      "name": "完成",
+      "font_class": "wancheng2",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
       "icon_id": "7494707",
       "name": "店铺，门店",
       "font_class": "huabanfuben1",
@@ -837,6 +865,13 @@
       "font_class": "jinbi1",
       "unicode": "e64b",
       "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "7543109",
+      "name": "关  闭",
+      "font_class": "guanbi",
+      "unicode": "e659",
+      "unicode_decimal": 58969
     },
     {
       "icon_id": "7736504",
@@ -865,6 +900,13 @@
       "font_class": "down",
       "unicode": "e7ac",
       "unicode_decimal": 59308
+    },
+    {
+      "icon_id": "8794089",
+      "name": "关  闭",
+      "font_class": "guanbi1",
+      "unicode": "e753",
+      "unicode_decimal": 59219
     },
     {
       "icon_id": "8966887",
@@ -921,6 +963,13 @@
       "font_class": "xihuan1",
       "unicode": "e635",
       "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "10971730",
+      "name": "关  闭",
+      "font_class": "guanbi2",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
     },
     {
       "icon_id": "11045021",
